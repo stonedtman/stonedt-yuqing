@@ -172,9 +172,9 @@ https://gitee.com/stonedtx/yuqing/blob/master/%E4%BA%A7%E5%93%81%E6%89%8B%E5%86%
 
 ## 捐赠方式
 
-<img src="./ProIMG/Wechat.jpeg" title="Logo"  width="220">
+<img src="./ProIMG/Wechat.png" title="Logo"  width="220">
 
-<img src="./ProIMG/zhifubao-pay.jpeg" title="Logo"  width="220">
+<img src="./ProIMG/zhifubao-pay.png" title="Logo"  width="220">
 
 
 ## 联系我们
