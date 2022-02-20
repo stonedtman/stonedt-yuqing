@@ -177,6 +177,14 @@ https://gitee.com/stonedtx/yuqing/blob/master/%E4%BA%A7%E5%93%81%E6%89%8B%E5%86%
 <img src="./ProIMG/zhifubao-pay.png" title="Logo"  width="220">
 
 
+## 感谢捐赠
+
+| 捐赠者     | 日期        | 金额  |
+|---------|-----------|-----|
+| Fra***k | 2022-2-21 | 50元 |
+
+
+
 ## 联系我们
 
 + 微信号： techflag  
