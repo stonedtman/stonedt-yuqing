@@ -12,6 +12,13 @@
 - Redis
 - MySQL
 - VUE
+- Tomcat
+- Nginx
+- Zookeeper
+- Kafka
+- RabbitMQ
+- Bootstrap
+
 
 ## 总体架构
 ![输入图片说明](ProIMG/Qon4S9stvKHpWoe8RSYMLw.png)
