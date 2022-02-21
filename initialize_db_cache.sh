@@ -580,7 +580,7 @@ CREATE TABLE `user` (
 --  Records of `user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES ('97', '2022-02-14 17:22:13', '13900000000', '13900000000', 'e10adc3949ba59abbe56e057f20f883e', '13900000000@qq.com', '2022-02-14 17:30:25', '1', null, null, null, '2', null, null, null, null, null, '1');
+INSERT INTO `user` VALUES ('97', '2022-02-14 17:22:13', '13900000000', '13900000000', '1ed91049c7697d6aaf7d1959e588e735', '13900000000@qq.com', '2022-02-14 17:30:25', '1', null, null, null, '2', null, null, null, null, null, '1');
 COMMIT;
 
 -- ----------------------------
