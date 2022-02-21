@@ -37,20 +37,16 @@
 
 <br><br>
 ## 开源技术栈
-- Java EE
-- SpringBoot
-- HttpClient
-- webMagic
-- Spider-flow
-- Redis
-- MySQL
-- VUE
-- Tomcat
-- Nginx
-- Zookeeper
-- Kafka
-- RabbitMQ
-- Bootstrap
+
+- 开发平台：Java EE & SpringBoot
+- 爬虫框架：Spider-flow & WebMagic & HttpClient
+- APP爬虫：Xposed框架
+- URL仓库：Redis
+- web应用服务器：Nginx&Tomcat
+- 数据处理和储存任务发送：Kafka&Zookeeper
+- 抓取任务发送：RabbitMQ
+- 配置管理：MySQL
+- 前端展示：Bootstrap & VUE
 
 
 ## 总体架构
