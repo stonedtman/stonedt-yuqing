@@ -45,7 +45,7 @@
 	
 	<insert id="insert" parameterType="com.stonedt.intelligence.entity.Analysis">
 		replace into 
-			monitor_analysis (
+			monitor_analysis ("lastest_version/stonedt-portal.jar"
 				create_time, relative_news, keyword_index, emotional_proportion, plan_word_hit, popular_information, 
 				analysis_id, project_id, hot_company, hot_people, hot_spot, time_period
 			)
