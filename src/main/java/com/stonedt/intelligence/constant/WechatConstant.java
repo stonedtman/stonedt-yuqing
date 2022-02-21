@@ -7,19 +7,19 @@ package com.stonedt.intelligence.constant;
 public class WechatConstant {
 	
 	// appid
-	public final static String AppID = "wx27ae60471bc5516f";
+	public final static String AppID = "*************";
 	
 	//AppSecret
-	public final static String AppSecret = "18f16a4529395014b66cb8394aeddaf9";
+	public final static String AppSecret = "******************";
 	
 	//获取AccessToken接口
-	public final static String api_wechat_AccessToken = "18f16a4529395014b66cb8394aeddaf9";
+	public final static String api_wechat_AccessToken = "************************";
 	
 	//发送模板消息
 	public final static String api_wechat_template = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx27ae60471bc5516f&secret=18f16a4529395014b66cb8394aeddaf9";
 	
 	//获取二维码ticket
-	public final static String api_wechat_qrcode = "18f16a4529395014b66cb8394aeddaf9";
+	public final static String api_wechat_qrcode = "***********************";
 	
 	//模板id
 	public final static String api_wechat_template_id = "Yr-BmtZJctEJSgfq2GfqPnb44iLc6exhesUuUcrasdk";
