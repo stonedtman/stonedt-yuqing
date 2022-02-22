@@ -440,10 +440,13 @@ $("#currentyear").text((new Date()).getFullYear());
         $("#createcomplete").addClass("line-active");
 
 
+        prokeywords = prokeywords.toString().replace(/(\s|;|-|"|‘|；|、|‘’|'|’|“”|》|《|<|>)/g, ",");
+        prokeywords = prokeywords.toString().replace(/,{1,}/, ",");
         if (prokeywords.indexOf("，") != -1) {
             prokeywords = prokeywords.toString().replace(new RegExp("，", 'gm'), ",");
         }
-
+        proshield = proshield.toString().replace(/(\s|;|-|"|‘|；|、|‘’|'|’|“”|》|《|<|>)/g, ",");
+        proshield = proshield.toString().replace(/,{1,}/, ",");
         if (proshield.indexOf("，") != -1) {
             proshield = proshield.toString().replace(new RegExp("，", 'gm'), ",");
         }
@@ -516,7 +519,8 @@ $("#currentyear").text((new Date()).getFullYear());
             $("#prokeywords").removeClass("text-error");
         }
 
-
+        prokeywords = prokeywords.toString().replace(/(\s|;|-|"|‘|；|、|‘’|'|’|“”|》|《|<|>)/g, ",");
+        prokeywords = prokeywords.toString().replace(/,{1,}/, ",");
         if (prokeywords.indexOf("，") != -1) {
             prokeywords = prokeywords.toString().replace(new RegExp("，", 'gm'), ",");
         }
@@ -533,6 +537,8 @@ $("#currentyear").text((new Date()).getFullYear());
             proaccident = proaccident.toString().replace(new RegExp("，", 'gm'), ",");
         }
 
+        proshield = proshield.toString().replace(/(\s|;|-|"|‘|；|、|‘’|'|’|“”|》|《|<|>)/g, ",");
+        proshield = proshield.toString().replace(/,{1,}/, ",");
         if (proshield.indexOf("，") != -1) {
             proshield = proshield.toString().replace(new RegExp("，", 'gm'), ",");
         }

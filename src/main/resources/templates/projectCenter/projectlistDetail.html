@@ -248,25 +248,25 @@ $("#currentyear").text((new Date()).getFullYear());
 						            '</tr>';
 	   			$('#projectDetail').append(keywordHtml);
 	   			
-	   			if(res.project_type == 2){
-	   				var regionalWordHtml = '<tr>'+
-						                        '<td>国家/城市/地域 关键词</td>'+
-						                        '<td>'+res.regional_word+'</td>'+
-						                    '</tr>';
-	   				$('#projectDetail').append(regionalWordHtml);
-	   				
-					var characterWordHtml = '<tr>'+
-												'<td>人物/机构/企业 关键词</td>'+
-												'<td>'+res.character_word+'</td>'+
-											'</tr>';
-					$('#projectDetail').append(characterWordHtml);
-	   				
-	   				var eventWordHtml = '<tr>'+
-						                    '<td>事件/动词 关键词</td>'+
-						                    '<td>'+res.event_word+'</td>'+
-						                '</tr>';
-					$('#projectDetail').append(eventWordHtml);
-	   			}
+	   			// if(res.project_type == 2){
+	   			// 	var regionalWordHtml = '<tr>'+
+				// 		                        '<td>国家/城市/地域 关键词</td>'+
+				// 		                        '<td>'+res.regional_word+'</td>'+
+				// 		                    '</tr>';
+	   			// 	$('#projectDetail').append(regionalWordHtml);
+	   			//
+				// 	var characterWordHtml = '<tr>'+
+				// 								'<td>人物/机构/企业 关键词</td>'+
+				// 								'<td>'+res.character_word+'</td>'+
+				// 							'</tr>';
+				// 	$('#projectDetail').append(characterWordHtml);
+	   			//
+	   			// 	var eventWordHtml = '<tr>'+
+				// 		                    '<td>事件/动词 关键词</td>'+
+				// 		                    '<td>'+res.event_word+'</td>'+
+				// 		                '</tr>';
+				// 	$('#projectDetail').append(eventWordHtml);
+	   			// }
 	   			
 	   			var stopwordHtml = '<tr>'+
 						                '<td>监测屏蔽歧义词</td>'+

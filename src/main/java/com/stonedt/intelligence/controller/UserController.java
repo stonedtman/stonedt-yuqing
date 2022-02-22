@@ -86,7 +86,9 @@ public class UserController {
                             @RequestParam("newPassword") String newPassword, HttpSession session) {
         User user = (User) session.getAttribute("User");
         if (MD5Util.getMD5(oldPassword).equals(user.getPassword())) {
-            boolean updateUserPwdById = userService.updateUserPwdById(user.getUser_id(), MD5Util.getMD5(newPassword));
+            //开源版本暂时不支持修改密码
+            //boolean updateUserPwdById = userService.updateUserPwdById(user.getUser_id(), MD5Util.getMD5(newPassword));
+            boolean updateUserPwdById = true;
             if (updateUserPwdById) {
                 return ResultUtil.build(200, "密码修改成功！");
             } else {

@@ -445,13 +445,12 @@ public class ProjectController {
                 String message = "";
                 
                 if(CommonJson.getIntValue("project_type") == 1){
-                	message = ProjectWordUtil.CommononprojectKeyWord(kafukaJson.getString("subject_word"));
+                    message = ProjectWordUtil.CommononprojectKeyWord(kafukaJson.getString("subject_word"));
                 }else {
-                	
-                	if(kafukaJson.getString("subject_word").indexOf("\\|")!=-1||kafukaJson.getString("subject_word").indexOf("+")!=-1) {
+                    if(kafukaJson.getString("subject_word").indexOf("\\|")!=-1||kafukaJson.getString("subject_word").indexOf("+")!=-1) {
                 		message = ProjectWordUtil.CommononprojectKeyWord(kafukaJson.getString("subject_word"));
                 	}else {
-                		kafukaJson.remove("project_type");
+                        kafukaJson.remove("project_type");
                         kafukaJson.remove("group_id");
                         kafukaJson.remove("project_name");
                         for (Map.Entry entry : kafukaJson.entrySet()) {
@@ -473,18 +472,18 @@ public class ProjectController {
                             }
                         }
                    }
-                	}
-                	try {
-                		String kafukaResponse = MyHttpRequestUtil.doPostKafka("ikHotWords", message, kafuka_url);
-                        RestTemplate template = new RestTemplate();
-                        MultiValueMap<String, Object> paramMap = new LinkedMultiValueMap<String, Object>();
-                        paramMap.add("text", message);
-                        String result = template.postForObject(insert_new_words_url, paramMap, String.class);
-                        System.out.println("result========================="+result);
-					} catch (Exception e) {
-						// TODO: handle exception
-					}
-                
+                }
+                try {
+                    String kafukaResponse = MyHttpRequestUtil.doPostKafka("ikHotWords", message, kafuka_url);
+                    RestTemplate template = new RestTemplate();
+                    MultiValueMap<String, Object> paramMap = new LinkedMultiValueMap<String, Object>();
+                    paramMap.add("text", message);
+                    String result = template.postForObject(insert_new_words_url, paramMap, String.class);
+                    System.out.println("result========================="+result);
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+                return response;
             } else {
                 response.put("code", 500);
                 response.put("msg", "方案新增失败");

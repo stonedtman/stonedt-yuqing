@@ -95,7 +95,7 @@
     </select>
 
     <select id="getProjectAndGroupInfoByUserId" resultType="map" parameterType="map">
-        SELECT date_format(project.create_time, '%Y-%m-%d') AS create_time,project.project_id,project.project_name,
+        SELECT date_format(project.create_time, '%Y-%m-%d %H:%i:%s') AS create_time,project.project_id,project.project_name,
 
         project.character_word, project.event_word, project.regional_word, project.stop_word,project.subject_word,
 
