@@ -68,27 +68,39 @@
 
 
 ## UI 展示
-![登录页面](ProIMG/login.png)
-![系统首页](ProIMG/main2.png)
-![输入图片说明](ProIMG/main.png)
-![输入图片说明](ProIMG/main3.png)
-![输入图片说明](ProIMG/main4.png)
-![输入图片说明](ProIMG/report.png)
-![输入图片说明](ProIMG/shijian.png)
-![输入图片说明](ProIMG/xiangqing.png)
-![输入图片说明](ProIMG/secher.png)
-![输入图片说明](ProIMG/jiance.png)
-![输入图片说明](ProIMG/WechatIMG12912.png)
-![输入图片说明](ProIMG/WechatIMG12910.png)
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/login.png" />
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/main2.png" />
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/main.png" />
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/main3.png" />
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/main4.png" />
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/report.png" />
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/shijian.png" />
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/xiangqing.png" />
+ 
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/secher.png" />
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/jiance.png" />
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/WechatIMG12912.png" />
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/WechatIMG12910.png" />
 
 
 ## 系统架构
 
-![输入图片说明](ProIMG/gongneng-jiagou.png)
+![输入图片说明](https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/gongneng-jiagou.png)
 
 
 ## 功能架构
-![输入图片说明](ProIMG/%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD.png)
+![输入图片说明](https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD.png)
 
 
 ## 开源计划
@@ -161,20 +173,20 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 
   服务流程如下
 
-![输入图片说明](ProIMG/data-plan.png)
+![输入图片说明](https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/data-plan.png)
 
 
 
 ## 微信
    扫描微信二维码，技术交流。
 
-<img src="./ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg" title="Logo"  width="220">
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg" title="Logo"  width="220">
 
 ## 捐赠方式
 
-<img src="./ProIMG/Wechat.png" title="Logo"  width="220">
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/Wechat.png" title="Logo"  width="200">
 
-<img src="./ProIMG/zhifubao-pay.png" title="Logo"  width="220">
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/zhifubao-pay.png" title="Logo"  width="200">
 
 
 ## 感谢捐赠
