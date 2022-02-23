@@ -182,9 +182,8 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 
 <img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg" title="Logo"  width="220">
 
-    技术交流
-<img src="https://gitee.com/stonedtx/yuqing/blob/master/ProIMG/111WechatIMG5085.jpeg
-" title="Logo"  width="220">
+##  技术交流
+![输入图片说明](ProIMG/111WechatIMG5085.jpeg)
 
 ## 捐赠方式
 
