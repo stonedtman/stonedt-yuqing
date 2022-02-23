@@ -128,7 +128,7 @@
     [【数据处理】技术架构说明文档](https://gitee.com/stonedtx/yuqing/blob/master/dataProcessing.md)
 
 
-### 舆情系统管理后台
+### 系统管理后台
 
 -  系统很容易上手，简单易懂。2022年4月份 会开放源代码，同时也会提供运行部署程序下载。
 
