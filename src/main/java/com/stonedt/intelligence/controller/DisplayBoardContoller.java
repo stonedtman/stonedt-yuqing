@@ -53,7 +53,6 @@ public class DisplayBoardContoller {
 			Map<String, Object> map = list.get(0);
 			Set<String> keySet = map.keySet();
 			for (String string : keySet) {
-//			if(string)
 				String string2 = TextUtil.processQuotationMarks(map.get(string).toString());
 				mv.addObject(string,JSONObject.parse(string2));
 			}
@@ -83,18 +82,6 @@ public class DisplayBoardContoller {
     public String getprojectType(@RequestParam(value="user_id") Long user_id,HttpServletRequest request) {
         JSONObject response = new JSONObject();
         List<DatafavoriteEntity> result = displayBoardService.getCollectionByuser(user_id);
-//        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-//        try {
-//            list = projectUtil.getprojectType();
-//            response.put("code", 200);
-//            response.put("msg", "方案组数据返回成功");
-//            response.put("data", list);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            response.put("code", 500);
-//            response.put("msg", "方案组数据返回失败");
-//            response.put("data", list);
-//        }
         response.put("user_id", user_id);
         response.put("data", result);
         return JSON.toJSONString(response);
@@ -114,18 +101,6 @@ public class DisplayBoardContoller {
     public String getprojectType2(@RequestParam(value="user_id") Long user_id,HttpServletRequest request) {
         JSONObject response = new JSONObject();
         List<DatafavoriteEntity> result = displayBoardService.getCollectionByuser(user_id);
-//        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-//        try {
-//            list = projectUtil.getprojectType();
-//            response.put("code", 200);
-//            response.put("msg", "方案组数据返回成功");
-//            response.put("data", list);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            response.put("code", 500);
-//            response.put("msg", "方案组数据返回失败");
-//            response.put("data", list);
-//        }
         response.put("user_id", user_id);
         response.put("data", result);
         return JSON.toJSONString(response);

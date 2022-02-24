@@ -75,9 +75,6 @@ public class AnalysisController {
 	}
 	
 	
-	
-
-// 历史代码
 	/**
 	 * 获取监测分析数据
 	 */
@@ -207,7 +204,6 @@ public class AnalysisController {
 					+ negative.getJSONObject(0).getString("keyword") + "】到达"
 					+ negative.getJSONObject(0).getString("rate") + "。";
 		}
-		// json.put("china", chinaString);
 
 		objectdata.put("china", chinaString);
 		objectdata.put("data", a);
