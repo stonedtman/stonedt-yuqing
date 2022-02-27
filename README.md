@@ -4,8 +4,11 @@
 
 支持对海量舆情数据分析和挖掘。
 
-[后台管理](https://gitee.com/stonedtx/yuqing-manager) 系统已经开源，预计2022-4月完成开源计划。
+[后台管理](https://gitee.com/stonedtx/yuqing-manager) 系统已经开源，预计2022年4月完成开源计划。
 <br>
+
+[数据采集](https://gitee.com/stonedtx/yuqing-spider) 系统已经开源，预计2022年6月完成开源计划。
+
  
 无论你是使用者还是共同完善的开发者，欢迎 pull request 或者 留言对我们提出建议。 
 <br>
