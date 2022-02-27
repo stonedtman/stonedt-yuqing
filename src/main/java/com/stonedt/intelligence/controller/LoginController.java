@@ -20,10 +20,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * description: 登录控制器 <br>
- * date: 2020/4/13 10:51 <br>
- * author: xiaomi <br>
- * version: 1.0 <br>
+ * 登陆控制器
+ * @author wangyi
+ *
  */
 @Controller
 @RequestMapping(value = "/")
@@ -33,14 +32,9 @@ public class LoginController {
     UserService userService;
 
     /**
-     * description: 登录页面跳转<br>
-     * version: 1.0 <br>
-     * date: 2020/4/13 11:06 <br>
-     * author: objcat <br>
-     * <p>
-     * No such property: code for class: Script1
-     *
-     * @return ModelAndView
+     * 登录页面跳转
+     * @param mv
+     * @return
      */
   //  @SystemControllerLog(module = "用户登录",submodule="用户登录", type = "查询",operation = "login")
     @GetMapping(value = "/login")
