@@ -73,8 +73,7 @@
 
 
 ## UI 展示
-
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/login.png" />
+![登录页面](https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/login.png)
 
 <img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/main2.png" />
 
