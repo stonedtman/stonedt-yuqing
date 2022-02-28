@@ -124,6 +124,8 @@
 
     [【数据采集】技术架构说明文档](https://gitee.com/stonedtx/yuqing/blob/master/dataCollection.md)
 
+    [数据采集](https://gitee.com/stonedtx/yuqing-spider) 系统已经开源，预计2022年6月完成开源计划。
+
 
 ### 舆情数据处理 
 
