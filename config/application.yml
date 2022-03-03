@@ -37,6 +37,7 @@ spring:
       username: root
       password: 123456
 
+
  # 修改设置Redis服务器地址
   redis:
     database: 0
@@ -46,6 +47,13 @@ spring:
     max-idle: 10
     max-wait: 100000
     timeout: 100000
+
+  # flyway 自动建库建表设置
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
           
 mybatis:
     type-aliases-package: com.stonedt.intelligence.entity

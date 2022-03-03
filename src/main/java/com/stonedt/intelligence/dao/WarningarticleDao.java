@@ -4,10 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
-import com.stonedt.intelligence.entity.AnalysisQuartzDo;
-
-import io.lettuce.core.dynamic.annotation.Param;
 
 @Mapper
 public interface WarningarticleDao {
