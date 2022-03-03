@@ -47,7 +47,8 @@ public class DataSourceConfig {
 
             String url01 = datasourceUrl.substring(0,datasourceUrl.indexOf("?"));
 
-            String url02 = url01.substring(0,url01.lastIndexOf("/"))+"?serverTimezone=Asia/Shanghai";
+            String url02 = url01.substring(0,url01.lastIndexOf("/"))+datasourceUrl.substring(datasourceUrl.indexOf("?"));
+            System.out.println(url02);
 
             String datasourceName = url01.substring(url01.lastIndexOf("/")+1);
             // 连接已经存在的数据库，如：mysql
