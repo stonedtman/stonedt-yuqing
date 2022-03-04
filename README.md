@@ -158,26 +158,24 @@
 
 仅需三步快速安装 思通舆情：
 
--  1.安装MySQL、redis。
+-  1.安装 MySQL 5.5+、redis 3.0+
 
--  2.下载 [application.yml](https://gitee.com/stonedtx/yuqing/raw/master/config/application.yml)、[application.properties](https://gitee.com/stonedtx/yuqing/raw/master/config/application.properties)、[config.properties](https://gitee.com/stonedtx/yuqing/raw/master/config/config.properties)，并创建 **config目录**  与 stonedt-yuqing.jar 在同一个目录下，可修改配置文件参数，包括MySQL、redis的链接地址、用户名和密码等。
+-  2.下载 [stonedt-yuqing.zip](https://gitee.com/stonedtx/yuqing/attach_files/985811/download)，解压zip，执行 java -jar stonedt-yuqing.jar，启动舆情系统
 
--  3.下载 [stonedt-yuqing.jar](https://gitee.com/stonedtx/yuqing/raw/master/lastest_version/stonedt-yuqing.jar) 程序，与 config文件夹 在同目录下，执行 java -jar stonedt-yuqing.jar
-
-
--  发行版本下载地址：https://gitee.com/stonedtx/yuqing/attach_files/985811/download
-
--  本地访问：http://127.0.0.1:8084/
-
--  用户名：13900000000
-
--  密码：stonedt
+-  3.本地访问：http://127.0.0.1:8084/
+ 用户名：13900000000，  密码：stonedt 
 
 
 
 ## 产品手册
 
 https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
+
+
+## 版本更新
+
+   每次版本更新的记录说明都在此，[查看详情](https://gitee.com/stonedtx/yuqing/blob/master/releasenote.md) 。
+
 
 
 
