@@ -160,9 +160,9 @@
 
 -  1.安装 MySQL 5.5+、redis 4.0+
 
--  2.下载 [stonedt-yuqing.zip](https://gitee.com/stonedtx/yuqing/attach_files/985811/download)，解压zip包，执行  _java -jar stonedt-yuqing.jar_ ，启动舆情系统。 
+-  2.下载 [stonedt-yuqing.zip](https://gitee.com/stonedtx/yuqing/attach_files/985811/download)，解压zip包，执行  _java -jar stonedt-yuqing.jar_，启动舆情系统。 
 
-_备注：修改配置文件[[application.yml](https://gitee.com/stonedtx/yuqing/blob/master/config/application.yml)]，设定MySQL、redis的链接地址、用户名和密码等。_ 
+_备注：修改配置文件[[application.yml](https://gitee.com/stonedtx/yuqing/blob/master/config/application.yml)]，设定 MySQL、redis 用户和密码等。_ 
 
 -  3.本地访问：http://127.0.0.1:8084/
  用户名：13900000000，  密码：stonedt 
