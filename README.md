@@ -158,9 +158,9 @@
 
 仅需三步快速安装 思通舆情：
 
--  1.安装MySQL、redis，执行建表 [initialize_db_cache.sh](https://gitee.com/stonedtx/yuqing/raw/master/initialize_db_cache.sh)  脚本。
+-  1.安装MySQL、redis。
 
--  2.下载 [application.yml](https://gitee.com/stonedtx/yuqing/raw/master/config/application.yml)、[application.properties](https://gitee.com/stonedtx/yuqing/raw/master/config/application.properties)、[config.properties](https://gitee.com/stonedtx/yuqing/raw/master/config/config.properties)，并创建 **config目录**  与 stonedt-yuqing.jar 在同一个目录下，可修改配置文件参数。
+-  2.下载 [application.yml](https://gitee.com/stonedtx/yuqing/raw/master/config/application.yml)、[application.properties](https://gitee.com/stonedtx/yuqing/raw/master/config/application.properties)、[config.properties](https://gitee.com/stonedtx/yuqing/raw/master/config/config.properties)，并创建 **config目录**  与 stonedt-yuqing.jar 在同一个目录下，可修改配置文件参数，包括MySQL、redis链接地址。
 
 -  3.下载 [stonedt-yuqing.jar](https://gitee.com/stonedtx/yuqing/raw/master/lastest_version/stonedt-yuqing.jar) 程序，与 config文件夹 在同目录下，执行 java -jar stonedt-yuqing.jar
 
