@@ -158,7 +158,7 @@
 
 仅需三步快速安装 思通舆情：
 
--  1.安装 MySQL 5.5+、redis 3.0+
+-  1.安装 MySQL 5.5+、redis 4.0+
 
 -  2.下载 [stonedt-yuqing.zip](https://gitee.com/stonedtx/yuqing/attach_files/985811/download)，解压zip包，执行  _java -jar stonedt-yuqing.jar_ ，启动舆情系统。 
 
