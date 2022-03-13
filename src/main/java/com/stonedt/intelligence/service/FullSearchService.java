@@ -286,4 +286,14 @@ public interface FullSearchService {
 
 	String hotBaiduList();
 
+	String hotWechat();
+
+	String hot36Kr();
+
+	String hotDouyin();
+
+	String hotBilibili();
+
+	String hotTecent();
+
 }

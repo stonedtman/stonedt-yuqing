@@ -2911,6 +2911,35 @@ public class FullSearchServiceImpl implements FullSearchService{
 		return HotWordsUtil.search2();
 		
 	}
+
+	@Override
+	public String hotWechat() {
+		return HotWordsUtil.hot36Kr();
+	}
+
+	@Override
+	public String hot36Kr() {
+		// TODO Auto-generated method stub
+		return HotWordsUtil.hotWechat();
+	}
+
+	@Override
+	public String hotDouyin() {
+		// TODO Auto-generated method stub
+		return HotWordsUtil.hotDouyin();
+	}
+
+	@Override
+	public String hotBilibili() {
+		// TODO Auto-generated method stub
+		return HotWordsUtil.hotBilibili();
+	}
+
+	@Override
+	public String hotTecent() {
+		// TODO Auto-generated method stub
+		return HotWordsUtil.hotTecent();
+	}
 	
 
     /**

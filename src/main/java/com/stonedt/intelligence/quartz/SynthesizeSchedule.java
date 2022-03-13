@@ -115,75 +115,77 @@ public class SynthesizeSchedule {
 			String hot_policydata = "";
 			String hot_finaceData = "";
 			String hot_36kr ="";
-			try {
-				FullSearchParam searchParam = new FullSearchParam();
-				searchParam.setPageNum(1);
-				searchParam.setPageSize(50);
-				searchParam.setSearchWord("");
-				searchParam.setClassify("4");
-				searchParam.setTimeType(1);
-				
-				//热点事件
-				searchParam.setSource_name("百度风云榜");
-				//JSONObject hotList = fullSearchService.hotList(searchParam);
-				hot_all = fullSearchService.hotBaiduList();
-				
-				//热门微博
-				searchParam.setSource_name("微博");
-				JSONObject hotList2 = fullSearchService.hotList(searchParam);
-				hot_weibo =conversionHotList(hotList2);
-				//热门微信
-				searchParam.setSource_name("微信");
-				
-				JSONObject hotListWechat = fullSearchService.hotList(searchParam);
-				hot_wechat =conversionHotList(hotListWechat);
-				searchParam.setPageSize(10);
-				searchParam.setClassify("1");
-				//热门科技
-				searchParam.setSource_name("36kr");
-				
-				JSONObject hotList36kr = fullSearchService.hotList(searchParam);
-				hot_36kr =conversionHotList(hotList36kr);
-				
-				searchParam.setClassify("2");
-				searchParam.setTimeType(2);
-				searchParam.setPageSize(50);
-				//热门抖音
-				searchParam.setSource_name("抖音");
-				
-				JSONObject hotListDouyin = fullSearchService.hotList(searchParam);
-				hot_douyin =conversionHotList(hotListDouyin);
-				
-				//热门哔哩哔哩
-				searchParam.setSource_name("哔哩哔哩");
-				
-				JSONObject hotListBiLiBiLi = fullSearchService.hotList(searchParam);
-				hot_bilibili =conversionHotList(hotListBiLiBiLi);
-				
-				//热门腾讯视频
-				searchParam.setSource_name("腾讯视频");
-				
-				JSONObject hotListTecentVedio = fullSearchService.hotList(searchParam);
-				hot_tecentvedio =conversionHotList(hotListTecentVedio);
-				hot_search_terms = HotWordsUtil.search();
-				
-				//政策--------国务院 > 首页 > 政策 > 最新    http://www.gov.cn/zhengce/zuixin.htm
-				
-				hot_policydata = getPolicyData();
-				
-				
-				
-				
-				//经济--------东方财富网(国内经济首页 > 财经频道 > 焦点 > 国内经济) http://finance.eastmoney.com/a/cgnjj.html
-				
-				hot_finaceData = getFinaceData();
-				
-				
-				
-			} catch (UnsupportedEncodingException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			FullSearchParam searchParam = new FullSearchParam();
+			searchParam.setPageNum(1);
+			searchParam.setPageSize(50);
+			searchParam.setSearchWord("");
+			searchParam.setClassify("4");
+			searchParam.setTimeType(1);
+			
+			//热点事件
+			searchParam.setSource_name("百度风云榜");
+			//JSONObject hotList = fullSearchService.hotList(searchParam);
+			hot_all = fullSearchService.hotBaiduList();
+			
+			//热门微博
+			searchParam.setSource_name("微博");
+			//JSONObject hotList2 = fullSearchService.hotList(searchParam);
+			//hot_weibo =conversionHotList(hotList2);
+			hot_weibo = HotWordsUtil.hotWeibo();
+			
+			//热门微信
+			searchParam.setSource_name("微信");
+			
+			//JSONObject hotListWechat = fullSearchService.hotList(searchParam);
+			//hot_wechat =conversionHotList(hotListWechat);
+			hot_wechat = fullSearchService.hotWechat();
+			
+			searchParam.setPageSize(10);
+			searchParam.setClassify("1");
+			//热门科技
+			searchParam.setSource_name("36kr");
+			
+			//JSONObject hotList36kr = fullSearchService.hotList(searchParam);
+			//hot_36kr =conversionHotList(hotList36kr);
+			
+			hot_36kr = fullSearchService.hot36Kr();
+			
+			searchParam.setClassify("2");
+			searchParam.setTimeType(2);
+			searchParam.setPageSize(50);
+			//热门抖音
+			//searchParam.setSource_name("抖音");
+			
+			///JSONObject hotListDouyin = fullSearchService.hotList(searchParam);
+			//hot_douyin =conversionHotList(hotListDouyin);
+			
+			hot_douyin = fullSearchService.hotDouyin();
+			
+			
+			//热门哔哩哔哩
+			//searchParam.setSource_name("哔哩哔哩");
+			
+			//JSONObject hotListBiLiBiLi = fullSearchService.hotList(searchParam);
+			//hot_bilibili =conversionHotList(hotListBiLiBiLi);
+			hot_bilibili =fullSearchService.hotBilibili();
+			//热门腾讯视频
+			//searchParam.setSource_name("腾讯视频");
+			
+			//JSONObject hotListTecentVedio = fullSearchService.hotList(searchParam);
+			
+			
+			//hot_tecentvedio =conversionHotList(hotListTecentVedio);
+			hot_tecentvedio =fullSearchService.hotTecent();
+			
+			hot_search_terms = HotWordsUtil.search();
+			
+			//政策--------国务院 > 首页 > 政策 > 最新    http://www.gov.cn/zhengce/zuixin.htm
+			
+			hot_policydata = getPolicyData();
+			
+			//经济--------东方财富网(国内经济首页 > 财经频道 > 焦点 > 国内经济) http://finance.eastmoney.com/a/cgnjj.html
+			
+			hot_finaceData = getFinaceData();
 			
 				try {
 					Map<String, Object> map = new HashMap<String, Object>();
@@ -498,7 +500,8 @@ public class SynthesizeSchedule {
 	
 	
 	public static void main(String[] args) {
-		getPolicyData();
+		String policyData = getFinaceData();
+		System.out.println(policyData);
 	}
 	
 	
