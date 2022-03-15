@@ -58,7 +58,7 @@
         <if test="count==0">
             INSERT INTO `synthesize`
             (`cteate_time`,`update_time`,`hot_wechat`,`hot_weibo`,`hot_all`,`hot_search_terms`,`hot_douyin`,`hot_bilibili`,`hot_tecentvedio`,hot_policydata,hot_finaceData,hot_36kr) VALUES (
-            #{now(),now(),#{map.hot_wechat},#{map.hot_weibo},#{map.hot_all},#{map.hot_search_terms},#{map.hot_douyin},#{map.hot_bilibili},#{map.hot_tecentvedio,#{map.hot_policydata},#{map.hot_finaceData},#{map.hot_36kr}}
+            now(),now(),#{map.hot_wechat},#{map.hot_weibo},#{map.hot_all},#{map.hot_search_terms},#{map.hot_douyin},#{map.hot_bilibili},#{map.hot_tecentvedio},#{map.hot_policydata},#{map.hot_finaceData},#{map.hot_36kr}
             )
         </if>
 </insert>

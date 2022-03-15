@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 192.168.71.73
+ Source Server         : 192.168.71.91
  Source Server Type    : MySQL
  Source Server Version : 50733
- Source Host           : s1.stonedt.com
+ Source Host           : 192.168.71.91
  Source Database       : stonedt_portal
 
  Target Server Type    : MySQL
  Target Server Version : 50733
  File Encoding         : utf-8
 
- Date: 02/14/2022 17:33:00 PM
+ Date: 03/15/2022 18:41:36 PM
 */
 
 SET NAMES utf8mb4;
@@ -36,6 +36,32 @@ CREATE TABLE `data_favorite` (
   PRIMARY KEY (`id`,`user_id`),
   UNIQUE KEY `article_public_id` (`article_public_id`,`user_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COMMENT='文章收藏表';
+
+-- ----------------------------
+--  Table structure for `flyway_schema_history`
+-- ----------------------------
+DROP TABLE IF EXISTS `flyway_schema_history`;
+CREATE TABLE `flyway_schema_history` (
+  `installed_rank` int(11) NOT NULL,
+  `version` varchar(50) DEFAULT NULL,
+  `description` varchar(200) NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `script` varchar(1000) NOT NULL,
+  `checksum` int(11) DEFAULT NULL,
+  `installed_by` varchar(100) NOT NULL,
+  `installed_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `execution_time` int(11) NOT NULL,
+  `success` tinyint(1) NOT NULL,
+  PRIMARY KEY (`installed_rank`),
+  KEY `flyway_schema_history_s_idx` (`success`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+--  Records of `flyway_schema_history`
+-- ----------------------------
+BEGIN;
+INSERT INTO `flyway_schema_history` VALUES ('1', '1.0', 'InitTableAndData', 'SQL', 'V1.0__InitTableAndData.sql', '-764204393', 'root', '2022-03-15 18:40:07', '4131', '1');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `full_menu`
@@ -522,7 +548,14 @@ CREATE TABLE `synthesize` (
   `hot_policydata` longtext,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='综合看板表';
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='综合看板表';
+
+-- ----------------------------
+--  Records of `synthesize`
+-- ----------------------------
+BEGIN;
+INSERT INTO `synthesize` VALUES ('64', '1', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `systemlog`
@@ -580,7 +613,7 @@ CREATE TABLE `user` (
 --  Records of `user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES ('97', '2022-02-14 17:22:13', '13900000000', '13900000000', '1ed91049c7697d6aaf7d1959e588e735', '13900000000@qq.com', '2022-02-14 17:30:25', '1', null, null, null, '2', null, null, null, null, null, '1');
+INSERT INTO `user` VALUES ('97', '2022-02-14 17:22:13', '13900000000', '13900000000', '1ed91049c7697d6aaf7d1959e588e735', '13900000000@qq.com', '2022-02-14 17:30:25', '1', null, null, null, '2', null, null, '3', null, null, '2');
 COMMIT;
 
 -- ----------------------------
