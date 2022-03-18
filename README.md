@@ -191,7 +191,7 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 
 <img src="https://img01.51jobcdn.com/fansImg/CompLogo/5/4601/4600395/4600395_300.png?636626639223288165"   width="30">
 
-[广东万事通](http://www.stwst.com) 
+[广东万事通航空地勤服务有限公司](http://www.stwst.com) 
 
 
 <img src="https://www.zzdz.com.cn/style/Photo/logo.jpg"   width="40">
