@@ -244,6 +244,8 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 
 + 公司官网：[www.stonedt.com](http://www.stonedt.com)
 
++ 技术博客：[blog.stonedt.com](http://blog.stonedt.com)
+
 欢迎您在下方留言，或添加微信与我们交流。
 
 
