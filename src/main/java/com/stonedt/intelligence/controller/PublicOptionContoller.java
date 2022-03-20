@@ -14,12 +14,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
@@ -31,6 +34,8 @@ import com.stonedt.intelligence.entity.PublicoptionDetailEntity;
 import com.stonedt.intelligence.entity.PublicoptionEntity;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.service.PublicOptionService;
+import com.stonedt.intelligence.util.MyHttpRequestUtil;
+import com.stonedt.intelligence.util.ProjectWordUtil;
 import com.stonedt.intelligence.util.TextUtil;
 import com.stonedt.intelligence.aop.SystemControllerLog;
 /**
@@ -45,7 +50,11 @@ public class PublicOptionContoller {
 	private PublicOptionService publicOptionService;
 	 
 	
-	
+	@Value("${kafuka.url}")
+    private String kafuka_url;
+
+    @Value("${insertnewwords.url}")
+    private String insert_new_words_url;
 	
 	/**
 	 * 舆情研判分析详情任务列表
@@ -216,6 +225,21 @@ public class PublicOptionContoller {
 			) {
 		User user = (User) session.getAttribute("User");
 		
+		
+		
+		
+		String message = ProjectWordUtil.CommononprojectKeyWord(eventkeywords);
+		
+		try {
+            String kafukaResponse = MyHttpRequestUtil.doPostKafka("ikHotWords", message, kafuka_url);
+            RestTemplate template = new RestTemplate();
+            MultiValueMap<String, Object> paramMap = new LinkedMultiValueMap<String, Object>();
+            paramMap.add("text", message);
+            String result = template.postForObject(insert_new_words_url, paramMap, String.class);
+            System.out.println("result========================="+result);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
 		
 		String result =publicOptionService.addpublicoptiondata(user.getUser_id(),eventname,eventkeywords,eventstarttime,eventendtime,eventstopwords);
 		

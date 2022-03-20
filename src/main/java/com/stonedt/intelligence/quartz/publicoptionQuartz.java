@@ -67,7 +67,7 @@ public class publicoptionQuartz {
      * 舆情研判
      */
 //    @PostConstruct
-    @Scheduled(cron = "0 0/2 * * * ?")
+    @Scheduled(cron = "0 0/10 * * * ?")
     public void popularInformation() {
         if (schedule_publicoption_open == 1) {
         	//publicoptionevent
