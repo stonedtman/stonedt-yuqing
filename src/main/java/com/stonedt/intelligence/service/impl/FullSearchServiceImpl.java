@@ -2914,13 +2914,13 @@ public class FullSearchServiceImpl implements FullSearchService{
 
 	@Override
 	public String hotWechat() {
-		return HotWordsUtil.hot36Kr();
+		return HotWordsUtil.hotWechat();
 	}
 
 	@Override
 	public String hot36Kr() {
 		// TODO Auto-generated method stub
-		return HotWordsUtil.hotWechat();
+		return HotWordsUtil.hot36Kr();
 	}
 
 	@Override
