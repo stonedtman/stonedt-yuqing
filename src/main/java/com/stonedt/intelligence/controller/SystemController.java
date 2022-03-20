@@ -251,7 +251,7 @@ public class SystemController {
         }
 
         WarningSetting warning = systemService.getWarningByProjectId(Long.valueOf(project_id));
-        warning.setWarning_word(warningWord);
+        //warning.setWarning_word(warningWord);
         mv.addObject("warning", warning);
         mv.addObject("warningStr", JSON.toJSONString(warning));
         mv.addObject("groupid", groupid);
