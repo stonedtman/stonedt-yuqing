@@ -198,7 +198,7 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 
 [山东众志电子有限公司](https://www.zzdz.com.cn) 
 
-<img src="http://www.whxg.gov.cn/material/img/logo1.png"   width="40">
+<img src="http://101.37.254.100:8080/assets/images/favicon.png"   width="40">
 
 [武汉新港管理委员会](http://www.whxg.gov.cn/) 
 
