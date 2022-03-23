@@ -60,15 +60,44 @@
 
 ### 思通舆情 技术栈：
 
-- 数据库：MySQL
-- 数据检索：Elasticsearch
-- 文章储存：Mongodb
-- 系统缓存：Redis
-- 消息队列：kafak & rabbitMQ
-- 深度学习：PaddlePaddle
-- 网络爬虫：WebMagic(java) & scrapy（python）
+#### 数据采集
+- 开发平台：Java EE & SpringBoot
+- 爬虫框架：Spider-flow & WebMagic & HttpClient
+- APP爬虫：Xposed框架
+- URL仓库：Redis
+- 网页渲染解析：Jvppeteer & Playwright（微软开源）
+- web应用服务器：Nginx & Tomcat
+- 储存任务发送：Kafka & Zookeeper
+- 抓取任务发送：RabbitMQ
+- 配置管理：MySQL
+- 前端展示：Bootstrap & VUE
+
+
+#### 数据处理
 - 开发框架：SpringBoot
 - 开发语言：Java JEE
+- 数据暂存：MySQL
+- 数据索引：Redis
+- 深度学习：PaddlePaddle
+- 自然语言处理：HaNLP & THUCTC
+- 数据处理和储存任务发送：Kafka & Zookeeper
+- 数据中台：自研 & DataEase 
+- 数据初始化：集成FlyWay，自动初始化MySQL
+- 数据总线：RockAPI （进行了二次开发）
+
+#### 数据分析
+- 数据库：MySQL
+- 数据检索：Elasticsearch
+- 中文分词器：IK分词
+- 相似度计算：Clickhouse
+- 数据同步：DataX
+- 文章储存：Mongodb
+- 数据缓存：Redis
+- 消息队列：kafak & rabbitMQ
+- 开发框架：SpringBoot
+- 开发语言：Java JEE
+- 图表展示：Apache  Echarts & anyCharts
+
 
 
 
