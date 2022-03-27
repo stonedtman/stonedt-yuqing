@@ -250,9 +250,6 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 
 [浙江远图技术股份有限公司](https://www.yuantutech.com/) 
 
-<img src="https://www.asun.cloud/templates/main/images/index/img_logo.png"   width="100">
-
-[江苏中天互联科技有限公司](https://www.asun.cloud/) 
 
 
 ##  按需定制|数据定制
