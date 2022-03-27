@@ -241,6 +241,12 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 <img src="https://image.qcc.com/logo/bec83b936f15fcfc6e1dd9f7b4d6dbfa.jpg?x-oss-process=style/logo_200"   width="40">
 
 [广西红海豚网络科技有限公司]() 
+<img src="https://www.sdws.edu.cn/_upload/tpl/00/05/5/template5/images/logo.png"   width="40">
+
+[山东外事职业大学](https://www.sdws.edu.cn/) 
+<img src="https://nwzimg.wezhan.cn/contents/sitefiles2043/10218923/images/18527024.png"   width="40">
+
+[浙江远图技术股份有限公司](https://www.yuantutech.com/) 
 
 
 ##  按需定制|数据定制
