@@ -242,7 +242,7 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 
 [广西红海豚网络科技有限公司]() 
 
-<img src="https://www.sdws.edu.cn/_upload/tpl/00/05/5/template5/images/foot-bg.png"   width="40">
+<img src="https://t8.baidu.com/it/u=1685772092,4008826324&fm=74&app=80&size=f256,256&n=0&f=JPEG&fmt=auto?sec=1648486800&t=b72d07ccfc6d53eb1d9544d276cb08a7"   width="40">
 
 [山东外事职业大学](https://www.sdws.edu.cn/) 
 
