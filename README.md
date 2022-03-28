@@ -250,7 +250,7 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 
 [浙江远图技术股份有限公司](https://www.yuantutech.com/) 
 
-<img src="http://110.42.144.221/appLogo.png"   width="40">
+[输入图片说明](ProIMG/wiznote.png)
 
 [为知笔记](https://www.wiz.cn/) 
 
