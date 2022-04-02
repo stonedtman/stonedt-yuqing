@@ -273,7 +273,7 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 
 ##  技术博客
 
-### 博客地址：[http://blog.stonedt.com/](http://blog.stonedt.com/)
+   **博客地址：[http://blog.stonedt.com/](http://blog.stonedt.com/)** 
 
 
 经过多年耕耘和沉淀，基于海量数据、主流开源技术及自研大数据、人工智能、基础系统架构，目前团队已经建成了完备的系统与技术体系。在此我们将会把自己的实践与经验与大家不断的分享。您可与我们直接沟通技术和产品问题，并获得技术资源、优质文章、用户社群、技术活动等信息。同时也欢迎您能加入我们！
