@@ -437,6 +437,10 @@ $("#currentyear").text((new Date()).getFullYear());
         } else {
             $("#prokeywords1").removeClass("text-error");
         }
+        if (prokeywords == proshield) {
+        	showtips("关键词与屏蔽词不能相同");
+            return;
+        }
         $("#createcomplete").addClass("line-active");
 
 
@@ -517,6 +521,12 @@ $("#currentyear").text((new Date()).getFullYear());
             showtips("请填写完整！");
         } else {
             $("#prokeywords").removeClass("text-error");
+        }
+        
+        
+        if (prokeywords == proshield) {
+        	showtips("关键词与屏蔽词不能相同");
+            return;
         }
 
         prokeywords = prokeywords.toString().replace(/(\s|;|-|"|‘|；|、|‘’|'|’|“”|》|《|<|>|\.|。)/g, ",");
