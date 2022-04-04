@@ -228,7 +228,7 @@ function createprolist(res) {
                 data[i].subject_word +
                 '    </a></div>' +
                 '    <div class="project-times">' +
-                data[i].create_time +
+                data[i].update_time +
                 '    </div>' +
                 '	<div class="project-handle">'+
             	'		<a href="#" onclick="toAnalysis(&apos;' + data[i].project_id + '&apos;,&apos;' + data[i].group_id + '&apos;)" data-id="' + data[i].project_id + '">监测分析</a>'+
