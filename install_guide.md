@@ -73,7 +73,6 @@ http://www.imxmx.com/Item/1/211097.html
 
 https://gitee.com/stonedtx/yuqing/attach_files
 
-
 ## 配置文件
 
 ### 程序目录
@@ -98,28 +97,48 @@ https://gitee.com/stonedtx/yuqing/attach_files
 
 ## 常见问题
 
-### MySQL数据库连接
-在后台启动日志出现MySQL连接错误信息，如图所示：
+### MySQL数据库连接错误
+- 错误现象
+
+  在后台启动日志出现MySQL连接错误信息，如图所示：
 ![输入图片说明](ProIMG/mysql-conn-err.png)
-### 配置远程权限
+
+- 解决方案
+
+  配置远程权限
 MySQL 5.5 和 MySQL 8.0配置MySQL连接权限的 **_方式不一样_** ，分别为：
 
-MySQL 5.5+
+  MySQL 5.5+
 
-> GRANT ALL PRIVILEGES ON . TO ‘root’@’%’ IDENTIFIED BY ‘123456’ WITH GRANT OPTION;
-> 
-> flush privileges;
+  > GRANT ALL PRIVILEGES ON . TO ‘root’@’%’ IDENTIFIED BY ‘123456’ WITH GRANT OPTION;
+  > 
+  > flush privileges;
 
-MySQL 8.0+
+  MySQL 8.0+
 
-
-> create user 'root'@'%' identified by '密码';
-> 
-> alter user 'root'@'%' identified by '新密码';
-> 
-> grant all privileges on *.* to 'root'@'%' with grant option;
-> 
-> flush privileges;
+  > create user 'root'@'%' identified by '密码';
+  > 
+  > alter user 'root'@'%' identified by '新密码';
+  > 
+  > grant all privileges on *.* to 'root'@'%' with grant option;
+  > 
+  > flush privileges;
 
 ### 热点资讯没有数据
-大多数问题是由于Redis没有正常启动或者正常连接。
+
+- 错误现象
+  ![输入图片说明](ProIMG/hot-point.png)
+  
+  大多数问题是由于Redis没有正常启动 或者 没有正常连接。
+
+- 解决方案
+
+  去启动你的redis服务器，例如：
+
+  执行 /etc/init.d/redis-server start
+
+
+
+
+
+
