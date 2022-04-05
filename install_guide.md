@@ -158,7 +158,7 @@ MySQL 5.5 和 MySQL 8.0配置MySQL连接权限的 **_方式不一样_** ，分�
 
 - 解决方案
 
-  登录mysql中root用户
+  登录mysql中root用户，执行下述语句
 
   mysql> grant select on `performance_schema`.user_variables_by_thread to nature@"%";
 
