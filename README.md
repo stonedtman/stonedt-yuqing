@@ -188,7 +188,9 @@
 1. JavaEE 8 以上版本；
 2. MySQL 5.5 以上版本；
 3. Redis 4.0 以上版本；
- 
+
+详见思通舆情安装部署手册：https://gitee.com/stonedtx/yuqing/blob/master/install_guide.md
+
 
 ## 运行版本
 
@@ -200,6 +202,8 @@
 
 -  3.本地访问：http://127.0.0.1:8084/
  用户名：13900000000，  密码：stonedt 
+
+详见思通舆情安装部署手册：https://gitee.com/stonedtx/yuqing/blob/master/install_guide.md
 
 _备注：修改配置文件[[application.yml](https://gitee.com/stonedtx/yuqing/blob/master/config/application.yml)]，设定 MySQL、redis 用户和密码等。_ 
 
