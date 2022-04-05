@@ -84,4 +84,9 @@ http://www.imxmx.com/Item/1/211097.html
 ## 常见问题
 
 ## MySQL数据库连接
+在后台启动日志出现MySQL连接错误信息，如图所示：
+![输入图片说明](ProIMG/mysql-conn-err.png)
+
+
 ## 热点资讯没有数据
+大多数问题是由于Redis没有正常启动或者正常连接。
