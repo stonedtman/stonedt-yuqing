@@ -2,265 +2,123 @@
 <html dir="ltr" lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<!-- Tell the browser to be responsive to screen width -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
-<!-- Favicon icon -->
-<link rel="icon" type="image/png" sizes="16x16"
-	th:href="@{/assets/images/favicon.png}">
-<title>登录·网络情报分析系统</title>
-<script th:src="@{/common/analyze-cloud.js}"></script>
-<!---->
-<!-- Custom CSS -->
-<link th:href="@{/dist/css/style.min.css}" rel="stylesheet">
-<link th:href="@{/dist/css/custom.css}" rel="stylesheet">
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/assets/images/favicon.png}">
+    <title>登录·网络情报分析系统</title>
+    <script th:src="@{/common/analyze-cloud.js}"></script>
+    <!---->
+    <!-- Custom CSS -->
+    <link th:href="@{/dist/css/style.min.css}" rel="stylesheet">
+    <link th:href="@{/dist/css/custom.css}" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-<style type="text/css">
-		.btn_experience{
-			color: #fff;
-			font-size: 17.5px;
-			padding: 0.5rem 1rem;
-			background-color: #3183e2;
-		}
-		.btn_experience:hover {
-			color: #fff;
-			background-color: #0346ff;
-			border-color: #0041f5;
-		}
-		.popup{
-			position: fixed;
-			top: 0;
-			right: 0;
-			bottom: 0;
-			left: 0;
-			overflow: auto;
-			outline: 0;
-			z-index: 100;
-		}
-		.ant-modal-mask {
-		    position: fixed;
-		    top: 0;
-		    right: 0;
-		    bottom: 0;
-		    left: 0;
-		    z-index: 100;
-		    height: 100%;
-		    background-color: rgba(0,0,0,.45);
-		}
-		.ant-modal {
-		    box-sizing: border-box;
-		    color: rgba(0,0,0,.85);
-		    font-size: 14px;
-		    font-variant: tabular-nums;
-		    line-height: 1.5715;
-		    list-style: none;
-		    font-feature-settings: "tnum","tnum";
-		    pointer-events: none;
-		    position: relative;
-		    top: 100px;
-		    width: auto;
-		    max-width: calc(100vw - 32px);
-		    margin: 0 auto;
-		    padding: 0 0 24px;
-		}
-		.ant-modal-body {
-		    padding: 24px;
-		    font-size: 14px;
-		    line-height: 1.5715;
-		    word-wrap: break-word;
-		}
-		.ant-modal-content {
-		    position: relative;
-		    background-color: #fff;
-		    background-clip: padding-box;
-		    border: 0;
-		    border-radius: 2px;
-		    box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);
-		    pointer-events: auto;
-		}
-		.ant-modal-close {
-		    position: absolute;
-		    top: 0;
-		    right: 0;
-		    z-index: 10;
-		    padding: 0;
-		    color: rgba(0,0,0,.45);
-		    font-weight: 700;
-		    line-height: 1;
-		    text-decoration: none;
-		    background: transparent;
-		    border: 0;
-		    outline: 0;
-		    cursor: pointer;
-		    transition: color .3s;
-		}
-		.ant-modal-close-x {
-		    display: block;
-		    width: 56px;
-		    height: 56px;
-		    font-size: 18px;
-		    font-style: normal;
-		    line-height: 56px;
-		    text-align: center;
-		    text-transform: none;
-		    text-rendering: auto;
-		}
-	</style>
-
 </head>
 
 <body>
-	<div class="main-wrapper">
-		<!-- ============================================================== -->
-		<!-- Preloader - style you can find in spinners.css -->
-		<!-- ============================================================== -->
-		<!--     <div class="preloader"> -->
-		<!--         <div class="lds-ripple"> -->
-		<!--             <div class="lds-pos"></div> -->
-		<!--             <div class="lds-pos"></div> -->
-		<!--         </div> -->
-		<!--     </div> -->
-		<!-- ============================================================== -->
-		<!-- Preloader - style you can find in spinners.css -->
-		<!-- ============================================================== -->
-		<!-- ============================================================== -->
-		<!-- Login box.scss -->
-		<!-- ============================================================== -->
-		<div class="auth-wrapper auth-wrapper-bg d-flex">
-			<div class="login-header">
-				<img th:src="@{/assets/images/favicon.png}" alt=""> <span>思通数据</span>
-			</div>
-			<div class="auth-box-left slogan-wrapper">
-				<div class="slogan">
-					<img th:src="@{/assets/images/login-left.png}" alt="">
-				</div>
-			</div>
-			<div class="auth-login p-r">
-				<div class="loginform" id="loginform">
-					<!-- Form -->
-					<div class="row">
-						<div class="col-12" style="height: 100%;">
-							<div class="logo">
-								<p class="login-title">登录</p>
-							</div>
-							<!--<form class="form-horizontal m-t-20" id="loginform" action="/login" method="post">-->
-							<form class="form-horizontal m-t-20" id="loginform" method="post">
-								<div class="input-group mb-4">
-									<input required="required" type="text"
-										class="form-control form-control-lg" name="telephone"
-										placeholder-class="login-place" placeholder="用户名" value="13900000000"
-										aria-label="Username" aria-describedby="basic-addon1">
-								</div>
-								<div class="input-group mb-4">
-									<input required="required" type="password"
-										class="form-control form-control-lg" name="password"
-										placeholder="密码" aria-label="Password"
-										aria-describedby="basic-addon1">
-								</div>
-								<div class="form-group text-center">
-									<div class="col-xs-12 p-b-20"
-										style="display: flex; justify-content: space-between; align-items: center;">
-										<!--  <a th:href="@{/forgotpwd}" style="color: #7290e0;">忘记密码？</a> -->
-										<button class="btn btn-block btn-lg btn-info bt-login"
-											type="button" onclick="login()">登录</button>
-										<div onclick="btn_experience()" class="btn btn_experience">获取体验账号</div>
-									</div>
-								</div>
-							</form>
-						</div>
-						<div class="cus-footer" style="color: #5a5a5a;">
-							© 2014-<span id="currentyear"></span> 南京涌亿思信息技术有限公司
-							苏ICP备17066984号-1
-						</div>
-					</div>
-				</div>
-			</div>
+<div class="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <!--     <div class="preloader"> -->
+    <!--         <div class="lds-ripple"> -->
+    <!--             <div class="lds-pos"></div> -->
+    <!--             <div class="lds-pos"></div> -->
+    <!--         </div> -->
+    <!--     </div> -->
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Login box.scss -->
+    <!-- ============================================================== -->
+    <div class="auth-wrapper auth-wrapper-bg d-flex">
+        <div class="login-header">
+            <img th:src="@{/assets/images/favicon.png}" alt="">
+            <span>思通数据</span>
+        </div>
+        <div class="auth-box-left slogan-wrapper">
+            <div class="slogan">
+                <img th:src="@{/assets/images/login-left.png}" alt="">
+            </div>
+        </div>
+        <div class="auth-login p-r">
+            <div class="loginform" id="loginform">
+                <!-- Form -->
+                <div class="row">
+                    <div class="col-12" style="height: 100%;">
+                        <div class="logo">
+                            <p class="login-title">登录</p>
+                        </div>
+                        <!--<form class="form-horizontal m-t-20" id="loginform" action="/login" method="post">-->
+                        <form class="form-horizontal m-t-20" id="loginform" method="post">
+                            <div class="input-group mb-4">
+                                <input required="required" type="text" class="form-control form-control-lg"
+                                       name="telephone" placeholder-class="login-place" placeholder="用户名"
+                                       aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-4">
+                                <input required="required" type="password" class="form-control form-control-lg"
+                                       name="password" placeholder="密码" aria-label="Password"
+                                       aria-describedby="basic-addon1">
+                            </div>
+                            <div class="form-group text-center">
+                                <div class="col-xs-12 p-b-20"
+                                     style="display: flex; justify-content: space-between;align-items: center;">
+                                    <a th:href="@{/forgotpwd}" style="color: #7290e0;">忘记密码？</a>
+                                    <button class="btn btn-block btn-lg btn-info bt-login" type="button"
+                                            onclick="login()">登录
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="cus-footer" style="color: #5a5a5a;"> © 2014-<span id="currentyear"></span> 南京涌亿思信息技术有限公司 苏ICP备17066984号-1</div>
+                </div>
+            </div>
+        </div>
 
-		</div>
-		<div id="springframe" onclick="closePopup()" style="display: none;">
-			<div class="ant-modal-mask" id="popupbg"></div>
-			<div class="popup" id="popup">
-				<div role="document" class="ant-modal" style="width: 380px; transform-origin: 337px 329px;">
-					<div tabindex="0" aria-hidden="true" style="width: 0px; height: 0px; overflow: hidden; outline: none;"></div>
-					<div class="ant-modal-content" onclick="event.stopPropagation()">
-						<div aria-label="Close" class="ant-modal-close" onclick="closePopup()">
-							<span class="ant-modal-close-x">
-								<span role="img" aria-label="close" class="anticon anticon-close ant-modal-close-icon">
-									<i class="mdi mdi-close-circle-outline"></i>
-								</span>
-							</span>
-						</div>
-						<div class="ant-modal-body">
-							<div style="display: flex; flex-direction: column; align-items: center; font-size: 18px; margin-top: 24px;">
-								<div style="margin-bottom: 24px;">公众号二维码</div>
-								<div>
-									<span style="font-size: 20px; color: rgb(24, 144, 255);">关注公众号</span>回复<span style="font-size: 20px; color: rgb(24, 144, 255);">demo</span>获取体验账号
-								</div>
-								<img th:src="@{/assets/images/wxOfficialAccount.jpeg}" alt="qrcode" style="width: 258px; height: 258px;">
-							</div>
-						</div>
-					</div>
-					<div tabindex="0" aria-hidden="true" style="width: 0px; height: 0px; overflow: hidden; outline: none;"></div>
-				</div>
-			</div>
-		</div>
-		<!-- ============================================================== -->
-		<!-- Login box.scss -->
-		<!-- ============================================================== -->
-		<!-- ============================================================== -->
-		<!-- Page wrapper scss in scafholding.scss -->
-		<!-- ============================================================== -->
-		<!-- ============================================================== -->
-		<!-- Page wrapper scss in scafholding.scss -->
-		<!-- ============================================================== -->
-		<!-- ============================================================== -->
-		<!-- Right Sidebar -->
-		<!-- ============================================================== -->
-		<!-- ============================================================== -->
-		<!-- Right Sidebar -->
-		<!-- ============================================================== -->
-	</div>
-	<!-- ============================================================== -->
-	<!-- All Required js -->
-	<!-- ============================================================== -->
-	<script th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
-	<!-- Bootstrap tether Core JavaScript -->
-	<script th:src="@{/assets/libs/popper.js/dist/umd/popper.min.js}"></script>
-	<script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.min.js}"></script>
-	<script th:src="@{/assets/libs/block-ui/jquery.blockUI.js}"></script>
-	<script th:src="@{/dist/js/sidebarmenu.js}"></script>
-	<script th:src="@{/dist/baidu/baidu_statistics.js}"></script>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Login box.scss -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Page wrapper scss in scafholding.scss -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Page wrapper scss in scafholding.scss -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Right Sidebar -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Right Sidebar -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- All Required js -->
+<!-- ============================================================== -->
+<script th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script th:src="@{/assets/libs/popper.js/dist/umd/popper.min.js}"></script>
+<script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/libs/block-ui/jquery.blockUI.js}"></script>
+<script th:src="@{/dist/js/sidebarmenu.js}"></script>
+<script th:src="@{/dist/baidu/baidu_statistics.js}"></script>
 
-	<!-- ============================================================== -->
-	<!-- This page plugin js -->
-	<!-- ============================================================== -->
-	<script type="application/javascript">
-	
-	$('[data-toggle="tooltip"]').tooltip();
-    $(".preloader").fadeOut();
-    // ============================================================== 
-    // Login and Recover Password 
-    // ============================================================== 
-	function closePopup(){
-		document.getElementById("springframe").style.display = "none";
-	}
-	function btn_experience(){
-		console.log("-----");
-		document.getElementById("springframe").style.display = "block";
-	}
-	
-	
-	
-		
+<!-- ============================================================== -->
+<!-- This page plugin js -->
+<!-- ============================================================== -->
+<script type="application/javascript">
 $("#currentyear").text((new Date()).getFullYear());
     $('[data-toggle="tooltip"]').tooltip();
     $(".preloader").fadeOut();
@@ -299,12 +157,7 @@ $("#currentyear").text((new Date()).getFullYear());
             }
         });
     }
-    
-    
-    
-    
-
-	</script>
+</script>
 </body>
 
 </html>
