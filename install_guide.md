@@ -67,21 +67,34 @@ http://www.imxmx.com/Item/1/211097.html
 
 ## 下载程序
 
-下载地址
+### 下载地址
 
+请选择最新软件版本 或者 你需要下载的版本
 
-程序目录
+https://gitee.com/stonedtx/yuqing/attach_files
 
 
 ## 配置文件
+
+### 程序目录
 ![输入图片说明](ProIMG/application.yml.png)
-说明配置文件，以及配置文件中几个关键点的含义
+
+### 配置文件
+
+配置文件 [application.yml](https://gitee.com/stonedtx/yuqing/blob/master/config/application.yml) 中包含了
+
+1.舆情系统http访问端口，2.MySQL数据库连接，3.redis缓存服务连接。三个要点都已经在配置文件中标明。您只需要修改IP地址或者用户名密码即可。
 
 
 ## 启动程序
-启动在后台
 
-启动在前台
+启动在 **前台** 
+在stonedt-yuqing目录下，与config目录同级 执行命令： java -jar stonedt-yuqing.jar
+
+
+启动在 **后台** 
+在stonedt-yuqing目录下，与config目录同级 执行命令： nohup java -jar stonedt-yuqing.jar &
+
 
 ## 常见问题
 
