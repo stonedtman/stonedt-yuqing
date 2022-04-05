@@ -61,8 +61,15 @@ https://www.cnblogs.com/gychomie/p/11013442.html
 
 ## 安装Redis
 
-源码及apt安装<p>
-http://www.imxmx.com/Item/1/211097.html
+- 安装
+
+  源码及apt安装<p>
+  http://www.imxmx.com/Item/1/211097.html
+
+- 配置
+
+  关于redis的配置这篇文章说的很详细 <p>
+  https://www.cnblogs.com/ysocean/p/9074787.html
 
 
 ## 下载程序
@@ -143,5 +150,28 @@ MySQL 5.5 和 MySQL 8.0配置MySQL连接权限的 **_方式不一样_** ，分�
 
   
 
+## 产品经理微信
+   扫描微信二维码，技术交流。
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg" title="Logo"  width="220">
+
+
+##  技术博客
+
+   **博客地址：[http://blog.stonedt.com/](http://blog.stonedt.com/)** 
+
+经过多年耕耘和沉淀，基于海量数据、主流开源技术及自研大数据、人工智能、基础系统架构，目前团队已经建成了完备的系统与技术体系。在此我们将会把自己的实践与经验与大家不断的分享。您可与我们直接沟通技术和产品问题，并获得技术资源、优质文章、用户社群、技术活动等信息。同时也欢迎您能加入我们！
+
+
+##  技术交流群
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/weixin-group.png" title="Logo"  width="220">
+
+
+## 捐赠方式
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/Wechat.png" title="Logo"  width="200">
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/zhifubao-pay.png" title="Logo"  width="200">
 
 
