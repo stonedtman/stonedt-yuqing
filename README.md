@@ -208,6 +208,13 @@
 _备注：修改配置文件[[application.yml](https://gitee.com/stonedtx/yuqing/blob/master/config/application.yml)]，设定 MySQL、redis 用户和密码等。_ 
 
 
+## 安装手册
+
+详见思通舆情安装部署手册：
+
+https://gitee.com/stonedtx/yuqing/blob/master/install_guide.md
+
+
 ## 产品手册
 
 https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
