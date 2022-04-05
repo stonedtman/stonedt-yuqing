@@ -30,7 +30,7 @@ Ubuntu 源码 安装 参见：<p>
 https://www.cnblogs.com/weijing24/p/4948880.html
 
 ### 配置远程权限
-MySQL 5.5 和 MySQL 8.0配置MySQL连接权限的方式不一样，分别为：
+MySQL 5.5 和 MySQL 8.0配置MySQL连接权限的 **_方式不一样_** ，分别为：
 
 MySQL 5.5+
 
@@ -66,6 +66,7 @@ http://www.imxmx.com/Item/1/211097.html
 
 
 ## 配置文件
+![输入图片说明](ProIMG/application.yml.png)
 说明配置文件，以及配置文件中几个关键点的含义
 
 
