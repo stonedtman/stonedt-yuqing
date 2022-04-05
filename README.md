@@ -210,7 +210,9 @@ _备注：修改配置文件[[application.yml](https://gitee.com/stonedtx/yuqing
 
 ## 安装手册
 
-详见思通舆情安装部署手册：
+我们把用户在安装部署中遇到的问题归纳整理成一份文档手册，
+
+详见思通舆情安装部署手册 及 常见问题：
 
 https://gitee.com/stonedtx/yuqing/blob/master/install_guide.md
 
