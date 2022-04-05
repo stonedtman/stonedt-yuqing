@@ -148,6 +148,16 @@ MySQL 5.5 和 MySQL 8.0配置MySQL连接权限的 **_方式不一样_** ，分�
 
   3.查看 application.yml 配置文件的redis服务设置部分的配置是否正确。
 
+### 数据库user_variables_by_thread报错
+
+- 错误现象
+SELECT command denied to user ‘root‘@‘192.168.*.*‘ for table ‘user_variables_by_thread‘报错
+普通mysql用户nature对performance_schema数据库的user_variables_by_thread表没有select权限
+
+- 解决方案
+  登录mysql中root用户
+  mysql> grant select on `performance_schema`.user_variables_by_thread to nature@"%";
+  mysql> flush privileges;
   
 
 ## 产品经理微信
