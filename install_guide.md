@@ -65,16 +65,18 @@ https://www.cnblogs.com/gychomie/p/11013442.html
 http://www.imxmx.com/Item/1/211097.html
 
 
-## 配置文件
-![输入图片说明](ProIMG/application.yml.png)
-说明配置文件，以及配置文件中几个关键点的含义
-
-
 ## 下载程序
 
 下载地址
 
+
 程序目录
+
+
+## 配置文件
+![输入图片说明](ProIMG/application.yml.png)
+说明配置文件，以及配置文件中几个关键点的含义
+
 
 ## 启动程序
 启动在后台
@@ -86,7 +88,25 @@ http://www.imxmx.com/Item/1/211097.html
 ### MySQL数据库连接
 在后台启动日志出现MySQL连接错误信息，如图所示：
 ![输入图片说明](ProIMG/mysql-conn-err.png)
+### 配置远程权限
+MySQL 5.5 和 MySQL 8.0配置MySQL连接权限的 **_方式不一样_** ，分别为：
 
+MySQL 5.5+
+
+> GRANT ALL PRIVILEGES ON . TO ‘root’@’%’ IDENTIFIED BY ‘123456’ WITH GRANT OPTION;
+> 
+> flush privileges;
+
+MySQL 8.0+
+
+
+> create user 'root'@'%' identified by '密码';
+> 
+> alter user 'root'@'%' identified by '新密码';
+> 
+> grant all privileges on *.* to 'root'@'%' with grant option;
+> 
+> flush privileges;
 
 ### 热点资讯没有数据
 大多数问题是由于Redis没有正常启动或者正常连接。
