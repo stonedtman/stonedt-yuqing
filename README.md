@@ -263,6 +263,12 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 
 [浙江远图技术股份有限公司](https://www.yuantutech.com/) 
 
+
+<img src="https://cache.marriott.com/marriottassets/marriott/CY/Logo/cy_logo_L.png"   width="40">
+
+[上海中建东孚资产管理有限公司中建万怡酒店分公司](https://www.marriott.com.cn/hotels/travel/shaho-courtyard-shanghai-hongqiao/)
+
+
 <img src="http://110.42.144.221/appLogo.png?t=1648460656835"   width="40">
 
 [为知笔记](https://www.wiz.cn/) 
