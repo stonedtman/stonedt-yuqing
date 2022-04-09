@@ -269,7 +269,7 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 [上海中建东孚资产管理有限公司中建万怡酒店分公司](https://www.marriott.com.cn/hotels/travel/shaho-courtyard-shanghai-hongqiao/)
 
 
-<img src="http://110.42.144.221/appLogo.png?t=1648460656835"   width="40">
+<img src="https://image.qcc.com/logo/eb7a36d6da0cdb74e7f3a24ffe301fe7.jpg"   width="40">
 
 [为知笔记](https://www.wiz.cn/) 
 
