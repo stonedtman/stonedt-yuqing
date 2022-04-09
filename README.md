@@ -274,6 +274,10 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 [为知笔记](https://www.wiz.cn/) 
 
 
+<img src="https://image.qcc.com/auto/0f47e3bea9ad5951e03e76d597921b0b.jpg"   width="40">
+[海南佐达网络科技有限公司](https://www.ysslink.com/) 
+
+
 
 ##  按需定制|数据定制
   当您在开发与研究中遇到  **数据采集、数据处理、舆情系统定制**  等方面的问题，请联系我们，我们会以最快的速度提供专业的解决方案。为您提供必要的专业技术支持。
