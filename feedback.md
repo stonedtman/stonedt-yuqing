@@ -6,7 +6,7 @@
 
 您所在的城市、国家
 
-您将 思通舆情 用于哪些业务场景, 在本文中可以留言告诉我们。
+您将 思通舆情 用于哪些业务场景, 在本文评论区中可以留言告诉我们。
 
 https://gitee.com/stonedtx/yuqing/blob/master/feedback.md
 
