@@ -25,6 +25,11 @@
 
  [【数据采集】技术架构说明文档](https://gitee.com/stonedtx/yuqing/blob/master/dataCollection.md) 和 [【数据处理】技术架构说明文档](https://gitee.com/stonedtx/yuqing/blob/master/dataProcessing.md) 。
 <br>
+<br>
+
+如果您在使用思通舆情，请让我们知道，您的使用对我们非常重要：查看
+
+
 <br><br>
 
 ### 思通舆情 的功能：
