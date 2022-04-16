@@ -25,7 +25,7 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 
 -   环境地址：**<http://open-yuqing.stonedt.com/>**
 -   用户：13900000000
--   密码：点击登录面“获取体验账号”，，关注微信公众号“思通数据”, 在公众号对话框输入“demo”，将会自动返回密码。
+-   密码：点击登录面“获取体验账号”，关注微信公众号“思通数据”, 在公众号对话框输入“demo”，将会自动返回密码。
 
 
 ### 思通舆情 的优势：
