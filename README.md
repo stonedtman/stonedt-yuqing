@@ -1,4 +1,8 @@
-思通舆情 是一款开源免费的舆情系统。支持本地化部署，支持在线体验。支持对海量舆情数据分析和挖掘。
+思通舆情 是一款开源免费的舆情系统。
+
+支持本地化部署，支持在线体验。
+
+支持对海量舆情数据分析和挖掘。
 
 无论你是使用者还是共同完善的开发者，欢迎 pull request 或者 留言对我们提出建议。 
 <br>
@@ -284,7 +288,7 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 
   **微信公众号**
 
-<img src="http://open-yuqing.stonedt.com/assets/images/wxOfficialAccount.jpeg" title="Logo"  width="220">
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/wxOfficialAccount.jpg" title="Logo"  width="220">
  
 ##  技术交流群
 
