@@ -1,37 +1,13 @@
-思通舆情 是一款开源免费的舆情系统。
+思通舆情 是一款开源免费的舆情系统。支持本地化部署，支持在线体验。支持对海量舆情数据分析和挖掘。
 
-支持本地化部署，支持在线体验。
-
-支持对海量舆情数据分析和挖掘。
-
-[后台管理](https://gitee.com/stonedtx/yuqing-manager) 系统已经开源，预计2022年4月完成开源计划。
-<br>
-
-[数据采集](https://gitee.com/stonedtx/open-spider) 系统已经开源，预计2022年6月完成开源计划。
-
- 
 无论你是使用者还是共同完善的开发者，欢迎 pull request 或者 留言对我们提出建议。 
 <br>
 您的支持和参与就是我们坚持开源的动力！请 :star:  [star](https://gitee.com/stonedtx/yuqing) 或者 [fork](https://gitee.com/stonedtx/yuqing)!  
 
-无论你是有相关经验、技术可以一起加入我们的开源项目。
-
- **[进一步了解，关于我们的一切，请看这里！](https://gitee.com/stonedtx/yuqing/wikis/pages)** 
+如果您在使用思通舆情，请让我们知道，您的使用对我们非常重要：**[查看](https://gitee.com/stonedtx/yuqing/blob/master/feedback.md)
+https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 
 <br>
-
-同时还会将项目计划和关键性技术讲解，毫无保留的公布于众，让大家对我们有更多的认识和了解。<br>
-关于数据采集和数据处理相关技术和开源计划，可以看这两篇文章：
-
- [【数据采集】技术架构说明文档](https://gitee.com/stonedtx/yuqing/blob/master/dataCollection.md) 和 [【数据处理】技术架构说明文档](https://gitee.com/stonedtx/yuqing/blob/master/dataProcessing.md) 。
-<br>
-<br>
-
-如果您在使用思通舆情，请让我们知道，您的使用对我们非常重要：[查看](https://gitee.com/stonedtx/yuqing/blob/master/feedback.md)
-
-https://gitee.com/stonedtx/yuqing/blob/master/feedback.md
-
-<br><br>
 
 ### 思通舆情 的功能：
 
@@ -39,6 +15,13 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md
 -   舆情预警：根据用户设置预警条件，判别舆情信息，并第一时间通过多渠道告知用户;
 -   舆情分析：全网事件分析、事件分析、传播分析、竞品分析、评论分析、热度指数，6类大数据分析;
 -   舆情报告：一键快速生成日、周、月、季度报告,自带行业舆情案例库，为舆情应对提供参考。
+
+
+## 在线体验
+
+-   环境地址：**<http://open-yuqing.stonedt.com/>**
+-   用户：13900000000
+-   密码：点击登录面“获取体验账号”，，关注微信公众号“思通数据”, 在公众号对话框输入“demo”，将会自动返回密码。
 
 
 ### 思通舆情 的优势：
@@ -183,13 +166,6 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md
    开源代码访问地址：https://gitee.com/stonedtx/yuqing-manager
 
 
-## 在线体验
-
--   环境地址：<http://open-yuqing.stonedt.com/>
--   用户名：13900000000
--   密码：1.1 点击登录页面“获取体验账号”按钮，扫描二维码，关注微信公众号“思通数据”。1.2 点击左侧第一个菜单，“体验账号"-"开源舆情”，将会自动返回密码。
-
-
 ## 安装依赖
 1. JavaEE 8 以上版本；
 2. MySQL 5.5 以上版本；
@@ -231,8 +207,6 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 ## 版本更新
 
    每次版本更新的记录说明都在此，[查看详情](https://gitee.com/stonedtx/yuqing/blob/master/releasenote.md) 。
-
-
 
 ## 产品用户
 
@@ -308,9 +282,10 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 
 经过多年耕耘和沉淀，基于海量数据、主流开源技术及自研大数据、人工智能、基础系统架构，目前团队已经建成了完备的系统与技术体系。在此我们将会把自己的实践与经验与大家不断的分享。您可与我们直接沟通技术和产品问题，并获得技术资源、优质文章、用户社群、技术活动等信息。同时也欢迎您能加入我们！
 
+  **微信公众号**
 
-
-
+<img src="http://open-yuqing.stonedt.com/assets/images/wxOfficialAccount.jpeg" title="Logo"  width="220">
+ 
 ##  技术交流群
 
 <img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/weixin-group.png" title="Logo"  width="220">
