@@ -113,8 +113,16 @@ https://gitee.com/stonedtx/yuqing/attach_files
 - 解决方案
 
   配置远程权限
-1.修改mysql的配置文件，执行命令vim /etc/mysql/mysql.conf.d/mysqld.cnf
-注释bind-address           = 127.0.0.1，执行保存命令。重启mysql
+
+1.修改mysql的配置文件
+
+ > vim /etc/mysql/mysql.conf.d/mysqld.cnf
+ 
+ > 注释bind-address = 127.0.0.1
+ 
+ > 执行保存命令
+ 
+ > 重启mysql
 
 
 2.MySQL 5.5 和 MySQL 8.0配置MySQL连接权限的 **_方式不一样_** ，分别为：
