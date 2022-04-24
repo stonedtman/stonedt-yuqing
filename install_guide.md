@@ -117,11 +117,11 @@ https://gitee.com/stonedtx/yuqing/attach_files
 1.修改mysql的配置文件
 
  > vim /etc/mysql/mysql.conf.d/mysqld.cnf
- 
+ >
  > 注释bind-address = 127.0.0.1
- 
+ >
  > 执行保存命令
- 
+ >
  > 重启mysql
 
 
