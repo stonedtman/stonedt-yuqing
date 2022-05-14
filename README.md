@@ -276,7 +276,8 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 
 或者
 
-填写 思通舆情·用户使用反馈表 告诉我们
+填写 思通舆情·用户反馈表 告诉我们
+
 [https://docs.qq.com/form/page/DQWFFWUtIQWhXQkZB](https://docs.qq.com/form/page/DQWFFWUtIQWhXQkZB)
 
 还可以
