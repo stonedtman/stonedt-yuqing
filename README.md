@@ -272,7 +272,11 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 3.在产品上还有哪些未满足您的需求？
 
 
-可以在此留言([点击这里](https://gitee.com/stonedtx/yuqing/issues/new?issue))，也可以拨打电话(13505146123)或者添加产品经理微信(techflag)  
+可以在此留言([点击这里](https://gitee.com/stonedtx/yuqing/issues/new?issue))
+
+或者
+
+拨打电话(13505146123)或者添加产品经理微信(techflag)  
 
 
 
