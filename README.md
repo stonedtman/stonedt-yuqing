@@ -276,7 +276,12 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 
 或者
 
-拨打电话(13505146123)或者添加产品经理微信(techflag)， 直接与我们联系。
+填写 思通舆情·用户使用反馈表 告诉我们
+[https://docs.qq.com/form/page/DQWFFWUtIQWhXQkZB](https://docs.qq.com/form/page/DQWFFWUtIQWhXQkZB)
+
+还可以
+
+直接拨打电话(13505146123)或者添加产品经理微信(techflag)， 直接与我们联系。
 
 
 
