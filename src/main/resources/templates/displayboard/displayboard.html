@@ -1293,6 +1293,7 @@
 		if(!(!hot_search_terms)){
 			a = JSON.parse(escape2Html(hot_search_terms))
 		}
+		debugger;
 		anychart.onDocumentReady(function() {
 			var chart = anychart.tagCloud(a);
 			chart.container("keywords");

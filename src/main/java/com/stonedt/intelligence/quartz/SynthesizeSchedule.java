@@ -94,12 +94,12 @@ public class SynthesizeSchedule {
      * 模板消息
      */
 
-//	@PostConstruct
+	//@PostConstruct
  //   @Scheduled(cron = "0 30 4 * * ?")
    	//@Scheduled(fixedDelay = 1000*60*2)
  	//
 	
-	@Scheduled(cron = "0 0/30 * * * ?")
+	  @Scheduled(cron = "0 0/30 * * * ?")
 	//@Scheduled(cron = "0 0 0/2 * * ?")
     public void popularInformation() {
     	if(schedule_synthesize_open==1) {

@@ -30,7 +30,7 @@ import com.alibaba.fastjson.JSONObject;
 public class HotWordsUtil {
 	
 	public static void main(String[] args) {
-		System.out.println(hot36Kr());
+		System.out.println(search());
 	}
 	
 	
@@ -82,12 +82,15 @@ public class HotWordsUtil {
 		Document parse = Jsoup.parse(html);
 		try {
 			//#sanRoot > main > div.container.right-container_2EFJr > div > div:nth-child(2)
-			Elements tobody = parse.select("#sanRoot > main > div.container.right-container_2EFJr > div > div:nth-child(2)");
+			Elements tobody = parse.select("#sanRoot > main > div.container.right-container_2EFJr > div > div:nth-child(2) > div");
 			for(int i = 1;i<31;i++) {
-				Elements select = tobody.select("div:nth-child("+i+")");
+				Element select = tobody.select("div:nth-child("+i+")").get(0);
 				String topic = select.select("div.content_1YWBm > a > div.c-single-text-ellipsis").text();
-				String original_weight = select.select("div.trend_2RttY.hide-icon > div.hot-index_1Bl1a").text();
+				String original_weight = select.select("div.hot-index_1Bl1a").text();
 				if(StringUtils.isBlank(topic)) {
+					continue;
+				}
+				if(StringUtils.isBlank(original_weight)) {
 					continue;
 				}
 				JSONObject js = new JSONObject();
