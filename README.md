@@ -13,7 +13,6 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 
 <br>
 
-
 ### 思通舆情 的功能：
 
 -   舆情监测：通过全文搜索、来源搜索、热搜监测等多重功能实现对全网文本、图片、视频舆情实时发现;
@@ -43,3 +42,13 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 -   网络自媒体：搜狐、百家号、今日头条、博客、企鹅号、微信公众号、微博；
 -   论坛：贴吧、论坛、问答、知乎；
 -   短视频：抖音、快手，等众多平台。
+
+
+### 思通舆情 的百科：
+
+关于本舆情系统项目的 心路历程、开发计划、入门文档、团队介绍、实际案例，等等，
+
+你想知道的一切都在这里： **[https://gitee.com/stonedtx/yuqing/wikis/pages](https://gitee.com/stonedtx/yuqing/wikis/pages)** 
+
+
+
