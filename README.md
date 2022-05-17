@@ -28,6 +28,7 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 -   密码：点击登录面“获取体验账号”，关注微信公众号“思通数据”, 在公众号对话框输入“demo”，将会自动返回密码。
 
 
+
 ### 思通舆情 的优势：
 
 -   开源开放：零门槛，线上快速获取和安装；快速获取用户反馈、按月发布新版本；
@@ -37,11 +38,11 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 
 ### 思通舆情 的数据：
 
--   新闻媒体：新闻、app、电子报、境外新闻；
+-   新闻媒体：新闻、app、电子报；
 -   网络自媒体：搜狐、百家号、今日头条、博客、企鹅号、微信公众号、微博；
--   境外社交媒体：twitter、facebook、及其他境外社交媒体；
 -   论坛：贴吧、论坛、问答、知乎；
 -   短视频：抖音、快手，等众多平台。
+
 
 ### 思通舆情 的百科：
 
@@ -49,14 +50,15 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 
 你想知道的一切都在这里： **[https://gitee.com/stonedtx/yuqing/wikis/pages](https://gitee.com/stonedtx/yuqing/wikis/pages)** 
 
+
 <br>
 
 ### 思通舆情 技术栈：
 
 #### 数据采集
 - 开发平台：Java EE & SpringBoot
-- 爬虫框架：Spider-flow & WebMagic & HttpClient
-- APP爬虫：Xposed框架
+- 采集框架：Spider-flow & WebMagic & HttpClient
+- APP采集：Xposed框架
 - URL仓库：Redis
 - 网页渲染解析：Jvppeteer & Playwright（微软开源）
 - web应用服务器：Nginx & Tomcat
@@ -90,7 +92,6 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 - 开发框架：SpringBoot
 - 开发语言：Java JEE
 - 图表展示：Apache  Echarts & anyCharts
-
 
 
 
@@ -131,17 +132,18 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 
 ## 开源计划
 
--  整个舆情系统分为五个部分：1.舆情数据展示，2.舆情数据处理，3.舆情数据采集，4.舆情数据大屏，5.管理后台。
+-  整个系统分为五个部分：1.数据展示，2.数据处理，3.数据采集，4.数据大屏，5.管理后台。
 
--  由于整个舆情系统非常庞大，目前只开源了第一部分 “舆情数据展示”。
+-  由于整个系统非常庞大，目前只开源了第一部分 “数据展示”。
 
--  舆情数据处理 和 舆情数据采集，我们会先开源文档以及部分代码。
+-  数据处理 和 数据采集，我们会先开源文档以及部分代码。
 
--  舆情数据大屏 有开源计划，但是具体时间尚未明确。
+-  数据大屏 有开源计划，但是具体时间尚未明确。
 
--  舆情数据处理 和 舆情数据采集，目前(2022-2-19)文档和代码正在规整中。
+-  数据处理 和 数据采集，目前(2022-2-19)文档和代码正在规整中。
 
--  舆情系统管理后台 ，将于2022年4月份之前开放源代码。
+-  系统管理后台 ，将于2022年4月份之前开放源代码。
+
 
 ###  舆情数据采集 
 -   目前正在整理编写文档，正式发布时间待定。
@@ -184,7 +186,7 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 
 -  1.安装 MySQL 5.5+、redis 4.0+
 
--  2.下载 [stonedt-yuqing.zip](https://gitee.com/stonedtx/yuqing/attach_files/1018172/download)，解压zip包，执行  _java -jar stonedt-yuqing.jar_，启动舆情系统。 
+-  2.下载 [stonedt-yuqing.zip](https://gitee.com/stonedtx/yuqing/attach_files/1061783/download)，解压zip包，执行  _java -jar stonedt-yuqing.jar_，启动舆情系统。 
 
 -  3.本地访问：http://127.0.0.1:8084/
  用户名：13900000000，  密码：stonedt 
@@ -211,56 +213,6 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 ## 版本更新
 
    每次版本更新的记录说明都在此，[查看详情](https://gitee.com/stonedtx/yuqing/blob/master/releasenote.md) 。
-
-## 产品用户
-
-
-感谢大家的肯定和支持（排名不分先后）
-
-<img src="https://www.asun.cloud/templates/main/images/index/icon_1.png" title="Logo"  width="30">
-
-[江苏中天互联科技有限公司](https://www.asun.cloud) 
-
-
-<img src="https://img01.51jobcdn.com/fansImg/CompLogo/5/4601/4600395/4600395_300.png?636626639223288165"   width="30">
-
-[广东万事通航空地勤服务有限公司](http://www.stwst.com) 
-
-
-<img src="https://www.zzdz.com.cn/style/Photo/logo.jpg"   width="40">
-
-[山东众志电子有限公司](https://www.zzdz.com.cn) 
-
-<img src="http://101.37.254.100:8080/assets/images/favicon.png"   width="40">
-
-[武汉新港管理委员会](http://www.whxg.gov.cn/) 
-
-<img src="https://image.qcc.com/logo/bec83b936f15fcfc6e1dd9f7b4d6dbfa.jpg?x-oss-process=style/logo_200"   width="40">
-
-[广西红海豚网络科技有限公司]() 
-
-<img src="https://t8.baidu.com/it/u=1685772092,4008826324&fm=74&app=80&size=f256,256&n=0&f=JPEG&fmt=auto?sec=1648486800&t=b72d07ccfc6d53eb1d9544d276cb08a7"   width="40">
-
-[山东外事职业大学](https://www.sdws.edu.cn/) 
-
-<img src="https://nwzimg.wezhan.cn/contents/sitefiles2043/10218923/images/18527024.png"   width="40">
-
-[浙江远图技术股份有限公司](https://www.yuantutech.com/) 
-
-
-<img src="https://cache.marriott.com/marriottassets/marriott/CY/Logo/cy_logo_L.png"   width="40">
-
-[上海中建东孚资产管理有限公司中建万怡酒店分公司](https://www.marriott.com.cn/hotels/travel/shaho-courtyard-shanghai-hongqiao/)
-
-
-<img src="https://image.qcc.com/logo/eb7a36d6da0cdb74e7f3a24ffe301fe7.jpg"   width="40">
-
-[为知笔记](https://www.wiz.cn/) 
-
-
-<img src="https://image.qcc.com/auto/0f47e3bea9ad5951e03e76d597921b0b.jpg"   width="40">
-
-[海南佐达网络科技有限公司](https://www.ysslink.com/) 
 
 
 ## 用户反馈
