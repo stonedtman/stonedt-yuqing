@@ -208,3 +208,9 @@ https://gitee.com/stonedtx/yuqing/blob/master/install_guide.md
 ## 产品手册
 
 https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
+
+
+## 版本更新
+
+   每次版本更新的记录说明都在此，[查看详情](https://gitee.com/stonedtx/yuqing/blob/master/releasenote.md) 。
+
