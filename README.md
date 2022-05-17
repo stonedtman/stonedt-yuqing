@@ -128,3 +128,46 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 
 ## 功能架构
 ![输入图片说明](https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD.png)
+
+
+## 开源计划
+
+-  整个系统分为五个部分：1.数据展示，2.数据处理，3.数据采集，4.数据大屏，5.管理后台。
+
+-  由于整个系统非常庞大，目前只开源了第一部分 “数据展示”。
+
+-  数据处理 和 数据采集，我们会先开源文档以及部分代码。
+
+-  数据大屏 有开源计划，但是具体时间尚未明确。
+
+-  数据处理 和 数据采集，目前(2022-2-19)文档和代码正在规整中。
+
+-  系统管理后台 ，将于2022年4月份之前开放源代码。
+
+
+###  舆情数据采集 
+-   目前正在整理编写文档，正式发布时间待定。
+
+    [【数据采集】技术架构说明文档](https://gitee.com/stonedtx/yuqing/blob/master/dataCollection.md)
+
+    [数据采集](https://gitee.com/stonedtx/open-spider) 系统已经开源，预计2022年6月完成开源计划。
+
+
+### 舆情数据处理 
+
+-   文档预计在2022年3月份提到开源社区。
+
+    [【数据处理】技术架构说明文档](https://gitee.com/stonedtx/yuqing/blob/master/dataProcessing.md)
+
+
+### 舆情数据大屏 
+
+-   有开源计划，但是具体时间尚未明确，预计在2022年8-10月份
+
+
+### 系统管理后台
+
+-  系统很容易上手，简单易懂。2022年4月份 会全部开放源代码，同时也会提供运行部署程序下载。
+   
+   开源代码访问地址：https://gitee.com/stonedtx/yuqing-manager
+
