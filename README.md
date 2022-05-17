@@ -171,3 +171,40 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
    
    开源代码访问地址：https://gitee.com/stonedtx/yuqing-manager
 
+
+## 安装依赖
+1. JavaEE 8 以上版本；
+2. MySQL 5.5 以上版本；
+3. Redis 4.0 以上版本；
+
+详见思通舆情安装部署手册：https://gitee.com/stonedtx/yuqing/blob/master/install_guide.md
+
+
+## 运行版本
+
+仅需三步快速安装 思通舆情：
+
+-  1.安装 MySQL 5.5+、redis 4.0+
+
+-  2.下载 [stonedt-yuqing.zip](https://gitee.com/stonedtx/yuqing/attach_files/1018172/download)，解压zip包，执行  _java -jar stonedt-yuqing.jar_，启动舆情系统。 
+
+-  3.本地访问：http://127.0.0.1:8084/
+ 用户名：13900000000，  密码：stonedt 
+
+详见思通舆情安装部署手册：https://gitee.com/stonedtx/yuqing/blob/master/install_guide.md
+
+_备注：修改配置文件[[application.yml](https://gitee.com/stonedtx/yuqing/blob/master/config/application.yml)]，设定 MySQL、redis 用户和密码等。_ 
+
+
+## 安装手册
+
+我们把用户在安装部署中遇到的问题归纳整理成一份文档手册，
+
+详见思通舆情安装部署手册 及 常见问题：
+
+https://gitee.com/stonedtx/yuqing/blob/master/install_guide.md
+
+
+## 产品手册
+
+https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
