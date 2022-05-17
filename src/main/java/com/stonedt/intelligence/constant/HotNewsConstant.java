@@ -8,4 +8,8 @@ public class HotNewsConstant {
 	// 热点资讯
     public static String es_api_hotarticle_list = "/hotnews/hotnewslist";
 
+    
+    
+    
+    
 }
