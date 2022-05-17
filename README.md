@@ -51,4 +51,80 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 你想知道的一切都在这里： **[https://gitee.com/stonedtx/yuqing/wikis/pages](https://gitee.com/stonedtx/yuqing/wikis/pages)** 
 
 
+<br>
 
+### 思通舆情 技术栈：
+
+#### 数据采集
+- 开发平台：Java EE & SpringBoot
+- 采集框架：Spider-flow & WebMagic & HttpClient
+- APP采集：Xposed框架
+- URL仓库：Redis
+- 网页渲染解析：Jvppeteer & Playwright（微软开源）
+- web应用服务器：Nginx & Tomcat
+- 储存任务发送：Kafka & Zookeeper
+- 抓取任务发送：RabbitMQ
+- 配置管理：MySQL
+- 前端展示：Bootstrap & VUE
+
+
+#### 数据处理
+- 开发框架：SpringBoot
+- 开发语言：Java JEE
+- 数据暂存：MySQL
+- 数据索引：Redis
+- 深度学习：PaddlePaddle
+- 自然语言处理：HaNLP & THUCTC
+- 数据处理和储存任务发送：Kafka & Zookeeper
+- 数据中台：自研 & DataEase 
+- 数据初始化：集成FlyWay，自动初始化MySQL
+- 数据总线：RockAPI （进行了二次开发）
+
+#### 数据分析
+- 数据库：MySQL
+- 数据检索：Elasticsearch
+- 中文分词器：IK分词
+- 相似度计算：Clickhouse
+- 数据同步：DataX
+- 文章储存：Mongodb
+- 数据缓存：Redis
+- 消息队列：kafak & rabbitMQ
+- 开发框架：SpringBoot
+- 开发语言：Java JEE
+- 图表展示：Apache  Echarts & anyCharts
+
+
+
+## UI 展示
+![登录页面](https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/login.png)
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/main2.png" />
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/main.png" />
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/main3.png" />
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/main4.png" />
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/report.png" />
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/shijian.png" />
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/xiangqing.png" />
+ 
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/secher.png" />
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/jiance.png" />
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/WechatIMG12912.png" />
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/WechatIMG12910.png" />
+
+
+## 系统架构
+
+![输入图片说明](https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/gongneng-jiagou.png)
+
+
+## 功能架构
+![输入图片说明](https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD.png)
