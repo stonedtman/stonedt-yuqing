@@ -1283,17 +1283,18 @@
             },
             {
                 x: "切身利益",
-                value: 94721"src/main/java/com/stonedt/intelligence/util/HotWordsUtil.java"
+                value: 94721
             },
             {
                 x: "社会",
                 value: 440721
             },
         ]
+		debugger;
 		if(!(!hot_search_terms)){
 			a = JSON.parse(escape2Html(hot_search_terms))
 		}
-		debugger;
+		
 		anychart.onDocumentReady(function() {
 			var chart = anychart.tagCloud(a);
 			chart.container("keywords");

@@ -94,7 +94,7 @@ public class SynthesizeSchedule {
      * 模板消息
      */
 
-	//@PostConstruct
+//	@PostConstruct
  //   @Scheduled(cron = "0 30 4 * * ?")
    	//@Scheduled(fixedDelay = 1000*60*2)
  	//

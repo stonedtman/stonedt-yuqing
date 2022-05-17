@@ -135,7 +135,6 @@ function reprintPO(){
 	for (let i = 0; i < 5; i++) {
 		let reprint = reprintPO[i]
 //		console.log(reprint)
-		debugger;
 		let emotionalIndex
 		switch(reprint.emotionalIndex){
 		case 1:emotionalIndex = '<span class="emotion zm">正面</span>';break;
@@ -163,9 +162,7 @@ $("#search-tab li").on("click", function () {
 
 function showPushPO(type){
 	// console.log(push_PO)
-	debugger;
 	// console.log(escape2Html(push_PO))
-	debugger;
 	let pushPO = JSON.parse(escape2Html(push_PO)) 
 	let list
 	if(type == 1){
@@ -735,7 +732,6 @@ function tecentvedio(){
  * @returns
  */
 function wexin(){
-	debugger;
 	loading('#weixin');
 	if(!(!hot_wechat)){
 		let wechat =	JSON.parse(escape2Html(hot_wechat)) 
