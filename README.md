@@ -214,3 +214,81 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 
    每次版本更新的记录说明都在此，[查看详情](https://gitee.com/stonedtx/yuqing/blob/master/releasenote.md) 。
 
+
+## 用户反馈
+
+1.没有找到您需要的数据，可以告诉我们？
+
+2.您在使用产品上遇到的哪些问题？
+
+3.在产品上还有哪些未满足您的需求？
+
+
+可以在 issues list 中发布您的提问 ([点击这里](https://gitee.com/stonedtx/yuqing/issues/new?issue))
+
+或者
+
+填写 思通舆情·用户反馈表 提交您的提问[https://docs.qq.com/form/page/DQWFFWUtIQWhXQkZB](https://docs.qq.com/form/page/DQWFFWUtIQWhXQkZB)
+
+还可以
+
+直接拨打电话( **13505146123** )或者添加产品经理微信( **techflag** )， 直接与我们联系。
+
+
+
+##  按需定制|数据定制
+  当您在开发与研究中遇到  **数据采集、数据处理、舆情系统定制**  等方面的问题，请联系我们，我们会以最快的速度提供专业的解决方案。为您提供必要的专业技术支持。
+
+  服务流程如下
+
+![输入图片说明](https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/data-plan.png)
+
+
+
+## 产品经理微信
+   扫描微信二维码，技术交流。
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg" title="Logo"  width="220">
+
+
+##  技术博客
+
+   **博客地址：[http://blog.stonedt.com/](http://blog.stonedt.com/)** 
+
+
+经过多年耕耘和沉淀，基于海量数据、主流开源技术及自研大数据、人工智能、基础系统架构，目前团队已经建成了完备的系统与技术体系。在此我们将会把自己的实践与经验与大家不断的分享。您可与我们直接沟通技术和产品问题，并获得技术资源、优质文章、用户社群、技术活动等信息。同时也欢迎您能加入我们！
+
+  **微信公众号**
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/wxOfficialAccount.jpg" title="Logo"  width="220">
+ 
+##  技术交流群
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/weixin-group.png" title="Logo"  width="220">
+
+
+
+## 联系我们
+
++ 微信号： techflag  
+
++ 电话： 13505146123
+
++ 邮箱： wangtao@stonedt.com
+
++ 公司官网：[www.stonedt.com](http://www.stonedt.com)
+
++ 技术博客：[blog.stonedt.com](http://blog.stonedt.com)
+
+欢迎您在下方留言，或添加微信与我们交流。
+
+
+## License & Copyright
+
+Copyright (c) 2014-2022 思通数科 StoneDT, All rights reserved.
+
+Licensed under The GNU General Public License version 3 (GPLv3)  (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+<https://www.gnu.org/licenses/gpl-3.0.html>
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
