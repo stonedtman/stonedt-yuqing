@@ -986,7 +986,8 @@ public class DateUtil {
 	 
     public static void main(String[] args) throws ParseException {
     	
-    	System.out.println(timeMinusDay(new Timestamp(new Date().getTime()),0));
+    	//System.out.println(timeMinusDay(new Timestamp(new Date().getTime()),0));
+    	System.out.println(stampToDate("1652844280000"));
     }
 
 }

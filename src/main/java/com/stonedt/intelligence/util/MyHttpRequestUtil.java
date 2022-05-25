@@ -36,9 +36,7 @@ import java.util.List;
 public class MyHttpRequestUtil {
 	
 	public static void main(String[] args) {
-		String sendPostEsSearch = sendPostEsSearch("http://dx2.stonedt.com:7121/yqsearch/countwebsitenum","&?times=2021-03-24 14:06:20&timee=2021-04-08 14:06:20&projecttype=1&website_id=1378");
 		
-		System.out.println(sendPostEsSearch);
 		
 	}
 	

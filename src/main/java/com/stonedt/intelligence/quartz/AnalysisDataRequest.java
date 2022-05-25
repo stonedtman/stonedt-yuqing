@@ -1120,7 +1120,6 @@ public class AnalysisDataRequest {
         map.put(searchkeyword, 0);
         try {
             String url = es_search_url + ReportConstant.es_api_media_exposure;
-            //String url = "http://dx2.stonedt.com:7120" + ReportConstant.es_api_media_exposure;
             String params = "times=" + times + "&timee=" + timee + "&keyword=" + keyword + "&stopword=" + stopword
                     + "&searchType=1&emotionalIndex=1,2,3" + "&projecttype=" + projectType+"&origintype=0&searchkeyword="+searchkeyword;
             String sendPostEsSearch = MyHttpRequestUtil.sendPostEsSearch(url, params);
@@ -1154,8 +1153,6 @@ public class AnalysisDataRequest {
     public String mediaActivityAnalysis(String highKeyword, String stopword, String times, String timee, Integer projectType) {
         try {
             Map<String, Object> result = new HashMap<>();
-  String abc = "http://dx2.stonedt.com:7121";
-        es_search_url = abc;
             String url = es_search_url + ReportConstant.es_api_media_active;
             String param = "times=" + times + "&timee=" + timee + "&keyword=" + highKeyword
                     + "&stopword=" + stopword + "&emotionalIndex=1,2,3" + "&projecttype=" + projectType;
@@ -1325,9 +1322,6 @@ public class AnalysisDataRequest {
 
     // 数据来源分析
     public String dataSourceAnalysis(String highKeyword, String stopword, String times, String timee, Integer projectType) {
-
-        String abc = "http://dx2.stonedt.com:7121";
-        es_search_url = abc;
 
         String url = es_search_url + "/yqsearch/datasourceanalysis";
         String param = "classify=1,2,3,4,5,6,7,8,9,10,11&times=" + times + "&timee=" + timee + "&keyword=" + highKeyword + "&stopword="
@@ -2784,8 +2778,6 @@ public class AnalysisDataRequest {
     //政策法规
 	public String dataPolicy(String keyword, String stopword, String times, String timee, Integer projectType) {
 
- String abc = "http://dx2.stonedt.com:7121";
-        es_search_url = abc;
 		  String url = es_search_url + ReportConstant.es_api_policy;
 		//String url = "http://192.168.71.81:8123" + ReportConstant.es_api_policy;
 		  
@@ -2879,8 +2871,6 @@ public class AnalysisDataRequest {
     //行业分布统计
     public String industrialDistribution(String keyword, String stopword, String times, String timee, Integer projectType) {
 
-//       String abc = "http://dx2.stonedt.com:7121";
-//        es_search_url = abc;
         String url = es_search_url + ReportConstant.es_api_search_industry_list;
         //String url = "http://192.168.71.81:8123" + ReportConstant.es_api_policy;
 
@@ -2939,8 +2929,6 @@ public class AnalysisDataRequest {
     //事件统计
     public String eventStudy(String keyword, String stopword, String times, String timee, Integer projectType) {
 
-       /* String abc = "http://dx2.stonedt.com:7121";
-        es_search_url = abc;*/
         String url = es_search_url + ReportConstant.es_api_search_event_list;
         //String url = "http://192.168.71.81:8123" + ReportConstant.es_api_policy;
 
