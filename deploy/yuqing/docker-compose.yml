@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  redis:
+    image: redis:latest #镜像名称
+    container_name: redis #容器名称
+    restart: always  #重启docker引擎后该容器也重启
+    volumes: #指定挂载目录
+      - /data/redis:/data
+  mysql:
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456 #root账号的密码
+    image: mysql:5.7 #镜像名称
+    container_name: db
+    restart: always
+    volumes: #指定挂载目录
+      - /data/mysql/data:/var/lib/mysql #数据挂载
+      - /data/mysql/init/:/docker-entrypoint-initdb.d/ #初始化数据
+  yuqing:
+    image: yuqing:latest
+    container_name: yuqing
+    ports:
+      - "8084:8084"
+    links:
+      - redis
+      - mysql
+    depends_on:
+      - redis
+      - mysql
+    networks:
+#      - nginx
+      - default
+# 如果使用nginx代理需要创建一个network并执行nginx下的docker-compose
+#networks:
+#  nginx:
+#    external: true
