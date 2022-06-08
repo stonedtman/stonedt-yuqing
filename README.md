@@ -172,6 +172,11 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
    开源代码访问地址：https://gitee.com/stonedtx/yuqing-manager
 
 
+## Docker 安装
+
+运行 docker pull maydays/yuqing:latest
+
+
 ## 安装依赖
 1. JavaEE 8 以上版本；
 2. MySQL 5.5 以上版本；
