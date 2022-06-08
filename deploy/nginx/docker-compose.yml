@@ -17,6 +17,7 @@ services:
       - /data/nginx/cert/:/home
     networks:
       - nginx
+# 如果使用nginx代理需要创建一个名称为nginx的network
 networks:
   nginx:
     external: true

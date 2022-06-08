@@ -17,7 +17,7 @@ services:
       - /data/mysql/data:/var/lib/mysql #数据挂载
       - /data/mysql/init/:/docker-entrypoint-initdb.d/ #初始化数据
   yuqing:
-    image: yuqing:latest
+    image: maydays/yuqing:latest
     container_name: yuqing
     ports:
       - "8084:8084"
