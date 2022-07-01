@@ -269,8 +269,7 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
  
 ##  技术交流群
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/weixin-group.png" title="Logo"  width="220">
-
+   微信群已超过200人，无法生成二维码，请添加产品经理微信入群：techflag 
 
 
 ## 联系我们
