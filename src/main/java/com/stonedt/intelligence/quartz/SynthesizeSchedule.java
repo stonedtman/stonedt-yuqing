@@ -561,29 +561,34 @@ public class SynthesizeSchedule {
 	 */
 	public static String getFinaceData() {
 		
-		String url = "http://finance.eastmoney.com/a/cgnjj.html";
+		String url = "https://np-listapi.eastmoney.com/comm/web/getNewsByColumns?client=web&biz=web_news_channel&column=350&order=1&needInteractData=0&page_index=1&page_size=20&req_trace=1666952448875&fields=code,showTime,title,mediaName,summary,image,url,uniqueUrl";
 		JSONArray array = new JSONArray();
 		try {
 			String gethtml = gethtml(url);
-			Document parse = Jsoup.parse(gethtml);
-			Elements select = parse.select("#newsListContent li");
+			
+			//Document parse = Jsoup.parse(gethtml);
+			//Elements select = parse.select(".artitleList ul li");
+			
+			JSONArray select = JSONObject.parseObject(gethtml).getJSONObject("data").getJSONArray("list");
+			//JSONArray select = JSONArray.parseArray(gethtml);
+			
+			
 			for (int i = 0; i < select.size(); i++) {
 				
 				JSONObject object = new JSONObject();
-				Element element = select.get(i);
-				String topic = element.getElementsByTag("a").get(0).text();
+				JSONObject parseObject = JSONObject.parseObject(select.get(i).toString());
+				
+				String topic = parseObject.getString("title");
 				if(!topic.equals("")) {
-					String source_url = element.getElementsByTag("a").get(0).attr("href");
+					String source_url = parseObject.getString("uniqueUrl");
 					object.put("source_url", source_url);
 					int rank = i+1;
 					object.put("rank", rank);
 					object.put("original_weight", 100000);
-					
-					object.put("source_name", "中方财富网");
-					
+					object.put("source_name", "东方财富网");
 					object.put("topic", topic);
 					
-	               String publish_time = "2021-"+element.getElementsByClass("time").get(0).text()+":00";
+	               String publish_time = parseObject.getString("showTime");
 			       //String publish_time = element.getElementsByClass("time").get(0).text();
 				   publish_time = publish_time.replaceAll("月", "-").replaceAll("日", "");
 					try {
