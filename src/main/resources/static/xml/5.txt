@@ -1,0 +1,88 @@
+<mxGraphModel>
+  <root>
+    <mxCell id="0">
+      <JsonProperty as="data">
+        {&quot;spiderName&quot;:&quot;未定义名称&quot;,&quot;submit-strategy&quot;:&quot;random&quot;,&quot;threadCount&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="1" parent="0"/>
+    <mxCell id="2" value="开始" style="start" parent="1" vertex="1">
+      <mxGeometry x="20" y="90" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;shape&quot;:&quot;start&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="15" value="抓取列表" style="request" parent="1" vertex="1">
+      <mxGeometry x="559" y="90" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;抓取列表&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;sleep&quot;:&quot;200&quot;,&quot;timeout&quot;:&quot;3000&quot;,&quot;response-charset&quot;:&quot;&quot;,&quot;retryCount&quot;:&quot;3&quot;,&quot;retryInterval&quot;:&quot;200&quot;,&quot;cookie-name&quot;:[&quot;Cookie&quot;],&quot;cookie-description&quot;:[&quot;&quot;],&quot;body-type&quot;:&quot;none&quot;,&quot;body-content-type&quot;:&quot;text/plain&quot;,&quot;loopCount&quot;:&quot;&quot;,&quot;url&quot;:&quot;${\&quot;http://www.baidu.com/s?ie=utf-8&amp;medium=2&amp;rtt=1&amp;bsst=1&amp;rsv_dl=news_t_sk&amp;cl=2&amp;wd=\&quot;+keyword+\&quot;&amp;tn=news&amp;rsv_bp=1&amp;tfflag=0&amp;tngroupname=organic_news&amp;newVideo=12&amp;goods_entry_switch=1&amp;pn=\&quot;+startIndex+\&quot;0\&quot;}&quot;,&quot;proxy&quot;:&quot;&quot;,&quot;cookie-value&quot;:[&quot;BIDUPSID=FFCCEFFD6AD71B7D82B27246697129D3; PSTM=1661740480; BAIDUID=6504A43EB0274812F809031B8671878C:FG=1; BD_UPN=12314753; BDUSS=NneHRaYzJNVnVCQ1lOa2RLNkozYlBNQkJMeHVqMzFOZm96SH5mQWlKajZia2RqSVFBQUFBJCQAAAAAAAAAAAEAAAB~B2D2tcjIscqntcSwrgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPrhH2P64R9jb0; BDUSS_BFESS=NneHRaYzJNVnVCQ1lOa2RLNkozYlBNQkJMeHVqMzFOZm96SH5mQWlKajZia2RqSVFBQUFBJCQAAAAAAAAAAAEAAAB~B2D2tcjIscqntcSwrgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPrhH2P64R9jb0; H_WISE_SIDS=110085_209568_211986_212870_215730_216941_219942_219946_221410_221796_222298_222396_223064_223683_224055_224065_224086_225202_225640_225854_226026_226087_226589_226674_226722_227117_227592_227614_227864_227932_228374_228535_228650_228668_228978_229060_229155_229286_229363_229526_229691_229867_230020; BDORZ=FFFB88E999055A3F8A630C64834BD6D0; BAIDUID_BFESS=6504A43EB0274812F809031B8671878C:FG=1; B64_BOT=1; BDRCVFR[C5g0hgaJYCf]=bvBYpeu9K4bTAR3Qh4-I0; delPer=0; PSINO=3; BA_HECTOR=al8h2h852ka584a4agak0ggo1hj2sn519; ZFY=ieqEe:Ai8741EeaFdWPdP8JYsVLPfdZb2pa5AnSzsKW8:C; channel=bd.pe8.net; COOKIE_SESSION=2832_0_3_3_8_8_0_0_3_3_0_1_2833_0_54_0_1664186476_0_1664186530%7C9%23114260_19_1663339171%7C6; baikeVisitId=9b4f3a04-d583-4052-9723-8095c345a108; BD_CK_SAM=1; sugstore=1; H_PS_645EC=f709ExtDBjjkFE38TE3k8%2B41MnOFC0dMOW6Pc5%2BTWxSUTxI8HeJCOlKpHClk30Xoq46OZjUQVWvG; BDRCVFR[C0p6oIjvx-c]=sycO_VPkq2bfjf4njRdn1DLg1nkgv99; H_PS_PSSID=37378_36548_36460_37354_37495_36885_37486_37396_36786_37447_37371; BDSVRTM=39&quot;],&quot;request-body&quot;:&quot;&quot;,&quot;follow-redirect&quot;:&quot;1&quot;,&quot;tls-validate&quot;:&quot;1&quot;,&quot;cookie-auto-set&quot;:&quot;1&quot;,&quot;repeat-enable&quot;:&quot;0&quot;,&quot;shape&quot;:&quot;request&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="33" value="定义变量" style="variable" parent="1" vertex="1">
+      <mxGeometry x="689" y="90" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;定义变量&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;ziloopVariableName&quot;:&quot;&quot;,&quot;variable-name&quot;:[&quot;titles&quot;,&quot;urls&quot;,&quot;times&quot;,&quot;sources&quot;,&quot;totals&quot;,&quot;total&quot;,&quot;pages&quot;,&quot;pages&quot;,&quot;abstracts&quot;],&quot;variable-description&quot;:[&quot;标题&quot;,&quot;摘要&quot;,&quot;原始链接&quot;,&quot;来源网站&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],&quot;loopCount&quot;:&quot;&quot;,&quot;ziloopCount&quot;:&quot;&quot;,&quot;variable-value&quot;:[&quot;${resp.selectors(\&quot;div&gt;#content_left&gt;div&gt;div&gt;.news-title_1YtI1\&quot;).texts()}&quot;,&quot;${resp.selectors(\&quot;div&gt;#content_left&gt;div&gt;div&gt;.news-title_1YtI1&gt;a\&quot;).attrs(\&quot;href\&quot;)}&quot;,&quot;${resp.selectors(\&quot;div&gt;#content_left&gt;div&gt;div&gt;div&gt;div&gt;span.c-gap-right-xsmall\&quot;).texts()}&quot;,&quot;${resp.selectors(\&quot;div&gt;#content_left&gt;div&gt;div&gt;div&gt;div&gt;div&gt;a&gt;span\&quot;).texts()}&quot;,&quot;${resp.selector(\&quot;#header_top_bar &gt; span\&quot;).text()}&quot;,&quot;${strUtils.substring(totals,totals.indexOf(\&quot;相关资讯\&quot;)+4,totals.lastIndexOf(\&quot;个\&quot;))}&quot;,&quot;${(strUtils.toInt(total)%10)==0?strUtils.toInt(total)/10:(strUtils.toInt(total)/10)+1}&quot;,&quot;${strUtils.toInt(pages+&#39;&#39;)&gt;2?2:pages}&quot;,&quot;${resp.selectors(\&quot;div&gt;#content_left&gt;div&gt;div&gt;div&gt;div&gt;span.c-color-text\&quot;).texts()}&quot;],&quot;shape&quot;:&quot;variable&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="54" value="" style="strokeWidth=2;sharp=1;" parent="1" source="15" target="33" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="55" value="循环" style="loop" parent="1" vertex="1">
+      <mxGeometry x="826" y="90" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;循环&quot;,&quot;loopItem&quot;:&quot;&quot;,&quot;loopVariableName&quot;:&quot;j&quot;,&quot;loopCount&quot;:&quot;${titles.size()}&quot;,&quot;loopStart&quot;:&quot;0&quot;,&quot;loopEnd&quot;:&quot;-1&quot;,&quot;awaitSleep&quot;:&quot;0&quot;,&quot;shape&quot;:&quot;loop&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="64" value="定义变量" style="variable" parent="1" vertex="1">
+      <mxGeometry x="916" y="90" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;定义变量&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;ziloopVariableName&quot;:&quot;&quot;,&quot;variable-name&quot;:[&quot;title&quot;,&quot;url&quot;,&quot;source&quot;,&quot;time&quot;,&quot;time&quot;,&quot;time&quot;,&quot;publish_time&quot;,&quot;abstract&quot;],&quot;variable-description&quot;:[&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],&quot;loopCount&quot;:&quot;&quot;,&quot;ziloopCount&quot;:&quot;&quot;,&quot;variable-value&quot;:[&quot;${titles[j]}&quot;,&quot;${urls[j]}&quot;,&quot;${sources[j]}&quot;,&quot;${times[j]}&quot;,&quot;${strUtils.contains(time,\&quot;昨天\&quot;)?(strUtils.substring(dateUtils.minusDay(1),0,10)+\&quot; \&quot;+strUtils.substring(time,2,time.length())+\&quot;:00\&quot;):time}&quot;,&quot;${strUtils.contains(time,\&quot;前天\&quot;)?(strUtils.substring(dateUtils.minusDay(2),0,10)+\&quot; \&quot;+strUtils.substring(time,2,time.length())+\&quot;:00\&quot;):time}&quot;,&quot;${dateUtils.FormatDate(time)}&quot;,&quot;${abstracts[j]}&quot;],&quot;shape&quot;:&quot;variable&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="65" value="" style="strokeWidth=2;sharp=1;" parent="1" source="55" target="64" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="106" value="" style="strokeWidth=2;sharp=1;" parent="1" source="33" target="55" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="112" value="定义变量" style="variable" parent="1" vertex="1">
+      <mxGeometry x="190" y="90" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;定义变量&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;ziloopVariableName&quot;:&quot;&quot;,&quot;variable-name&quot;:[&quot;keyword&quot;,&quot;page&quot;,&quot;startIndex&quot;],&quot;variable-description&quot;:[&quot;&quot;,&quot;&quot;,&quot;&quot;],&quot;loopCount&quot;:&quot;&quot;,&quot;ziloopCount&quot;:&quot;&quot;,&quot;variable-value&quot;:[&quot;北京&quot;,&quot;${pageNoData}&quot;,&quot;${page==&#39;0&#39;?&#39;&#39;:(page-1)}&quot;],&quot;shape&quot;:&quot;variable&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="113" value="" style="strokeWidth=2;sharp=1;" parent="1" source="2" target="112" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="114" value="" style="strokeWidth=2;sharp=1;" parent="1" source="112" target="15" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="115" value="输出" style="output" parent="1" vertex="1">
+      <mxGeometry x="1080" y="90" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;输出&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;tableName&quot;:&quot;&quot;,&quot;csvName&quot;:&quot;&quot;,&quot;csvEncoding&quot;:&quot;GBK&quot;,&quot;output-name&quot;:[&quot;title&quot;,&quot;url&quot;,&quot;source&quot;,&quot;publish_time&quot;,&quot;abstract&quot;,&quot;author&quot;],&quot;loopCount&quot;:&quot;&quot;,&quot;output-value&quot;:[&quot;${strUtils.contains(title,keyword)?(strUtils.replaceAll(title,keyword,&#39;&lt;b class=\&quot;key\&quot; style=\&quot;color:red\&quot;&gt;&#39;+keyword+&#39;&lt;/b&gt;&#39;)):(title)}&quot;,&quot;${url}&quot;,&quot;${source}&quot;,&quot;${publish_time}&quot;,&quot;${strUtils.contains(abstract,keyword)?(strUtils.replaceAll(abstract,keyword,&#39;&lt;b class=\&quot;key\&quot; style=\&quot;color:red\&quot;&gt;&#39;+keyword+&#39;&lt;/b&gt;&#39;)):(abstract)}&quot;,&quot;${&#39;-&#39;}&quot;],&quot;output-all&quot;:&quot;0&quot;,&quot;output-database&quot;:&quot;0&quot;,&quot;output-csv&quot;:&quot;0&quot;,&quot;shape&quot;:&quot;output&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="116" value="" style="strokeWidth=2;sharp=1;" parent="1" source="64" target="115" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+  </root>
+</mxGraphModel>

@@ -1,0 +1,88 @@
+<mxGraphModel>
+  <root>
+    <mxCell id="0">
+      <JsonProperty as="data">
+        {&quot;spiderName&quot;:&quot;未定义名称&quot;,&quot;submit-strategy&quot;:&quot;random&quot;,&quot;threadCount&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="1" parent="0"/>
+    <mxCell id="2" value="开始" style="start" parent="1" vertex="1">
+      <mxGeometry x="80" y="80" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;shape&quot;:&quot;start&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="3" value="定义变量" style="variable" parent="1" vertex="1">
+      <mxGeometry x="210" y="80" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;定义变量&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;ziloopVariableName&quot;:&quot;&quot;,&quot;variable-name&quot;:[&quot;keyword&quot;,&quot;page&quot;,&quot;total_page&quot;],&quot;variable-description&quot;:[&quot;&quot;,&quot;&quot;,&quot;&quot;],&quot;loopCount&quot;:&quot;&quot;,&quot;ziloopCount&quot;:&quot;&quot;,&quot;variable-value&quot;:[&quot;北京&quot;,&quot;${pageNoData}&quot;,&quot;${page== 1 ? 0 :((page-1)*10)}&quot;],&quot;shape&quot;:&quot;variable&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="4" value="" style="strokeWidth=2;sharp=1;" parent="1" source="2" target="3" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="5" value="开始抓取" style="request" parent="1" vertex="1">
+      <mxGeometry x="350" y="80" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;开始抓取&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;sleep&quot;:&quot;&quot;,&quot;timeout&quot;:&quot;&quot;,&quot;response-charset&quot;:&quot;&quot;,&quot;retryCount&quot;:&quot;&quot;,&quot;retryInterval&quot;:&quot;&quot;,&quot;cookie-name&quot;:[&quot;cookie&quot;],&quot;cookie-description&quot;:[&quot;&quot;],&quot;header-name&quot;:[&quot;referer&quot;,&quot;user-agent&quot;],&quot;header-description&quot;:[&quot;&quot;,&quot;&quot;],&quot;body-type&quot;:&quot;none&quot;,&quot;body-content-type&quot;:&quot;text/plain&quot;,&quot;loopCount&quot;:&quot;&quot;,&quot;url&quot;:&quot;${\&quot;https://www.douyin.com/aweme/v1/web/general/search/single/?device_platform=webapp&amp;aid=6383&amp;channel=channel_pc_web&amp;search_channel=aweme_general&amp;sort_type=0&amp;publish_time=0&amp;keyword=\&quot;+keyword+\&quot;&amp;search_source=normal_search&amp;query_correct_type=1&amp;is_filter_search=0&amp;from_group_id=6987870724073557255&amp;offset=\&quot;+total_page+\&quot;&amp;count=10\&quot;}&quot;,&quot;proxy&quot;:&quot;&quot;,&quot;cookie-value&quot;:[&quot;ttwid=1%7CP0JhRRY4Bs8OVUvN5L2Miz7mJjuyOsBXql6ASbJCbh4%7C1666344544%7Cb84871b088be071be4b63a80dcdb75a7397a8cb0128399106dd2c84a2de9560b; douyin.com; strategyABtestKey=1666344479.962; s_v_web_id=verify_l9iah9u8_X69Syl98_IJxX_4CI1_AVrP_CgPLlmPB5lK0; passport_csrf_token=34c8e93a61ceeb9398a14e8b3e86ec3e; passport_csrf_token_default=34c8e93a61ceeb9398a14e8b3e86ec3e; ttcid=f1880482f8d14a2dbd289c981a45db6a40; AB_LOGIN_GUIDE_TIMESTAMP=%221666344479785%22; _tea_utm_cache_2018=undefined; SEARCH_RESULT_LIST_TYPE=%22single%22; __ac_signature=_02B4Z6wo00f01OB8TFAAAIDBazfXsxb7GdjgXEjAAFtT0QprmLESRwztu7QYMLFpMSbB4Gybg4kQDPDgTnlNKwF9vN0Ogg.ZlIH9XC.D4xHb65cqQlAvz6Hvt1vFWUmPIiX3Nc9QBBtf.6Tt6d; tt_scid=i3Pr6JT5tgEUsW7RRrlo3QPivVfT.XPI13V5JTns4LeMinDdpC2kPzCw22SZLiAs9930; msToken=yh8_iPx7x2jKq-VUhgHlsQKJlCn8OVxzsHNHM16tb5SCo0pRv80zK3BeBtVDS87eObvOwhS1gbTkLZehfoQ18uot1MBXNo9PQJoW6hvPrjPTGHN2_gfXabK4TRkUTg==; msToken=kieZ9kVyg6pPT3wUDqNwuIjnV1JlEqHmbQhKiWHOLIrdKx3gj-efmNJh6I14APcGbeQ-_CZp3hla-MKevOv0b37exw2k6g11FsDmJIsF4hftlQ-WXnCjN9u3jg0JCw==; __ac_nonce=0635408b200f4d9736d24; home_can_add_dy_2_desktop=%220%22&quot;],&quot;header-value&quot;:[&quot;https://www.douyin.com/search/%E8%8B%8F%E5%B7%9E?source=normal_search&amp;aid=66cd7d9d-5ae0-46ec-9642-d4224c81d693&amp;enter_from=recommend&amp;focus_method=&amp;gid=6987870724073557255&quot;,&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36&quot;],&quot;request-body&quot;:&quot;&quot;,&quot;follow-redirect&quot;:&quot;1&quot;,&quot;tls-validate&quot;:&quot;1&quot;,&quot;cookie-auto-set&quot;:&quot;1&quot;,&quot;repeat-enable&quot;:&quot;0&quot;,&quot;shape&quot;:&quot;request&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="6" value="" style="strokeWidth=2;sharp=1;" parent="1" source="3" target="5" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="10" value="定义变量" style="variable" parent="1" vertex="1">
+      <mxGeometry x="460" y="80" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;定义变量&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;ziloopVariableName&quot;:&quot;&quot;,&quot;variable-name&quot;:[&quot;json&quot;,&quot;datalist&quot;],&quot;variable-description&quot;:[&quot;&quot;,&quot;&quot;],&quot;loopCount&quot;:&quot;&quot;,&quot;ziloopCount&quot;:&quot;&quot;,&quot;variable-value&quot;:[&quot;${resp.html.json()}&quot;,&quot;${json.data}&quot;],&quot;shape&quot;:&quot;variable&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="11" value="" style="strokeWidth=2;sharp=1;" parent="1" source="5" target="10" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="12" value="循环" style="loop" parent="1" vertex="1">
+      <mxGeometry x="600" y="80" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;循环&quot;,&quot;loopItem&quot;:&quot;&quot;,&quot;loopVariableName&quot;:&quot;i&quot;,&quot;loopCount&quot;:&quot;${datalist.size()}&quot;,&quot;loopStart&quot;:&quot;0&quot;,&quot;loopEnd&quot;:&quot;-1&quot;,&quot;awaitSleep&quot;:&quot;0&quot;,&quot;shape&quot;:&quot;loop&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="13" value="" style="strokeWidth=2;sharp=1;" parent="1" source="10" target="12" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="16" value="输出" style="output" parent="1" vertex="1">
+      <mxGeometry x="870" y="80" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;输出&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;tableName&quot;:&quot;&quot;,&quot;csvName&quot;:&quot;&quot;,&quot;csvEncoding&quot;:&quot;GBK&quot;,&quot;output-name&quot;:[&quot;title&quot;,&quot;videojson&quot;,&quot;publish_time&quot;,&quot;author&quot;,&quot;url&quot;],&quot;loopCount&quot;:&quot;&quot;,&quot;output-value&quot;:[&quot;${title}&quot;,&quot;${videojson}&quot;,&quot;${publish_time}&quot;,&quot;${author}&quot;,&quot;${&#39;https://www.douyin.com/video/&#39; + source_url}&quot;],&quot;output-all&quot;:&quot;0&quot;,&quot;output-database&quot;:&quot;0&quot;,&quot;output-csv&quot;:&quot;0&quot;,&quot;shape&quot;:&quot;output&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="18" value="定义变量" style="variable" parent="1" vertex="1">
+      <mxGeometry x="720" y="80" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;定义变量&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;ziloopVariableName&quot;:&quot;&quot;,&quot;variable-name&quot;:[&quot;title&quot;,&quot;video_url&quot;,&quot;videoorientationurl1&quot;,&quot;videoorientationurl&quot;,&quot;publish_time&quot;,&quot;author&quot;,&quot;videojson&quot;,&quot;imglist&quot;,&quot;imgjson&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;source_url&quot;],&quot;variable-description&quot;:[&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],&quot;loopCount&quot;:&quot;&quot;,&quot;ziloopCount&quot;:&quot;&quot;,&quot;variable-value&quot;:[&quot;${datalist.get(i).aweme_info.desc}&quot;,&quot;${datalist.get(i).aweme_info.video.play_addr.url_list.get(0)}&quot;,&quot;${datalist.get(i).aweme_info.video.cover.url_list}&quot;,&quot;${videoorientationurl1.get(0)}&quot;,&quot;${dateUtils.stampToDate(datalist.get(i).aweme_info.create_time +&#39;000&#39;)}&quot;,&quot;${datalist.get(i).aweme_info.author.nickname}&quot;,&quot;${jsonUtils.createJsonObject()}&quot;,&quot;${jsonUtils.createJsonArray()}&quot;,&quot;${jsonUtils.createJsonObject()}&quot;,&quot;${imgjson.put(\&quot;imgurl\&quot;,&#39;&#39;)}&quot;,&quot;${imglist.add(imgjson)}&quot;,&quot;${videojson.put(\&quot;imglist\&quot;,imglist)}&quot;,&quot;${videojson.put(\&quot;vediourl\&quot;,video_url)}&quot;,&quot;${videojson.put(\&quot;videoorientationurl\&quot;,videoorientationurl)}&quot;,&quot;${datalist.get(i).aweme_info.aweme_id}&quot;],&quot;shape&quot;:&quot;variable&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="19" value="" style="strokeWidth=2;sharp=1;" parent="1" source="12" target="18" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="20" value="" style="strokeWidth=2;strokeColor=blue;sharp=1;" parent="1" source="18" target="16" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;blue&quot;,&quot;condition&quot;:&quot;${source_url != null}&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+  </root>
+</mxGraphModel>

@@ -1,0 +1,136 @@
+<mxGraphModel>
+  <root>
+    <mxCell id="0">
+      <JsonProperty as="data">
+        {&quot;spiderName&quot;:&quot;未定义名称&quot;,&quot;submit-strategy&quot;:&quot;random&quot;,&quot;threadCount&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="1" parent="0"/>
+    <mxCell id="2" value="开始" style="start" parent="1" vertex="1">
+      <mxGeometry x="80" y="80" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;shape&quot;:&quot;start&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="21" value="根据关键词搜索" style="request" parent="1" vertex="1">
+      <mxGeometry x="630" y="80" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;根据关键词搜索&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;sleep&quot;:&quot;1000&quot;,&quot;timeout&quot;:&quot;&quot;,&quot;response-charset&quot;:&quot;&quot;,&quot;retryCount&quot;:&quot;1&quot;,&quot;retryInterval&quot;:&quot;2000&quot;,&quot;cookie-name&quot;:[&quot;cookie&quot;],&quot;cookie-description&quot;:[&quot;&quot;],&quot;header-name&quot;:[&quot;user-agent&quot;],&quot;header-description&quot;:[&quot;&quot;],&quot;body-type&quot;:&quot;none&quot;,&quot;body-content-type&quot;:&quot;text/plain&quot;,&quot;loopCount&quot;:&quot;&quot;,&quot;url&quot;:&quot;https://m.weibo.cn/api/container/getIndex?containerid=231522type%3D1%26q%3D%23${keyword}%23&amp;page_type=searchall&amp;page=${pageNo}&quot;,&quot;proxy&quot;:&quot;&quot;,&quot;cookie-value&quot;:[&quot;SUB=_2AkMUDYtbf8NxqwJRmfwTz2LhZIhyyw7EieKiUXqAJRMxHRl-yT9jqhYstRB6P42ltJExNYB2psyLl8ONit3Dytbl__Lo; SUBP=0033WrSXqPxfM72-Ws9jqgMF55529P9D9WWcnADUlTd4zwRxZivlmOy.; _s_tentry=passport.weibo.com; Apache=5401105109200.461.1666253868866; SINAGLOBAL=5401105109200.461.1666253868866; ULV=1666253868908:1:1:1:5401105109200.461.1666253868866:&quot;],&quot;header-value&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36&quot;],&quot;request-body&quot;:&quot;&quot;,&quot;follow-redirect&quot;:&quot;1&quot;,&quot;tls-validate&quot;:&quot;1&quot;,&quot;cookie-auto-set&quot;:&quot;1&quot;,&quot;repeat-enable&quot;:&quot;0&quot;,&quot;shape&quot;:&quot;request&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="23" value="定义变量" style="variable" parent="1" vertex="1">
+      <mxGeometry x="720" y="80" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;定义变量&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;ziloopVariableName&quot;:&quot;&quot;,&quot;variable-name&quot;:[&quot;jsonhtml&quot;,&quot;data&quot;,&quot;parseArray&quot;],&quot;variable-description&quot;:[&quot;&quot;,&quot;&quot;,&quot;&quot;],&quot;loopCount&quot;:&quot;&quot;,&quot;ziloopCount&quot;:&quot;&quot;,&quot;variable-value&quot;:[&quot;${jsonUtils.parseObject(resp.html)}&quot;,&quot;${jsonhtml.getJSONObject(\&quot;data\&quot;)}&quot;,&quot;${data.getJSONArray(\&quot;cards\&quot;)}&quot;],&quot;shape&quot;:&quot;variable&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="30" value="自定义的关键词" style="variable" parent="1" vertex="1">
+      <mxGeometry x="380" y="200" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;自定义的关键词&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;ziloopVariableName&quot;:&quot;&quot;,&quot;variable-name&quot;:[&quot;keyword&quot;,&quot;pageNo&quot;],&quot;variable-description&quot;:[&quot;&quot;,&quot;&quot;],&quot;loopCount&quot;:&quot;&quot;,&quot;ziloopCount&quot;:&quot;&quot;,&quot;variable-value&quot;:[&quot;南京&quot;,&quot;${pageNoData}&quot;],&quot;shape&quot;:&quot;variable&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="34" value="循环" style="loop" parent="1" vertex="1">
+      <mxGeometry x="830" y="80" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;循环&quot;,&quot;loopItem&quot;:&quot;&quot;,&quot;loopVariableName&quot;:&quot;z&quot;,&quot;loopCount&quot;:&quot;${parseArray}&quot;,&quot;loopStart&quot;:&quot;0&quot;,&quot;loopEnd&quot;:&quot;-1&quot;,&quot;awaitSleep&quot;:&quot;100&quot;,&quot;shape&quot;:&quot;loop&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="35" value="" style="strokeWidth=2;strokeColor=#00ff00;sharp=1;" parent="1" source="23" target="34" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;2&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;#00ff00&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="36" value="定义变量" style="variable" parent="1" vertex="1">
+      <mxGeometry x="930" y="80" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;定义变量&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;ziloopVariableName&quot;:&quot;&quot;,&quot;variable-name&quot;:[&quot;jsonobject&quot;],&quot;variable-description&quot;:[&quot;&quot;],&quot;loopCount&quot;:&quot;&quot;,&quot;ziloopCount&quot;:&quot;&quot;,&quot;variable-value&quot;:[&quot;${parseArray.getJSONObject(z)}&quot;],&quot;shape&quot;:&quot;variable&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="37" value="" style="strokeWidth=2;sharp=1;" parent="1" source="34" target="36" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="38" value="含有card_group" style="variable" parent="1" vertex="1">
+      <mxGeometry x="1120" y="80" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;含有card_group&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;ziloopVariableName&quot;:&quot;&quot;,&quot;variable-name&quot;:[&quot;cardgrouparray&quot;],&quot;variable-description&quot;:[&quot;&quot;],&quot;loopCount&quot;:&quot;&quot;,&quot;ziloopCount&quot;:&quot;&quot;,&quot;variable-value&quot;:[&quot;${jsonobject.getJSONArray(\&quot;card_group\&quot;)}&quot;],&quot;shape&quot;:&quot;variable&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="39" value="判断关键字,确定json类型" style="strokeWidth=2;strokeColor=#00ff00;sharp=1;" parent="1" source="36" target="38" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;判断关键字,确定json类型&quot;,&quot;exception-flow&quot;:&quot;2&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;#00ff00&quot;,&quot;condition&quot;:&quot;${jsonobject.containsKey(\&quot;card_group\&quot;) == true}&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="40" value="循环" style="loop" parent="1" vertex="1">
+      <mxGeometry x="1210" y="80" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;循环&quot;,&quot;loopItem&quot;:&quot;&quot;,&quot;loopVariableName&quot;:&quot;index&quot;,&quot;loopCount&quot;:&quot;${cardgrouparray.size()}&quot;,&quot;loopStart&quot;:&quot;0&quot;,&quot;loopEnd&quot;:&quot;-1&quot;,&quot;awaitSleep&quot;:&quot;300&quot;,&quot;shape&quot;:&quot;loop&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="41" value="" style="strokeWidth=2;strokeColor=#00ff00;sharp=1;" parent="1" source="38" target="40" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;2&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;#00ff00&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="42" value="获取内容详情页" style="variable" parent="1" vertex="1">
+      <mxGeometry x="1402" y="80" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;获取内容详情页&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;ziloopVariableName&quot;:&quot;&quot;,&quot;variable-name&quot;:[&quot;source_url&quot;,&quot;url&quot;,&quot;mblog&quot;,&quot;abstract&quot;,&quot;publish_time&quot;,&quot;source&quot;,&quot;title&quot;],&quot;variable-description&quot;:[&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],&quot;loopCount&quot;:&quot;&quot;,&quot;ziloopCount&quot;:&quot;&quot;,&quot;variable-value&quot;:[&quot;${cardgrouparray.getJSONObject(index).getString(\&quot;scheme\&quot;)}&quot;,&quot;${source_url.split(\&quot;\\\\?\&quot;)[0]}&quot;,&quot;${cardgrouparray.getJSONObject(index).getJSONObject(\&quot;mblog\&quot;)}&quot;,&quot;${mblog.text}&quot;,&quot;${mblog.created_at}&quot;,&quot;${&#39;微博&#39;}&quot;,&quot;${mblog.user.screen_name}&quot;],&quot;shape&quot;:&quot;variable&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="43" value="带有详情页url的" style="strokeWidth=2;strokeColor=#00ff00;sharp=1;" parent="1" source="40" target="42" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;带有详情页url的&quot;,&quot;exception-flow&quot;:&quot;2&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;#00ff00&quot;,&quot;condition&quot;:&quot;${cardgrouparray.getJSONObject(index).containsKey(\&quot;mblog\&quot;) == true  &amp;&amp; cardgrouparray.getJSONObject(index).containsKey(\&quot;scheme\&quot;) == true}&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="74" value="定义变量" style="variable" parent="1" vertex="1">
+      <mxGeometry x="930" y="170" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;定义变量&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;ziloopVariableName&quot;:&quot;&quot;,&quot;variable-name&quot;:[&quot;source_url&quot;,&quot;source_url&quot;,&quot;mblog&quot;],&quot;variable-description&quot;:[&quot;&quot;,&quot;&quot;,&quot;&quot;],&quot;loopCount&quot;:&quot;&quot;,&quot;ziloopCount&quot;:&quot;&quot;,&quot;variable-value&quot;:[&quot;${jsonobject.getString(\&quot;scheme\&quot;)}&quot;,&quot;${source_url.split(\&quot;\\\\?\&quot;)[0]}&quot;,&quot;${jsonobject.getJSONObject(\&quot;mblog\&quot;)}&quot;],&quot;shape&quot;:&quot;variable&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="75" value="" style="strokeWidth=2;strokeColor=#00ff00;sharp=1;" parent="1" source="36" target="74" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;2&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;#00ff00&quot;,&quot;condition&quot;:&quot;${jsonobject.containsKey(\&quot;card_group\&quot;) == false}&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="87" value="" style="strokeWidth=2;sharp=1;" parent="1" source="30" target="21" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="94" value="输出" style="output" parent="1" vertex="1">
+      <mxGeometry x="1402" y="186" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;输出&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;tableName&quot;:&quot;&quot;,&quot;csvName&quot;:&quot;&quot;,&quot;csvEncoding&quot;:&quot;GBK&quot;,&quot;output-name&quot;:[&quot;title&quot;,&quot;url&quot;,&quot;abstract&quot;,&quot;publish_time&quot;,&quot;source&quot;,&quot;author&quot;],&quot;loopCount&quot;:&quot;&quot;,&quot;output-value&quot;:[&quot;${strUtils.contains(title,keyword)?(strUtils.replaceAll(title,keyword,&#39;&lt;b class=\&quot;key\&quot; style=\&quot;color:red\&quot;&gt;&#39;+keyword+&#39;&lt;/b&gt;&#39;)):(title)}&quot;,&quot;${url}&quot;,&quot;${strUtils.contains(abstract,keyword)?(strUtils.replaceAll(abstract,keyword,&#39;&lt;b class=\&quot;key\&quot; style=\&quot;color:red\&quot;&gt;&#39;+keyword+&#39;&lt;/b&gt;&#39;)):(abstract)}&quot;,&quot;${publish_time}&quot;,&quot;${source}&quot;,&quot;${title}&quot;],&quot;output-all&quot;:&quot;0&quot;,&quot;output-database&quot;:&quot;0&quot;,&quot;output-csv&quot;:&quot;0&quot;,&quot;shape&quot;:&quot;output&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="95" value="" style="strokeWidth=2;sharp=1;" parent="1" source="42" target="94" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="97" value="" style="strokeWidth=2;sharp=1;" parent="1" source="2" target="30" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="101" value="" style="strokeWidth=2;sharp=1;" edge="1" parent="1" source="21" target="23">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+  </root>
+</mxGraphModel>

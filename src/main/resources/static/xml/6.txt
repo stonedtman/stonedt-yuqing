@@ -1,0 +1,94 @@
+<mxGraphModel>
+  <root>
+    <mxCell id="0">
+      <JsonProperty as="data">
+        {&quot;spiderName&quot;:&quot;未定义名称&quot;,&quot;submit-strategy&quot;:&quot;random&quot;,&quot;threadCount&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="1" parent="0"/>
+    <mxCell id="2" value="开始" style="start" parent="1" vertex="1">
+      <mxGeometry x="270" y="116.5" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;shape&quot;:&quot;start&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="17" value="定义变量" style="variable" parent="1" vertex="1">
+      <mxGeometry x="390" y="116.5" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;定义变量&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;ziloopVariableName&quot;:&quot;&quot;,&quot;variable-name&quot;:[&quot;total_page&quot;,&quot;keyword&quot;],&quot;variable-description&quot;:[&quot;&quot;,&quot;&quot;],&quot;loopCount&quot;:&quot;&quot;,&quot;ziloopCount&quot;:&quot;&quot;,&quot;variable-value&quot;:[&quot;${pageNoData}&quot;,&quot;北京&quot;],&quot;shape&quot;:&quot;variable&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="22" value="定义变量" style="variable" parent="1" vertex="1">
+      <mxGeometry x="836" y="117" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;定义变量&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;ziloopVariableName&quot;:&quot;&quot;,&quot;variable-name&quot;:[&quot;list_data&quot;],&quot;variable-description&quot;:[&quot;&quot;],&quot;loopCount&quot;:&quot;&quot;,&quot;ziloopCount&quot;:&quot;&quot;,&quot;variable-value&quot;:[&quot;${resp.html.json().data.data}&quot;],&quot;shape&quot;:&quot;variable&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="26" value="循环" style="loop" parent="1" vertex="1">
+      <mxGeometry x="936" y="117" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;循环&quot;,&quot;loopItem&quot;:&quot;&quot;,&quot;loopVariableName&quot;:&quot;i&quot;,&quot;loopCount&quot;:&quot;${list_data.size()}&quot;,&quot;loopStart&quot;:&quot;0&quot;,&quot;loopEnd&quot;:&quot;-1&quot;,&quot;awaitSleep&quot;:&quot;0&quot;,&quot;shape&quot;:&quot;loop&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="33" value="定义变量" style="variable" parent="1" vertex="1">
+      <mxGeometry x="1056" y="117" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;定义变量&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;ziloopVariableName&quot;:&quot;&quot;,&quot;variable-name&quot;:[&quot;title&quot;,&quot;title&quot;,&quot;summary&quot;,&quot;url&quot;,&quot;source&quot;,&quot;publish_time&quot;,&quot;extend&quot;,&quot;source_flag&quot;,&quot;site_name&quot;,&quot;snippet&quot;],&quot;variable-description&quot;:[&quot;标题&quot;,&quot;&quot;,&quot;摘要&quot;,&quot;原始链接&quot;,&quot;来源网站&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],&quot;loopCount&quot;:&quot;&quot;,&quot;ziloopCount&quot;:&quot;&quot;,&quot;variable-value&quot;:[&quot;${strUtils.replaceAll(list_data[i].title,&#39;&lt;em&gt;&#39;,&#39;&#39;)}&quot;,&quot;${strUtils.replaceAll(title,&#39;&lt;/em&gt;&#39;,&#39;&#39;)}&quot;,&quot;${list_data[i].snippet}&quot;,&quot;${list_data[i].url}&quot;,&quot;${list_data[i].source}&quot;,&quot;${dateUtils.stampToDate(list_data[i].timestamp+&#39;000&#39;)}&quot;,&quot;${list_data[i].extend}&quot;,&quot;${strUtils.indexOf(extend,&#39;site_name&#39;)}&quot;,&quot;${source_flag!=-1?(list_data[i].extend.json().site_name):source}&quot;,&quot;${list_data.get(i).snippet}&quot;],&quot;shape&quot;:&quot;variable&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="34" value="" style="strokeWidth=2;sharp=1;" parent="1" source="26" target="33" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="65" value="开始抓取" style="request" parent="1" vertex="1">
+      <mxGeometry x="600" y="117" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;开始抓取&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;sleep&quot;:&quot;&quot;,&quot;timeout&quot;:&quot;&quot;,&quot;response-charset&quot;:&quot;&quot;,&quot;retryCount&quot;:&quot;&quot;,&quot;retryInterval&quot;:&quot;&quot;,&quot;cookie-name&quot;:[&quot;Cookie&quot;],&quot;cookie-description&quot;:[&quot;&quot;],&quot;header-name&quot;:[&quot;Host&quot;],&quot;header-description&quot;:[&quot;&quot;],&quot;body-type&quot;:&quot;none&quot;,&quot;body-content-type&quot;:&quot;text/plain&quot;,&quot;loopCount&quot;:&quot;&quot;,&quot;url&quot;:&quot;${&#39;http://www.chinaso.com/v5/general/v1/web/search?q=&#39;+keyword+&#39;&amp;pn=&#39;+total_page+&#39;&amp;ps=15&amp;force=0&amp;stime=24h&amp;etime=now&#39;}&quot;,&quot;proxy&quot;:&quot;&quot;,&quot;cookie-value&quot;:[&quot;uid=CgqASWJmH0KGd3qqDSdIAg==; cookie_name=122.96.102.43.1650859843374970; wdcid=7e72f38d9bc6dc56; wdlast=1652238633; Hm_lvt_91fa1aefc990a9fc21c08506e5983ddf=1652238633; __WWW_CARD__DISSTATUS__=false; __WWW_nav__DISSTATUS__=false; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%221805eea194944-0d246d8dddcd0b-535b0612-1296000-1805eea194a99e%22%2C%22first_id%22%3A%22%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E7%9B%B4%E6%8E%A5%E6%B5%81%E9%87%8F%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC_%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%22%2C%22%24latest_referrer%22%3A%22%22%7D%2C%22%24device_id%22%3A%221805eea194944-0d246d8dddcd0b-535b0612-1296000-1805eea194a99e%22%7D&quot;],&quot;header-value&quot;:[&quot;www.chinaso.com&quot;],&quot;request-body&quot;:&quot;&quot;,&quot;follow-redirect&quot;:&quot;1&quot;,&quot;tls-validate&quot;:&quot;1&quot;,&quot;cookie-auto-set&quot;:&quot;1&quot;,&quot;repeat-enable&quot;:&quot;0&quot;,&quot;shape&quot;:&quot;request&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="70" value="" style="strokeWidth=2;sharp=1;" parent="1" source="22" target="26" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="113" value="" style="strokeWidth=2;sharp=1;" parent="1" source="17" target="65" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="114" value="输出" style="output" parent="1" vertex="1">
+      <mxGeometry x="1056" y="201" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;输出&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;tableName&quot;:&quot;&quot;,&quot;csvName&quot;:&quot;&quot;,&quot;csvEncoding&quot;:&quot;GBK&quot;,&quot;output-name&quot;:[&quot;url&quot;,&quot;title&quot;,&quot;source&quot;,&quot;publish_time&quot;,&quot;abstract&quot;,&quot;author&quot;],&quot;loopCount&quot;:&quot;&quot;,&quot;output-value&quot;:[&quot;${url}&quot;,&quot;${strUtils.contains(title,keyword)?(strUtils.replaceAll(title,keyword,&#39;&lt;b class=\&quot;key\&quot; style=\&quot;color:red\&quot;&gt;&#39;+keyword+&#39;&lt;/b&gt;&#39;)):(title)}&quot;,&quot;${source}&quot;,&quot;${publish_time}&quot;,&quot;${strUtils.contains(snippet,keyword)?(strUtils.replaceAll(snippet,keyword,&#39;&lt;b class=\&quot;key\&quot; style=\&quot;color:red\&quot;&gt;&#39;+keyword+&#39;&lt;/b&gt;&#39;)):(snippet)}&quot;,&quot;${&#39;-&#39;}&quot;],&quot;output-all&quot;:&quot;0&quot;,&quot;output-database&quot;:&quot;0&quot;,&quot;output-csv&quot;:&quot;0&quot;,&quot;shape&quot;:&quot;output&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="115" value="" style="strokeWidth=2;sharp=1;" parent="1" source="33" target="114" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="117" value="输出" style="output" parent="1" vertex="1">
+      <mxGeometry x="1208" y="10" width="32" height="32" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;输出&quot;,&quot;loopVariableName&quot;:&quot;&quot;,&quot;tableName&quot;:&quot;&quot;,&quot;csvName&quot;:&quot;&quot;,&quot;csvEncoding&quot;:&quot;GBK&quot;,&quot;output-name&quot;:[&quot;content&quot;],&quot;loopCount&quot;:&quot;&quot;,&quot;output-value&quot;:[&quot;${content}&quot;],&quot;output-all&quot;:&quot;0&quot;,&quot;output-database&quot;:&quot;0&quot;,&quot;output-csv&quot;:&quot;0&quot;,&quot;shape&quot;:&quot;output&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="118" value="" style="strokeWidth=2;sharp=1;" parent="1" source="2" target="17" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+    <mxCell id="122" value="" style="strokeWidth=2;sharp=1;" parent="1" source="65" target="22" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+      <JsonProperty as="data">
+        {&quot;value&quot;:&quot;&quot;,&quot;exception-flow&quot;:&quot;0&quot;,&quot;lineWidth&quot;:&quot;2&quot;,&quot;line-style&quot;:&quot;sharp&quot;,&quot;lineColor&quot;:&quot;black&quot;,&quot;condition&quot;:&quot;&quot;,&quot;transmit-variable&quot;:&quot;1&quot;}
+      </JsonProperty>
+    </mxCell>
+  </root>
+</mxGraphModel>
