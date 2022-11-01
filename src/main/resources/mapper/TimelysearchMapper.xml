@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.stonedt.intelligence.dao.TimelysearchDao">
+
+	
+	<select id="listFullPolymerization" resultType="com.stonedt.intelligence.entity.TimelyPolymerization">
+	
+	select * from search_type where status = 1
+	
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	<select id="getTemplete" parameterType="String" resultType="map">
+	
+	
+	  select id,engine from templete where type = #{stype} and status = 1
+	
+	
+	</select>
+	
+	
+
+</mapper>

@@ -1,9 +1,14 @@
 //if(!full_type) full_type = 1
-if(menuStyle == 0){
-	listFullPolymerization()
-}else{
-	listFullTypeByFirst()
-}
+// if(menuStyle == 0){
+// 	listFullPolymerization()
+// }else{
+// 	listFullTypeByFirst()
+// }
+
+
+listFullPolymerization();
+
+
 
 /**
  * 展开模式菜单
@@ -54,7 +59,7 @@ function listFullTypeByFirst(){
 function listFullPolymerization(){
 	$.ajax({
         type: 'GET',
-        url: ctx + 'fullsearch/listFullPolymerization',
+        url: ctx + 'timelysearch/listFullPolymerization',
         dataType: 'json',
         data: {},
         contentType: 'application/json;charset=utf-8',
@@ -70,10 +75,10 @@ function listFullPolymerization(){
             		aaa = 'sidebar-item comactive'
             		idList = res[i].value
             	}
-				var htmlStr = '<li class="'+aaa+'" data-id="'+res[i].value+'" data-poly="'+res[i].id+'">'
+				var htmlStr = '<li class="'+aaa+'" data-id="'+res[i].id+'" data-poly="'+res[i].id+'">'
 								+ '<a class="sidebar-link waves-effect waves-dark" href="javascript:void(0)">'
 								+ '		<i class="'+res[i].icon+'"></i>'
-								+ '		<span class="hide-menu">' + res[i].name + '</span>'
+								+ '		<span class="hide-menu">' + res[i].type_name + '</span>'
 								+ '	</a>'
 								+ '</li>'
 				$('#sidebarnav').append(htmlStr)

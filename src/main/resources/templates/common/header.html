@@ -80,14 +80,14 @@
                     </a>
                 </li>
 
-                <!-- <li data-type="full_search" th:classappend="${menu=='full_search'?'nav-active3':''}"
+                 <li data-type="full_search" th:classappend="${menu=='full_search'?'nav-active3':''}"
                     class="nav-item dropdown hover-none navLi">
                     <a style="display: block; position: absolute; font-size: 12px; color: #fff; margin-left: 76px; margin-top: 6px; background-color: #fe475d; width: 25px; height: 17px; border-radius: 45%; padding-left: 7px;transform: scale(0.9);">新</a>
                     <a class="nav-link dropdown-toggle waves-effect  waves-dark">
-                        <span class="d-none d-md-block"> <i class="fa fa-search"></i> 情报搜索</span>
-                        <span class="d-block d-md-none">情报搜索</span>
+                        <span class="d-none d-md-block"> <i class="fa fa-search"></i> 即时搜索</span>
+                        <span class="d-block d-md-none">即时搜索</span>
                     </a>
-                </li> -->
+                </li> 
                 <li data-type="public_option" th:classappend="${menu=='public_option'?'nav-active3':''}"
                     class="nav-item dropdown hover-none navLi" id="yqypfx">
                     <a class="nav-link dropdown-toggle waves-effect  waves-dark">
@@ -513,7 +513,7 @@
                 window.location.href = ctxPath + 'volume' + param;
             }
             else if (menu == 'full_search') {
-                window.location.href = ctxPath + 'fullsearch';
+                window.location.href = ctxPath + 'timelysearch';
             }else if (menu == 'public_option') {
                 window.location.href = ctxPath + 'publicoption';
             }else if (menu == 'syswarning') {
