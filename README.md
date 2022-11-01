@@ -199,7 +199,7 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 详见思通舆情安装部署手册：https://gitee.com/stonedtx/yuqing/blob/master/install_guide.md
 
 _备注：修改配置文件[[application.yml](https://gitee.com/stonedtx/yuqing/blob/master/config/application.yml)]，设定 MySQL、redis 用户和密码等。
-      修改配置文件[[application.properties](https://gitee.com/stonedtx/yuqing/blob/master/config/application.properties)]，修改xmlFilePath 文件路径等。_ 
+      修改配置文件[[application.properties](https://gitee.com/stonedtx/yuqing/blob/master/config/application.properties)]，修改xmlFilePath文件路径，并且拷贝config文件下的xml文件到指定路径等。_ 
 
 
 ## 安装手册
