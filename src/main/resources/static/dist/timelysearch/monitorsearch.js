@@ -406,28 +406,8 @@ $('body').on(
 
 
 			var stype = $(this).attr("data-id");
-			gettempleteinfo(stype, 0);
+			gettempleteinfo2(stype, 0);
 			
-			
-			
-			
-			
-			pageHelper(1, totalPage);
-			var keywords = $("#searchWord").val();
-
-			var website_id = '';
-			$('span[data-engine]').each(function() {
-				if ($(this).hasClass('badge-info')) {
-					website_id = $(this).data('engine');
-				}
-			});
-			debugger;
-			loadContent(stype, keywords, website_id, 1);
-
-			let url = "result?website_id=" + website_id + "&pageNoData=1&keyword=" + keywords +
-				"&stype=" + stype + "&fulltype=" + stype;
-				console.info("22222222222"+url);
-			setUrl(url);
 		}
 	})
 
@@ -540,3 +520,75 @@ function pageHelper(currentPage, totalPages) {
 //         }
 //     );
 // }
+
+
+/**
+ * 获取模版信息
+ */
+function gettempleteinfo2(fulltype, website_id) {
+	debugger;
+	$.ajax({
+		url: "/timelysearch/templete?stype=" + fulltype,
+		type: "get",
+		//async:false,
+		success: function(data) {
+			let resultdata = '';
+			if (data.length > 0) {
+				for (let i = 0; i < data.length; i++) {
+					let strdata = '';
+
+
+					if (website_id == 0 && i == 0) {
+						strdata = '<span data-engine="' + data[i].id +
+							'" class="badge badge-pill badge-info">' + data[i].engine + '</span>';
+					} else {
+						if (data[i].id == website_id) {
+							//strdata = '<input type="radio" value="'+data[i].id+'" name="sex" checked/>'+data[i].engine;
+							strdata = '<span data-engine="' + data[i].id +
+								'" class="badge badge-pill badge-info">' + data[i].engine + '</span>';
+						} else {
+							//strdata = '<input type="radio" value="'+data[i].id+'" name="sex"/>'+data[i].engine;
+							strdata = '<span data-engine="' + data[i].id +
+								'" class="badge badge-pill badge-light">' + data[i].engine + '</span>';
+						}
+
+
+					}
+
+
+
+
+					resultdata += strdata;
+				}
+			}
+			
+			$("#engine").html(resultdata);
+			pageHelper(1, totalPage);
+			var keywords = $("#searchWord").val();
+			
+			//var website_id = '';
+			$('span[data-engine]').each(function() {
+				if ($(this).hasClass('badge-info')) {
+					website_id = $(this).data('engine');
+				}
+			});
+			debugger;
+			loadContent(fulltype, keywords, website_id, 1);
+			
+			let url = "result?website_id=" + website_id + "&pageNoData=1&keyword=" + keywords +
+				"&stype=" + fulltype + "&fulltype=" + fulltype;
+				console.info("22222222222"+url);
+			setUrl(url);
+			
+			
+			
+			
+		}
+	});
+	
+	
+	
+	
+	
+	
+}
