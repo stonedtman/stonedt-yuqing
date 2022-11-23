@@ -224,11 +224,11 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 
 ## 联系我们
 
-+ 微信号： techflag  
++ 微信号： javabloger  
 
-+ 电话： 13505146123
++ 电话： 13913853100
 
-+ 邮箱： wangtao@stonedt.com
++ 邮箱： huangyi@stonedt.com
 
 + 公司官网：[www.stonedt.com](http://www.stonedt.com)
 
