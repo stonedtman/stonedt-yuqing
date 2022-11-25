@@ -253,7 +253,7 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 
 还可以
 
-直接拨打电话( **13505146123** )或者添加产品经理微信( **techflag** )， 直接与我们联系。
+直接拨打电话( **13913853100** )或者添加产品经理微信( **javabloger** )， 直接与我们联系。
 
 
 
@@ -285,7 +285,7 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
  
 ###  技术交流群
 
-   微信群已超过200人，无法生成二维码，请添加产品经理微信入群：techflag 
+   微信群已超过200人，无法生成二维码，请添加产品经理微信入群：javabloger 
 <img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg" title="Logo"  width="220">
 
 
