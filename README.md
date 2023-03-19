@@ -165,6 +165,11 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 -   有开源计划，但是具体时间尚未明确，预计在2022年8-10月份
 
 
+### 自然语言处理
+
+-   [思通数科-自然语言处理文本挖掘引擎](https://gitee.com/stonedtx/free-nlp-api)
+
+
 ### 系统管理后台
 
 -  系统很容易上手，简单易懂。2022年4月份 会全部开放源代码，同时也会提供运行部署程序下载。
