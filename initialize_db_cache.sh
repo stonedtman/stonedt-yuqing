@@ -224,6 +224,33 @@ CREATE TABLE `monitor_analysis_copy1` (
   UNIQUE KEY `project_id` (`project_id`,`time_period`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+-- ----------------------------
+-- Table structure for search_type
+-- ----------------------------
+DROP TABLE IF EXISTS `search_type`;
+CREATE TABLE `search_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type_name` varchar(255) DEFAULT NULL COMMENT '类型',
+  `status` int(11) DEFAULT '1' COMMENT '状态',
+  `create_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `icon` varchar(255) DEFAULT NULL COMMENT '图标',
+  `type` int(11) DEFAULT NULL COMMENT '类型',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of search_type
+-- ----------------------------
+BEGIN;
+INSERT INTO `search_type` (`id`, `type_name`, `status`, `create_time`, `icon`, `type`) VALUES (1, '资讯', 1, '2022-10-31 10:32:54', 'mdi mdi-widgets', 1);
+INSERT INTO `search_type` (`id`, `type_name`, `status`, `create_time`, `icon`, `type`) VALUES (2, '社交', 1, '2022-10-31 10:32:55', 'fas fa-fire', 2);
+INSERT INTO `search_type` (`id`, `type_name`, `status`, `create_time`, `icon`, `type`) VALUES (3, '金融', 1, '2022-10-31 10:32:56', 'mdi mdi-briefcase-check', 3);
+INSERT INTO `search_type` (`id`, `type_name`, `status`, `create_time`, `icon`, `type`) VALUES (4, '视频', 1, '2022-10-31 10:32:57', 'mdi mdi-access-point-network', 4);
+INSERT INTO `search_type` (`id`, `type_name`, `status`, `create_time`, `icon`, `type`) VALUES (5, '图片', 1, '2022-10-31 10:32:58', 'mdi mdi-format-bold', 5);
+COMMIT;
+
+
 -- ----------------------------
 --  Table structure for `opinion_condition`
 -- ----------------------------
