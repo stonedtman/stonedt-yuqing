@@ -82,15 +82,14 @@ public class HotWordsUtil {
 		Document parse = Jsoup.parse(html);
 		try {
 			//#sanRoot > main > div.container.right-container_2EFJr > div > div:nth-child(2)
-			Elements tobody = parse.select("#sanRoot > main > div.container.right-container_2EFJr > div > div:nth-child(2) > div");
+			Elements tobody = parse.select("#sanRoot > main > div.container.right-container_2EFJr > div > div:nth-child(2)");
 			for(int i = 1;i<31;i++) {
-				Element select = tobody.select("div:nth-child("+i+")").get(0);
+				Elements select = tobody.select("div:nth-child("+i+")");
 				String topic = select.select("div.content_1YWBm > a > div.c-single-text-ellipsis").text();
-				String original_weight = select.select("div.hot-index_1Bl1a").text();
-				if(StringUtils.isBlank(topic)) {
-					continue;
-				}
-				if(StringUtils.isBlank(original_weight)) {
+				System.out.println("topic:"+topic);
+				String original_weight = select.select("div.trend_2RttY.hide-icon > div.hot-index_1Bl1a").text();
+				System.out.println("original_weight:"+original_weight);
+				if(StringUtils.isBlank(topic)||topic.length()>100) {
 					continue;
 				}
 				JSONObject js = new JSONObject();
@@ -384,7 +383,7 @@ public class HotWordsUtil {
 				}
 				JSONObject js = new JSONObject();
 				js.put("topic", topic);
-				js.put("source_url", source_url);
+				js.put("source_url", "https://search.bilibili.com/all?keyword="+topic);
 				js.put("source_name",source_name);
 				js.put("original_weight", original_weight);
 				list.add(js);
@@ -422,7 +421,7 @@ public class HotWordsUtil {
 				}
 				JSONObject js = new JSONObject();
 				js.put("topic", topic);
-				js.put("source_url", source_url);
+				js.put("source_url", "https://v.qq.com/x/search/?q="+topic);
 				js.put("source_name",source_name);
 				js.put("original_weight", original_weight);
 				list.add(js);
