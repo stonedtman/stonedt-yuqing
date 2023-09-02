@@ -99,8 +99,8 @@ public class SynthesizeSchedule {
    	//@Scheduled(fixedDelay = 1000*60*2)
  	//
 	
-	  @Scheduled(cron = "0 0/30 * * * ?")
-	//@Scheduled(cron = "0 0 0/2 * * ?")
+	  //@Scheduled(cron = "0 0/30 * * * ?")
+	@Scheduled(cron = "0 0 0/2 * * ?")
     public void popularInformation() {
     	if(schedule_synthesize_open==1) {
     		//获取accesstoken
