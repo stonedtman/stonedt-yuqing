@@ -13,8 +13,8 @@ import java.io.IOException;
  *
  * @date  2020年5月25日 下午5:52:52
  */
-@WebFilter(filterName = "CorsFilter")
-@Configuration
+//@WebFilter(filterName = "CorsFilter")
+//@Configuration
 public class CorsFilter implements Filter {
 	
     @Override
