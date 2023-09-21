@@ -45,7 +45,7 @@ public class WebConfigurer implements WebMvcConfigurer {
                 addPathPatterns("/**")
                 .excludePathPatterns("/jumpLogin", "/user/save")
                 .excludePathPatterns("/login","/loginredirect","/project/keywords", "/logout", "static/**","/forgotpwd", "/assets/**", "/dist/**", "/common/**","/monitor/weChatToken","/hot/**")
-                .excludePathPatterns("/fullsearch/listFullTypeByThird", "/fullsearch/hotList","/hot/hotpage/**");
+                .excludePathPatterns("/fullsearch/listFullTypeByThird", "/fullsearch/hotList","/hot/hotpage/**","/img/**","/logonCode");
     }
 
 

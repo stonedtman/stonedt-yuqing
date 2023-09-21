@@ -1,6 +1,7 @@
 package com.stonedt.intelligence.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.code.kaptcha.Constants;
 import com.stonedt.intelligence.aop.SystemControllerLog;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.service.UserService;
@@ -92,8 +93,13 @@ public class LoginController {
     @ResponseBody
     public JSONObject login(@RequestParam(value = "telephone") String telephone,
                             @RequestParam(value = "password") String password,
+                            @RequestParam(value = "graph_code") String graph_code,
                             HttpSession session) {
         JSONObject response = new JSONObject();
+        String string = null;//图形验证码
+        if(null!=session.getAttribute(Constants.KAPTCHA_SESSION_KEY)) {
+        	string = session.getAttribute(Constants.KAPTCHA_SESSION_KEY).toString();
+        }
         User user = userService.selectUserByTelephone(telephone);
         if (null != user) {
             if (user.getStatus() == 0) {
@@ -105,7 +111,13 @@ public class LoginController {
                     if (status == 2) {
                         response.put("code", 4);
                         response.put("msg", "账户已被注销");
-                    } else {
+                    } 
+                    if(null==string||!graph_code.equals(string)) {
+                    	response.put("code", 6);
+                        response.put("msg", "图形验证码不正确");
+                        return response;
+                    }
+                    else {
                         session.setAttribute("User", user);
                         response.put("code", 1);
                         response.put("msg", "用户登录成功");
