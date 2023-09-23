@@ -302,6 +302,12 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 
 访问地址： [https://gitee.com/stonedtx/free-nlp-api](https://gitee.com/stonedtx/free-nlp-api)
 
+<br>
+
+微信扫码在线体验： [https://nlp.stonedt.com](https://nlp.stonedt.com)
+
+<br>
+
 
 ## License & Copyright
 
