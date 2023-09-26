@@ -294,6 +294,21 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 <img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg" title="Logo"  width="220">
 
 
+## 其他开源项目
+
+
+免费的自然语言处理、情感分析、实体识别、图像识别与分类、OCR识别、语音识别接口，功能强大，欢迎体验。
+<br>
+
+访问地址： [https://gitee.com/stonedtx/free-nlp-api](https://gitee.com/stonedtx/free-nlp-api)
+
+<br>
+
+微信扫码在线体验： [https://nlp.stonedt.com](https://nlp.stonedt.com)
+
+<br>
+
+
 ## License & Copyright
 
 Copyright (c) 2014-2022 思通数科 StoneDT, All rights reserved.
