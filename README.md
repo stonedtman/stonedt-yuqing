@@ -196,7 +196,7 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 
 -  1.安装 MySQL 5.5+、redis 4.0+
 
--  2.下载 [stonedt-yuqing.zip](https://gitee.com/stonedtx/yuqing/attach_files/1232235/download)，解压zip包，执行  _java -jar stonedt-yuqing.jar_，启动舆情系统。 
+-  2.下载 [stonedt-yuqing.zip](https://gitee.com/stonedtx/yuqing/attach_files/1541372/download)，解压zip包，执行  _java -jar stonedt-yuqing.jar_，启动舆情系统。 
 
 -  3.本地访问：http://127.0.0.1:8084/
  用户名：13900000000，  密码：stonedt 
