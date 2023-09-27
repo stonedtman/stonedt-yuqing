@@ -200,7 +200,7 @@ docker run -itd --name stonedt_yuqing -p 8084:8084 registry.cn-beijing.aliyuncs.
 docker logs 容器ID -f
 ```
 屏幕出现运行日志即为部署成功
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/docker_log.png" title="Logo"  width="220">
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/docker_log.png">
 
 
 ## 安装依赖
