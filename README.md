@@ -59,8 +59,8 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 - 开发平台：Java J2EE & SpringBoot
 - 采集框架：Spider-flow & WebMagic & HttpClient
 - APP采集：Xposed框架
-- URL仓库：Redis
-- 网页渲染解析：Jvppeteer & Playwright（微软开源）
+- URL仓库：布隆过滤器 + Redis
+- 网页渲染解析：Jvppeteer & Playwright（微软开源） & Selenium
 - web应用服务器：Nginx & Tomcat
 - 储存任务发送：Kafka & Zookeeper
 - 抓取任务发送：RabbitMQ
@@ -91,7 +91,7 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 - 消息队列：Kafka & RabbitMQ
 - 开发框架：SpringBoot
 - 开发语言：Java J2EE
-- 图表展示：Apache  Echarts & AnyCharts
+- 图表展示：Apache Echarts & AnyCharts
 
 
 
