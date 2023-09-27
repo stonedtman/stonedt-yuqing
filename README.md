@@ -194,6 +194,11 @@ docker run -itd --name stonedt_yuqing -p 8084:8084 registry.cn-beijing.aliyuncs.
 
 使用docker ps命令获取我们运行的容器ID
 
+```
+docker ps
+```
+
+
 使用docker logs 容器ID -f 查看容器日志
 
 ```
