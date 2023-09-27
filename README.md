@@ -182,7 +182,21 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 
 ## Docker 安装
 
-运行 docker pull maydays/yuqing:latest
+-   1.Docker拉取镜像并运行
+
+在命令行输入下面一行命令即可完成镜像的拉取以及运行,拉取镜像大概需要花费5-10分钟。
+
+```
+docker run -itd --name stonedt_yuqing -p 8084:8084 registry.cn-beijing.aliyuncs.com/stonedt_yuqing/stonedt_yuqing:1.0.1
+```
+
+-   2.验证是否成功运行
+
+使用docker ps命令获取我们运行的容器ID
+
+使用docker logs 容器ID -f 查看容器日志（例如 docker logs 79c788da03a7 -f）
+
+屏幕出现运行日志即为部署成功
 
 
 ## 安装依赖
