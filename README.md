@@ -56,7 +56,7 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 ### 思通舆情 技术栈：
 
 #### 数据采集
-- 开发平台：Java EE & SpringBoot
+- 开发平台：Java J2EE & SpringBoot
 - 采集框架：Spider-flow & WebMagic & HttpClient
 - APP采集：Xposed框架
 - URL仓库：Redis
@@ -70,7 +70,7 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 
 #### 数据处理
 - 开发框架：SpringBoot
-- 开发语言：Java JEE
+- 开发语言：Java J2EE
 - 数据暂存：MySQL
 - 数据索引：Redis
 - 深度学习：PaddlePaddle
@@ -78,7 +78,7 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 - 数据处理和储存任务发送：Kafka & Zookeeper
 - 数据中台：自研 & DataEase 
 - 数据初始化：集成FlyWay，自动初始化MySQL
-- 数据总线：RockAPI （进行了二次开发）
+- 数据总线：RocketAPI （进行了二次开发）
 
 #### 数据分析
 - 数据库：MySQL
@@ -88,10 +88,10 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 - 数据同步：DataX
 - 文章储存：Mongodb
 - 数据缓存：Redis
-- 消息队列：kafak & rabbitMQ
+- 消息队列：Kafka & RabbitMQ
 - 开发框架：SpringBoot
-- 开发语言：Java JEE
-- 图表展示：Apache  Echarts & anyCharts
+- 开发语言：Java J2EE
+- 图表展示：Apache  Echarts & AnyCharts
 
 
 
@@ -203,7 +203,7 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 
 详见思通舆情安装部署手册：https://gitee.com/stonedtx/yuqing/blob/master/install_guide.md
 
-_备注：修改配置文件[[application.yml](https://gitee.com/stonedtx/yuqing/blob/master/config/application.yml)]，设定 MySQL、redis 用户和密码等。
+_备注：修改配置文件[[application.yml](https://gitee.com/stonedtx/yuqing/blob/master/config/application.yml)]，设定 MySQL、Redis 用户和密码等。
       修改配置文件[[application.properties](https://gitee.com/stonedtx/yuqing/blob/master/config/application.properties)]，修改xmlFilePath文件路径，并且拷贝config文件下的xml文件到指定路径等。_ 
 
 
