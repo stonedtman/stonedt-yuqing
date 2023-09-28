@@ -145,7 +145,7 @@ https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 
 -  系统管理后台 ，将于2022年4月份之前开放源代码。
 
--  智写报告 ，将于2023年10月份之前开放源代码。
+-  智写报告 ，将于2023年10月份之前开放源代码。(后端引擎由我司[写作宝](https://www.xiezuobao.net/)团队提供服务与支持)
 
 
 ###  舆情数据采集 
