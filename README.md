@@ -8,8 +8,6 @@
 <br>
 您的支持和参与就是我们坚持开源的动力！请 :star:  [star](https://gitee.com/stonedtx/yuqing) 或者 [fork](https://gitee.com/stonedtx/yuqing)!  
 
-如果您在使用思通舆情，请让我们知道，您的使用对我们非常重要：**[查看](https://gitee.com/stonedtx/yuqing/blob/master/feedback.md)
-https://gitee.com/stonedtx/yuqing/blob/master/feedback.md**
 
 <br>
 
