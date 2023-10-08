@@ -727,7 +727,7 @@ $(document).on('click','#updateanalysis', function () {
 	           }else if (status==500){
                    showInfo("更新失败，请稍后再试...");
                }else if (status===422){
-                   showInfo("距离上次更新时间小于15分钟，请稍后再试...");
+                   showInfo("距离上次请求时间小于15分钟，请稍后再试...");
                }
 	        },
 	        error: function (xhr, ajaxOptions, thrownError) {
