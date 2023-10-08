@@ -499,7 +499,7 @@ function weibo(){
 				html += '<li><a target="_blank" href="'+weibodetail.source_url+'"><div class="over-newsbox"><div class="content-title">'
 				+ '<div class="over-weibohottopictitle" title="'+weibodetail.topic+'" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><span class="content-logo" style="background: url(https://file.ipadown.com/tophub/assets/images/media/s.weibo.com.png);"></span>'
 				+ weibodetail.topic+'</div></div><div class="over-tips">'
-				+ '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 微博</span><span class="link f-right moodzm">'+emotionalIndex+'</span>'
+				+ '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 微博</span><span class="link f-right moodzm" style="display: none;">'+emotionalIndex+'</span>'
 				+ '<span class="link f-right moodfm" style="color: #9ca8b3;margin: 0;"><i class="fas fa-fire" style="color: #fe475d;"> </i> '+weibodetail.original_weight+'</span>'
 				+ '</div></div><i class="mdi mdi-chevron-right font-20"></i></a></li>'
 				
@@ -533,7 +533,7 @@ function douyin(){
 				html += '<li><a target="_blank" href="'+douyindetail.source_url+'"><div class="over-newsbox"><div class="content-title">'
 				+ '<div class="over-weibohottopictitle" title="'+douyindetail.topic+'" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><span class="content-logo" style="background: url(https://file.ipadown.com/tophub/assets/images/media/iesdouyin.com.png);"></span>'
 				+ douyindetail.topic+'</div></div><div class="over-tips">'
-				+ '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 抖音</span><span class="link f-right moodzm">'+emotionalIndex+'</span>'
+				+ '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 抖音</span><span class="link f-right moodzm" style="display: none;">'+emotionalIndex+'</span>'
 				+ '<span class="link f-right moodfm" style="color: #9ca8b3;margin: 0;"><i class="fas fa-fire" style="color: #fe475d;"> </i> '+douyindetail.original_weight+'</span>'
 				+ '</div></div><i class="mdi mdi-chevron-right font-20"></i></a></li>'
 				
@@ -568,7 +568,7 @@ function policydata(){
 				html += '<li><a target="_blank" href="'+douyindetail.source_url+'"><div class="over-newsbox"><div class="content-title">'
 				+ '<div class="over-weibohottopictitle" title="'+douyindetail.topic+'" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><span class="content-logo" style="background: url(http://www.gov.cn/govweb/xhtml/2016gov/images/public/logo_wz1.jpg);"></span>'
 				+ douyindetail.topic+'</div></div><div class="over-tips">'
-				+ '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 国务院</span><span class="link f-right moodzm">'+emotionalIndex+'</span>'
+				+ '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 国务院</span><span class="link f-right moodzm" style="display: none;">'+emotionalIndex+'</span>'
 //				+ '<span class="link f-right moodfm" style="color: #9ca8b3;margin: 0;"><i class="fas fa-fire" style="color: #fe475d;"> </i> '+douyindetail.original_weight+'</span>'
 				+ '</div></div><i class="mdi mdi-chevron-right font-20"></i></a></li>'
 				
@@ -604,7 +604,7 @@ function finaceData(){
 				html += '<li><a target="_blank" href="'+douyindetail.source_url+'"><div class="over-newsbox"><div class="content-title">'
 				+ '<div class="over-weibohottopictitle" title="'+douyindetail.topic+'" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><span class="content-logo" style="background: url(https://g1.dfcfw.com/g3/201909/20190912110958.jpg);"></span>'
 				+ douyindetail.topic+'</div></div><div class="over-tips">'
-				+ '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 东方财富网</span><span class="link f-right moodzm">'+emotionalIndex+'</span>'
+				+ '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 东方财富网</span><span class="link f-right moodzm" style="display: none;">'+emotionalIndex+'</span>'
 //				+ '<span class="link f-right moodfm" style="color: #9ca8b3;margin: 0;"><i class="fas fa-fire" style="color: #fe475d;"> </i> '+douyindetail.original_weight+'</span>'
 				+ '</div></div><i class="mdi mdi-chevron-right font-20"></i></a></li>'
 				
@@ -639,7 +639,7 @@ function scienceandtechnology(){
 				html += '<li><a target="_blank" href="'+douyindetail.source_url+'"><div class="over-newsbox"><div class="content-title">'
 				+ '<div class="over-weibohottopictitle" title="'+douyindetail.topic+'" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><span class="content-logo" style="background: url(https://file.ipadown.com/tophub/assets/images/media/36kr.com.png_50x50.png);"></span>'
 				+ douyindetail.topic+'</div></div><div class="over-tips">'
-				+ '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 36kr</span><span class="link f-right moodzm">'+emotionalIndex+'</span>'
+				+ '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 36kr</span><span class="link f-right moodzm" style="display: none;">'+emotionalIndex+'</span>'
 //				+ '<span class="link f-right moodfm" style="color: #9ca8b3;margin: 0;"><i class="fas fa-fire" style="color: #fe475d;"> </i> '+douyindetail.original_weight+'</span>'
 				+ '</div></div><i class="mdi mdi-chevron-right font-20"></i></a></li>'
 				
@@ -679,7 +679,7 @@ function bilibili(){
 				html += '<li><a target="_blank" href="'+bilibilidetail.source_url+'"><div class="over-newsbox"><div class="content-title">'
 				+ '<div class="over-weibohottopictitle" title="'+bilibilidetail.topic+'" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><span class="content-logo" style="background: url(https://file.ipadown.com/tophub/assets/images/media/bilibili.com.png);"></span>'
 				+ bilibilidetail.topic+'</div></div><div class="over-tips">'
-				+ '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 bilibili</span><span class="link f-right moodzm">'+emotionalIndex+'</span>'
+				+ '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 bilibili</span><span class="link f-right moodzm" style="display: none;">'+emotionalIndex+'</span>'
 				+ '<span class="link f-right moodfm" style="color: #9ca8b3;margin: 0;"><i class="fas fa-fire" style="color: #fe475d;"> </i> '+bilibilidetail.original_weight+'</span>'
 				+ '</div></div><i class="mdi mdi-chevron-right font-20"></i></a></li>'
 				
@@ -714,7 +714,7 @@ function tecentvedio(){
 				html += '<li><a target="_blank" href="'+tecentvediodetail.source_url+'"><div class="over-newsbox"><div class="content-title">'
 				+ '<div class="over-weibohottopictitle" title="'+tecentvediodetail.topic+'" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><span class="content-logo" style="background: url(https://file.ipadown.com/tophub/assets/images/media/v.qq.com.png);"></span>'
 				+ tecentvediodetail.topic+'</div></div><div class="over-tips">'
-				+ '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 腾讯视频</span><span class="link f-right moodzm">'+emotionalIndex+'</span>'
+				+ '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 腾讯视频</span><span class="link f-right moodzm" style="display: none;">'+emotionalIndex+'</span>'
 				+ '<span class="link f-right moodfm" style="color: #9ca8b3;margin: 0;"><i class="fas fa-fire" style="color: #fe475d;"> </i> '+tecentvediodetail.original_weight+'</span>'
 				+ '</div></div><i class="mdi mdi-chevron-right font-20"></i></a></li>'
 				
@@ -749,7 +749,7 @@ function wexin(){
 				html += '<li><a target="_blank" href="'+wechatdetail.source_url+'"><div class="over-newsbox"><div class="content-title">'
 				+ '<div class="over-weibohottopictitle" title="'+wechatdetail.topic+'" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><span class="content-logo" style="background: url(https://file.ipadown.com/tophub/assets/images/media/mp.weixin.qq.com.png_160x160.png);"></span>'
 				+ wechatdetail.topic+'</div></div><div class="over-tips">'
-				+ '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 微信</span><span class="link f-right moodzm">'+emotionalIndex+'</span>'
+				+ '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 微信</span><span class="link f-right moodzm" style="display: none;">'+emotionalIndex+'</span>'
 				+ '<span class="link f-right moodfm" style="color: #9ca8b3;margin: 0;"><i class="fas fa-fire" style="color: #fe475d;"> </i> '+wechatdetail.original_weight+'</span>'
 				+ '</div></div><i class="mdi mdi-chevron-right font-20"></i></a></li>'
 				
@@ -849,7 +849,7 @@ function allhot(){
 				html += '<li><a target="_blank" href="'+hot.source_url+'"><div class="over-newsbox"><div class="content-title">'
 				+ '<div class="over-weibohottopictitle" title="'+hot.topic+'" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><span class="content-logo" style="background: url('+iconUrl+');"></span>'
 				+ hot.topic+'</div></div><div class="over-tips">'
-				+ '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 '+source_name+'</span><span class="link f-right moodzm">'+emotionalIndex+'</span>'
+				+ '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 '+source_name+'</span><span class="link f-right moodzm" style="display: none;">'+emotionalIndex+'</span>'
 				+ '<span class="link f-right moodfm" style="color: #9ca8b3;margin: 0;"><i class="fas fa-fire" style="color: #fe475d;"> </i> '+hot.original_weight+'</span>'
 				+ '</div></div><i class="mdi mdi-chevron-right font-20"></i></a></li>'
 				
@@ -976,7 +976,7 @@ function installHot(res){
                 if (source.sentiment == 1) {
                 	sales_volume = '<span class="link f-right moodzm">正面</span>'
                 } else if (source.sentiment == 2) {
-                	sales_volume = '<span class="link f-right moodzx">中性</span>'
+                	sales_volume = '<span class="link f-right moodzx" style="display: none;">中性</span>'
                 } else if (source.sentiment == 3) {
                 	sales_volume = '<span class="link f-right moodfm">负面</span>'
                 }

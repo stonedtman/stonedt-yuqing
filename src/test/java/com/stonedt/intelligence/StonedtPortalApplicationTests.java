@@ -54,6 +54,8 @@ public class StonedtPortalApplicationTests {
 
 	@Test
 	public void contextLoads() {
+//		String policyData = SynthesizeSchedule.getPolicyData();
+//		System.out.println(policyData);
 		synthesizeSchedule.popularInformation();
 //		name();
 
@@ -175,7 +177,6 @@ public class StonedtPortalApplicationTests {
 
 
 								JSONObject nerdatasjon = analysisDataRequest.dataNerArticleData(highKeyword, stopword, times, timee, projectType,nersjon);
-
 
 
 								analysisQuartzDo.setNer(nerdatasjon.toJSONString());

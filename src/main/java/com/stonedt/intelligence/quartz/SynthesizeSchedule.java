@@ -511,7 +511,7 @@ public class SynthesizeSchedule {
 	 */
 	public static String getPolicyData() {
 		
-		String url = "http://www.gov.cn/zhengce/zuixin.htm";
+		String url = "https://www.gov.cn/zhengce/zuixin/home.htm";
 		JSONArray array = new JSONArray();
 		try {
 			String gethtml = gethtml(url);
