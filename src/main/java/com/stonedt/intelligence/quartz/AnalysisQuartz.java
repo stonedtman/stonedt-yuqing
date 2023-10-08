@@ -141,7 +141,7 @@ public class AnalysisQuartz {
      * 	新的监测分析定时任务
      */
     //@Scheduled(cron = "0 0 22 * * ?")
-    @Scheduled(cron = "${schedule.analysispt.cron}")
+//    @Scheduled(cron = "${schedule.analysispt.cron}")
     public void start() {
         if (schedule_analysis_open == 1) {
             try {

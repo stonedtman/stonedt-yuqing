@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import com.stonedt.intelligence.aop.SystemControllerLog;
@@ -17,6 +18,7 @@ import com.stonedt.intelligence.dao.ProjectTaskDao;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,6 +41,9 @@ public class AnalysisController {
 	
 	@Autowired
 	private ProjectTaskDao projectTaskDao;
+
+	@Resource
+	private RedisTemplate<String,String> redisTemplate;
 	
 	
 	
@@ -313,8 +318,16 @@ public class AnalysisController {
 		if (StringUtils.isBlank(groupId))groupId = "";
 		if (StringUtils.isBlank(projectId))projectId = "";
 		try {
+			Boolean exits = redisTemplate.hasKey("analysisProject_" + projectId);
+			if (exits) {
+				map.put("status", 422);
+				map.put("result", "fail");
+				return JSONObject.toJSONString(map);
+			}
 			Boolean flag = projectTaskDao.updateProjectTaskAnalysisToUnDealFlag(Long.parseLong(projectId));
 			if(flag==true) {
+				// 15分钟内不允许重复请求
+				redisTemplate.opsForValue().set("analysisProject_" + projectId, "1", 15, java.util.concurrent.TimeUnit.MINUTES);
 				 map.put("status", 200);
 				 map.put("result", "success");
 			}

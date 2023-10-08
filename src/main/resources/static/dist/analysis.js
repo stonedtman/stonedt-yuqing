@@ -724,7 +724,11 @@ $(document).on('click','#updateanalysis', function () {
 	           let status = JSON.parse(data).status;
 	           if(status==200){
 	        	   showInfo("定时任务已生成，请稍后...");
-	           }
+	           }else if (status==500){
+                   showInfo("更新失败，请稍后再试...");
+               }else if (status===422){
+                   showInfo("距离上次更新时间小于15分钟，请稍后再试...");
+               }
 	        },
 	        error: function (xhr, ajaxOptions, thrownError) {
 	            if (xhr.status == 403) {
