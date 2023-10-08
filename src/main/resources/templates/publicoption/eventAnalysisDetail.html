@@ -1821,6 +1821,22 @@
 				$('.anychart-credits').remove();
 			}, 150);
 		</script>
+		<script>
+			// 获取mvc传过来的值
+			var main_media = unscramble_content.main_media;
+			var wemedia = unscramble_content.wemedia;
+			// 根据id赋值
+			$("#main_media").html(main_media);
+			$("#wemedia").html(wemedia);
+			propagationAnalysis2()
+			// var selfMediaRankingList = propagation_analysis.media;
+			// // 将列表数据赋值
+			// var html = "";
+			// for(var i = 0; i < selfMediaRankingList.length; i++) {
+			// 	html += "<tr><td>" + selfMediaRankingList[i].name + "</td><td>" + selfMediaRankingList[i].source_name + "</td><td>"+selfMediaRankingList[i].fans + "</td><td>"+selfMediaRankingList[i].publishs + "</td></tr>"
+			// }
+			// $("#selfMediaRankingList").html(html);
+		</script>
 		 <script th:inline="javascript" type="text/javascript">
     let projectid = '';
     let groupId = '';
