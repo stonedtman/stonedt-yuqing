@@ -73,6 +73,8 @@ public class PublicOptionServiceImpl implements PublicOptionService{
 		publicoption.setEventkeywords(eventkeywords);
 		publicoption.setEventstopwords(eventstopwords);
 		publicOptionDao.updatedatabyid(publicoption);
+		//删除已经生成的报告
+		publicOptionDao.deletePublicoptionDetailByPublicoptionId(id);
 		} catch (Exception e) {
 			map.put("status", 500);
 			map.put("result", "fail");

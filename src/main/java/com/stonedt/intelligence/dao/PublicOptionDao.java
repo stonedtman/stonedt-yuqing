@@ -53,5 +53,10 @@ public interface PublicOptionDao {
 	String getUnscrambleContentById(Integer id);
 
 	List<Map<String, Object>> getpublicoptionnetizensAnalysisData(@Param("user_id")Long user_id);
-	
+
+	/**
+	 * 	根据方案id删除方案详情
+	 * @param publicoptionId 方案id
+	 */
+	void deletePublicoptionDetailByPublicoptionId(@Param("publicoptionId") Integer publicoptionId);
 }

@@ -752,7 +752,7 @@ public class publicoptionQuartz {
     		String eventkeywords = checkString(publicoptionEntity.getEventkeywords());
     		String[] split = eventkeywords.split("\\+");
     		String mainkeywords = split[0];
-    		String affiliatedkeywords = split[1];
+    		String affiliatedkeywords = split.length>1?split[1]:null;
     		String keywords =mainkeywords+","; 
     		if(null !=  affiliatedkeywords && !"".equals(affiliatedkeywords.trim())){
     			String[] split2 = mainkeywords.split(",");
