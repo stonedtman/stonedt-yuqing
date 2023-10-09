@@ -208,7 +208,7 @@ $("#currentyear").text((new Date()).getFullYear());
                         statusStr = '   <input type="checkbox" class="change_status" checked data-on-color="success" data-off-color="warning" value="' + list[i].project_id + '"> '
                     }
                     var html = '<div class="project-warning-list" data-id="' + list[i].project_id + '"> ' +
-                        '<div>' + list[i].project_name + '</div> ' +
+                        '<div class="text-over">' + list[i].project_name + '</div> ' +
                         '<div class="text-over">' + list[i].warning_name + '</div> ' +
                         '<div>' + list[i].group_name + '</div> ' +
                         '<div>' + contentStr + '</div> ' +

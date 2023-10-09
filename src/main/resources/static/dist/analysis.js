@@ -1742,6 +1742,9 @@ function hotSpotRankingChart(data, selectId) {
                     trigger: 'item',
                     formatter: function (params) {
                         if (typeof(params.value)[2] == "undefined") {
+                            if(String(params.value)=="NaN"){
+                                return params.name + ' : ' + 0;
+                            }
                             return params.name + ' : ' + params.value;
                         } else {
                             return params.name + ' : ' + params.value[2];
