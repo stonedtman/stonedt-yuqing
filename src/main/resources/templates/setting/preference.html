@@ -64,8 +64,8 @@
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item">系统设置</li>
                                     <li class="breadcrumb-item">偏好设置</li>
-                                    <li class="breadcrumb-item" id="groupName">涉及国家</li>
-                                    <li class="breadcrumb-item" id="projectName">国家高层</li>
+                                    <li class="breadcrumb-item" id="groupName"></li>
+                                    <li class="breadcrumb-item" id="projectName"></li>
                                 </ol>
                             </nav>
                         </div>
@@ -230,6 +230,7 @@ $("#currentyear").text((new Date()).getFullYear());
                     var html = '<option value="">暂无方案组！</option>';
                     $('#groupSelect').html(html);
                 }
+                $('#groupName').text($('#groupSelect option:selected').text());
             },
             error: function (res) {
                 console.log(res);
@@ -266,6 +267,8 @@ $("#currentyear").text((new Date()).getFullYear());
                     $('#projectSelect').html(html);
                     $('#iconall i').hide();
                 }
+                <!--导航条渲染,变更内容-->
+                $('#projectName').text($('#projectSelect option:selected').text());
             },
             error: function (res) {
                 console.log(res);
@@ -276,10 +279,13 @@ $("#currentyear").text((new Date()).getFullYear());
     $('#groupSelect').change(function () {
         listProjectByGroupId();
         getOpinionConditionByProjectId();
+        $('#groupName').text($('#groupSelect option:selected').text());
     });
 
     $('#projectSelect').change(function () {
         getOpinionConditionByProjectId();
+        <!--导航条渲染-->
+        $('#projectName').text($('#projectSelect option:selected').text());
     });
 
     // 偏好设置信息
