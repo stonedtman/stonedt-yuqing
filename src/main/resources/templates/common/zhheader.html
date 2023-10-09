@@ -70,7 +70,8 @@
                     </a>
                 </li>
                 <!--                监测大屏-->
-                <li class="nav-item dropdown hover-none navLi" id="jcdp">
+                <li data-type="opinion_screen" th:classappend="${menu=='opinion_screen'?'nav-active3':''}"
+                    class="nav-item dropdown hover-none navLi" id="jcdp">
                     <a class="nav-link dropdown-toggle waves-effect  waves-dark">
                         <span class="d-none d-md-block"> <i class="fa fa-chart-line"></i> 监测大屏</span>
                         <span class="d-block d-md-none">监测大屏</span>
@@ -448,15 +449,10 @@
                 window.location.href = ctxPath + 'fullsearch';
             }else if (menu == 'public_option') {
                 window.location.href = ctxPath + 'publicoption';
+            }else if (menu == 'opinion_screen') {
+                window.open('http://'+ window.location.host + '/opinion_screen');
             }
         }
-
-
-        //当监测大屏菜单时，执行函数
-        $("#jcdp").click(function(){
-            // 打开新标签页
-            window.open('http://192.168.71.52:5466/opinion_screen');
-        });
 
     </script>
 </header>
