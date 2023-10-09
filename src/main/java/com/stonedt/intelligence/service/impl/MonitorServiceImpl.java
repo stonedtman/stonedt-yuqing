@@ -165,7 +165,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray orgarray = paramJson.getJSONArray("organizationtype");
         String orgtypelist = StringUtils.join(orgarray, ",");
         if (StringUtils.isBlank(orgtypelist)) {
-        	orgtypelist = "0";
+            orgtypelist = "0";
         }
         
         paramJson.put("orgtypelist", orgtypelist);
@@ -176,7 +176,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray categorylabledataarray = paramJson.getJSONArray("categorylabledata");
         String categorylable = StringUtils.join(categorylabledataarray, ",");
         if (StringUtils.isBlank(categorylable)) {
-        	categorylable = "0";
+            categorylable = "0";
         }
         paramJson.put("categorylable", categorylable);
         paramJson.remove("categorylabledata");
@@ -187,7 +187,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray enterprisetypelistarray = paramJson.getJSONArray("enterprisetypelist");
         String enterprisetypelist = StringUtils.join(enterprisetypelistarray, ",");
         if (StringUtils.isBlank(enterprisetypelist)) {
-        	enterprisetypelist = "0";
+            enterprisetypelist = "0";
         }
         paramJson.put("enterprisetypelist", enterprisetypelist);
         
@@ -197,7 +197,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray hightechtypelistarray = paramJson.getJSONArray("hightechtypelist");
         String hightechtypelist = StringUtils.join(hightechtypelistarray, ",");
         if (StringUtils.isBlank(hightechtypelist)) {
-        	hightechtypelist = "0";
+            hightechtypelist = "0";
         }
         paramJson.put("hightechtypelist", hightechtypelist);
         
@@ -205,7 +205,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray policylableflagarray = paramJson.getJSONArray("policylableflag");
         String policylableflag = StringUtils.join(policylableflagarray, ",");
         if (StringUtils.isBlank(policylableflag)) {
-        	policylableflag = "0";
+            policylableflag = "0";
         }
         paramJson.put("policylableflag", policylableflag);
 
@@ -282,10 +282,10 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray eventArray = paramJson.getJSONArray("eventIndex");
         String eventlable = "";
         if(eventArray!=null) {
-        	eventlable = StringUtils.join(eventArray, ",");
+            eventlable = StringUtils.join(eventArray, ",");
             eventlable = eventlable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
             if(eventlable.endsWith(",")) {
-            	eventlable = eventlable.substring(0, eventlable.length()-1);
+                eventlable = eventlable.substring(0, eventlable.length()-1);
             }
         }
         paramJson.put("eventlable", eventlable);
@@ -294,10 +294,10 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray industryArray = paramJson.getJSONArray("industryIndex");
         String industrylable = "";
         if(industryArray!=null) {
-        	industrylable = StringUtils.join(industryArray, ",");
+            industrylable = StringUtils.join(industryArray, ",");
             industrylable = industrylable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
             if(industrylable.endsWith(",")) {
-            	industrylable = industrylable.substring(0, industrylable.length()-1);
+                industrylable = industrylable.substring(0, industrylable.length()-1);
             }
         }
         paramJson.put("industrylable", industrylable);
@@ -306,14 +306,14 @@ public class MonitorServiceImpl implements MonitorService {
         String province = "";
         JSONArray provinceArray = paramJson.getJSONArray("province");
         if(provinceArray!=null) {
-        	province = StringUtils.join(provinceArray, ",");
+            province = StringUtils.join(provinceArray, ",");
             if(!StringUtils.isEmpty(province)) {
-            	province = province.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+                province = province.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
             }else {
-            	province = "";
+                province = "";
             }
             if(province.endsWith(",")) {
-            	province = province.substring(0, province.length()-1);
+                province = province.substring(0, province.length()-1);
             }
         }
         
@@ -326,12 +326,12 @@ public class MonitorServiceImpl implements MonitorService {
         String city = StringUtils.join(cityArray, ",");
         
         if(!StringUtils.isEmpty(city)) {
-        	city = city.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+            city = city.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
         }else {
-        	city = "";
+            city = "";
         }
         if(city.endsWith(",")) {
-        	city = city.substring(0, city.length()-1);
+            city = city.substring(0, city.length()-1);
         }
         paramJson.put("city", city);
         
@@ -383,9 +383,9 @@ public class MonitorServiceImpl implements MonitorService {
                 String similarUrl = es_search_url + MonitorConstant.es_api_similar_titlekeyword_search_content;
                 String esSimilarResponse = null;
                 if(redisUtil.existsKey(key)) {
-                	esSimilarResponse = redisUtil.getKey(key);
+                    esSimilarResponse = redisUtil.getKey(key);
                 }else {
-                	esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
+                    esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
                     redisUtil.filteritemset(key, esSimilarResponse);
                 }
                 if (!esSimilarResponse.equals("")) {
@@ -447,11 +447,11 @@ public class MonitorServiceImpl implements MonitorService {
                         JSONObject _sourceJson = dataJson.getJSONObject("_source");
                         Set<String> relatedWord = new HashSet<>();
                         if(projectType==2) {
-                        	relatedWord = ProjectWordUtil
+                            relatedWord = ProjectWordUtil
                                     .projectRelatedWord(_sourceJson.getString("title") + _sourceJson.getString("content"), subject_word, regional_word, character_word, event_word);
                             _sourceJson.put("relatedWord", relatedWord);
                         }else if(projectType==1) {
-                        	relatedWord = ProjectWordUtil
+                            relatedWord = ProjectWordUtil
                                     .CommononprojectRelatedWord(_sourceJson.getString("title") + _sourceJson.getString("content"), subject_word, regional_word, character_word, event_word);
                             _sourceJson.put("relatedWord", relatedWord);
                         }
@@ -494,31 +494,31 @@ public class MonitorServiceImpl implements MonitorService {
                         }
                       //事件标签
                         if (_sourceJson.containsKey("eventlable")) {
-                        	_sourceJson.put("eventlable", _sourceJson.get("eventlable").toString());
+                            _sourceJson.put("eventlable", _sourceJson.get("eventlable").toString());
                         }else {
-                        	 _sourceJson.put("eventlable", "");
+                            _sourceJson.put("eventlable", "");
                         }
                         //行业标签
                         if (_sourceJson.containsKey("industrylable")) {
-                        	_sourceJson.put("industrylable", _sourceJson.get("industrylable").toString());
+                            _sourceJson.put("industrylable", _sourceJson.get("industrylable").toString());
                         }else {
-                        	 _sourceJson.put("industrylable", "");
+                            _sourceJson.put("industrylable", "");
                         }
                         //文章分类
                         if (_sourceJson.containsKey("article_category")) {
-                        	_sourceJson.put("article_category", _sourceJson.get("article_category").toString());
+                            _sourceJson.put("article_category", _sourceJson.get("article_category").toString());
                         }else {
-                        	 _sourceJson.put("article_category", "");
+                            _sourceJson.put("article_category", "");
                         }
                         //相似文章数量
                         _sourceJson.put("num", 1);
                         JSONArray similarArray = JSON.parseArray(JSONObject.parseObject(redisUtil.getKey(key)).getString("data"));
                         for (Object object : similarArray) {
-                        	JSONObject parseObject = JSONObject.parseObject(object.toString());
-                        	if(parseObject.get("article_public_id").equals(_sourceJson.getString("article_public_id"))) {
-                        		_sourceJson.put("num", Integer.parseInt(parseObject.getString("num")));
-                        	}
-						}
+                            JSONObject parseObject = JSONObject.parseObject(object.toString());
+                            if(parseObject.get("article_public_id").equals(_sourceJson.getString("article_public_id"))) {
+                                _sourceJson.put("num", Integer.parseInt(parseObject.getString("num")));
+                            }
+                        }
                         String key_words = _sourceJson.getString("key_words");
                         if (!key_words.equals("")) {
                             String sb = "";
@@ -563,7 +563,7 @@ public class MonitorServiceImpl implements MonitorService {
                 response.put("data", dataGroupJson);
             }
         } else {
-        	redisUtil.deleteKey(user_id);
+            redisUtil.deleteKey(user_id);
             paramJson.put("esindex", "postal");
             paramJson.put("estype", "infor");
             String params = MapUtil.getUrlParamsByMap(paramJson);
@@ -599,11 +599,11 @@ public class MonitorServiceImpl implements MonitorService {
                         
                         Set<String> relatedWord = new HashSet<>();
                         if(projectType==2) {
-                        	relatedWord = ProjectWordUtil
+                            relatedWord = ProjectWordUtil
                                     .projectRelatedWord(_sourceJson.getString("title") + _sourceJson.getString("content"), subject_word, regional_word, character_word, event_word);
                             _sourceJson.put("relatedWord", relatedWord);
                         }else if(projectType==1) {
-                        	relatedWord = ProjectWordUtil
+                            relatedWord = ProjectWordUtil
                                     .CommononprojectRelatedWord(_sourceJson.getString("title") + _sourceJson.getString("content"), subject_word, regional_word, character_word, event_word);
                             _sourceJson.put("relatedWord", relatedWord);
                         }
@@ -620,7 +620,7 @@ public class MonitorServiceImpl implements MonitorService {
                         }
                         String ner = "";
                         if(_sourceJson.containsKey("ner")) {
-                        	ner = _sourceJson.getString("ner");
+                            ner = _sourceJson.getString("ner");
                         }
 
                         title = _sourceJson.getString("title");
@@ -635,12 +635,12 @@ public class MonitorServiceImpl implements MonitorService {
                             if (!extend_string_one.equals("")) {
                                 JSONObject extend_string_oneJson = JSON.parseObject(extend_string_one);
                                 try {
-                                	 JSONArray imglist = extend_string_oneJson.getJSONArray("imglist");
+                                    JSONArray imglist = extend_string_oneJson.getJSONArray("imglist");
                                      extend_string_oneJson.put("imglist", imglist);
                                      _sourceJson.put("extend_string_one", extend_string_oneJson);
-								} catch (Exception e) {
-									_sourceJson.put("extend_string_one", "");
-								}
+                                } catch (Exception e) {
+                                    _sourceJson.put("extend_string_one", "");
+                                }
                                
                             }
                         } else {
@@ -648,15 +648,15 @@ public class MonitorServiceImpl implements MonitorService {
                         }
                         //事件标签
                         if (_sourceJson.containsKey("eventlable")) {
-                        	_sourceJson.put("eventlable", _sourceJson.get("eventlable").toString());
+                            _sourceJson.put("eventlable", _sourceJson.get("eventlable").toString());
                         }else {
-                        	 _sourceJson.put("eventlable", "");
+                            _sourceJson.put("eventlable", "");
                         }
                         //行业标签
                         if (_sourceJson.containsKey("industrylable")) {
-                        	_sourceJson.put("industrylable", _sourceJson.get("industrylable").toString());
+                            _sourceJson.put("industrylable", _sourceJson.get("industrylable").toString());
                         }else {
-                        	 _sourceJson.put("industrylable", "");
+                            _sourceJson.put("industrylable", "");
                         }
                         
                         
@@ -1178,46 +1178,48 @@ public class MonitorServiceImpl implements MonitorService {
             
             Integer timeType = paramJson.getInteger("timeType");
             JSONObject timeJson = new JSONObject();
-            switch (timeType) {
-                case 1:
-                    timeJson = DateUtil.dateRoll(new Date(), Calendar.HOUR, -24);
-                    times = timeJson.getString("times");
-                    timee = timeJson.getString("timee");
-                    break;
-                case 2:
-                    timeJson = DateUtil.getDifferOneDayTimes(0);
-                    times = timeJson.getString("times") + " 00:00:00";
-                    timee = timeJson.getString("timee") + " 23:59:59";
-                    break;
-                case 3:
-                    timeJson = DateUtil.getDifferOneDayTimes(-1);
-                    times = timeJson.getString("times") + " 00:00:00";
-                    timee = timeJson.getString("times") + " 23:59:59";
-                    break;
-                case 4:
-                    timeJson = DateUtil.getDifferOneDayTimes(-3);
-                    times = timeJson.getString("times") + " 00:00:00";
-                    timee = timeJson.getString("timee") + " 23:59:59";
-                    break;
-                case 5:
-                    timeJson = DateUtil.getDifferOneDayTimes(-7);
-                    times = timeJson.getString("times") + " 00:00:00";
-                    timee = timeJson.getString("timee") + " 23:59:59";
-                    break;
-                case 6:
-                    timeJson = DateUtil.getDifferOneDayTimes(-15);
-                    times = timeJson.getString("times") + " 00:00:00";
-                    timee = timeJson.getString("timee") + " 23:59:59";
-                    break;
-                case 7:
-                    timeJson = DateUtil.getDifferOneDayTimes(-30);
-                    times = timeJson.getString("times") + " 00:00:00";
-                    timee = timeJson.getString("timee") + " 23:59:59";
-                    break;
-                case 8:
-                    times = paramJson.getString("times") + " 00:00:00";
-                    timee = paramJson.getString("timee") + " 23:59:59";
-                    break;
+            if (timeType!=null) {
+                switch (timeType) {
+                    case 1:
+                        timeJson = DateUtil.dateRoll(new Date(), Calendar.HOUR, -24);
+                        times = timeJson.getString("times");
+                        timee = timeJson.getString("timee");
+                        break;
+                    case 2:
+                        timeJson = DateUtil.getDifferOneDayTimes(0);
+                        times = timeJson.getString("times") + " 00:00:00";
+                        timee = timeJson.getString("timee") + " 23:59:59";
+                        break;
+                    case 3:
+                        timeJson = DateUtil.getDifferOneDayTimes(-1);
+                        times = timeJson.getString("times") + " 00:00:00";
+                        timee = timeJson.getString("times") + " 23:59:59";
+                        break;
+                    case 4:
+                        timeJson = DateUtil.getDifferOneDayTimes(-3);
+                        times = timeJson.getString("times") + " 00:00:00";
+                        timee = timeJson.getString("timee") + " 23:59:59";
+                        break;
+                    case 5:
+                        timeJson = DateUtil.getDifferOneDayTimes(-7);
+                        times = timeJson.getString("times") + " 00:00:00";
+                        timee = timeJson.getString("timee") + " 23:59:59";
+                        break;
+                    case 6:
+                        timeJson = DateUtil.getDifferOneDayTimes(-15);
+                        times = timeJson.getString("times") + " 00:00:00";
+                        timee = timeJson.getString("timee") + " 23:59:59";
+                        break;
+                    case 7:
+                        timeJson = DateUtil.getDifferOneDayTimes(-30);
+                        times = timeJson.getString("times") + " 00:00:00";
+                        timee = timeJson.getString("timee") + " 23:59:59";
+                        break;
+                    case 8:
+                        times = paramJson.getString("times") + " 00:00:00";
+                        timee = paramJson.getString("timee") + " 23:59:59";
+                        break;
+                }
             }
 
             paramJson.put("times", times);
@@ -1225,28 +1227,30 @@ public class MonitorServiceImpl implements MonitorService {
             
             
             JSONArray eventArray = paramJson.getJSONArray("eventIndex");
-            String eventlable = StringUtils.join(eventArray, ",");
-           
-            eventlable = eventlable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
-            if(eventlable.endsWith(",")) {
-            	eventlable = eventlable.substring(0, eventlable.length()-1);
+            if (eventArray!=null) {
+                String eventlable = StringUtils.join(eventArray, ",");
+
+                eventlable = eventlable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+                if(eventlable.endsWith(",")) {
+                    eventlable = eventlable.substring(0, eventlable.length()-1);
+                }
+                paramJson.put("eventlable", eventlable);
+
+                paramJson.remove("eventIndex");
             }
-            paramJson.put("eventlable", eventlable);
-            
-            paramJson.remove("eventIndex");
-            
-            
+
+
             JSONArray industryArray = paramJson.getJSONArray("industryIndex");
-            String industrylable = StringUtils.join(industryArray, ",");
-            
-            
-            
-            industrylable = industrylable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
-            if(industrylable.endsWith(",")) {
-            	industrylable = industrylable.substring(0, industrylable.length()-1);
+            if (industryArray!=null) {
+                String industrylable = StringUtils.join(industryArray, ",");
+
+                industrylable = industrylable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+                if(industrylable.endsWith(",")) {
+                    industrylable = industrylable.substring(0, industrylable.length()-1);
+                }
+                paramJson.put("industrylable", industrylable);
+                paramJson.remove("industryIndex");
             }
-            paramJson.put("industrylable", industrylable);
-            paramJson.remove("industryIndex");
             
             
             
@@ -1254,14 +1258,14 @@ public class MonitorServiceImpl implements MonitorService {
             JSONArray provinceArray = paramJson.getJSONArray("province");
             province = StringUtils.join(provinceArray, ",");
             if(!StringUtils.isEmpty(province)) {
-            	province = province.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+                province = province.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
             }else {
-            	province = "";
+                province = "";
             }
             if(province.endsWith(",")) {
-            	province = province.substring(0, province.length()-1);
+                province = province.substring(0, province.length()-1);
             }
-            
+
             paramJson.put("province", province);
             
             
@@ -1270,12 +1274,12 @@ public class MonitorServiceImpl implements MonitorService {
             String city = StringUtils.join(cityArray, ",");
             
             if(!StringUtils.isEmpty(city)) {
-            	city = city.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+                city = city.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
             }else {
-            	city = "";
+                city = "";
             }
             if(city.endsWith(",")) {
-            	city = city.substring(0, city.length()-1);
+                city = city.substring(0, city.length()-1);
             }
             paramJson.put("city", city);
             
@@ -1284,7 +1288,7 @@ public class MonitorServiceImpl implements MonitorService {
             JSONArray orgarray = paramJson.getJSONArray("organizationtype");
             String orgtypelist = StringUtils.join(orgarray, ",");
             if (StringUtils.isBlank(orgtypelist)) {
-            	orgtypelist = "0";
+                orgtypelist = "0";
             }
             
             paramJson.put("orgtypelist", orgtypelist);
@@ -1295,7 +1299,7 @@ public class MonitorServiceImpl implements MonitorService {
             JSONArray categorylabledataarray = paramJson.getJSONArray("categorylabledata");
             String categorylable = StringUtils.join(categorylabledataarray, ",");
             if (StringUtils.isBlank(categorylable)) {
-            	categorylable = "0";
+                categorylable = "0";
             }
             paramJson.put("categorylable", categorylable);
             paramJson.remove("categorylabledata");
@@ -1306,7 +1310,7 @@ public class MonitorServiceImpl implements MonitorService {
             JSONArray enterprisetypelistarray = paramJson.getJSONArray("enterprisetypelist");
             String enterprisetypelist = StringUtils.join(enterprisetypelistarray, ",");
             if (StringUtils.isBlank(enterprisetypelist)) {
-            	enterprisetypelist = "0";
+                enterprisetypelist = "0";
             }
             paramJson.put("enterprisetypelist", enterprisetypelist);
             
@@ -1316,7 +1320,7 @@ public class MonitorServiceImpl implements MonitorService {
             JSONArray hightechtypelistarray = paramJson.getJSONArray("hightechtypelist");
             String hightechtypelist = StringUtils.join(hightechtypelistarray, ",");
             if (StringUtils.isBlank(hightechtypelist)) {
-            	hightechtypelist = "0";
+                hightechtypelist = "0";
             }
             paramJson.put("hightechtypelist", hightechtypelist);
             
@@ -1324,7 +1328,7 @@ public class MonitorServiceImpl implements MonitorService {
             JSONArray policylableflagarray = paramJson.getJSONArray("policylableflag");
             String policylableflag = StringUtils.join(policylableflagarray, ",");
             if (StringUtils.isBlank(policylableflag)) {
-            	policylableflag = "0";
+                policylableflag = "0";
             }
             paramJson.put("policylableflag", policylableflag);
 
@@ -1447,8 +1451,10 @@ public class MonitorServiceImpl implements MonitorService {
                 map.put("jumptype", "1");
                 map.put("page", "1");
                 map.put("size", exportlist.size());
-                map.put("times", times);
-                map.put("timee", timee);
+                if (timeType != null) {
+                    map.put("times", times);
+                    map.put("timee", timee);
+                }
                 
 
                 String url = es_search_url + MonitorConstant.es_api_exportqbsearchconten;
@@ -1500,9 +1506,9 @@ public class MonitorServiceImpl implements MonitorService {
      * @param paramJson
      * @return com.alibaba.fastjson.JSONObject
      */
-	@Override
-	public JSONObject getArticleIndustryList(JSONObject paramJson) {
-		JSONObject response = new JSONObject();
+    @Override
+    public JSONObject getArticleIndustryList(JSONObject paramJson) {
+        JSONObject response = new JSONObject();
         JSONObject dataGroupJson = new JSONObject();
         Long projectid = paramJson.getLong("projectid");
         Map<String, Object> projectParamMap = new HashMap<String, Object>();
@@ -1610,7 +1616,7 @@ public class MonitorServiceImpl implements MonitorService {
        
         eventlable = eventlable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
         if(eventlable.endsWith(",")) {
-        	eventlable = eventlable.substring(0, eventlable.length()-1);
+            eventlable = eventlable.substring(0, eventlable.length()-1);
         }
         paramJson.put("eventlable", eventlable);
         //2021.7.2
@@ -1626,7 +1632,7 @@ public class MonitorServiceImpl implements MonitorService {
         
         industrylable = industrylable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
         if(industrylable.endsWith(",")) {
-        	industrylable = industrylable.substring(0, industrylable.length()-1);
+            industrylable = industrylable.substring(0, industrylable.length()-1);
         }
         paramJson.put("industrylable", industrylable);
         //2021.7.1
@@ -1639,12 +1645,12 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray provinceArray = paramJson.getJSONArray("province");
         province = StringUtils.join(provinceArray, ",");
         if(!StringUtils.isEmpty(province)) {
-        	province = province.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+            province = province.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
         }else {
-        	province = "";
+            province = "";
         }
         if(province.endsWith(",")) {
-        	province = province.substring(0, province.length()-1);
+            province = province.substring(0, province.length()-1);
         }
         
         paramJson.put("province", province);
@@ -1657,12 +1663,12 @@ public class MonitorServiceImpl implements MonitorService {
         String city = StringUtils.join(cityArray, ",");
         
         if(!StringUtils.isEmpty(city)) {
-        	city = city.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+            city = city.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
         }else {
-        	city = "";
+            city = "";
         }
         if(city.endsWith(",")) {
-        	city = city.substring(0, city.length()-1);
+            city = city.substring(0, city.length()-1);
         }
         paramJson.put("city", city);
         //2021.7.2
@@ -1672,7 +1678,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray orgarray = paramJson.getJSONArray("organizationtype");
         String orgtypelist = StringUtils.join(orgarray, ",");
         if (StringUtils.isBlank(orgtypelist)) {
-        	orgtypelist = "0";
+            orgtypelist = "0";
         }
         
         paramJson.put("orgtypelist", orgtypelist);
@@ -1683,7 +1689,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray categorylabledataarray = paramJson.getJSONArray("categorylabledata");
         String categorylable = StringUtils.join(categorylabledataarray, ",");
         if (StringUtils.isBlank(categorylable)) {
-        	categorylable = "0";
+            categorylable = "0";
         }
         paramJson.put("categorylable", categorylable);
         paramJson.remove("categorylabledata");
@@ -1694,7 +1700,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray enterprisetypelistarray = paramJson.getJSONArray("enterprisetypelist");
         String enterprisetypelist = StringUtils.join(enterprisetypelistarray, ",");
         if (StringUtils.isBlank(enterprisetypelist)) {
-        	enterprisetypelist = "0";
+            enterprisetypelist = "0";
         }
         paramJson.put("enterprisetypelist", enterprisetypelist);
         
@@ -1704,7 +1710,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray hightechtypelistarray = paramJson.getJSONArray("hightechtypelist");
         String hightechtypelist = StringUtils.join(hightechtypelistarray, ",");
         if (StringUtils.isBlank(hightechtypelist)) {
-        	hightechtypelist = "0";
+            hightechtypelist = "0";
         }
         paramJson.put("hightechtypelist", hightechtypelist);
         
@@ -1712,7 +1718,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray policylableflagarray = paramJson.getJSONArray("policylableflag");
         String policylableflag = StringUtils.join(policylableflagarray, ",");
         if (StringUtils.isBlank(policylableflag)) {
-        	policylableflag = "0";
+            policylableflag = "0";
         }
         paramJson.put("policylableflag", policylableflag);
 
@@ -1787,9 +1793,9 @@ public class MonitorServiceImpl implements MonitorService {
                 String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+paramJson.getString("datasource_type")+timeType+matchingmode+searchType+emotionalIndex;
                 //String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword");
                 if(redisUtil.existsKey(key)) {
-                	esSimilarResponse = redisUtil.getKey(key);
+                    esSimilarResponse = redisUtil.getKey(key);
                 }else {
-                	esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
+                    esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
                     redisUtil.set(key, esSimilarResponse);
                 }
                 
@@ -1832,7 +1838,7 @@ public class MonitorServiceImpl implements MonitorService {
                     return response;
                 }
         }else {
-        	paramJson.put("esindex", "postal");
+            paramJson.put("esindex", "postal");
             paramJson.put("estype", "infor");
             String params = MapUtil.getUrlParamsByMap(paramJson);
             url = es_search_url + MonitorConstant.es_api_search_industry_list;
@@ -1854,20 +1860,18 @@ public class MonitorServiceImpl implements MonitorService {
                 response.put("msg", "行业标签列表成功");
                 dataGroupJson.put("data", jsonArray);
                 response.put("data", dataGroupJson);
-			return response;
-			}
+                return response;
+            }
         }
        return response;
 
 }
 
-	@Override
-	public JSONObject getArticleEventList(JSONObject paramJson) {
+    @Override
+    public JSONObject getArticleEventList(JSONObject paramJson) {
 
 
-
-
-		JSONObject response = new JSONObject();
+        JSONObject response = new JSONObject();
         JSONObject dataGroupJson = new JSONObject();
         Long projectid = paramJson.getLong("projectid");
         Map<String, Object> projectParamMap = new HashMap<String, Object>();
@@ -1972,7 +1976,7 @@ public class MonitorServiceImpl implements MonitorService {
        
         eventlable = eventlable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
         if(eventlable.endsWith(",")) {
-        	eventlable = eventlable.substring(0, eventlable.length()-1);
+            eventlable = eventlable.substring(0, eventlable.length()-1);
         }
         paramJson.put("eventlable", eventlable);
         //2021.7.1
@@ -1987,7 +1991,7 @@ public class MonitorServiceImpl implements MonitorService {
         
         industrylable = industrylable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
         if(industrylable.endsWith(",")) {
-        	industrylable = industrylable.substring(0, industrylable.length()-1);
+            industrylable = industrylable.substring(0, industrylable.length()-1);
         }
         paramJson.put("industrylable", industrylable);
         paramJson.remove("industryIndex");
@@ -1998,12 +2002,12 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray provinceArray = paramJson.getJSONArray("province");
         province = StringUtils.join(provinceArray, ",");
         if(!StringUtils.isEmpty(province)) {
-        	province = province.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+            province = province.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
         }else {
-        	province = "";
+            province = "";
         }
         if(province.endsWith(",")) {
-        	province = province.substring(0, province.length()-1);
+            province = province.substring(0, province.length()-1);
         }
         
         paramJson.put("province", province);
@@ -2015,12 +2019,12 @@ public class MonitorServiceImpl implements MonitorService {
         String city = StringUtils.join(cityArray, ",");
         
         if(!StringUtils.isEmpty(city)) {
-        	city = city.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+            city = city.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
         }else {
-        	city = "";
+            city = "";
         }
         if(city.endsWith(",")) {
-        	city = city.substring(0, city.length()-1);
+            city = city.substring(0, city.length()-1);
         }
         paramJson.put("city", city);
         //2021.7.2
@@ -2030,7 +2034,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray orgarray = paramJson.getJSONArray("organizationtype");
         String orgtypelist = StringUtils.join(orgarray, ",");
         if (StringUtils.isBlank(orgtypelist)) {
-        	orgtypelist = "0";
+            orgtypelist = "0";
         }
         
         paramJson.put("orgtypelist", orgtypelist);
@@ -2042,7 +2046,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray categorylabledataarray = paramJson.getJSONArray("categorylabledata");
         String categorylable = StringUtils.join(categorylabledataarray, ",");
         if (StringUtils.isBlank(categorylable)) {
-        	categorylable = "0";
+            categorylable = "0";
         }
         paramJson.put("categorylable", categorylable);
         paramJson.remove("categorylabledata");
@@ -2053,7 +2057,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray enterprisetypelistarray = paramJson.getJSONArray("enterprisetypelist");
         String enterprisetypelist = StringUtils.join(enterprisetypelistarray, ",");
         if (StringUtils.isBlank(enterprisetypelist)) {
-        	enterprisetypelist = "0";
+            enterprisetypelist = "0";
         }
         paramJson.put("enterprisetypelist", enterprisetypelist);
         
@@ -2063,7 +2067,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray hightechtypelistarray = paramJson.getJSONArray("hightechtypelist");
         String hightechtypelist = StringUtils.join(hightechtypelistarray, ",");
         if (StringUtils.isBlank(hightechtypelist)) {
-        	hightechtypelist = "0";
+            hightechtypelist = "0";
         }
         paramJson.put("hightechtypelist", hightechtypelist);
         
@@ -2071,7 +2075,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray policylableflagarray = paramJson.getJSONArray("policylableflag");
         String policylableflag = StringUtils.join(policylableflagarray, ",");
         if (StringUtils.isBlank(policylableflag)) {
-        	policylableflag = "0";
+            policylableflag = "0";
         }
         paramJson.put("policylableflag", policylableflag);
 
@@ -2128,9 +2132,9 @@ public class MonitorServiceImpl implements MonitorService {
                 String params = MapUtil.getUrlParamsByMap(paramJson);
                 String similarUrl = es_search_url + MonitorConstant.es_api_similar_titlekeyword_search_content;
                 //String esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
-                
-				                
-				String esSimilarResponse = null;
+
+
+            String esSimilarResponse = null;
                 
 //                String key = redisUtil.getKey(user_id);
 //                if(key!=null) {
@@ -2138,18 +2142,17 @@ public class MonitorServiceImpl implements MonitorService {
 //                }else {
 //                	esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
 //                }
-	            String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+paramJson.getString("datasource_type")+timeType+matchingmode+searchType+emotionalIndex;
+            String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+paramJson.getString("datasource_type")+timeType+matchingmode+searchType+emotionalIndex;
                 //String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword");
                 if(redisUtil.existsKey(key)) {
-                	esSimilarResponse = redisUtil.getKey(key);
+                    esSimilarResponse = redisUtil.getKey(key);
                 }else {
-                	esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
+                    esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
                     redisUtil.set(key, esSimilarResponse);
                 }
-				
-                
 
-                if (!esSimilarResponse.equals("")) {
+
+            if (!esSimilarResponse.equals("")) {
                     List article_public_idList = new ArrayList();
                     JSONArray similarArray = JSON.parseArray(esSimilarResponse);
                     for (int i = 0; i < similarArray.size(); i++) {
@@ -2162,22 +2165,22 @@ public class MonitorServiceImpl implements MonitorService {
                     dataGroupJson.put("article_public_idList", article_public_idList);
             }
             if (!article_public_idStr.equals("")) {
-	                paramJson.put("article_public_idstr", article_public_idStr);
-	                paramJson.remove("keyword");
-	                paramJson.remove("stopword");
-	                String params1 = MapUtil.getUrlParamsByMap(paramJson);
-	                url = es_search_url + MonitorConstant.es_api_similar_event_list;
-	                String esResponse = MyHttpRequestUtil.sendPostEsSearch(url, params1);
-	                JSONArray jsonArray = JSON.parseObject(esResponse).getJSONObject("aggregations").getJSONObject("group_by_tags").getJSONArray("buckets");
-	                int total = Integer.parseInt(JSON.parseObject(esResponse).getJSONObject("hits").get("total").toString());
-	                JSONObject jsonObject = new JSONObject();
-	                jsonObject.put("key", "total");
-	                jsonObject.put("doc_count", total);
-	                jsonArray.add(jsonObject);
-	                response.put("code", 200);
-	                response.put("msg", "行业标签列表成功");
-	                dataGroupJson.put("data", jsonArray);
-	                response.put("data", dataGroupJson);
+                paramJson.put("article_public_idstr", article_public_idStr);
+                paramJson.remove("keyword");
+                paramJson.remove("stopword");
+                String params1 = MapUtil.getUrlParamsByMap(paramJson);
+                url = es_search_url + MonitorConstant.es_api_similar_event_list;
+                String esResponse = MyHttpRequestUtil.sendPostEsSearch(url, params1);
+                JSONArray jsonArray = JSON.parseObject(esResponse).getJSONObject("aggregations").getJSONObject("group_by_tags").getJSONArray("buckets");
+                int total = Integer.parseInt(JSON.parseObject(esResponse).getJSONObject("hits").get("total").toString());
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("key", "total");
+                jsonObject.put("doc_count", total);
+                jsonArray.add(jsonObject);
+                response.put("code", 200);
+                response.put("msg", "行业标签列表成功");
+                dataGroupJson.put("data", jsonArray);
+                response.put("data", dataGroupJson);
                     return response;
                 } else {
                     response.put("code", 500);
@@ -2186,7 +2189,7 @@ public class MonitorServiceImpl implements MonitorService {
                     return response;
                 }
         }else {
-        	paramJson.put("esindex", "postal");
+            paramJson.put("esindex", "postal");
             paramJson.put("estype", "infor");
             String params = MapUtil.getUrlParamsByMap(paramJson);
             url = es_search_url + MonitorConstant.es_api_search_event_list;
@@ -2207,17 +2210,17 @@ public class MonitorServiceImpl implements MonitorService {
                 response.put("msg", "行业标签列表成功");
                 dataGroupJson.put("data", jsonArray);
                 response.put("data", dataGroupJson);
-				return response;
-			}
+                return response;
+            }
         }
-			return response;
-	}
+        return response;
+    }
 
-	@Override
-	public JSONObject getArticleProvinceList(JSONObject paramJson) {
-		
+    @Override
+    public JSONObject getArticleProvinceList(JSONObject paramJson) {
 
-		JSONObject response = new JSONObject();
+
+        JSONObject response = new JSONObject();
         JSONObject dataGroupJson = new JSONObject();
         Long projectid = paramJson.getLong("projectid");
         Map<String, Object> projectParamMap = new HashMap<String, Object>();
@@ -2321,7 +2324,7 @@ public class MonitorServiceImpl implements MonitorService {
        
         eventlable = eventlable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
         if(eventlable.endsWith(",")) {
-        	eventlable = eventlable.substring(0, eventlable.length()-1);
+            eventlable = eventlable.substring(0, eventlable.length()-1);
         }
         paramJson.put("eventlable", eventlable);
         
@@ -2335,7 +2338,7 @@ public class MonitorServiceImpl implements MonitorService {
         
         industrylable = industrylable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
         if(industrylable.endsWith(",")) {
-        	industrylable = industrylable.substring(0, industrylable.length()-1);
+            industrylable = industrylable.substring(0, industrylable.length()-1);
         }
         paramJson.put("industrylable", industrylable);
         paramJson.remove("industryIndex");
@@ -2346,12 +2349,12 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray provinceArray = paramJson.getJSONArray("province");
         province = StringUtils.join(provinceArray, ",");
         if(!StringUtils.isEmpty(province)) {
-        	province = province.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+            province = province.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
         }else {
-        	province = "";
+            province = "";
         }
         if(province.endsWith(",")) {
-        	province = province.substring(0, province.length()-1);
+            province = province.substring(0, province.length()-1);
         }
         
         paramJson.put("province", province);
@@ -2364,12 +2367,12 @@ public class MonitorServiceImpl implements MonitorService {
         String city = StringUtils.join(cityArray, ",");
         
         if(!StringUtils.isEmpty(city)) {
-        	city = city.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+            city = city.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
         }else {
-        	city = "";
+            city = "";
         }
         if(city.endsWith(",")) {
-        	city = city.substring(0, city.length()-1);
+            city = city.substring(0, city.length()-1);
         }
         paramJson.put("city", city);
         //2021.7.2
@@ -2379,7 +2382,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray orgarray = paramJson.getJSONArray("organizationtype");
         String orgtypelist = StringUtils.join(orgarray, ",");
         if (StringUtils.isBlank(orgtypelist)) {
-        	orgtypelist = "0";
+            orgtypelist = "0";
         }
         
         paramJson.put("orgtypelist", orgtypelist);
@@ -2390,7 +2393,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray categorylabledataarray = paramJson.getJSONArray("categorylabledata");
         String categorylable = StringUtils.join(categorylabledataarray, ",");
         if (StringUtils.isBlank(categorylable)) {
-        	categorylable = "0";
+            categorylable = "0";
         }
         paramJson.put("categorylable", categorylable);
         paramJson.remove("categorylabledata");
@@ -2401,7 +2404,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray enterprisetypelistarray = paramJson.getJSONArray("enterprisetypelist");
         String enterprisetypelist = StringUtils.join(enterprisetypelistarray, ",");
         if (StringUtils.isBlank(enterprisetypelist)) {
-        	enterprisetypelist = "0";
+            enterprisetypelist = "0";
         }
         paramJson.put("enterprisetypelist", enterprisetypelist);
         
@@ -2411,7 +2414,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray hightechtypelistarray = paramJson.getJSONArray("hightechtypelist");
         String hightechtypelist = StringUtils.join(hightechtypelistarray, ",");
         if (StringUtils.isBlank(hightechtypelist)) {
-        	hightechtypelist = "0";
+            hightechtypelist = "0";
         }
         paramJson.put("hightechtypelist", hightechtypelist);
         
@@ -2419,7 +2422,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray policylableflagarray = paramJson.getJSONArray("policylableflag");
         String policylableflag = StringUtils.join(policylableflagarray, ",");
         if (StringUtils.isBlank(policylableflag)) {
-        	policylableflag = "0";
+            policylableflag = "0";
         }
         paramJson.put("policylableflag", policylableflag);
 
@@ -2478,9 +2481,9 @@ public class MonitorServiceImpl implements MonitorService {
                 String params = MapUtil.getUrlParamsByMap(paramJson);
                 String similarUrl = es_search_url + MonitorConstant.es_api_similar_titlekeyword_search_content;
                 //String esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
-                
-                
-				String esSimilarResponse = null;
+
+
+            String esSimilarResponse = null;
                 
 //                String key = redisUtil.getKey(user_id);
 //                if(key!=null) {
@@ -2489,18 +2492,16 @@ public class MonitorServiceImpl implements MonitorService {
 //                	esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
 //                }
                 //String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword");                                                          数据品类
-	            String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+paramJson.getString("datasource_type")+timeType+matchingmode+searchType+emotionalIndex;
-				if(redisUtil.existsKey(key)) {
-                	esSimilarResponse = redisUtil.getKey(key);
+            String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+paramJson.getString("datasource_type")+timeType+matchingmode+searchType+emotionalIndex;
+            if(redisUtil.existsKey(key)) {
+                esSimilarResponse = redisUtil.getKey(key);
                 }else {
-                	esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
+                esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
                     redisUtil.set(key, esSimilarResponse);
                 }
-				
-                
-                
 
-                if (!esSimilarResponse.equals("")) {
+
+            if (!esSimilarResponse.equals("")) {
                     List article_public_idList = new ArrayList();
                     JSONArray similarArray = JSON.parseArray(esSimilarResponse);
                     for (int i = 0; i < similarArray.size(); i++) {
@@ -2513,30 +2514,30 @@ public class MonitorServiceImpl implements MonitorService {
                     dataGroupJson.put("article_public_idList", article_public_idList);
             }
             if (!article_public_idStr.equals("")) {
-	                paramJson.put("article_public_idstr", article_public_idStr);
-	                paramJson.remove("keyword");
-	                paramJson.remove("stopword");
-	                String params1 = MapUtil.getUrlParamsByMap(paramJson);
-	                url = es_search_url + MonitorConstant.es_api_similar_province_list;
-	                String esResponse = MyHttpRequestUtil.sendPostEsSearch(url, params1);
-	                JSONArray jsonArray = JSON.parseObject(esResponse).getJSONObject("aggregations").getJSONObject("group_by_tags").getJSONArray("buckets");
-	                int total = Integer.parseInt(JSON.parseObject(esResponse).getJSONObject("hits").get("total").toString());
-	
-	                JSONObject jsonObject = new JSONObject();
-	                jsonObject.put("key", "total");
-	                jsonObject.put("doc_count", total);
-	                jsonArray.add(jsonObject);
-	                response.put("code", 200);
-	                response.put("msg", "行业标签列表成功");
-	                dataGroupJson.put("data", jsonArray);
-	                response.put("data", dataGroupJson);
+                paramJson.put("article_public_idstr", article_public_idStr);
+                paramJson.remove("keyword");
+                paramJson.remove("stopword");
+                String params1 = MapUtil.getUrlParamsByMap(paramJson);
+                url = es_search_url + MonitorConstant.es_api_similar_province_list;
+                String esResponse = MyHttpRequestUtil.sendPostEsSearch(url, params1);
+                JSONArray jsonArray = JSON.parseObject(esResponse).getJSONObject("aggregations").getJSONObject("group_by_tags").getJSONArray("buckets");
+                int total = Integer.parseInt(JSON.parseObject(esResponse).getJSONObject("hits").get("total").toString());
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("key", "total");
+                jsonObject.put("doc_count", total);
+                jsonArray.add(jsonObject);
+                response.put("code", 200);
+                response.put("msg", "行业标签列表成功");
+                dataGroupJson.put("data", jsonArray);
+                response.put("data", dataGroupJson);
                 } else {
                     response.put("code", 500);
                     response.put("msg", "行业标签列表失败");
                     response.put("data", dataGroupJson);
                 }
         }else {
-        	paramJson.put("esindex", "postal");
+            paramJson.put("esindex", "postal");
             paramJson.put("estype", "infor");
             String params = MapUtil.getUrlParamsByMap(paramJson);
             url = es_search_url + MonitorConstant.es_api_search_province_list;
@@ -2558,17 +2559,17 @@ public class MonitorServiceImpl implements MonitorService {
                 response.put("msg", "行业标签列表成功");
                 dataGroupJson.put("data", jsonArray);
                 response.put("data", dataGroupJson);
-			}
+            }
         }
-			return response;
-		
-		
-	}
+        return response;
 
-	@Override
-	public JSONObject getArticleCityList(JSONObject paramJson) {
 
-		JSONObject response = new JSONObject();
+    }
+
+    @Override
+    public JSONObject getArticleCityList(JSONObject paramJson) {
+
+        JSONObject response = new JSONObject();
         JSONObject dataGroupJson = new JSONObject();
         Long projectid = paramJson.getLong("projectid");
         Map<String, Object> projectParamMap = new HashMap<String, Object>();
@@ -2672,7 +2673,7 @@ public class MonitorServiceImpl implements MonitorService {
        
         eventlable = eventlable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
         if(eventlable.endsWith(",")) {
-        	eventlable = eventlable.substring(0, eventlable.length()-1);
+            eventlable = eventlable.substring(0, eventlable.length()-1);
         }
         paramJson.put("eventlable", eventlable);
         
@@ -2686,7 +2687,7 @@ public class MonitorServiceImpl implements MonitorService {
         
         industrylable = industrylable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
         if(industrylable.endsWith(",")) {
-        	industrylable = industrylable.substring(0, industrylable.length()-1);
+            industrylable = industrylable.substring(0, industrylable.length()-1);
         }
         paramJson.put("industrylable", industrylable);
         paramJson.remove("industryIndex");
@@ -2697,12 +2698,12 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray provinceArray = paramJson.getJSONArray("province");
         province = StringUtils.join(provinceArray, ",");
         if(!StringUtils.isEmpty(province)) {
-        	province = province.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+            province = province.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
         }else {
-        	province = "";
+            province = "";
         }
         if(province.endsWith(",")) {
-        	province = province.substring(0, province.length()-1);
+            province = province.substring(0, province.length()-1);
         }
         
         paramJson.put("province", province);
@@ -2713,12 +2714,12 @@ public class MonitorServiceImpl implements MonitorService {
         String city = StringUtils.join(cityArray, ",");
         
         if(!StringUtils.isEmpty(city)) {
-        	city = city.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+            city = city.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
         }else {
-        	city = "";
+            city = "";
         }
         if(city.endsWith(",")) {
-        	city = city.substring(0, city.length()-1);
+            city = city.substring(0, city.length()-1);
         }
         paramJson.put("city", city);
         //2021.7.1
@@ -2727,7 +2728,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray orgarray = paramJson.getJSONArray("organizationtype");
         String orgtypelist = StringUtils.join(orgarray, ",");
         if (StringUtils.isBlank(orgtypelist)) {
-        	orgtypelist = "0";
+            orgtypelist = "0";
         }
         
         paramJson.put("orgtypelist", orgtypelist);
@@ -2738,7 +2739,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray categorylabledataarray = paramJson.getJSONArray("categorylabledata");
         String categorylable = StringUtils.join(categorylabledataarray, ",");
         if (StringUtils.isBlank(categorylable)) {
-        	categorylable = "0";
+            categorylable = "0";
         }
         paramJson.put("categorylable", categorylable);
         paramJson.remove("categorylabledata");
@@ -2749,7 +2750,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray enterprisetypelistarray = paramJson.getJSONArray("enterprisetypelist");
         String enterprisetypelist = StringUtils.join(enterprisetypelistarray, ",");
         if (StringUtils.isBlank(enterprisetypelist)) {
-        	enterprisetypelist = "0";
+            enterprisetypelist = "0";
         }
         paramJson.put("enterprisetypelist", enterprisetypelist);
         
@@ -2759,7 +2760,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray hightechtypelistarray = paramJson.getJSONArray("hightechtypelist");
         String hightechtypelist = StringUtils.join(hightechtypelistarray, ",");
         if (StringUtils.isBlank(hightechtypelist)) {
-        	hightechtypelist = "0";
+            hightechtypelist = "0";
         }
         paramJson.put("hightechtypelist", hightechtypelist);
         
@@ -2767,7 +2768,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray policylableflagarray = paramJson.getJSONArray("policylableflag");
         String policylableflag = StringUtils.join(policylableflagarray, ",");
         if (StringUtils.isBlank(policylableflag)) {
-        	policylableflag = "0";
+            policylableflag = "0";
         }
         paramJson.put("policylableflag", policylableflag);
 
@@ -2838,9 +2839,9 @@ public class MonitorServiceImpl implements MonitorService {
                 //String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword");
                 String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+timeType+matchingmode+searchType+emotionalIndex;
                 if(redisUtil.existsKey(key)) {
-                	esSimilarResponse = redisUtil.getKey(key);
+                    esSimilarResponse = redisUtil.getKey(key);
                 }else {
-                	esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
+                    esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
                     redisUtil.set(key, esSimilarResponse);
                 }
                 
@@ -2859,23 +2860,23 @@ public class MonitorServiceImpl implements MonitorService {
                     dataGroupJson.put("article_public_idList", article_public_idList);
             }
             if (!article_public_idStr.equals("")) {
-	                paramJson.put("article_public_idstr", article_public_idStr);
-	                paramJson.remove("keyword");
-	                paramJson.remove("stopword");
-	                String params1 = MapUtil.getUrlParamsByMap(paramJson);
-	                url = es_search_url + MonitorConstant.es_api_similar_city_list;
-	                String esResponse = MyHttpRequestUtil.sendPostEsSearch(url, params1);
-	                JSONArray jsonArray = JSON.parseObject(esResponse).getJSONObject("aggregations").getJSONObject("group_by_tags").getJSONArray("buckets");
-	                int total = Integer.parseInt(JSON.parseObject(esResponse).getJSONObject("hits").get("total").toString());
-	
-	                JSONObject jsonObject = new JSONObject();
-	                jsonObject.put("key", "total");
-	                jsonObject.put("doc_count", total);
-	                jsonArray.add(jsonObject);
-	                response.put("code", 200);
-	                response.put("msg", "行业标签列表成功");
-	                dataGroupJson.put("data", jsonArray);
-	                response.put("data", dataGroupJson);
+                paramJson.put("article_public_idstr", article_public_idStr);
+                paramJson.remove("keyword");
+                paramJson.remove("stopword");
+                String params1 = MapUtil.getUrlParamsByMap(paramJson);
+                url = es_search_url + MonitorConstant.es_api_similar_city_list;
+                String esResponse = MyHttpRequestUtil.sendPostEsSearch(url, params1);
+                JSONArray jsonArray = JSON.parseObject(esResponse).getJSONObject("aggregations").getJSONObject("group_by_tags").getJSONArray("buckets");
+                int total = Integer.parseInt(JSON.parseObject(esResponse).getJSONObject("hits").get("total").toString());
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("key", "total");
+                jsonObject.put("doc_count", total);
+                jsonArray.add(jsonObject);
+                response.put("code", 200);
+                response.put("msg", "行业标签列表成功");
+                dataGroupJson.put("data", jsonArray);
+                response.put("data", dataGroupJson);
                     return response;
                 } else {
                     response.put("code", 500);
@@ -2884,7 +2885,7 @@ public class MonitorServiceImpl implements MonitorService {
                     return response;
                 }
         }else {
-        	paramJson.put("esindex", "postal");
+            paramJson.put("esindex", "postal");
             paramJson.put("estype", "infor");
             String params = MapUtil.getUrlParamsByMap(paramJson);
             url = es_search_url + MonitorConstant.es_api_search_city_list;
@@ -2906,16 +2907,16 @@ public class MonitorServiceImpl implements MonitorService {
                 response.put("msg", "行业标签列表成功");
                 dataGroupJson.put("data", jsonArray);
                 response.put("data", dataGroupJson);
-			return response;
-			}
+                return response;
+            }
         }
 
-			return response;
-		
-		
-		
-	}
-	 /**
+        return response;
+
+
+    }
+
+    /**
      * @param [paramJson]
      * @return com.alibaba.fastjson.JSONObject
      * @description: 获取文章列表数据 <br>
@@ -2980,7 +2981,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray orgarray = paramJson.getJSONArray("organizationtype");
         String orgtypelist = StringUtils.join(orgarray, ",");
         if (StringUtils.isBlank(orgtypelist)) {
-        	orgtypelist = "0";
+            orgtypelist = "0";
         }
         
         paramJson.put("orgtypelist", orgtypelist);
@@ -2991,7 +2992,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray categorylabledataarray = paramJson.getJSONArray("categorylabledata");
         String categorylable = StringUtils.join(categorylabledataarray, ",");
         if (StringUtils.isBlank(categorylable)) {
-        	categorylable = "0";
+            categorylable = "0";
         }
         paramJson.put("categorylable", categorylable);
         paramJson.remove("categorylabledata");
@@ -3002,7 +3003,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray enterprisetypelistarray = paramJson.getJSONArray("enterprisetypelist");
         String enterprisetypelist = StringUtils.join(enterprisetypelistarray, ",");
         if (StringUtils.isBlank(enterprisetypelist)) {
-        	enterprisetypelist = "0";
+            enterprisetypelist = "0";
         }
         paramJson.put("enterprisetypelist", enterprisetypelist);
         
@@ -3012,7 +3013,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray hightechtypelistarray = paramJson.getJSONArray("hightechtypelist");
         String hightechtypelist = StringUtils.join(hightechtypelistarray, ",");
         if (StringUtils.isBlank(hightechtypelist)) {
-        	hightechtypelist = "0";
+            hightechtypelist = "0";
         }
         paramJson.put("hightechtypelist", hightechtypelist);
         
@@ -3020,7 +3021,7 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray policylableflagarray = paramJson.getJSONArray("policylableflag");
         String policylableflag = StringUtils.join(policylableflagarray, ",");
         if (StringUtils.isBlank(policylableflag)) {
-        	policylableflag = "0";
+            policylableflag = "0";
         }
         paramJson.put("policylableflag", policylableflag);
 
@@ -3104,7 +3105,7 @@ public class MonitorServiceImpl implements MonitorService {
        
         eventlable = eventlable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
         if(eventlable.endsWith(",")) {
-        	eventlable = eventlable.substring(0, eventlable.length()-1);
+            eventlable = eventlable.substring(0, eventlable.length()-1);
         }
         paramJson.put("eventlable", eventlable);
         
@@ -3118,7 +3119,7 @@ public class MonitorServiceImpl implements MonitorService {
         
         industrylable = industrylable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
         if(industrylable.endsWith(",")) {
-        	industrylable = industrylable.substring(0, industrylable.length()-1);
+            industrylable = industrylable.substring(0, industrylable.length()-1);
         }
         paramJson.put("industrylable", industrylable);
         paramJson.remove("industryIndex");
@@ -3129,12 +3130,12 @@ public class MonitorServiceImpl implements MonitorService {
         JSONArray provinceArray = paramJson.getJSONArray("province");
         province = StringUtils.join(provinceArray, ",");
         if(!StringUtils.isEmpty(province)) {
-        	province = province.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+            province = province.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
         }else {
-        	province = "";
+            province = "";
         }
         if(province.endsWith(",")) {
-        	province = province.substring(0, province.length()-1);
+            province = province.substring(0, province.length()-1);
         }
         
         paramJson.put("province", province);
@@ -3145,12 +3146,12 @@ public class MonitorServiceImpl implements MonitorService {
         String city = StringUtils.join(cityArray, ",");
         
         if(!StringUtils.isEmpty(city)) {
-        	city = city.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+            city = city.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
         }else {
-        	city = "";
+            city = "";
         }
         if(city.endsWith(",")) {
-        	city = city.substring(0, city.length()-1);
+            city = city.substring(0, city.length()-1);
         }
         paramJson.put("city", city);
         // 更新偏好设置值
@@ -3200,9 +3201,9 @@ public class MonitorServiceImpl implements MonitorService {
                 String similarUrl = es_search_url + MonitorConstant.es_api_similar_titlekeyword_search_content_by_num_five;
                 String esSimilarResponse = null;
                 if(redisUtil.existsKey(key)) {
-                	esSimilarResponse = redisUtil.getKey(key);
+                    esSimilarResponse = redisUtil.getKey(key);
                 }else {
-                	esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
+                    esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
                     redisUtil.filteritemset(key, esSimilarResponse);
                 }
                 if (!esSimilarResponse.equals("")) {
@@ -3266,11 +3267,11 @@ public class MonitorServiceImpl implements MonitorService {
                         
                         Set<String> relatedWord = new HashSet<>();
                         if(projectType==2) {
-                        	relatedWord = ProjectWordUtil
+                            relatedWord = ProjectWordUtil
                                     .projectRelatedWord(_sourceJson.getString("title") + _sourceJson.getString("content"), subject_word, regional_word, character_word, event_word);
                             _sourceJson.put("relatedWord", relatedWord);
                         }else if(projectType==1) {
-                        	relatedWord = ProjectWordUtil
+                            relatedWord = ProjectWordUtil
                                     .CommononprojectRelatedWord(_sourceJson.getString("title") + _sourceJson.getString("content"), subject_word, regional_word, character_word, event_word);
                             _sourceJson.put("relatedWord", relatedWord);
                         }
@@ -3315,31 +3316,31 @@ public class MonitorServiceImpl implements MonitorService {
                         }
                       //事件标签
                         if (_sourceJson.containsKey("eventlable")) {
-                        	_sourceJson.put("eventlable", _sourceJson.get("eventlable").toString());
+                            _sourceJson.put("eventlable", _sourceJson.get("eventlable").toString());
                         }else {
-                        	 _sourceJson.put("eventlable", "");
+                            _sourceJson.put("eventlable", "");
                         }
                         //行业标签
                         if (_sourceJson.containsKey("industrylable")) {
-                        	_sourceJson.put("industrylable", _sourceJson.get("industrylable").toString());
+                            _sourceJson.put("industrylable", _sourceJson.get("industrylable").toString());
                         }else {
-                        	 _sourceJson.put("industrylable", "");
+                            _sourceJson.put("industrylable", "");
                         }
                         //文章分类
                         if (_sourceJson.containsKey("article_category")) {
-                        	_sourceJson.put("article_category", _sourceJson.get("article_category").toString());
+                            _sourceJson.put("article_category", _sourceJson.get("article_category").toString());
                         }else {
-                        	 _sourceJson.put("article_category", "");
+                            _sourceJson.put("article_category", "");
                         }
                         //相似文章数量
                         _sourceJson.put("num", 1);
                         JSONArray similarArray = JSON.parseArray(JSONObject.parseObject(redisUtil.getKey(key)).getString("data"));
                         for (Object object : similarArray) {
-                        	JSONObject parseObject = JSONObject.parseObject(object.toString());
-                        	if(parseObject.get("article_public_id").equals(_sourceJson.getString("article_public_id"))) {
-                        		_sourceJson.put("num", Integer.parseInt(parseObject.getString("num")));
-                        	}
-						}
+                            JSONObject parseObject = JSONObject.parseObject(object.toString());
+                            if(parseObject.get("article_public_id").equals(_sourceJson.getString("article_public_id"))) {
+                                _sourceJson.put("num", Integer.parseInt(parseObject.getString("num")));
+                            }
+                        }
                         String key_words = _sourceJson.getString("key_words");
                         if (!key_words.equals("")) {
                             String sb = "";
@@ -3384,7 +3385,7 @@ public class MonitorServiceImpl implements MonitorService {
                 response.put("data", dataGroupJson);
             }
         } else {
-        	redisUtil.deleteKey(user_id);
+            redisUtil.deleteKey(user_id);
             paramJson.put("esindex", "postal");
             paramJson.put("estype", "infor");
             String params = MapUtil.getUrlParamsByMap(paramJson);
@@ -3420,11 +3421,11 @@ public class MonitorServiceImpl implements MonitorService {
                         
                         Set<String> relatedWord = new HashSet<>();
                         if(projectType==2) {
-                        	relatedWord = ProjectWordUtil
+                            relatedWord = ProjectWordUtil
                                     .projectRelatedWord(_sourceJson.getString("title") + _sourceJson.getString("content"), subject_word, regional_word, character_word, event_word);
                             _sourceJson.put("relatedWord", relatedWord);
                         }else if(projectType==1) {
-                        	relatedWord = ProjectWordUtil
+                            relatedWord = ProjectWordUtil
                                     .CommononprojectRelatedWord(_sourceJson.getString("title") + _sourceJson.getString("content"), subject_word, regional_word, character_word, event_word);
                             _sourceJson.put("relatedWord", relatedWord);
                         }
@@ -3440,7 +3441,7 @@ public class MonitorServiceImpl implements MonitorService {
                         }
                         String ner = "";
                         if(_sourceJson.containsKey("ner")) {
-                        	ner = _sourceJson.getString("ner");
+                            ner = _sourceJson.getString("ner");
                         }
 
                         title = _sourceJson.getString("title");
@@ -3463,15 +3464,15 @@ public class MonitorServiceImpl implements MonitorService {
                         }
                         //事件标签
                         if (_sourceJson.containsKey("eventlable")) {
-                        	_sourceJson.put("eventlable", _sourceJson.get("eventlable").toString());
+                            _sourceJson.put("eventlable", _sourceJson.get("eventlable").toString());
                         }else {
-                        	 _sourceJson.put("eventlable", "");
+                            _sourceJson.put("eventlable", "");
                         }
                         //行业标签
                         if (_sourceJson.containsKey("industrylable")) {
-                        	_sourceJson.put("industrylable", _sourceJson.get("industrylable").toString());
+                            _sourceJson.put("industrylable", _sourceJson.get("industrylable").toString());
                         }else {
-                        	 _sourceJson.put("industrylable", "");
+                            _sourceJson.put("industrylable", "");
                         }
                         
                         _sourceJson.put("title", Jsoup.parse(_sourceJson.get("title").toString()).text());
@@ -3536,7 +3537,6 @@ public class MonitorServiceImpl implements MonitorService {
         }
         return response;
     }
-	
-	
-	
-	}
+
+
+}

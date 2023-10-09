@@ -56,7 +56,7 @@ public class StonedtPortalApplicationTests {
 	public void contextLoads() {
 //		String policyData = SynthesizeSchedule.getPolicyData();
 //		System.out.println(policyData);
-		synthesizeSchedule.popularInformation();
+//		synthesizeSchedule.popularInformation();
 //		name();
 
 

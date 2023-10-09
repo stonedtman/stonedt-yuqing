@@ -322,6 +322,7 @@ public class AnalysisController {
 			if (exits) {
 				map.put("status", 422);
 				map.put("result", "fail");
+				map.put("message", "距离请求更新未超过15分钟，请稍后再试！");
 				return JSONObject.toJSONString(map);
 			}
 			Boolean flag = projectTaskDao.updateProjectTaskAnalysisToUnDealFlag(Long.parseLong(projectId));

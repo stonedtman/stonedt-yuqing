@@ -65,10 +65,17 @@
                 <li data-type="public_option" th:classappend="${menu=='public_option'?'nav-active3':''}"
                     class="nav-item dropdown hover-none navLi">
                     <a class="nav-link dropdown-toggle waves-effect  waves-dark">
-                        <span class="d-none d-md-block"> <i class="fa fa-list"></i> 事件分析</span>
+                        <span class="d-none d-md-block"> <i class="fa fa-window-maximize"></i> 事件分析</span>
                         <span class="d-block d-md-none">事件分析</span>
                     </a>
-                </li> 
+                </li>
+                <!--                监测大屏-->
+                <li class="nav-item dropdown hover-none navLi" id="jcdp">
+                    <a class="nav-link dropdown-toggle waves-effect  waves-dark">
+                        <span class="d-none d-md-block"> <i class="fa fa-chart-line"></i> 监测大屏</span>
+                        <span class="d-block d-md-none">监测大屏</span>
+                    </a>
+                </li>
                 <!-- 				<li th:classappend="${menu=='account'?'nav-active3':''}" class="nav-item dropdown hover-transparent"> -->
                 <!-- 	                <a class="nav-link dropdown-toggle waves-effect hover-transparent waves-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
                 <!-- 	                 <span class="d-none d-md-block">账号监测 <i class="fa fa-angle-down"></i></span> -->
@@ -443,6 +450,13 @@
                 window.location.href = ctxPath + 'publicoption';
             }
         }
+
+
+        //当监测大屏菜单时，执行函数
+        $("#jcdp").click(function(){
+            // 打开新标签页
+            window.open('https://www.baidu.com');
+        });
 
     </script>
 </header>

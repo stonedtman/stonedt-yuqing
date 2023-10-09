@@ -389,7 +389,13 @@ function getAnalysisMonitorProjectid() {
 // var hospital = JSON.parse(analysis.ner).hospital;
 // hotHospitalRank(hospital);
 // }
-            
+            // 如果超过48小时，提示用户刷新数据
+            var now = new Date().getTime();
+            var lasttime = new Date(analysis.create_time).getTime();
+            var diff = now - lasttime;
+            if (diff > 172800000) {
+                showInfo('数据已超过48小时未更新，请点击刷新按钮更新数据！');
+            }
             
         },
         error: function (xhr, ajaxOptions, thrownError) {
