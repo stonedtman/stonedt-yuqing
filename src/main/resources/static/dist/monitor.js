@@ -1312,7 +1312,9 @@ function installArticle(res) {
                             strTitle += '<span class="sl-date">' + publish_time + ' </span></div>';
 
                             // let strTitle = '<div class="monitor-content-title"><a onclick="toDetail(&apos;' + article_public_id + '&apos;,&apos;' + monitor_groupid + '&apos;,&apos;' + monitor_projectid + '&apos;)" class="link font-bold"><span class="content-logo" style="background: url(' + websitelogo + ');"></span>' + title + '</a><span class="sl-date  ">' + publish_time + ' </span></div>';
-                            let strContent = '<div class="wb-content-imgbox"><div class="wb-left-imgbox"><img src="' + imglist[0].imgurl + '" class="img-cover" alt=""></div><div class="wb-right-content"><div class="monitor-content-con font-13">' + content + '</div></div></div>';
+                            let strContent = '<div class="wb-content-imgbox">' +
+                                // '<div class="wb-left-imgbox"><img src="' + imglist[0].imgurl + '" class="img-cover" alt=""></div>' +
+                                '<div class="wb-right-content"><div class="monitor-content-con font-13">' + content + '</div></div></div>';
                             let strLikeStrat = '<div class="like-comm m-t-10 font-13">';
                             let strSource = '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 ' + sourcewebsitename + authorShow +'</span>';/*2021.6.28添加作者显示*/
                             //let strKeywords = '<span class="link m-r-10"> <i class="mdi mdi-tag-outline"></i> 涉及词 ' + relatedWord.join("，") + '</span>';
