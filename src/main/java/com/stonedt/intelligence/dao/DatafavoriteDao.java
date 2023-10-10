@@ -20,4 +20,11 @@ public interface DatafavoriteDao {
 
 	DatafavoriteEntity selectdata(Map<String, Object> map);
 
+	/**
+	 * 获取收藏夹列表
+	 * @param userId 用户id
+	 * @param projectid 方案id
+	 * @return
+	 */
+	List<DatafavoriteEntity> getdatafavoriteByUserAndProjectid(Long userId, Long projectid);
 }

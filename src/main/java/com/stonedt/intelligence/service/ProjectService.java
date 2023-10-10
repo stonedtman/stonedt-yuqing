@@ -50,4 +50,11 @@ public interface ProjectService {
 	JSONObject getAllKeywords();
 
 	Map<String,Object> getProjectInfoById(Map<String,Object> map);
+
+	/**
+	 * 根据用户id获取方案列表
+	 * @param userId 用户id
+	 * @return 方案列表
+	 */
+    List<Project> listProjectByUserId(long userId);
 }

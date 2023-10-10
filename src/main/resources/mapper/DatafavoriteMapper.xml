@@ -49,8 +49,19 @@ user_id=#{user_id}
 	where af.user_id = #{user_id} and p.is_selected=1
 	order by af.favoritetime desc limit 5
 </select>
+    <select id="getdatafavoriteByUserAndProjectid"
+            resultType="com.stonedt.intelligence.entity.DatafavoriteEntity">
+		select id, title, article_public_id, publish_time, user_id, favoritetime, status, emotionalIndex, projectid, groupid, source_name from data_favorite
+		<where>
+			user_id = #{userId}
+			<if test="projectid!=null and projectid!=''">
+				and projectid = #{projectid}
+			</if>
+		and status=1
+		</where>
+		order by id desc
 
-
+	</select>
 
 
 </mapper>

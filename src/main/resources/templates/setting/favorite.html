@@ -23,7 +23,7 @@
   <!--<script src="//at.alicdn.com/t/font_1709263_w16payhc3l.js"></script>-->
   <style>
     .articleTitle {
-      width: 25%;
+      width: 30%;
     }
     .sourceName {
       width: 20%;
@@ -38,7 +38,7 @@
       width: 10%;
     }
     .publishTime {
-      width: 15%;
+      width: 10%;
     }
   </style>
 </head>
@@ -231,14 +231,36 @@
   var projectId = [[${projectid}]];
   var pageNum = [[${pageNum}]];
   if (!pageNum) pageNum = 1;
+  let groupList = [];
+  let projectList = [];
 
 
   $(document).ready(function () {
     radioswitch.init()
     listSolutionGroupByUserId()
+    listProjectByUserId()
     listProjectByGroupId()
-    getWarningArticle(1)
+    getArticleList(1)
   });
+
+  // 根据当前用户获取方案列表
+    function listProjectByUserId() {
+      $.ajax({
+        url: ctxPath + 'system/listProjectByUserId',
+        type: 'post',
+        dataType: 'json',
+        data: {},
+        async: false,
+        success: function (res) {
+          var list = res;
+          projectList = list;
+        }, error: function (xhr, ajaxOptions, thrownError) {
+          if (xhr.status == 403) {
+            window.location.href = ctxPath + "login";
+          }
+        }
+      });
+    }
 
   // 方案组列表
   function listSolutionGroupByUserId() {
@@ -250,6 +272,7 @@
       async: false,
       success: function (res) {
         var list = res;
+        groupList = list;
         $('#groupSelect').html('<option value="">全部方案组</option>');
         for (var i = 0; i < list.length; i++) {
           var html = '';
@@ -317,16 +340,16 @@
 
   $('#groupSelect').change(function () {
     listProjectByGroupId();
-    getWarningArticle(1)
+    getArticleList(1)
     setBrowserUrl()
   });
 
   $('#projectSelect').change(function () {
-    getWarningArticle(1)
+    getArticleList(1)
     setBrowserUrl()
   });
 
-  function getWarningArticle(pageNum) {
+  function getArticleList(pageNum) {
     var groupId = $('#groupSelect').val();
     var projectId = $('#projectSelect').val();
     if(groupId){
@@ -340,7 +363,7 @@
       projectId = "";
     }
     $.ajax({
-      url: ctxPath + 'system/getWarningArticle',
+      url: ctxPath + 'system/getFavoriteList',
       type: 'post',
       dataType: 'json',
       data: {
@@ -352,22 +375,33 @@
         loading("#prolist-warning-box")
       },
       success: function (res) {
-        var list = res.data.warningArticle;
+        var list = res.data.favoriteList;
         $('#prolist-warning-box').html('')
         if (list.length > 0) {
           for (var i = 0; i < list.length; i++) {
-            var articleDetail = list[i].article_detail;
-            var sourceName = '-';
-            if(articleDetail){
-              articleDetail = JSON.parse(articleDetail);
-              sourceName = articleDetail.sourcewebsitename;
+            let groupName = groupList.find(item => item.groupId === list[i].groupid).groupName;
+            let projectName = projectList.find(item => item.projectId === list[i].projectid).projectName;
+            let emotionalIndex = list[i].emotionalIndex;
+            let emotional = '';
+            switch (emotionalIndex) {
+              case 1:
+                emotional = '<div class="emotional moodzm">正面</div>>'
+                break;
+              case 2:
+                emotional = '<div class="emotional moodzx" style="color: #ffbc34">中性</div>'
+                break;
+              case 3:
+                emotional = '<div class="emotional moodfm">负面</div>'
+                break;
+
             }
-            var html = '<div class="project-warning-message-list"> ' +
-                    '     <div class="text-over"><a href="/monitor/detail/' + list[i].article_id + '?groupid='+list[i].group_id+'&projectid='+list[i].project_id+'" target="_blank">' + list[i].article_title + '</a> </div>' +
-                    '     <div class="sourceName">' + sourceName + '</div>' +
-                    '     <div class="groupName">' + list[i].groupName + '</div>' +
-                    '     <div class="projectName">' + list[i].project_name + '</div>' +
-                    '     <div>' + timeParse(getMyDate(list[i].article_time)) + '</div>' +
+            var html = '<div class="project-article-list"> ' +
+                    '     <div class="text-over articleTitle"><a href="/monitor/detail/' + list[i].article_public_id + '?groupid='+list[i].groupid+'&projectid='+list[i].projectid+'" target="_blank">' + list[i].title + '</a> </div>' +
+                    '     <div class="sourceName">' + list[i].source_name + '</div>' +
+                    '     <div class="groupName">' + groupName + '</div>' +
+                    '     <div class="projectName">' + projectName + '</div>' +
+                      emotional +
+                    '     <div class="publishTime">' + timeParse(getMyDate(list[i].publish_time)) + '</div>' +
                     '</div>';
             $('#prolist-warning-box').append(html);
           }
@@ -400,7 +434,7 @@
       shouldShowPage: true, //是否显示该按钮
       useBootstrapTooltip: false,
       onPageClicked: function (event, originalEvent, type, page) {
-        getWarningArticle(page);
+        getArticleList(page);
         setBrowserUrl();
       }
     });

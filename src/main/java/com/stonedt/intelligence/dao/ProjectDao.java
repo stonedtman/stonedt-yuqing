@@ -61,4 +61,11 @@ public interface ProjectDao {
 	List<Map<String, Object>> getprojectByUser2(@Param("user_id")Long user_id, @Param("type")Integer type);
 
 	List<String> getKeywordsByUser2(@Param("user_id")Long user_id, @Param("type")Integer type);
+
+    /**
+     * 根据用户id获取方案列表
+     * @param userId 用户id
+     * @return 方案列表
+     */
+    List<Project> listProjectByUserId(long userId);
 }

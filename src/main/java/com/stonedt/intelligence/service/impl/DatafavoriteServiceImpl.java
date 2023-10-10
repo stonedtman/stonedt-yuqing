@@ -1,8 +1,12 @@
 package com.stonedt.intelligence.service.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -96,6 +100,24 @@ public class DatafavoriteServiceImpl implements DatafavoriteService{
 		map.put("public_id", id);
 		DatafavoriteEntity res = datafavoriteDao.selectdata(map);
 		return res;
+	}
+
+	/**
+	 * 获取收藏夹列表
+	 *
+	 * @param pageNum   页码
+	 * @param userId    用户id
+	 * @param projectid 方案id
+	 */
+	@Override
+	public Map<String, Object> getFavoriteList(Integer pageNum, long userId, Long projectid) {
+		Map<String, Object> resMap = new HashedMap<String, Object>();
+		PageHelper.startPage(pageNum, 10);
+		List<DatafavoriteEntity> datafavoriteEntityList = datafavoriteDao.getdatafavoriteByUserAndProjectid(userId, projectid);
+		PageInfo<DatafavoriteEntity> pageInfo = new PageInfo<>(datafavoriteEntityList);
+		resMap.put("favoriteList", datafavoriteEntityList);
+		resMap.put("pageInfo", pageInfo);
+		return resMap;
 	}
 
 }

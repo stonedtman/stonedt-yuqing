@@ -307,8 +307,9 @@
 		 GROUP BY update_time desc
 		limit 5
 	</select>
-	
-	
-	
-	
+    <select id="listProjectByUserId" resultType="com.stonedt.intelligence.entity.Project">
+		select project_id as projectId,project_name as projectName,group_id as groupId from project where user_id = #{userId} and del_status = 0
+	</select>
+
+
 </mapper>

@@ -8,7 +8,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.github.pagehelper.PageInfo;
 import com.stonedt.intelligence.aop.SystemControllerLog;
+import com.stonedt.intelligence.entity.*;
+import com.stonedt.intelligence.service.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,17 +24,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
-import com.stonedt.intelligence.entity.OpinionCondition;
-import com.stonedt.intelligence.entity.Project;
-import com.stonedt.intelligence.entity.SolutionGroup;
-import com.stonedt.intelligence.entity.User;
-import com.stonedt.intelligence.entity.WarningSetting;
-import com.stonedt.intelligence.service.EarlyWarningService;
-import com.stonedt.intelligence.service.OpinionConditionService;
-import com.stonedt.intelligence.service.ProjectService;
-import com.stonedt.intelligence.service.SolutionGroupService;
-import com.stonedt.intelligence.service.SystemService;
-import com.stonedt.intelligence.service.UserService;
 import com.stonedt.intelligence.util.ProjectUtil;
 import com.stonedt.intelligence.util.ResultUtil;
 import com.stonedt.intelligence.util.UserUtil;
@@ -58,6 +50,8 @@ public class SystemController {
     private ProjectService projectService;
     @Autowired
     private EarlyWarningService earlyWarningService;
+    @Autowired
+    private DatafavoriteService datafavoriteService;
 
     @Value("${product.manual.path}")
     private String productManualPath;
@@ -343,15 +337,27 @@ public class SystemController {
      */
     @PostMapping(value = "/getFavoriteList")
     @ResponseBody
-    public String getFavoriteList(HttpServletRequest request, @RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
-                                  @RequestParam(value = "groupId", required = false) String groupId,
-                                  @RequestParam(value = "projectId", required = false) String projectId) {
-        Long id = null;
-        if (StringUtils.isNotBlank(groupId)) {
-            id = Long.valueOf(groupId);
-        }
+    public ResultUtil getFavoriteList(HttpServletRequest request, @RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
+                                      @RequestParam(value = "project_id", required = false) String projectId) {
         long userId = userUtil.getUserId(request);
-        return JSON.toJSONString(null);
+        Long id = null;
+        if (StringUtils.isNotBlank(projectId)) {
+            id = Long.valueOf(projectId);
+        }
+        Map<String, Object> map = datafavoriteService.getFavoriteList(pageNum, userId, id);
+        return ResultUtil.build(200, "", map);
+
+    }
+
+    /**
+     * 根据用户id获取所有的方案
+     */
+    @PostMapping(value = "/listProjectByUserId")
+    @ResponseBody
+    public String listProjectByUserId(HttpServletRequest request) {
+        long userId = userUtil.getUserId(request);
+        List<Project> listProjectByUserId = projectService.listProjectByUserId(userId);
+        return JSON.toJSONString(listProjectByUserId);
     }
 
     /**
