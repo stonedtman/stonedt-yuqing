@@ -112,13 +112,12 @@
 
 	<!--检索用户最近搜索的词-->
 	<select id="getSearchWordById" resultType="map">
-		SELECT search_word,user_id,count(search_word),create_time AS wordCount FROM full_word
+		SELECT search_word,user_id,count(*) AS wordCount FROM full_word
 
 		WHERE user_id = #{map.user_id}
 
 		GROUP BY user_id,search_word
 
-		ORDER BY create_time DESC
 
 		LIMIT 6
 	</select>
