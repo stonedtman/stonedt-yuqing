@@ -101,10 +101,10 @@ function getlatestnews(analysis_projectid) {
                         emotion = '中性';
                         emotionclass = 'emotion zx';
                     } else if (emotion == 1) {
-                        emotion = '积极';
+                        emotion = '正面';
                         emotionclass = 'emotion zm';
                     } else {
-                        emotion = '消极';
+                        emotion = '负面';
                         emotionclass = 'emotion fm';
                     }
 
@@ -535,7 +535,7 @@ function dataOverview(data) {
     let sensitiveStyleClass = '.css-bar-danger.css-bar-';
 
     var html = dataOverviewHelper('全部信息', data.all, "css-bar m-b-0 css-bar-primary css-bar-", "mdi mdi-database text-info", "bg-cyan", allStyleClass, allStyle, false) + dataOverviewHelper('消极信息', data.sensitive, "css-bar m-b-0 css-bar-danger css-bar-", "mdi mdi-emoticon-sad text-danger", "bg-green", sensitiveStyleClass, sensitiveStyle, true)
-        + dataOverviewHelper('积极&中性信息', data.noSensitive, "css-bar m-b-0 css-bar-success css-bar-", "mdi mdi-emoticon-happy text-cyan", "bg-yellow", noSensitiveStyleClass, noSensitiveStyle, true) + earlyWarningHtml;
+        + dataOverviewHelper('正面&中性信息', data.noSensitive, "css-bar m-b-0 css-bar-success css-bar-", "mdi mdi-emoticon-happy text-cyan", "bg-yellow", noSensitiveStyleClass, noSensitiveStyle, true) + earlyWarningHtml;
     $('#dataOverview').html(html);
 }
 
@@ -551,7 +551,7 @@ function emotionalRate(data) {
     var html = "";
     html = '<div class="col-4 birder-right text-center">' +
         ' <h4 class="m-b-0 ">' + positive + '' +
-        '  </h4>积极' +
+        '  </h4>正面' +
         ' </div>' +
         ' <!-- column -->' +
         '<div class="col-4 birder-right text-center">' +
@@ -561,7 +561,7 @@ function emotionalRate(data) {
         ' <!-- column -->' +
         ' <div class="col-4 text-center">' +
         ' <h4 class="m-b-0">' + negative + '' +
-        ' </h4>消极' +
+        ' </h4>负面' +
         '  </div>'
     $("#emotional_proportion").html(html);
     // 图
@@ -580,9 +580,9 @@ function emotionalRate(data) {
         bindto: '#emotionRateChart',
         data: {
             columns: [
-                ['积极', pos],
+                ['正面', pos],
                 ['中性', neu],
-                ['消极', neg],
+                ['负面', neg],
             ],
             type: 'donut',
         },
