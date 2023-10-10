@@ -204,15 +204,23 @@ $("#currentyear").text((new Date()).getFullYear());
                 let index = i % 2;
 
                 if (index == 0) {
-                    str1 += '<li><span class="v-hot">' + (i + 1) + '</span> <a href=""><span>' + search_word + '</span></a></li>';
+                    str1 += '<li><span class="v-hot">' + (i + 1) + '</span> <a href="javascript:void(0)"><span>' + search_word + '</span></a></li>';
                 } else {
-                    str2 += '<li><span class="v-hot">' + (i + 1) + '</span> <a href=""><span>' + search_word + '</span></a></li>';
+                    str2 += '<li><span class="v-hot">' + (i + 1) + '</span> <a href="javascript:void(0)"><span>' + search_word + '</span></a></li>';
                 }
             }
             let str3 = '<ul class="timeline timeline-left hot-content-list" style="padding-left: 200px;">' + str1 + '</ul>';
             let str4 = '<ul class="timeline timeline-left hot-content-list" style="padding-left: 100px;">' + str2 + '</ul>';
             StrAll = str3 + str4;
             $("#searchwords").html(StrAll);
+
+            setTimeout(function(){
+                $('.search-record a').click(function () {
+                    var searchWord = this.innerText.trim();
+                    var params = '?keyword=' + searchWord + '&stype=' + full_type + '&full_poly=' + full_poly+"&fulltype="+full_type;
+                    window.location.href = ctx + 'timelysearch/result' + params;
+                })
+            },100)
         }
     }
 </script>
