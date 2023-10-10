@@ -1104,7 +1104,7 @@ function installArticle(res) {
                     let strCheck = '<div class="monitor-check"><input type="checkbox" data-index="' + article_public_id + '" id="check2"><span></span></div>';
                     let strContentStart = '<div class="monitor-right">';
                     let strTitle = '<div class="monitor-content-title"><a target="_blank" title="'+title_copy+'" style="width: 65%" href="' + ctxPath + 'monitor/detail/' + article_public_id + '?groupid=' + monitor_groupid + '&projectid=' + monitor_projectid + '&publish_time=' + pub_data + '&relatedWord=' + relatedWord.join("，") + '" class="link font-bold">'
-                    strTitle+='<span class="content-logo" style="background: url(' + websitelogo + ');width:4%"></span><span style="width:95%;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">'+title+'</span></a>';
+                    strTitle+='<span class="content-logo" style="background: url(' + websitelogo + ');"></span><span style="width:95%;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">'+title+'</span></a>';
                     if (industrylable != '') {
                         strTitle += '<span class="sl-date industrylable" >' + industrylable + ' </span>';
                     }
@@ -1293,7 +1293,7 @@ function installArticle(res) {
                             //let strTitle = '<div class="monitor-content-title"><a target="_blank" style="width: 65%" href="' + ctxPath + 'monitor/detail/' + article_public_id + '?groupid=' + monitor_groupid + '&projectid=' + monitor_projectid + '&publish_time=' + pub_data + '&relatedWord=' + relatedWord.join("，") + '" class="link font-bold"><span class="content-logo" style="background: url(' + websitelogo + ');"></span>' + title + '</a>';
                             
                             let strTitle = '<div class="monitor-content-title"><a target="_blank" title="'+title_copy+'"style="width: 65%" href="' + ctxPath + 'monitor/detail/' + article_public_id + '?groupid=' + monitor_groupid + '&projectid=' + monitor_projectid + '&publish_time=' + pub_data + '&relatedWord=' + relatedWord.join("，") + '" class="link font-bold">'
-                            strTitle+='<span class="content-logo" style="background: url(' + websitelogo + ');width:4%"></span><span style="width:95%;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">'+title+'</span></a>';
+                            strTitle+='<span class="content-logo" style="background: url(' + websitelogo + ');"></span><span style="width:95%;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">'+title+'</span></a>';
                             
                             
                             if (industrylable != '') {
@@ -1449,7 +1449,7 @@ function installArticle(res) {
                             //let strTitle = '<div class="monitor-content-title"><a target="_blank" style="width: 65%" href="' + ctxPath + 'monitor/detail/' + article_public_id + '?groupid=' + monitor_groupid + '&projectid=' + monitor_projectid + '&publish_time=' + pub_data + '&relatedWord=' + relatedWord.join("，") + '" class="link font-bold"><span class="content-logo" style="background: url(' + websitelogo + ');"></span>' + title + '</a>';
                             
                             let strTitle = '<div class="monitor-content-title"><a target="_blank" title="'+title_copy+'"style="width: 65%" href="' + ctxPath + 'monitor/detail/' + article_public_id + '?groupid=' + monitor_groupid + '&projectid=' + monitor_projectid + '&publish_time=' + pub_data + '&relatedWord=' + relatedWord.join("，") + '" class="link font-bold">'
-                            strTitle+='<span class="content-logo" style="background: url(' + websitelogo + ');width:4%"></span><span style="width:95%;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">'+title+'</span></a>';
+                            strTitle+='<span class="content-logo" style="background: url(' + websitelogo + ');"></span><span style="width:95%;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">'+title+'</span></a>';
                             
                             if (industrylable != '') {
                                 strTitle += '<span class="sl-date industrylable" >' + industrylable + ' </span>';
@@ -1601,7 +1601,7 @@ function installArticle(res) {
                         //let strTitle = '<div class="monitor-content-title"><a target="_blank" style="width: 65%" href="' + ctxPath + 'monitor/detail/' + article_public_id + '?groupid=' + monitor_groupid + '&projectid=' + monitor_projectid + '&publish_time=' + pub_data + '&relatedWord=' + relatedWord.join("，") + '" class="link font-bold"><span class="content-logo" style="background: url(' + websitelogo + ');"></span>' + title + '</a>';
                         
                         let strTitle = '<div class="monitor-content-title"><a target="_blank" title="'+title_copy+'" style="width: 65%" href="' + ctxPath + 'monitor/detail/' + article_public_id + '?groupid=' + monitor_groupid + '&projectid=' + monitor_projectid + '&publish_time=' + pub_data + '&relatedWord=' + relatedWord.join("，") + '" class="link font-bold">'
-                        strTitle+='<span class="content-logo" style="background: url(' + websitelogo + ');width:4%"></span><span style="width:95%;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">'+title+'</span></a>';
+                        strTitle+='<span class="content-logo" style="background: url(' + websitelogo + ');"></span><span style="width:95%;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">'+title+'</span></a>';
                         
                         if (industrylable != '') {
                             strTitle += '<span class="sl-date industrylable" >' + industrylable + ' </span>';
@@ -4550,7 +4550,7 @@ function checkedShow(id , showId , text) {
     if (boolean1){
         let text1 = "<a\n" +
             "                            data-v-03cb9676=\"\"\n" +
-            "                            style=\"font-weight: 300; font-size: 1px\"\n" +
+            "                            style=\"font-weight: 300; font-size: 12px\"\n" +
             "                            class=\"dselect-text\"\n" +
             "                          >\n" +
             "                            "+text + "(" + sum + ")" + "\n" +
@@ -4564,7 +4564,7 @@ function checkedShow(id , showId , text) {
 
         let text2 = "<a\n" +
             "                            data-v-03cb9676=\"\"\n" +
-            "                            style=\"font-weight: 300; font-size: 1px\"\n" +
+            "                            style=\"font-weight: 300; font-size: 12px\"\n" +
             "                            class=\"dselect-text\"\n" +
             "                          >\n" +
             "                            "+ text +"\n" +
