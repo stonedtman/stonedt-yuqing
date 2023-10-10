@@ -318,6 +318,43 @@ public class SystemController {
     }
 
     /**
+     * @param mv    视图
+     * @param request 请求
+     * @return org.springframework.web.servlet.ModelAndView
+     * @description: 跳转收藏夹页面 <br>
+     * @version: 1.0 <br>
+     * @date: 2023/10/10 11:10 <br>
+     * @auther: 文轩 <br>
+     */
+    @SystemControllerLog(module = "系统设置", submodule = "系统设置-收藏夹", type = "查询", operation = "favorite")
+    @GetMapping(value = "/favorite")
+    public ModelAndView favorite(ModelAndView mv, HttpServletRequest request) {
+        String groupId = request.getParameter("groupid");
+        String projectId = request.getParameter("projectid");
+        mv.setViewName("setting/favorite");
+        mv.addObject("groupId", groupId);
+        mv.addObject("projectId", projectId);
+        mv.addObject("settingLeft", "favorite");
+        return mv;
+    }
+
+    /**
+     * 获取收藏夹列表
+     */
+    @PostMapping(value = "/getFavoriteList")
+    @ResponseBody
+    public String getFavoriteList(HttpServletRequest request, @RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
+                                  @RequestParam(value = "groupId", required = false) String groupId,
+                                  @RequestParam(value = "projectId", required = false) String projectId) {
+        Long id = null;
+        if (StringUtils.isNotBlank(groupId)) {
+            id = Long.valueOf(groupId);
+        }
+        long userId = userUtil.getUserId(request);
+        return JSON.toJSONString(null);
+    }
+
+    /**
      * 根据方案id获取偏好设置信息
      */
     /*@SystemControllerLog(module = "系统设置", submodule = "系统设置-偏好设置", type = "查询", operation = "getOpinionConditionByProjectId")*/
