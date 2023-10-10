@@ -698,7 +698,7 @@ function thematicAnalysis2(){
 		$('#media').append(
 			'<li>'+
 				'<span title="'+arr[i].title+'">'+rankingHtml+title+'</span>'+
-				'<span>'+arr[i].author+'</span>'+
+				'<span class="text-over">'+arr[i].author+'</span>'+
 				'<span>'+arr[i].publish_time+'</span>'+
 				'<span>'+arr[i].hot+'</span>'+
 			'</li>'

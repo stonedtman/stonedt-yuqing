@@ -3629,6 +3629,7 @@ a {
 .sidebar-nav>ul{
 	height: calc(100vh - 120px);
     overflow-y: auto;
+    overflow-x: hidden;
     margin-bottom: 10px;
 }
 .sidebar-nav>ul::-webkit-scrollbar{

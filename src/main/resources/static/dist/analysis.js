@@ -886,12 +886,16 @@ function toHtmlHotEventRanking(type, data) {
             }
         }
         var emotionHtml = '';
-        if (type == 0) {
-            var emotion = data[i].emotion;
-            if (emotion == 1) emotionHtml = '<span style="margin-right: 15px;" class="link moodzm">正面</span>';
-            if (emotion == 2) emotionHtml = '<span style="margin-right: 15px;" class="link moodzx">中性</span>';
-            if (emotion == 3) emotionHtml = '<span style="margin-right: 15px;" class="link moodfm">负面</span>';
-        }
+        // if (type == 0) {
+        //     var emotion = data[i].emotion;
+        //     if (emotion == 1) emotionHtml = '<span style="margin-right: 15px;" class="link moodzm">正面</span>';
+        //     if (emotion == 2) emotionHtml = '<span style="margin-right: 15px;" class="link moodzx">中性</span>';
+        //     if (emotion == 3) emotionHtml = '<span style="margin-right: 15px;" class="link moodfm">负面</span>';
+        // }
+        var emotion = data[i].emotion;
+        if (emotion == 1) emotionHtml = '<span style="margin-right: 15px;" class="link moodzm">正面</span>';
+        if (emotion == 2) emotionHtml = '<span style="margin-right: 15px;" class="link moodzx">中性</span>';
+        if (emotion == 3) emotionHtml = '<span style="margin-right: 15px;" class="link moodfm">负面</span>';
         var rate = data[i].rate;
         var _score = data[i]._score;
         if (!rate) rate = '00.00%';
