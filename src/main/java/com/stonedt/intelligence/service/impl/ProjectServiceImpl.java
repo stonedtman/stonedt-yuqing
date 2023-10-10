@@ -8,6 +8,7 @@ import java.util.Map;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.stonedt.intelligence.dao.DatafavoriteDao;
 import com.stonedt.intelligence.dao.OpinionConditionDao;
 import com.stonedt.intelligence.entity.ReportCustom;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +19,7 @@ import com.alibaba.fastjson.JSON;
 import com.stonedt.intelligence.dao.ProjectDao;
 import com.stonedt.intelligence.entity.Project;
 import com.stonedt.intelligence.service.ProjectService;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -26,6 +28,8 @@ public class ProjectServiceImpl implements ProjectService {
     private ProjectDao projectDao;
     @Autowired
     private OpinionConditionDao opinionConditionDao;
+    @Autowired
+    private DatafavoriteDao datafavoriteDao;
 
     @Override
     public List<Map<String, Object>> getGroupInfoByUserId(Long userId) {
@@ -90,7 +94,9 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Integer delProject(Map<String, Object> map) {
+        datafavoriteDao.delDatafavoriteByProjectId((Long)map.get("project_id"));
         return projectDao.delProject(map);
     }
 

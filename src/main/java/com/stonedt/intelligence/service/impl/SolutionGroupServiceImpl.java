@@ -6,18 +6,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.stonedt.intelligence.dao.DatafavoriteDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.stonedt.intelligence.dao.SolutionGroupDao;
 import com.stonedt.intelligence.entity.SolutionGroup;
 import com.stonedt.intelligence.service.SolutionGroupService;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SolutionGroupServiceImpl implements SolutionGroupService {
 
     @Autowired
     private SolutionGroupDao solutionGroupDao;
+    @Autowired
+    private DatafavoriteDao datafavoriteDao;
 
     @Override
     public int addSolutionGroup(SolutionGroup sg) {
@@ -64,9 +68,11 @@ public class SolutionGroupServiceImpl implements SolutionGroupService {
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public Map<String, Object> updateSolutionGroupStatus(Long groupId) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		Boolean updateSolutionGroupStatus = solutionGroupDao.updateSolutionGroupStatus(groupId);
+        datafavoriteDao.delDatafavoriteByGroupid(groupId);
 		if (updateSolutionGroupStatus) {
 			result.put("state", true);
 			result.put("message", "删除方案组成功！");

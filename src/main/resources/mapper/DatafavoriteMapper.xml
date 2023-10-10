@@ -32,10 +32,15 @@ and
 user_id=#{user_id}
 
 </update>
+	<update id="delDatafavoriteByProjectId">
+		update data_favorite set status=2 where projectid=#{projectId}
+	</update>
+	<update id="delDatafavoriteByGroupid">
+		update data_favorite set status=2 where groupid=#{groupId}
+	</update>
 
 
-
-<select id="getdatafavoriteByUser" resultType="com.stonedt.intelligence.entity.DatafavoriteEntity">
+	<select id="getdatafavoriteByUser" resultType="com.stonedt.intelligence.entity.DatafavoriteEntity">
 	select * from data_favorite where user_id = #{user_id} order by favoritetime desc limit 5
 </select>
 

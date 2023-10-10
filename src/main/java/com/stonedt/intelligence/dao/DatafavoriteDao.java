@@ -27,4 +27,16 @@ public interface DatafavoriteDao {
 	 * @return
 	 */
 	List<DatafavoriteEntity> getdatafavoriteByUserAndProjectid(Long userId, Long projectid);
+
+	/**
+	 * 根据方案id删除收藏夹
+	 * @param projectId 方案id
+	 */
+	void delDatafavoriteByProjectId(Long projectId);
+
+	/**
+	 * 根据方案组id删除收藏夹
+	 * @param groupId 方案组id
+	 */
+	void delDatafavoriteByGroupid(Long groupId);
 }
