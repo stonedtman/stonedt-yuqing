@@ -2935,6 +2935,31 @@ a {
     background: transparent;
 }
 
+.project-article-list {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px 14px 20px;
+    border-bottom: 1px solid rgba(202, 201, 201, 0.3);
+    white-space: nowrap;
+    color: #8193a3;
+}
+.project-article-title {
+    user-select: none;
+    color: #3e5569;
+}
+
+.project-article-list>div {
+    height: 22px;
+}
+
+.project-article-list:hover {
+    background: #c4e2ff;
+    transition: all 0.3s ease-in;
+}
+.project-article-title:hover {
+    background: transparent;
+}
+
 .pro-data-edit {
     user-select: none;
     font-size: 0;
