@@ -534,7 +534,7 @@ function dataOverview(data) {
     let noSensitiveStyleClass = '.css-bar-success.css-bar-';
     let sensitiveStyleClass = '.css-bar-danger.css-bar-';
 
-    var html = dataOverviewHelper('全部信息', data.all, "css-bar m-b-0 css-bar-primary css-bar-", "mdi mdi-database text-info", "bg-cyan", allStyleClass, allStyle, false) + dataOverviewHelper('消极信息', data.sensitive, "css-bar m-b-0 css-bar-danger css-bar-", "mdi mdi-emoticon-sad text-danger", "bg-green", sensitiveStyleClass, sensitiveStyle, true)
+    var html = dataOverviewHelper('全部信息', data.all, "css-bar m-b-0 css-bar-primary css-bar-", "mdi mdi-database text-info", "bg-cyan", allStyleClass, allStyle, false) + dataOverviewHelper('负面信息', data.sensitive, "css-bar m-b-0 css-bar-danger css-bar-", "mdi mdi-emoticon-sad text-danger", "bg-green", sensitiveStyleClass, sensitiveStyle, true)
         + dataOverviewHelper('正面&中性信息', data.noSensitive, "css-bar m-b-0 css-bar-success css-bar-", "mdi mdi-emoticon-happy text-cyan", "bg-yellow", noSensitiveStyleClass, noSensitiveStyle, true) + earlyWarningHtml;
     $('#dataOverview').html(html);
 }

@@ -74,6 +74,226 @@
             font-size: 12px;
             text-align: center;
         }
+        .page-wrapper{
+            height: 100vh;
+            overflow: hidden;
+        }
+        .btns{
+            display: flex;
+            align-items: center;
+            padding-left: 20px;
+            margin-bottom: 20px;
+            background-color: #FFFFFF;
+        }
+        .btns .item{
+            height: 40px;
+            line-height: 40px;
+            padding: 0 20px;
+            color: #6184e6;
+            cursor: pointer;
+        }
+        .btns .item:first-child{
+            padding-left: 0;
+        }
+        .card-identify{
+            display: flex;
+        }
+        .identify-images{
+            display: flex;
+            width: 50%;
+            padding: 10px;
+            background-color: #f1f5f9;
+        }
+        .identify-img-list{
+            width: 60px;
+            height: 100%;
+            overflow-y: auto;
+            margin-right: 10px;
+        }
+        .img-item{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 60px;
+            padding: 2px;
+            margin-bottom: 8px;
+            background-color: #dbdfe5;
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+        .img-item.active{
+            border-color: #9bb4ee;
+            border-radius: 1px;
+        }
+        .img-item img{
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .identify-img{
+            flex: 1;
+            height: 100%;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #dbdfe5;
+        }
+        .identify-img img{
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .identify-result{
+            width: 50%;
+            height: 100%;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .result-header{
+            height: 28px;
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #f2f3f5;
+        }
+        .result-title{
+            font-size: 12px;
+            margin-top: 8px;
+        }
+        .identify-type{
+            font-size: 16px;
+        }
+        .result-content{
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px 0;
+        }
+        .not-identify{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .not-identify .btn{
+            height: 30px;
+            line-height: 30px;
+            margin-top: 10px;
+            padding: 0px 12px;
+            color: #FFFFFF;
+            border-radius: 2px;
+            background-color: #6283e6;
+        }
+        .result-footer{
+            width: 100%;
+            text-align: center;
+        }
+        .result-footer a{
+            color: #0ba8ef;
+        }
+        .showCreateEvent{
+            height: 100%;
+        }
+        .event-box{
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        #imageRecognition .event-box{
+            width: 550px;
+            min-height: auto;
+            margin-left: -275px;
+        }
+        #imageRecognition .event-box-body{
+            padding: 20px 20px 30px;
+        }
+        .steps{
+            display: flex;
+            align-items: center;
+            margin-top: 4px;
+        }
+        .step{
+            position: relative;
+            width: 100%;
+            height: 32px;
+            line-height: 32px;
+            color: #666666;
+            text-align: center;
+        }
+        .step img{
+            height: 100%;
+        }
+        .step span{
+            width: 100%;
+            position: absolute;
+            left: 50%;
+            top: 54%;
+            transform: translate(-50%,-50%);
+        }
+        .step.active{
+            color: #FFFFFF;
+        }
+        .identify-content{
+
+        }
+        .identify-content .tips{
+            margin: 24px 0px 20px 120px;
+        }
+        .identify-content .tip{
+            margin-bottom: 12px;
+        }
+        .step-btn{
+            width: 180px;
+            height: 32px;
+            line-height: 32px;
+            margin: auto;
+            font-size: 12px;
+            color: #FFFFFF;
+            text-align: center;
+            background: #3268C0;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        .identify-complete{
+            text-align: center;
+            color: #3268C0;
+        }
+        .identify-complete img{
+            width: 60px;
+            margin: 24px 0 10px;
+            border-radius: 50%;
+        }
+        .identify-complete .text{
+            margin-bottom: 24px;
+        }
+        #intelligentWrite .event-box-body{
+            padding: 32px;
+        }
+        #close_this{
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            z-index: 1;
+        }
+        #intelligentWrite .report-content{
+            padding: 0 20px 20px;
+            background-color: #f6f6f6;
+        }
+        #intelligentWrite .report-content .title{
+            height: 40px;
+            line-height: 40px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            border-bottom: 1px solid rgba(19,39,69,.1);
+        }
+        #intelligentWrite .report-content .content{
+            height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -105,12 +325,12 @@
             <!-- nav end-->
             <div class="p-20">
                 <!-- basic table -->
-                <div class="row m-b-20">
+                <div class="row m-b-20" style="height: calc(100vh - 174px);overflow: hidden;">
                     <div class="col-lg-8">
-                        <div class="card">
+                        <div class="card" style="height: calc(50vh - 87px);overflow-y: auto;margin-bottom: 0">
                             <div class="card-body">
                                 <h4 class="card-title" id="title"></h4>
-                                <div class="detail-tips">
+                                <div class="detail-tips" style="margin-bottom: 10px;">
                                     <span id="source"></span>
                                     <span id="author"></span>
                                     <span id="publish_time"></span>
@@ -121,20 +341,63 @@
                                     <span id="export"></span>
                                     <span id="yuanwen"></span>
                                 </div>
-
-                            </div>
-                        </div>
-                        <div class="card m-b-0" style="min-height: 100vh;">
-                            <div class="card-body">
                                 <div class="detail-content" id="content">
 
                                 </div>
-
                             </div>
                             <span id="post_statement"></span>
                         </div>
+                        <div class="btns">
+                            <div class="item" onclick="image_recognition()">
+                                <span style="display: block;position: absolute;font-size: 12px;color: #fff;margin-left: 54px;background-color: #fe475d;height: 14px;line-height: 14px;border-radius: 45%;padding: 0 4px;transform: scale(0.9);">new</span>
+                                <div class="text">图像识别</div>
+                            </div>
+                            <div class="item" onclick="intelligent_write()">
+                                <span style="display: block;position: absolute;font-size: 12px;color: #fff;margin-left: 54px;background-color: #fe475d;height: 14px;line-height: 14px;border-radius: 45%;padding: 0 4px;transform: scale(0.9);">new</span>
+                                <div class="text">智写报告</div>
+                            </div>
+                        </div>
+                        <div class="card m-b-0" style="height: calc(50vh - 147px);">
+                            <div class="card-body" style="height: 100%">
+                                <div class="card-identify" style="height: 100%">
+                                    <div class="identify-images">
+                                        <div class="identify-img-list">
+                                            <div class="img-item active">
+                                                <img src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/e0m9Hs8ZWwtDW5CCZuJLUo8XCB1OQXCbS02hzKgGdohGgGPjLAfKXSof11TLXSwlpXiaenvCzlUmPhDVeBb8dibA/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1" alt="">
+                                            </div>
+                                            <div class="img-item">
+                                                <img src="https://mmbiz.qpic.cn/sz_mmbiz_png/e0m9Hs8ZWwvxnmYQzkqYPQt2icszu79alHxiaXTIgZamtRtu07dHDAltllrTfGnzF5C7PhfLCeChnfQiakmd78caQ/640?wx_fmt=png" alt="">
+                                            </div>
+                                            <div class="img-item">
+                                                <img src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/e0m9Hs8ZWwtDW5CCZuJLUo8XCB1OQXCblkm6unF0qd15ickq17FqdL2LPIrVBtVImaU4HLzsPpPaCyWY4fx9dibA/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="identify-img">
+                                            <img src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/e0m9Hs8ZWwtDW5CCZuJLUo8XCB1OQXCbS02hzKgGdohGgGPjLAfKXSof11TLXSwlpXiaenvCzlUmPhDVeBb8dibA/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="identify-result">
+                                        <div class="result-header">
+                                            <div class="result-title">识别结果</div>
+                                            <div class="identify-type">图像识别</div>
+                                        </div>
+                                        <div class="result-content">
+                                            <div class="not-identify">
+                                                <div class="tip">未识别图片中的文字内容</div>
+                                                <div class="tip">请点击下方按钮进行识别</div>
+                                                <div class="btn">图像识别</div>
+                                            </div>
+                                        </div>
+                                        <div class="result-footer">
+                                            本技术由 <a href="https://nlp.stonedt.com/dist/assets/page/login/login.html" target="_blank">思通数科·智能识别引擎</a> 提供支持
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" style="height: 100%;overflow-y: auto;">
                         <div class="card">
                             <div class="card-body">
                                 <div class="detail-card-title m-b-0">
@@ -377,6 +640,7 @@
 <script th:src="@{/assets/extra-libs/c3/d3.min.js}"></script>
 <script th:src="@{/assets/extra-libs/c3/c3.min.js}"></script>
 <script th:src="@{/common/tools.js}"></script>
+<script th:src="@{/assets/libs/block-ui/jquery.blockUI.js}"></script>
 <script th:src="@{/dist/baidu/baidu_statistics.js}"></script>
 
 <script type="text/javascript" th:inline="javascript">
@@ -901,6 +1165,186 @@ $("#currentyear").text((new Date()).getFullYear());
                 }
             }
         );
+    }
+
+    $(".identify-img-list .img-item").click(function () {
+        let imgList = document.querySelectorAll(".identify-img-list .img-item")
+        for (var i = 0; i < imgList.length; i++){
+            imgList[i].classList.remove("active")
+        }
+        this.classList.add("active")
+        $(".identify-img img").attr("src",$(this).find("img")[0].src)
+        if(!document.querySelector(".result-content .not-identify")){
+            identifyresult()
+        }
+    })
+
+    $(".not-identify .btn").click(function () {
+        image_recognition()
+    })
+    function image_recognition() {
+        var eventHtml =
+            '<div class="shadebox" id="imageRecognition">'+
+            '    <div class="showCreateEvent"> '+
+            '        <div class="event-box">'+
+            '            <div class="event-box-header"> '+
+            '                <h5 class="modal-title">图像识别绑定</h5>'+
+            '                <i class="mdi mdi-close-circle-outline font-18 cursor-po" id="closethis"></i>'+
+            '            </div>'+
+            '            <div class="event-box-body">'+
+            `                <div class="steps">
+                                    <div class="step active">
+                                        <img src="/assets/images/identify/step1h.png" alt="">
+                                        <span>1.注册账号</span>
+                                    </div>
+                                    <div class="step">
+                                        <img src="/assets/images/identify/step2.png" alt="">
+                                        <span>2.绑定接口信息</span>
+                                    </div>
+                                    <div class="step">
+                                        <img src="/assets/images/identify/step3.png" alt="">
+                                        <span>3.完成</span>
+                                    </div>
+                                 </div>
+                                 <div class="identify-content">
+                                    <div class="tips">
+                                        <div class="tip">1.请前往：<a style="color: #0ba8ef" href="https://nlp.stonedt.com/dist/assets/page/login/login.html" target="_blank">思通数科·智能识别引擎</a> 注册账号</div>
+                                        <div class="tip">2.扫码注册成功之后点击右上角用户管理</div>
+                                        <div class="tip">3.获取“secret-id”和“secret-key”进行绑定接口</div>
+                                     </div>
+                                 </div>
+                                 <div class="step-btn">下一步</div>
+                                 `+
+            '            </div>'+
+            '        </div>'+
+            '    </div>'+
+            '</div>'
+
+        $("body").append(eventHtml)
+        $("#closethis").click(function (param) {
+            $("#imageRecognition").remove()
+        })
+        $(".step-btn").click(function () {
+            changestep()
+        })
+        $(".steps .step").click(function () {
+
+        })
+
+
+        // $(".result-content").html("")
+        // identifyresult()
+    }
+
+    function changestep() {
+        let nowstep = 0
+        let stepList = document.querySelectorAll(".steps .step")
+        for (let i = 0; i < stepList.length; i++) {
+            if(stepList[i].className.indexOf("active")>-1){
+                nowstep = i+1
+            }
+        }
+        if(nowstep==1){
+            let html ='          <div class="event-line" style="padding-bottom: 4px;margin-top: 10px">'+
+                '                    <div>secren-id</div>'+
+                '                    <div class="input-group">'+
+                '                        <input type="text" class="form-control" id="secren_id" placeholder="请输入secren-id"/>'+
+                '                    </div>'+
+                '                </div>'+
+                '                <div class="event-line">'+
+                '                    <div>secren-key</div>'+
+                '                    <div class="input-group">'+
+                '                        <input type="text" class="form-control" id="secren_key" placeholder="请输入secren-key"/>'+
+                '                    </div>'+
+                '                </div>'+
+                '                <div style="text-align: center;margin-bottom: 10px">如何获取接口信息</div>';
+            $(".identify-content").html(html)
+            $(".step-btn").html("确定绑定")
+            stepList[0].classList.remove("active")
+            stepList[0].getElementsByTagName("img")[0].src = "/assets/images/identify/step1.png"
+            stepList[1].classList.add("active")
+            stepList[1].getElementsByTagName("img")[0].src = "/assets/images/identify/step2h.png"
+        }
+        if(nowstep==2){
+            let secren_id = $("#secren_id").val()
+            let secren_key = $("#secren_key").val()
+            if(secren_id==""||secren_key==""){
+                $.blockUI({
+                    message: "secren-id和secren-key不能为空",
+                    fadeIn: 700,
+                    fadeOut: 700,
+                    timeout: 3000,
+                    showOverlay: false,
+                    centerY: false,
+                    css: {
+                        width: '250px',
+                        top: '20px',
+                        left: '',
+                        right: '20px',
+                        border: 'none',
+                        padding: '15px 5px',
+                        backgroundColor: '#000',
+                        '-webkit-border-radius': '10px',
+                        '-moz-border-radius': '10px',
+                        opacity: 0.9,
+                        color: '#fff'
+                    }
+                });
+                return
+            }
+            let html ='          <div class="identify-complete">'+
+                '                    <img src="/assets/images/identify/complete.png" alt="">'+
+                '                    <div class="text">绑定已完成</div>'+
+                '                </div>';
+            $(".identify-content").html(html)
+            $(".step-btn").html("立即识别")
+            stepList[1].classList.remove("active")
+            stepList[1].getElementsByTagName("img")[0].src = "/assets/images/identify/step2.png"
+            stepList[2].classList.add("active")
+            stepList[2].getElementsByTagName("img")[0].src = "/assets/images/identify/step3h.png"
+        }
+        if(nowstep==3){
+            $("#imageRecognition").remove()
+            identifyresult()
+        }
+    }
+
+    function identifyresult() {
+        let list = ['<div>游乐场安全提示</div>','暂无识别','<div>游乐场安全提示 如在封闭空间内游玩遇到火灾，切莫 悦张，应按逃生指示标识方向从逃生 出口迅速撤离 中华人民共和国应急管理部</div>']
+        let imgList = document.querySelectorAll(".identify-img-list .img-item")
+        let html = ''
+        for (let i = 0; i < imgList.length; i++) {
+            if(imgList[i].className.indexOf("active")>-1){
+                html = list[i]
+            }
+        }
+        $(".result-content").html(html)
+    }
+
+    function intelligent_write() {
+        var eventHtml =
+            '<div class="shadebox" id="intelligentWrite">'+
+            '    <div class="showCreateEvent"> '+
+            '        <div class="event-box">'+
+            '            <i class="mdi mdi-close-circle-outline font-18 cursor-po" id="close_this"></i>'+
+            '            <div class="event-box-body">'+
+            `                <div class="report-content">
+                                <div class="title">恐怕未来我们拿金牌能力越来越强，足篮人才储备越来越差</div>
+                                <div class="content">首先，我们需要认识到篮球是一项需要全方位发展和长期培养的运动。在过去的几十年里，我国篮球事业取得了举世瞩目的成就，不仅在亚洲地区崭露头角，还在国际赛场上屡屡崭露头角。</div>
+                                <div class="support" style="text-align: center;">
+                                    本技术由 <a style="color: #0ba8ef" href="https://www.xiezuobao.net" target="_blank">思通数科·写作宝</a> 提供支持
+                                </div>
+                             </div>
+                                 `+
+            '            </div>'+
+            '        </div>'+
+            '    </div>'+
+            '</div>'
+
+        $("body").append(eventHtml)
+        $("#close_this").click(function (param) {
+            $("#intelligentWrite").remove()
+        })
     }
 
     //    function toDetail(article_public_id, g_id, p_id) {
