@@ -49,7 +49,7 @@ public class PlatformController {
         // 获取用户id
         User user = userUtil.getuser(request);
         if (!user.getNlp_flag().equals(1)){
-            return ResultUtil.build(500, "未绑定nlp服务");
+            return ResultUtil.build(424, "未绑定nlp服务");
         }
         // 调用
         return platformService.nlpOcr(user, images);

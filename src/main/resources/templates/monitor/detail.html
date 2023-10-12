@@ -348,7 +348,7 @@
                             <span id="post_statement"></span>
                         </div>
                         <div class="btns">
-                            <div class="item" onclick="image_recognition()">
+                            <div class="item" onclick="image_recognition_btn()">
                                 <span style="display: block;position: absolute;font-size: 12px;color: #fff;margin-left: 54px;background-color: #fe475d;height: 14px;line-height: 14px;border-radius: 45%;padding: 0 4px;transform: scale(0.9);">new</span>
                                 <div class="text">图像识别</div>
                             </div>
@@ -653,7 +653,7 @@ $("#currentyear").text((new Date()).getFullYear());
     var publish_time = [[${publish_time}]];
     //    		var menu = [[${menu}]];
     //    let currentPageByDetail = [[${currentPageByDetail}]];
-
+    var imageList = []
     $(function () {
         breadCrumbs();
         articleDetail();
@@ -771,7 +771,7 @@ $("#currentyear").text((new Date()).getFullYear());
 //                        }
 //
 //                        pageStrAll = pageStrStart + currentBefore + currentAfter + pageStrEnd;
-
+                        imageList = JSON.parse(res.detail.extend_string_one).imglist
                         var detail = res.detail;
                         let imgListAll = '';
                         let imgListStr1 = '<div>';
@@ -1175,13 +1175,53 @@ $("#currentyear").text((new Date()).getFullYear());
         this.classList.add("active")
         $(".identify-img img").attr("src",$(this).find("img")[0].src)
         if(!document.querySelector(".result-content .not-identify")){
-            identifyresult()
+            // identifyresult()
+            getBlob($(this).find("img")[0].src)
         }
     })
 
     $(".not-identify .btn").click(function () {
-        image_recognition()
+        getBlob(imageList[0].imgurl)
     })
+    function image_recognition_btn() {
+        getBlob(imageList[0].imgurl)
+    }
+    function getBlob(url) {
+        // fetch 为ES6新增，不支持IE兼容，请注意分辨
+        fetch(url).then((response) => {
+            let blob = new Blob([response.blob()])
+            let imgFile = new File([blob], "image", { type: 'image/png' })
+            nlp_ocr(imgFile)
+        })
+    }
+    function nlp_ocr(imgFile) {
+        let formdata = new FormData()
+        formdata.append("images",imgFile)
+        $.ajax({
+            url: window.location.origin + "/platform/nlp/ocr",
+            method: "post",
+            data: formdata,
+            async:false,
+            processData : false,
+            contentType : false,
+            success: function (res) {
+                console.log(res)
+                if(res.status==200){
+                    $("#imageRecognition").remove()
+                    identifyresult()
+                }
+                if(res.status==424){
+                    image_recognition()
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+
+                if (xhr.status == 403) {
+                    window.location.href = ctxPath + "login";
+                }
+            }
+        });
+    }
     function image_recognition() {
         var eventHtml =
             '<div class="shadebox" id="imageRecognition">'+
@@ -1236,8 +1276,6 @@ $("#currentyear").text((new Date()).getFullYear());
         })
 
 
-        // $(".result-content").html("")
-        // identifyresult()
     }
 
     function changestep() {
@@ -1297,20 +1335,65 @@ $("#currentyear").text((new Date()).getFullYear());
                 });
                 return
             }
-            let html ='          <div class="identify-complete">'+
-                '                    <img src="/assets/images/identify/complete.png" alt="">'+
-                '                    <div class="text">绑定已完成</div>'+
-                '                </div>';
-            $(".identify-content").html(html)
-            $(".step-btn").html("立即识别")
-            stepList[1].classList.remove("active")
-            stepList[1].getElementsByTagName("img")[0].src = "/assets/images/identify/step2.png"
-            stepList[2].classList.add("active")
-            stepList[2].getElementsByTagName("img")[0].src = "/assets/images/identify/step3h.png"
+            let d = {
+                secretId: secren_id,
+                secretKey: secren_key,
+            }
+            $.ajax({
+                url: window.location.origin + "/platform/nlp/bind",
+                method: "post",
+                dataType: "json",
+                data: JSON.stringify(d),
+                contentType: "application/json;charset=UTF-8",
+                success: function (res) {
+                    if(res.status==200){
+                        let html ='          <div class="identify-complete">'+
+                            '                    <img src="/assets/images/identify/complete.png" alt="">'+
+                            '                    <div class="text">绑定已完成</div>'+
+                            '                </div>';
+                        $(".identify-content").html(html)
+                        $(".step-btn").html("立即识别")
+                        stepList[1].classList.remove("active")
+                        stepList[1].getElementsByTagName("img")[0].src = "/assets/images/identify/step2.png"
+                        stepList[2].classList.add("active")
+                        stepList[2].getElementsByTagName("img")[0].src = "/assets/images/identify/step3h.png"
+                    }else{
+                        $.blockUI({
+                            message: res.msg,
+                            fadeIn: 700,
+                            fadeOut: 700,
+                            timeout: 3000,
+                            showOverlay: false,
+                            centerY: false,
+                            css: {
+                                width: '250px',
+                                top: '20px',
+                                left: '',
+                                right: '20px',
+                                border: 'none',
+                                padding: '15px 5px',
+                                backgroundColor: '#000',
+                                '-webkit-border-radius': '10px',
+                                '-moz-border-radius': '10px',
+                                opacity: 0.9,
+                                color: '#fff'
+                            }
+                        });
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+
+                    if (xhr.status == 403) {
+                        window.location.href = ctxPath + "login";
+                    }
+                }
+            });
+
         }
         if(nowstep==3){
             $("#imageRecognition").remove()
-            identifyresult()
+            // identifyresult()
+            getBlob(imageList[0].imgurl)
         }
     }
 
