@@ -1177,9 +1177,9 @@ $("#currentyear").text((new Date()).getFullYear());
     function image_recognition_btn() {
         getBlob(imageList[0].imgurl)
     }
-    function getBlob(url) {
+    async function getBlob(url) {
         // fetch 为ES6新增，不支持IE兼容，请注意分辨
-        fetch(url)
+        await fetch(url)
             .then(response=>{
                 return response.blob()
             })
