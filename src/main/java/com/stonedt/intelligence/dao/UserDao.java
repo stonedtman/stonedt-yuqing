@@ -1,6 +1,7 @@
 package com.stonedt.intelligence.dao;
 
 import com.stonedt.intelligence.entity.User;
+import com.stonedt.intelligence.vo.BindParamsVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -115,4 +116,9 @@ public interface UserDao {
 
 	void updateEndLoginTime(Long userId);
 
+	/**
+	 * 绑定nlp
+	 * @param bindParamsVo 绑定参数
+	 */
+    void bindNlp(BindParamsVo bindParamsVo);
 }

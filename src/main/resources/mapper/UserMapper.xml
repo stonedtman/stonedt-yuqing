@@ -150,5 +150,8 @@ select user_id,username from user where user_type = 2 and user_id not in (${user
 	<update id="editIs_change_pas" parameterType="java.lang.Long">
 	update user set is_change_pas=1 where user_id=#{userId}
 </update>
+    <update id="bindNlp">
+		update user set nlp_secret_id = #{secretId},nlp_secret_key = #{secretKey},nlp_flag = 1 where user_id=#{userId}
+	</update>
 
 </mapper>

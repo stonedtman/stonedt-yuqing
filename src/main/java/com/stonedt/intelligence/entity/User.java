@@ -23,6 +23,21 @@ public class User {
     private String organization_id;
     private Integer isOnline;
 
+    /**
+     * nlp服务绑定id
+     */
+    private String nlp_secret_id;
+
+    /**
+     * nlp服务绑定key
+     */
+    private String nlp_secret_key;
+
+    /**
+     * nlp服务绑定状态
+     */
+    private Integer nlp_flag;
+
     public Integer getIsOnline() {
         return isOnline;
     }
@@ -144,5 +159,29 @@ public class User {
 
     public void setOrganization_id(String organization_id) {
         this.organization_id = organization_id;
+    }
+
+    public String getNlp_secret_id() {
+        return nlp_secret_id;
+    }
+
+    public void setNlp_secret_id(String nlp_secret_id) {
+        this.nlp_secret_id = nlp_secret_id;
+    }
+
+    public String getNlp_secret_key() {
+        return nlp_secret_key;
+    }
+
+    public void setNlp_secret_key(String nlp_secret_key) {
+        this.nlp_secret_key = nlp_secret_key;
+    }
+
+    public Integer getNlp_flag() {
+        return nlp_flag;
+    }
+
+    public void setNlp_flag(Integer nlp_flag) {
+        this.nlp_flag = nlp_flag;
     }
 }
