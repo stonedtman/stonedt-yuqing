@@ -1,5 +1,6 @@
 package com.stonedt.intelligence.service.impl;
 
+import cn.hutool.core.io.FileUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.stonedt.intelligence.dao.UserDao;
@@ -20,6 +21,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 
 /**
@@ -94,6 +97,12 @@ public class PlatformServiceImpl implements PlatformService {
             return ResultUtil.build(500, "nlp服务调用失败");
         }
         JSONObject jsonObject = JSON.parseObject(result);
-        return ResultUtil.ok(jsonObject);
+        Object code = jsonObject.get("code");
+        //转Integer
+        int codeInt = Integer.parseInt(code.toString());
+        if (codeInt != 200){
+            return ResultUtil.build(codeInt, jsonObject.get("msg").toString());
+        }
+        return ResultUtil.ok(jsonObject.get("results"));
     }
 }
