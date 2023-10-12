@@ -29,6 +29,24 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+		<style>
+			.recommend{
+				padding: 20px 20px 0;
+			}
+			.recommend-content{
+				height: 52px;
+				line-height: 52px;
+				padding: 0 20px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				border: 1px solid #e5e5e5;
+				background-color: #fbffeb;
+			}
+			.recommend .close{
+				cursor: pointer;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -63,6 +81,12 @@
 			<!-- ============================================================== -->
 			<div class="page-wrapper" style="margin-left: 0;">
 				<div class="right-part right-content">
+					<div class="recommend">
+						<div class="recommend-content">
+							<span>最新人工智能AIGC产品发布: https://www.xiezuobao.net 微信扫码即可体验</span>
+							<i class="close fa fa-times"></i>
+						</div>
+					</div>
 				
 <!-- 				<div class="page-breadcrumb"> -->
 <!--                 <div class="row" id="chu"> -->
@@ -1353,11 +1377,13 @@
     function moreHotdata(website){
     	window.location.href = ctxPath + 'fullsearch/result?searchword=&menuStyle=1&fulltype=8&page=1&sourcename='+website
     }
-    
-    
-    
-    
-    
+
+
+
+
+	 $(".recommend .close").click(function () {
+		 $(".recommend").remove()
+	 })
 </script>
 		
 		

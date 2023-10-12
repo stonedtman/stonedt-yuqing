@@ -1227,8 +1227,12 @@ $("#currentyear").text((new Date()).getFullYear());
         $(".step-btn").click(function () {
             changestep()
         })
-        $(".steps .step").click(function () {
-
+        $(".steps .step").click(function (e) {
+            let index = $(this).index()
+            if(index==0){
+                $("#imageRecognition").remove()
+                image_recognition()
+            }
         })
 
 
@@ -1244,6 +1248,7 @@ $("#currentyear").text((new Date()).getFullYear());
                 nowstep = i+1
             }
         }
+
         if(nowstep==1){
             let html ='          <div class="event-line" style="padding-bottom: 4px;margin-top: 10px">'+
                 '                    <div>secren-id</div>'+

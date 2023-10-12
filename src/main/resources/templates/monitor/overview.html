@@ -83,7 +83,23 @@
 .moodfm{
 	color: #f62d51;
 }
-
+.recommend{
+	padding: 20px 20px 0;
+	margin-bottom: -10px;
+}
+.recommend-content{
+	height: 52px;
+	line-height: 52px;
+	padding: 0 20px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border: 1px solid #e5e5e5;
+	background-color: #fbffeb;
+}
+.recommend .close{
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -92,6 +108,12 @@
 		<div th:replace="common/monitor_left::monitor_left"></div>
 		<div class="page-wrapper">
 			<div class="right-part right-content" style="overflow-x: hidden;">
+				<div class="recommend">
+					<div class="recommend-content">
+						<span>最新人工智能AIGC产品发布: https://www.xiezuobao.net 微信扫码即可体验</span>
+						<i class="close fa fa-times"></i>
+					</div>
+				</div>
 				<!-- nav start-->
 				<div class="page-breadcrumb">
 					<div class="row" id="chu">
@@ -1215,6 +1237,9 @@
 								anal_projectId);
 					})
 		})
+	$(".recommend .close").click(function () {
+		$(".recommend").remove()
+	})
 	</script>
 </body>
 
