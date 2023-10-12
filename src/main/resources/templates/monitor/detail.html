@@ -165,6 +165,7 @@
             font-size: 16px;
         }
         .result-content{
+            position: relative;
             flex: 1;
             overflow-y: auto;
             padding: 10px 0;
@@ -326,8 +327,8 @@
             <div class="p-20">
                 <!-- basic table -->
                 <div class="row m-b-20" style="height: calc(100vh - 174px);overflow: hidden;">
-                    <div class="col-lg-8">
-                        <div class="card" style="height: calc(50vh - 87px);overflow-y: auto;margin-bottom: 0">
+                    <div class="col-lg-8" style="height: 100%">
+                        <div class="card card-detail" style="height: 100%;overflow-y: auto;margin-bottom: 0">
                             <div class="card-body">
                                 <h4 class="card-title" id="title"></h4>
                                 <div class="detail-tips" style="margin-bottom: 10px;">
@@ -347,7 +348,7 @@
                             </div>
                             <span id="post_statement"></span>
                         </div>
-                        <div class="btns">
+                        <div class="btns" style="display: none">
                             <div class="item" onclick="image_recognition_btn()">
                                 <span style="display: block;position: absolute;font-size: 12px;color: #fff;margin-left: 54px;background-color: #fe475d;height: 14px;line-height: 14px;border-radius: 45%;padding: 0 4px;transform: scale(0.9);">new</span>
                                 <div class="text">图像识别</div>
@@ -357,7 +358,7 @@
                                 <div class="text">智写报告</div>
                             </div>
                         </div>
-                        <div class="card m-b-0" style="height: calc(50vh - 147px);">
+                        <div class="card m-b-0 identify" style="height: calc(50vh - 147px);display: none">
                             <div class="card-body" style="height: 100%">
                                 <div class="card-identify" style="height: 100%">
                                     <div class="identify-images">
@@ -772,6 +773,9 @@ $("#currentyear").text((new Date()).getFullYear());
 //
 //                        pageStrAll = pageStrStart + currentBefore + currentAfter + pageStrEnd;
                         imageList = JSON.parse(res.detail.extend_string_one).imglist
+                        document.querySelector(".card-detail").style.height = "calc(100% - 40px)"
+                        document.querySelector(".btns").style = ""
+
                         var detail = res.detail;
                         let imgListAll = '';
                         let imgListStr1 = '<div>';
@@ -1167,19 +1171,6 @@ $("#currentyear").text((new Date()).getFullYear());
         );
     }
 
-    $(".identify-img-list .img-item").click(function () {
-        let imgList = document.querySelectorAll(".identify-img-list .img-item")
-        for (var i = 0; i < imgList.length; i++){
-            imgList[i].classList.remove("active")
-        }
-        this.classList.add("active")
-        $(".identify-img img").attr("src",$(this).find("img")[0].src)
-        if(!document.querySelector(".result-content .not-identify")){
-            // identifyresult()
-            getBlob($(this).find("img")[0].src)
-        }
-    })
-
     $(".not-identify .btn").click(function () {
         getBlob(imageList[0].imgurl)
     })
@@ -1188,8 +1179,12 @@ $("#currentyear").text((new Date()).getFullYear());
     }
     function getBlob(url) {
         // fetch 为ES6新增，不支持IE兼容，请注意分辨
-        fetch(url).then((response) => {
-            let blob = new Blob([response.blob()])
+        fetch(url)
+            .then(response=>{
+                return response.blob()
+            })
+            .then((res) => {
+            let blob = new Blob([res])
             let imgFile = new File([blob], "image", { type: 'image/png' })
             nlp_ocr(imgFile)
         })
@@ -1208,9 +1203,33 @@ $("#currentyear").text((new Date()).getFullYear());
                 console.log(res)
                 if(res.status==200){
                     $("#imageRecognition").remove()
-                    identifyresult()
+                    identifyresult(res.data[0].data)
+                }else if(res.status==424){
+                    image_recognition()
+                }else{
+                    $.blockUI({
+                        message: res.msg,
+                        fadeIn: 700,
+                        fadeOut: 700,
+                        timeout: 3000,
+                        showOverlay: false,
+                        centerY: false,
+                        css: {
+                            width: '250px',
+                            top: '20px',
+                            left: '',
+                            right: '20px',
+                            border: 'none',
+                            padding: '15px 5px',
+                            backgroundColor: '#000',
+                            '-webkit-border-radius': '10px',
+                            '-moz-border-radius': '10px',
+                            opacity: 0.9,
+                            color: '#fff'
+                        }
+                    });
                 }
-                if(res.status==424){
+                if(res.status==1201){
                     image_recognition()
                 }
             },
@@ -1392,21 +1411,55 @@ $("#currentyear").text((new Date()).getFullYear());
         }
         if(nowstep==3){
             $("#imageRecognition").remove()
-            // identifyresult()
             getBlob(imageList[0].imgurl)
         }
     }
 
-    function identifyresult() {
-        let list = ['<div>游乐场安全提示</div>','暂无识别','<div>游乐场安全提示 如在封闭空间内游玩遇到火灾，切莫 悦张，应按逃生指示标识方向从逃生 出口迅速撤离 中华人民共和国应急管理部</div>']
-        let imgList = document.querySelectorAll(".identify-img-list .img-item")
+    function identifyresult(listdata) {
+        let imgList = imageList
         let html = ''
         for (let i = 0; i < imgList.length; i++) {
-            if(imgList[i].className.indexOf("active")>-1){
-                html = list[i]
+            if(i==0){
+                html += `
+                    <div class="img-item active">
+                        <img src="${imgList[i].imgurl}" alt="">
+                    </div>
+                `
+            }else{
+                html += `
+                    <div class="img-item">
+                        <img src="${imgList[i].imgurl}" alt="">
+                    </div>
+                `
             }
         }
-        $(".result-content").html(html)
+        document.querySelector(".card-detail").style.height = "calc(50vh - 87px)"
+        document.querySelector(".identify").style.display = "flex"
+        if(document.querySelector(".result-content .not-identify")){
+            $(".identify-img-list").html(html)
+            $(".identify-img").html(`<img src="${imgList[0].imgurl}" alt="">`)
+            $(".identify-img-list .img-item").click(function () {
+                let imgList = document.querySelectorAll(".identify-img-list .img-item")
+                for (var i = 0; i < imgList.length; i++){
+                    imgList[i].classList.remove("active")
+                }
+                this.classList.add("active")
+                $(".identify-img img").attr("src",$(this).find("img")[0].src)
+                if(!document.querySelector(".result-content .not-identify")){
+                    getBlob($(this).find("img")[0].src)
+                }
+            })
+        }
+        let contenthtml = ""
+        for (let i = 0; i < listdata.length; i++) {
+            contenthtml+=`
+                <div style="position: absolute;left: ${listdata[i].text_box_position[0][0]}px;top: ${listdata[i].text_box_position[0][1]}px;white-space: nowrap;">${listdata[i].text}</div>
+            `
+        }
+        if(listdata.length==0){
+            contenthtml="暂无识别"
+        }
+        $(".result-content").html(contenthtml)
     }
 
     function intelligent_write() {
