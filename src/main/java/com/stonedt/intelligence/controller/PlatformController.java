@@ -62,4 +62,16 @@ public class PlatformController {
 
     }
 
+    /**
+     * 写作宝绑定
+     */
+    @PostMapping(value = "/xie/bind")
+    public ResultUtil xieBind(@RequestBody BindParamsVo bindParamsVo, HttpServletRequest request) {
+        // 获取用户id
+        long userId = userUtil.getUserId(request);
+        bindParamsVo.setUserId(userId);
+        // 绑定
+        return platformService.xieBind(bindParamsVo);
+    }
+
 }

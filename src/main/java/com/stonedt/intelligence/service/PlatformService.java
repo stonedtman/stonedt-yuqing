@@ -25,4 +25,11 @@ public interface PlatformService {
      * @param images 图片
      */
     ResultUtil nlpOcr(User user, MultipartFile images) throws IOException;
+
+    /**
+     * 写作宝服务绑定
+     * @param bindParamsVo 绑定参数
+     * @return 绑定结果
+     */
+    ResultUtil xieBind(BindParamsVo bindParamsVo);
 }

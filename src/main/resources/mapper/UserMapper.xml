@@ -153,5 +153,8 @@ select user_id,username from user where user_type = 2 and user_id not in (${user
     <update id="bindNlp">
 		update user set nlp_secret_id = #{secretId},nlp_secret_key = #{secretKey},nlp_flag = 1 where user_id=#{userId}
 	</update>
+    <update id="bindXie">
+		update user set xie_secret_id = #{secretId},xie_secret_key = #{secretKey},xie_flag = 1 where user_id=#{userId}
+	</update>
 
 </mapper>

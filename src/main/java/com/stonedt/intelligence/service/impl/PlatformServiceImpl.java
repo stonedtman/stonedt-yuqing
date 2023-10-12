@@ -105,4 +105,21 @@ public class PlatformServiceImpl implements PlatformService {
         }
         return ResultUtil.ok(jsonObject.get("results"));
     }
+
+    /**
+     * 写作宝服务绑定
+     *
+     * @param bindParamsVo 绑定参数
+     * @return 绑定结果
+     */
+    @Override
+    public ResultUtil xieBind(BindParamsVo bindParamsVo) {
+        try {
+            userDao.bindXie(bindParamsVo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.build(500, "绑定失败");
+        }
+        return ResultUtil.ok();
+    }
 }

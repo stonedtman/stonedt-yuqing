@@ -121,4 +121,10 @@ public interface UserDao {
 	 * @param bindParamsVo 绑定参数
 	 */
     void bindNlp(BindParamsVo bindParamsVo);
+
+	/**
+	 * 绑定写作宝
+	 * @param bindParamsVo 绑定参数
+	 */
+	void bindXie(BindParamsVo bindParamsVo);
 }

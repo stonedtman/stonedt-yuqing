@@ -38,6 +38,21 @@ public class User {
      */
     private Integer nlp_flag;
 
+    /**
+     * 写作宝服务绑定id
+     */
+    private String xie_secret_id;
+
+    /**
+     * 写作宝服务绑定key
+     */
+    private String xie_secret_key;
+
+    /**
+     * 写作宝服务绑定状态
+     */
+    private Integer xie_flag;
+
     public Integer getIsOnline() {
         return isOnline;
     }
@@ -183,5 +198,29 @@ public class User {
 
     public void setNlp_flag(Integer nlp_flag) {
         this.nlp_flag = nlp_flag;
+    }
+
+    public String getXie_secret_id() {
+        return xie_secret_id;
+    }
+
+    public void setXie_secret_id(String xie_secret_id) {
+        this.xie_secret_id = xie_secret_id;
+    }
+
+    public String getXie_secret_key() {
+        return xie_secret_key;
+    }
+
+    public void setXie_secret_key(String xie_secret_key) {
+        this.xie_secret_key = xie_secret_key;
+    }
+
+    public Integer getXie_flag() {
+        return xie_flag;
+    }
+
+    public void setXie_flag(Integer xie_flag) {
+        this.xie_flag = xie_flag;
     }
 }
