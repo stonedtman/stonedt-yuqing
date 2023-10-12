@@ -772,7 +772,16 @@ $("#currentyear").text((new Date()).getFullYear());
 //                        }
 //
 //                        pageStrAll = pageStrStart + currentBefore + currentAfter + pageStrEnd;
-                        imageList = JSON.parse(res.detail.extend_string_one).imglist
+                        let arr = JSON.parse(res.detail.extend_string_one).imglist
+                        for (let i = 0; i < arr.length; i++) {
+                            let index = arr[i].imgurl.indexOf("data/image")
+                            if(index==-1){
+                                imageList.push(arr[i])
+                            }else if(index==0){
+                                imageList.push(arr[i])
+                            }
+                        }
+
                         document.querySelector(".card-detail").style.height = "calc(100% - 40px)"
                         document.querySelector(".btns").style = ""
 
