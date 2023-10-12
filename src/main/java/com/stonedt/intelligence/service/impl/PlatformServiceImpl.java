@@ -1,5 +1,7 @@
 package com.stonedt.intelligence.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.stonedt.intelligence.dao.UserDao;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.service.PlatformService;
@@ -64,18 +66,12 @@ public class PlatformServiceImpl implements PlatformService {
      * @param images 图片
      */
     @Override
-    public ResultUtil nlpOcr(User user, MultipartFile images) {
+    public ResultUtil nlpOcr(User user, MultipartFile images) throws IOException {
         //调用nlp服务,参数为图片
 
         MultiValueMap<String,Object> params = new LinkedMultiValueMap<>();
-        byte[] imagesBytes;
-        try {
-            imagesBytes = images.getBytes();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return ResultUtil.build(500, "图片上传失败");
-        }
-        ByteArrayResource fileAsResource = new ByteArrayResource(imagesBytes) {
+
+        ByteArrayResource fileAsResource = new ByteArrayResource(images.getBytes()) {
             @Override
             public String getFilename() {
                 return images.getOriginalFilename();
@@ -89,13 +85,15 @@ public class PlatformServiceImpl implements PlatformService {
         params.add("images", fileAsResource);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-        headers.set("Secret-Id",user.getNlp_secret_id());
-        headers.set("Secret-Key",user.getNlp_secret_key());
+        headers.set("secret-id",user.getNlp_secret_id());
+        headers.set("secret-key",user.getNlp_secret_key());
         HttpEntity<MultiValueMap<String,Object>> requestEntity  = new HttpEntity<>(params, headers);
-        HashMap<?,?> result = restTemplate.postForObject(nlpOcrUrl, requestEntity, HashMap.class);
+        String result = restTemplate.postForObject(nlpOcrUrl, requestEntity, String.class);
+
         if (result == null){
             return ResultUtil.build(500, "nlp服务调用失败");
         }
-        return ResultUtil.ok(result);
+        JSONObject jsonObject = JSON.parseObject(result);
+        return ResultUtil.ok(jsonObject);
     }
 }

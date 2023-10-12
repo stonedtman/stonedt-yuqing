@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 /**
  * 跨平台服务控制层
@@ -52,7 +53,12 @@ public class PlatformController {
             return ResultUtil.build(424, "未绑定nlp服务");
         }
         // 调用
-        return platformService.nlpOcr(user, images);
+        try {
+            return platformService.nlpOcr(user, images);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResultUtil.build(500, "ocr识别失败");
+        }
 
     }
 

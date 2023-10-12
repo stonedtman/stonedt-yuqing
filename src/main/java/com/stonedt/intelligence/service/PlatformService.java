@@ -5,6 +5,8 @@ import com.stonedt.intelligence.util.ResultUtil;
 import com.stonedt.intelligence.vo.BindParamsVo;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 /**
  * @author 文轩
  * description: 跨平台服务 <br>
@@ -22,5 +24,5 @@ public interface PlatformService {
      * @param user 用户
      * @param images 图片
      */
-    ResultUtil nlpOcr(User user, MultipartFile images);
+    ResultUtil nlpOcr(User user, MultipartFile images) throws IOException;
 }
