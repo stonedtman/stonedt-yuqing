@@ -34,6 +34,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * @author 文轩
@@ -241,7 +242,8 @@ public class PlatformServiceImpl implements PlatformService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("secret-id", user.getXie_secret_id());
         headers.set("secret-key", user.getXie_secret_key());
-        HttpEntity<CopyWriting> requestEntity = new HttpEntity<>(copyWriting, headers);
+        String jsonString = JSON.toJSONString(copyWriting);
+        HttpEntity<String> requestEntity = new HttpEntity<>(jsonString, headers);
         String result = restTemplate.postForObject(xieTitleUrl, requestEntity, String.class);
         if (result == null) {
             return ResultUtil.build(500, "写作宝服务调用失败");
