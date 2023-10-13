@@ -202,21 +202,29 @@
         color: #f62d51;
       }
       .recommend{
-        padding: 20px 20px 0;
-        margin-bottom: -10px;
+        padding: 0px 20px;
       }
       .recommend-content{
         height: 52px;
         line-height: 52px;
         padding: 0 20px;
+        margin-top: 20px;
+        margin-bottom: -10px;
+        overflow: hidden;
         display: flex;
-        align-items: center;
         justify-content: space-between;
         border: 1px solid #e5e5e5;
         background-color: #fbffeb;
       }
+      .recommend .text{
+        flex: 1;
+        margin-right: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
       .recommend .close{
-        cursor: pointer;
+        line-height: 52px;
       }
     </style>
     <!--<meta name="referrer" content="no-referrer"/>-->
@@ -230,7 +238,11 @@
         <div class="right-part right-content left-filtrate" id="left-filtrates">
           <div class="recommend">
             <div class="recommend-content">
-              <span>最新人工智能AIGC产品发布: https://www.xiezuobao.net 微信扫码即可体验</span>
+              <div style="overflow: hidden;">
+                <div class="recommend-content-list">
+                  <div class="text">最新人工智能AIGC产品发布: https://www.xiezuobao.net 微信扫码即可体验</div>
+                </div>
+              </div>
               <i class="close fa fa-times"></i>
             </div>
           </div>
@@ -1943,16 +1955,61 @@
     $('.navLi').click(function () {
         jumpNavLocation($(this).data('type'), monitor_groupid, monitor_projectid);
     })
-
+    let recommendList = []
+    let recommendListIndex = 0
     $.ajax({
       url: window.location.origin+"/platform/notice",
       success: function (res) {
-        console.log(res)
+        if(res.status==200){
+          recommendList = res.data
+          let html = ""
+          if(recommendList.length==1){
+            html=`
+              <div class="text">${recommendList[0].content}</div>
+            `
+          }
+          if(recommendList.length>1){
+            html+=`
+              <div class="text">${recommendList[1].content}</div>
+            `
+          }
+          $(".recommend-content-list").html(html)
+
+          $(".recommend .close").click(function () {
+            $(".recommend").remove()
+          })
+
+          if(recommendList.length>1){
+            recommendsettimeout()
+          }
+        }
       }
     })
-    $(".recommend .close").click(function () {
-      $(".recommend").remove()
-    })
+    function recommendsettimeout() {
+      let timer = null
+      let s = 52/(500/10)
+      setInterval(function(){
+        recommendListIndex++
+        if(recommendListIndex>recommendList.length){
+          recommendListIndex=0
+        }
+        timer = setInterval(function () {
+          let mt = document.querySelector(".recommend-content-list").style.marginTop
+          let nowmt = mt.split("px")[0]-s
+          document.querySelector(".recommend-content-list").style.marginTop = nowmt+"px"
+        },10)
+        setTimeout(function(){
+          clearInterval(timer)
+          changeRecommendList()
+        },500)
+      },3000)
+    }
+    function changeRecommendList(){
+      let list = document.querySelectorAll(".recommend-content-list .text")
+      list[0].remove()
+      document.querySelector(".recommend-content-list").style.marginTop = 0
+      $(".recommend-content-list").append(`<div class="text">${recommendList[recommendListIndex-1].content}</div>`)
+    }
   </script>
   <script type="text/javascript">
     $("#example-multiple-selected").multiselect();

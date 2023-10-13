@@ -31,17 +31,25 @@
 <![endif]-->
 		<style>
 			.recommend{
-				padding: 20px 20px 0;
+				padding: 0px 20px;
 			}
 			.recommend-content{
 				height: 52px;
 				line-height: 52px;
 				padding: 0 20px;
+				margin-top: 20px;
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
 				border: 1px solid #e5e5e5;
 				background-color: #fbffeb;
+			}
+			.recommend .text{
+				flex: 1;
+				margin-right: 20px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
 			}
 			.recommend .close{
 				cursor: pointer;
@@ -83,7 +91,7 @@
 				<div class="right-part right-content">
 					<div class="recommend">
 						<div class="recommend-content">
-							<span>最新人工智能AIGC产品发布: https://www.xiezuobao.net 微信扫码即可体验</span>
+							<div class="text">最新人工智能AIGC产品发布: https://www.xiezuobao.net 微信扫码即可体验</div>
 							<i class="close fa fa-times"></i>
 						</div>
 					</div>
