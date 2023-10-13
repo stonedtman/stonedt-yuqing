@@ -103,7 +103,7 @@ public class LoginController {
         }
         User user = userService.selectUserByTelephone(telephone);
         if (null != user) {
-            if (user.getTerm_of_validity().after(new Date())) {
+            if (user.getTerm_of_validity().before(new Date())) {
                 response.put("code", Integer.valueOf(500));
                 response.put("msg", "账号已过期！");
                 return response;
