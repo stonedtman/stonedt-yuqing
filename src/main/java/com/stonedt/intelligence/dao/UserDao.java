@@ -127,4 +127,6 @@ public interface UserDao {
 	 * @param bindParamsVo 绑定参数
 	 */
 	void bindXie(BindParamsVo bindParamsVo);
+
+	User selectById(Integer id);
 }

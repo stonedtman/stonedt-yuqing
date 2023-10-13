@@ -2,6 +2,7 @@ package com.stonedt.intelligence.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.stonedt.intelligence.constant.PromptConstant;
 import com.stonedt.intelligence.dao.UserDao;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.service.PlatformService;
@@ -55,6 +56,9 @@ public class PlatformServiceImpl implements PlatformService {
     @Value("${platform.xie.copy-writing}")
     private String xieCopyWritingUrl;
 
+    @Value("${platform.xie.title}")
+    private String xieTitleUrl;
+
     public PlatformServiceImpl(UserDao userDao,
                                RestTemplate restTemplate,
                                OkHttpClient okHttpClient,
@@ -80,8 +84,8 @@ public class PlatformServiceImpl implements PlatformService {
 
         try {
             userDao.bindNlp(bindParamsVo);
-            user.setNlp_flag(1);
-            request.getSession().setAttribute("User", user);
+            User newUser = userDao.selectById(user.getId());
+            request.getSession().setAttribute("User", newUser);
         } catch (Exception e) {
             e.printStackTrace();
             return ResultUtil.build(500, "绑定失败");
@@ -147,8 +151,8 @@ public class PlatformServiceImpl implements PlatformService {
         bindParamsVo.setUserId(user.getId());
         try {
             userDao.bindXie(bindParamsVo);
-            user.setXie_flag(1);
-            request.getSession().setAttribute("User", user);
+            User newUser = userDao.selectById(user.getId());
+            request.getSession().setAttribute("User", newUser);
         } catch (Exception e) {
             e.printStackTrace();
             return ResultUtil.build(500, "绑定失败");
@@ -165,6 +169,7 @@ public class PlatformServiceImpl implements PlatformService {
      */
     @Override
     public SseEmitter xieReport(User user, CopyWriting copyWriting) {
+        copyWriting.setPromptId(PromptConstant.XIE_REPORT);
         String text = copyWriting.getParams().get("text");
         //去除html标签,保留文字
         text = text.replaceAll("<[^>]*>", "");
@@ -215,5 +220,36 @@ public class PlatformServiceImpl implements PlatformService {
         };
         factory.newEventSource(request, listener);
         return sseEmitter;
+    }
+
+    /**
+     * 写作宝标题生成
+     *
+     * @param user        用户
+     * @param copyWriting 写作宝参数
+     * @return 标题
+     */
+    @Override
+    public ResultUtil xieReportTitle(User user, CopyWriting copyWriting) {
+        copyWriting.setPromptId(PromptConstant.XIE_REPORT);
+        String text = copyWriting.getParams().get("text");
+        //去除html标签,保留文字
+        text = text.replaceAll("<[^>]*>", "");
+        copyWriting.getParams().put("text", text);
+        //设置请求头
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("secret-id", user.getXie_secret_id());
+        headers.set("secret-key", user.getXie_secret_key());
+        HttpEntity<CopyWriting> requestEntity = new HttpEntity<>(copyWriting, headers);
+        String result = restTemplate.postForObject(xieTitleUrl, requestEntity, String.class);
+        if (result == null) {
+            return ResultUtil.build(500, "写作宝服务调用失败");
+        }
+        JSONObject jsonObject = JSON.parseObject(result);
+        Object code = jsonObject.get("code");
+        Object msg = jsonObject.get("msg");
+        Object data = jsonObject.get("data");
+        return ResultUtil.build(Integer.parseInt(code.toString()), msg.toString(), data);
     }
 }

@@ -47,4 +47,12 @@ public interface PlatformService {
      * @return 写作宝结果
      */
     SseEmitter xieReport(User user, CopyWriting copyWriting);
+
+    /**
+     * 写作宝标题生成
+     * @param user 用户
+     * @param copyWriting 写作宝参数
+     * @return 标题
+     */
+    ResultUtil xieReportTitle(User user, CopyWriting copyWriting);
 }

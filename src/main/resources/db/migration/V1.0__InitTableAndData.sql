@@ -761,3 +761,14 @@ ALTER TABLE `stonedt_portal`.`user`
 
 ALTER TABLE `stonedt_portal`.`user`
   ADD COLUMN `xie_flag` int(1) NULL DEFAULT 0 COMMENT '写作宝平台绑定状态(1代表已绑定,0代表未绑定)' AFTER `xie_secret_key`;
+
+delete from user
+where id not in (
+  select id from (
+                   select min(id) id from user
+                   group by telephone
+                 ) t
+);
+
+ALTER TABLE `stonedt_portal`.`user`
+  ADD UNIQUE INDEX `union_user_telephone`(`telephone`) USING BTREE COMMENT '电话号码唯一索引';

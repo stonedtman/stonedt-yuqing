@@ -140,6 +140,9 @@
 select user_id,username from user where user_type = 2 and user_id not in (${user_id})
 
 </select>
+	<select id="selectById" resultType="com.stonedt.intelligence.entity.User">
+		select * from user where id = #{id}
+	</select>
 	<update id="updateLoginFailCountAndTime" parameterType="java.util.Map">
 		update user set login_fail_count=#{loginFailCount}
 		<if test="loginFailTime != null">

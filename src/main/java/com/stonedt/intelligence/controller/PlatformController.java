@@ -86,6 +86,19 @@ public class PlatformController {
     }
 
     /**
+     * 写作宝标题生成
+     */
+    @PostMapping(value = "/xie/report/title")
+    public ResultUtil xieReportTitle(@RequestBody CopyWriting copyWriting, HttpServletRequest request) {
+        // 获取用户
+        User user = userUtil.getuser(request);
+
+        // 调用
+        return platformService.xieReportTitle(user, copyWriting);
+    }
+
+
+    /**
      * 写作宝智写报告
      */
     @PostMapping(value = "/xie/report")
