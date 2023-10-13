@@ -655,6 +655,7 @@ $("#currentyear").text((new Date()).getFullYear());
     //    		var menu = [[${menu}]];
     //    let currentPageByDetail = [[${currentPageByDetail}]];
     var imageList = []
+    var detail_text = ""
     $(function () {
         breadCrumbs();
         articleDetail();
@@ -784,6 +785,8 @@ $("#currentyear").text((new Date()).getFullYear());
 
                         document.querySelector(".card-detail").style.height = "calc(100% - 40px)"
                         document.querySelector(".btns").style = ""
+
+                        detail_text = res.detail.text
 
                         var detail = res.detail;
                         let imgListAll = '';
@@ -1209,7 +1212,6 @@ $("#currentyear").text((new Date()).getFullYear());
             processData : false,
             contentType : false,
             success: function (res) {
-                console.log(res)
                 if(res.status==200){
                     $("#imageRecognition").remove()
                     identifyresult(res.data[0].data)
@@ -1293,7 +1295,7 @@ $("#currentyear").text((new Date()).getFullYear());
             $("#imageRecognition").remove()
         })
         $(".step-btn").click(function () {
-            changestep()
+            changestep("image")
         })
         $(".steps .step").click(function (e) {
             let index = $(this).index()
@@ -1306,7 +1308,7 @@ $("#currentyear").text((new Date()).getFullYear());
 
     }
 
-    function changestep() {
+    function changestep(type) {
         let nowstep = 0
         let stepList = document.querySelectorAll(".steps .step")
         for (let i = 0; i < stepList.length; i++) {
@@ -1367,60 +1369,117 @@ $("#currentyear").text((new Date()).getFullYear());
                 secretId: secren_id,
                 secretKey: secren_key,
             }
-            $.ajax({
-                url: window.location.origin + "/platform/nlp/bind",
-                method: "post",
-                dataType: "json",
-                data: JSON.stringify(d),
-                contentType: "application/json;charset=UTF-8",
-                success: function (res) {
-                    if(res.status==200){
-                        let html ='          <div class="identify-complete">'+
-                            '                    <img src="/assets/images/identify/complete.png" alt="">'+
-                            '                    <div class="text">绑定已完成</div>'+
-                            '                </div>';
-                        $(".identify-content").html(html)
-                        $(".step-btn").html("立即识别")
-                        stepList[1].classList.remove("active")
-                        stepList[1].getElementsByTagName("img")[0].src = "/assets/images/identify/step2.png"
-                        stepList[2].classList.add("active")
-                        stepList[2].getElementsByTagName("img")[0].src = "/assets/images/identify/step3h.png"
-                    }else{
-                        $.blockUI({
-                            message: res.msg,
-                            fadeIn: 700,
-                            fadeOut: 700,
-                            timeout: 3000,
-                            showOverlay: false,
-                            centerY: false,
-                            css: {
-                                width: '250px',
-                                top: '20px',
-                                left: '',
-                                right: '20px',
-                                border: 'none',
-                                padding: '15px 5px',
-                                backgroundColor: '#000',
-                                '-webkit-border-radius': '10px',
-                                '-moz-border-radius': '10px',
-                                opacity: 0.9,
-                                color: '#fff'
-                            }
-                        });
-                    }
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
+            if(type=="image"){
+                $.ajax({
+                    url: window.location.origin + "/platform/nlp/bind",
+                    method: "post",
+                    dataType: "json",
+                    data: JSON.stringify(d),
+                    contentType: "application/json;charset=UTF-8",
+                    success: function (res) {
+                        if(res.status==200){
+                            let html ='          <div class="identify-complete">'+
+                                '                    <img src="/assets/images/identify/complete.png" alt="">'+
+                                '                    <div class="text">绑定已完成</div>'+
+                                '                </div>';
+                            $(".identify-content").html(html)
+                            $(".step-btn").html("立即识别")
+                            stepList[1].classList.remove("active")
+                            stepList[1].getElementsByTagName("img")[0].src = "/assets/images/identify/step2.png"
+                            stepList[2].classList.add("active")
+                            stepList[2].getElementsByTagName("img")[0].src = "/assets/images/identify/step3h.png"
+                        }else{
+                            $.blockUI({
+                                message: res.msg,
+                                fadeIn: 700,
+                                fadeOut: 700,
+                                timeout: 3000,
+                                showOverlay: false,
+                                centerY: false,
+                                css: {
+                                    width: '250px',
+                                    top: '20px',
+                                    left: '',
+                                    right: '20px',
+                                    border: 'none',
+                                    padding: '15px 5px',
+                                    backgroundColor: '#000',
+                                    '-webkit-border-radius': '10px',
+                                    '-moz-border-radius': '10px',
+                                    opacity: 0.9,
+                                    color: '#fff'
+                                }
+                            });
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
 
-                    if (xhr.status == 403) {
-                        window.location.href = ctxPath + "login";
+                        if (xhr.status == 403) {
+                            window.location.href = ctxPath + "login";
+                        }
                     }
-                }
-            });
+                });
+            }
+            if(type=="write"){
+                $.ajax({
+                    url: window.location.origin + "/platform/xie/bind",
+                    method: "post",
+                    dataType: "json",
+                    data: JSON.stringify(d),
+                    contentType: "application/json;charset=UTF-8",
+                    success: function (res) {
+                        if(res.status==200){
+                            let html ='          <div class="identify-complete">'+
+                                '                    <img src="/assets/images/identify/complete.png" alt="">'+
+                                '                    <div class="text">绑定已完成</div>'+
+                                '                </div>';
+                            $(".identify-content").html(html)
+                            $(".step-btn").html("立即写作")
+                            stepList[1].classList.remove("active")
+                            stepList[1].getElementsByTagName("img")[0].src = "/assets/images/identify/step2.png"
+                            stepList[2].classList.add("active")
+                            stepList[2].getElementsByTagName("img")[0].src = "/assets/images/identify/step3h.png"
+                        }else{
+                            $.blockUI({
+                                message: res.msg,
+                                fadeIn: 700,
+                                fadeOut: 700,
+                                timeout: 3000,
+                                showOverlay: false,
+                                centerY: false,
+                                css: {
+                                    width: '250px',
+                                    top: '20px',
+                                    left: '',
+                                    right: '20px',
+                                    border: 'none',
+                                    padding: '15px 5px',
+                                    backgroundColor: '#000',
+                                    '-webkit-border-radius': '10px',
+                                    '-moz-border-radius': '10px',
+                                    opacity: 0.9,
+                                    color: '#fff'
+                                }
+                            });
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
 
+                        if (xhr.status == 403) {
+                            window.location.href = ctxPath + "login";
+                        }
+                    }
+                });
+            }
         }
         if(nowstep==3){
             $("#imageRecognition").remove()
-            getBlob(imageList[0].imgurl)
+            if(type=="image"){
+                getBlob(imageList[0].imgurl)
+            }
+            if(type=="write"){
+                reporting()
+            }
         }
     }
 
@@ -1472,29 +1531,235 @@ $("#currentyear").text((new Date()).getFullYear());
     }
 
     function intelligent_write() {
-        var eventHtml =
-            '<div class="shadebox" id="intelligentWrite">'+
-            '    <div class="showCreateEvent"> '+
-            '        <div class="event-box">'+
-            '            <i class="mdi mdi-close-circle-outline font-18 cursor-po" id="close_this"></i>'+
-            '            <div class="event-box-body">'+
-            `                <div class="report-content">
-                                <div class="title">恐怕未来我们拿金牌能力越来越强，足篮人才储备越来越差</div>
+        $.ajax({
+            url: window.location.origin + "/platform/xie/checkBind",
+            method: "get",
+            success: function (res) {
+                if(res.status==200){
+                    $("#imageRecognition").remove()
+                    reporting()
+                }else if(res.status==424){
+                    intelligent_write_recognition()
+                }else{
+                    $.blockUI({
+                        message: res.msg,
+                        fadeIn: 700,
+                        fadeOut: 700,
+                        timeout: 3000,
+                        showOverlay: false,
+                        centerY: false,
+                        css: {
+                            width: '250px',
+                            top: '20px',
+                            left: '',
+                            right: '20px',
+                            border: 'none',
+                            padding: '15px 5px',
+                            backgroundColor: '#000',
+                            '-webkit-border-radius': '10px',
+                            '-moz-border-radius': '10px',
+                            opacity: 0.9,
+                            color: '#fff'
+                        }
+                    });
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+
+                if (xhr.status == 403) {
+                    window.location.href = ctxPath + "login";
+                }
+            }
+        });
+    }
+    let articleTitle = ""
+    function reporting() {
+        $.ajax({
+            url: window.location.origin + "/platform/xie/report/title",
+            method: "post",
+            dataType: "json",
+            data: JSON.stringify({
+                params:{
+                    text:detail_text
+                },
+                temperature:0.7
+            }),
+            contentType: "application/json;charset=UTF-8",
+            success: function (res) {
+                if(res.status==200){
+                    articleTitle = res.data
+                    sse()
+                }else{
+                    $.blockUI({
+                        message: res.msg,
+                        fadeIn: 700,
+                        fadeOut: 700,
+                        timeout: 3000,
+                        showOverlay: false,
+                        centerY: false,
+                        css: {
+                            width: '250px',
+                            top: '20px',
+                            left: '',
+                            right: '20px',
+                            border: 'none',
+                            padding: '15px 5px',
+                            backgroundColor: '#000',
+                            '-webkit-border-radius': '10px',
+                            '-moz-border-radius': '10px',
+                            opacity: 0.9,
+                            color: '#fff'
+                        }
+                    });
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+
+                if (xhr.status == 403) {
+                    window.location.href = ctxPath + "login";
+                }
+            }
+        });
+    }
+    function sse() {
+        let num = 0
+        reporting_content(num)
+        num++
+        fetch(window.location.origin + "/platform/xie/report", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                params: {
+                    title: articleTitle,
+                    text: detail_text
+                },
+                temperature:0.7
+            }),
+        }).then(response => {
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder('utf-8');
+            let buffer = '';
+
+            function processStreamResult(result2) {
+                const chunk = decoder.decode(result2.value, { stream: !result2.done });
+                buffer += chunk;
+//逐条解析后端返回数据
+                const lines = buffer.split('\n');
+                buffer = lines.pop();
+
+                lines.forEach(line => {
+                    if (line.trim().length > 0) {
+                        console.log(line);
+
+                        if(line == 'data: [DONE]'){
+                            //执行完成的页面逻辑
+                        }else{
+
+                        }
+
+                    }
+                });
+
+                if (!result2.done) {
+                    return reader.read().then(processStreamResult);
+                }
+            }
+
+            return reader.read().then(processStreamResult);
+        });
+        // console.log(response)
+        // const reader = response.body.getReader();
+        //
+        // while (true) {
+        //     const {value, done} = reader.read();
+        //     if (done) break;
+        //
+        //     console.log('get.message', new TextDecoder().decode(value));
+        // }
+
+    }
+    function reporting_content(num) {
+        if(num==0){
+            var eventHtml =
+                '<div class="shadebox" id="intelligentWrite">'+
+                '    <div class="showCreateEvent"> '+
+                '        <div class="event-box">'+
+                '            <i class="mdi mdi-close-circle-outline font-18 cursor-po" id="close_this"></i>'+
+                '            <div class="event-box-body">'+
+                `                <div class="report-content">
+                                <div class="title">${articleTitle}</div>
                                 <div class="content">首先，我们需要认识到篮球是一项需要全方位发展和长期培养的运动。在过去的几十年里，我国篮球事业取得了举世瞩目的成就，不仅在亚洲地区崭露头角，还在国际赛场上屡屡崭露头角。</div>
                                 <div class="support" style="text-align: center;">
                                     本技术由 <a style="color: #0ba8ef" href="https://www.xiezuobao.net" target="_blank">思通数科·写作宝</a> 提供支持
                                 </div>
                              </div>
                                  `+
+                '            </div>'+
+                '        </div>'+
+                '    </div>'+
+                '</div>'
+
+            $("body").append(eventHtml)
+            $("#close_this").click(function (param) {
+                $("#intelligentWrite").remove()
+            })
+        }
+    }
+    function intelligent_write_recognition() {
+        var eventHtml =
+            '<div class="shadebox" id="imageRecognition">'+
+            '    <div class="showCreateEvent"> '+
+            '        <div class="event-box">'+
+            '            <div class="event-box-header"> '+
+            '                <h5 class="modal-title">智能写作绑定</h5>'+
+            '                <i class="mdi mdi-close-circle-outline font-18 cursor-po" id="closethis"></i>'+
+            '            </div>'+
+            '            <div class="event-box-body">'+
+            `                <div class="steps">
+                                <div class="step active">
+                                    <img src="/assets/images/identify/step1h.png" alt="">
+                                    <span>1.注册账号</span>
+                                </div>
+                                <div class="step">
+                                    <img src="/assets/images/identify/step2.png" alt="">
+                                    <span>2.绑定接口信息</span>
+                                </div>
+                                <div class="step">
+                                    <img src="/assets/images/identify/step3.png" alt="">
+                                    <span>3.完成</span>
+                                </div>
+                             </div>
+                             <div class="identify-content">
+                                <div class="tips">
+                                    <div class="tip">1.请前往：<a style="color: #0ba8ef" href="https://xie.stonedt.com" target="_blank">思通数科·写作宝</a> 注册账号</div>
+                                    <div class="tip">2.扫码注册成功之后点击右上角用户头像</div>
+                                    <div class="tip">3.获取“secret-id”和“secret-key”进行绑定接口</div>
+                                 </div>
+                             </div>
+                             <div class="step-btn">下一步</div>`+
             '            </div>'+
             '        </div>'+
             '    </div>'+
             '</div>'
 
         $("body").append(eventHtml)
-        $("#close_this").click(function (param) {
-            $("#intelligentWrite").remove()
+        $("#closethis").click(function (param) {
+            $("#imageRecognition").remove()
         })
+        $(".step-btn").click(function () {
+            changestep("write")
+        })
+        $(".steps .step").click(function (e) {
+            let index = $(this).index()
+            if(index==0){
+                $("#imageRecognition").remove()
+                intelligent_write_recognition()
+            }
+        })
+
+
     }
 
     //    function toDetail(article_public_id, g_id, p_id) {
