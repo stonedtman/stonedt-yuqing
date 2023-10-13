@@ -1626,29 +1626,28 @@ $("#currentyear").text((new Date()).getFullYear());
             }
         });
     }
+    let source = null
     async function sse() {
         let num = 0
         reporting_content(num)
         num++
-        let source = new EventSource(window.location.origin + `/platform/xie/report?title=${encodeURIComponent(articleTitle)}&articleId=${encodeURIComponent(articleId)}&projectId=${encodeURIComponent(projectId)}&relatedword=${encodeURIComponent(relatedword)}&publish_time=${encodeURIComponent(publish_time)}`)
+        source = new EventSource(window.location.origin + `/platform/xie/report?title=${encodeURIComponent(articleTitle)}&articleId=${encodeURIComponent(articleId)}&projectId=${encodeURIComponent(projectId)}&relatedword=${encodeURIComponent(relatedword)}&publish_time=${encodeURIComponent(publish_time)}`)
         source.onopen=function () {
             console.log("连接成功")
+            if(num>1){
+                source.close()
+            }
         }
         source.onmessage=function (e) {
             console.log(e)
             if(e.type=="message"){
                 articleContent+=JSON.parse(e.data).data
                 reporting_content(num)
-                // if(JSON.parse(e.data).data==""){
-                //     source.close()
-                // }
             }
         }
         source.onerror=function () {
             console.log("连接断开")
-        }
-        source.onclose=function () {
-            console.log("连接关闭")
+            num++
         }
     }
     function reporting_content(num) {
@@ -1720,6 +1719,7 @@ $("#currentyear").text((new Date()).getFullYear());
         $("body").append(eventHtml)
         $("#closethis").click(function (param) {
             $("#imageRecognition").remove()
+            source.close()
         })
         $(".step-btn").click(function () {
             changestep("write")
