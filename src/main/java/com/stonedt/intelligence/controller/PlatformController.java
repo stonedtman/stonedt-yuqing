@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -102,7 +103,9 @@ public class PlatformController {
      * 写作宝智写报告
      */
     @PostMapping(value = "/xie/report")
-    public SseEmitter xieReport(@RequestBody CopyWriting copyWriting, HttpServletRequest request) {
+    public SseEmitter xieReport(@RequestBody CopyWriting copyWriting, HttpServletRequest request, HttpServletResponse response) {
+        response.addHeader("X-Accel-Buffering", "no");
+        response.setHeader("Content-Encoding", "none");
         // 获取用户
         User user = userUtil.getuser(request);
 
@@ -114,7 +117,15 @@ public class PlatformController {
      * 写作宝智写报告,get请求
      */
     @GetMapping(value = "/xie/report")
-    public SseEmitter xieReportGet(String articleId, Long projectId, String relatedword,String publishTime,String title, HttpServletRequest request) {
+    public SseEmitter xieReportGet(String articleId,
+                                   Long projectId,
+                                   String relatedword,
+                                   String publishTime,
+                                   String title,
+                                   HttpServletRequest request,
+                                   HttpServletResponse response) {
+        response.addHeader("X-Accel-Buffering", "no");
+        response.setHeader("Content-Encoding", "none");
         // 获取用户
         User user = userUtil.getuser(request);
 
