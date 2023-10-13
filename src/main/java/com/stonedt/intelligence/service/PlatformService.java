@@ -48,6 +48,20 @@ public interface PlatformService {
      */
     SseEmitter xieReport(User user, CopyWriting copyWriting);
 
+
+    /**
+     * 写作宝服务调用
+     *
+     * @param user        用户
+     * @param articleId   文章id
+     * @param projectId   项目id
+     * @param relatedword 关键词
+     * @param publishTime 发布时间
+     * @param title
+     * @return 写作宝结果
+     */
+    SseEmitter xieReport(User user, String articleId, Long projectId, String relatedword, String publishTime,String title);
+
     /**
      * 写作宝标题生成
      * @param user 用户

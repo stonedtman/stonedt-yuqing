@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.stonedt.intelligence.constant.PromptConstant;
 import com.stonedt.intelligence.dao.UserDao;
 import com.stonedt.intelligence.entity.User;
+import com.stonedt.intelligence.service.ArticleService;
 import com.stonedt.intelligence.service.PlatformService;
 import com.stonedt.intelligence.util.ResultUtil;
 import com.stonedt.intelligence.util.UserUtil;
@@ -35,6 +36,8 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author 文轩
@@ -51,6 +54,8 @@ public class PlatformServiceImpl implements PlatformService {
 
     private final UserUtil userUtil;
 
+    private final ArticleService articleService;
+
     @Value("${platform.nlp.ocr-url}")
     private String nlpOcrUrl;
 
@@ -66,11 +71,13 @@ public class PlatformServiceImpl implements PlatformService {
     public PlatformServiceImpl(UserDao userDao,
                                RestTemplate restTemplate,
                                OkHttpClient okHttpClient,
-                               UserUtil userUtil) {
+                               UserUtil userUtil,
+                               ArticleService articleService) {
         this.userDao = userDao;
         this.restTemplate = restTemplate;
         this.okHttpClient = okHttpClient;
         this.userUtil = userUtil;
+        this.articleService = articleService;
     }
 
 
@@ -227,6 +234,30 @@ public class PlatformServiceImpl implements PlatformService {
         };
         factory.newEventSource(request, listener);
         return sseEmitter;
+    }
+
+    /**
+     * 写作宝服务调用
+     *
+     * @param user        用户
+     * @param articleId   文章id
+     * @param projectId   项目id
+     * @param relatedword 关键词
+     * @param publishTime 发布时间
+     * @param title
+     * @return 写作宝结果
+     */
+    @Override
+    public SseEmitter xieReport(User user, String articleId, Long projectId, String relatedword, String publishTime, String title) {
+        Map<String, Object> articleDetail = articleService.articleDetail(articleId, projectId, relatedword,publishTime);
+        Object text = articleDetail.get("text");
+        CopyWriting copyWriting = new CopyWriting();
+        copyWriting.setTemperature(0.7f);
+        HashMap<String, String> params = new HashMap<>(2);
+        params.put("title", title);
+        params.put("text", String.valueOf(text));
+        copyWriting.setParams(params);
+        return xieReport(user, copyWriting);
     }
 
     /**

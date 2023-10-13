@@ -111,6 +111,18 @@ public class PlatformController {
     }
 
     /**
+     * 写作宝智写报告,get请求
+     */
+    @GetMapping(value = "/xie/report")
+    public SseEmitter xieReportGet(String articleId, Long projectId, String relatedword,String publishTime,String title, HttpServletRequest request) {
+        // 获取用户
+        User user = userUtil.getuser(request);
+
+        // 调用
+        return platformService.xieReport(user, articleId, projectId, relatedword,publishTime,title);
+    }
+
+    /**
      * 获取公告
      */
     @GetMapping(value = "/notice")
