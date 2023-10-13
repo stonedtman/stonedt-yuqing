@@ -55,4 +55,10 @@ public interface PlatformService {
      * @return 标题
      */
     ResultUtil xieReportTitle(User user, CopyWriting copyWriting);
+
+    /**
+     * 获取最新公告
+     * @return 最新公告
+     */
+    ResultUtil getNewNotice();
 }

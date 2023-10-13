@@ -110,4 +110,12 @@ public class PlatformController {
         return platformService.xieReport(user, copyWriting);
     }
 
+    /**
+     * 获取公告
+     */
+    @GetMapping(value = "/notice")
+    public ResultUtil getNotice() {
+        return platformService.getNewNotice();
+    }
+
 }

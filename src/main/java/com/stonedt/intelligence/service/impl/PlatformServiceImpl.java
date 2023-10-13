@@ -28,13 +28,13 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * @author 文轩
@@ -59,6 +59,9 @@ public class PlatformServiceImpl implements PlatformService {
 
     @Value("${platform.xie.title}")
     private String xieTitleUrl;
+
+    @Value("${platform.notice.url}")
+    private String noticeUrl;
 
     public PlatformServiceImpl(UserDao userDao,
                                RestTemplate restTemplate,
@@ -259,5 +262,22 @@ public class PlatformServiceImpl implements PlatformService {
         Object msg = jsonObject.get("msg");
         Object data = jsonObject.get("data");
         return ResultUtil.build(Integer.parseInt(code.toString()), msg.toString(), data);
+    }
+
+    /**
+     * 获取最新公告
+     *
+     * @return 最新公告
+     */
+    @Override
+    public ResultUtil getNewNotice() {
+        String result = null;
+        try {
+            result = restTemplate.getForObject(noticeUrl, String.class);
+        } catch (RestClientException e) {
+            e.printStackTrace();
+            return ResultUtil.build(500, "获取失败");
+        }
+        return JSON.parseObject(result, ResultUtil.class);
     }
 }
