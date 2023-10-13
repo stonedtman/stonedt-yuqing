@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -98,10 +99,15 @@ public class LoginController {
         JSONObject response = new JSONObject();
         String string = null;//图形验证码
         if(null!=session.getAttribute(Constants.KAPTCHA_SESSION_KEY)) {
-        	string = session.getAttribute(Constants.KAPTCHA_SESSION_KEY).toString();
+            string = session.getAttribute(Constants.KAPTCHA_SESSION_KEY).toString();
         }
         User user = userService.selectUserByTelephone(telephone);
         if (null != user) {
+            if (user.getTerm_of_validity().after(new Date())) {
+                response.put("code", Integer.valueOf(500));
+                response.put("msg", "账号已过期！");
+                return response;
+            }
             if (user.getStatus() == 0) {
                 response.put("code", 3);
                 response.put("msg", "用户禁止登录");
@@ -113,7 +119,7 @@ public class LoginController {
                         response.put("msg", "账户已被注销");
                     } 
                     if(null==string||!graph_code.equals(string)) {
-                    	response.put("code", 6);
+                        response.put("code", 6);
                         response.put("msg", "图形验证码不正确");
                         return response;
                     }

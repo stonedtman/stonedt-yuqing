@@ -1,5 +1,7 @@
 package com.stonedt.intelligence.entity;
 
+import java.util.Date;
+
 /**
  * description: 用户信息实体 <br>
  * date: 2020/4/14 11:25 <br>
@@ -52,6 +54,11 @@ public class User {
      * 写作宝服务绑定状态
      */
     private Integer xie_flag;
+
+    /**
+     * 账号有效期
+     */
+    private Date term_of_validity;
 
     public Integer getIsOnline() {
         return isOnline;
@@ -222,5 +229,13 @@ public class User {
 
     public void setXie_flag(Integer xie_flag) {
         this.xie_flag = xie_flag;
+    }
+
+    public Date getTerm_of_validity() {
+        return term_of_validity;
+    }
+
+    public void setTerm_of_validity(Date term_of_validity) {
+        this.term_of_validity = term_of_validity;
     }
 }
