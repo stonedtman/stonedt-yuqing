@@ -312,10 +312,6 @@ public class PlatformServiceImpl implements PlatformService {
             e.printStackTrace();
             return ResultUtil.build(500, "获取失败");
         }
-        JSONObject jsonObject = JSON.parseObject(result);
-        Object code = jsonObject.get("code");
-        Object msg = jsonObject.get("msg");
-        Object data = jsonObject.get("data");
-        return ResultUtil.build(Integer.parseInt(code.toString()), msg.toString(), data);
+        return JSON.parseObject(result, ResultUtil.class);
     }
 }
