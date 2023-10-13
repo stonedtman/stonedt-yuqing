@@ -1944,6 +1944,12 @@
         jumpNavLocation($(this).data('type'), monitor_groupid, monitor_projectid);
     })
 
+    $.ajax({
+      url: window.location.origin+"/platform/notice",
+      success: function (res) {
+        console.log(res)
+      }
+    })
     $(".recommend .close").click(function () {
       $(".recommend").remove()
     })
