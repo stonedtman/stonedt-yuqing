@@ -223,6 +223,9 @@ public class PlatformServiceImpl implements PlatformService {
             public void onFailure(@NotNull EventSource eventSource, @Nullable Throwable t, @Nullable Response response) {
                 super.onFailure(eventSource, t, response);
                 log.error("用户{}sse连接出错", user.getId());
+                if (t != null) {
+                    t.printStackTrace();
+                }
                 sseEmitter.complete();
             }
 
@@ -244,7 +247,7 @@ public class PlatformServiceImpl implements PlatformService {
      * @param projectId   项目id
      * @param relatedword 关键词
      * @param publishTime 发布时间
-     * @param title
+     * @param title      标题
      * @return 写作宝结果
      */
     @Override
