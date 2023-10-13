@@ -189,7 +189,7 @@ public class PlatformServiceImpl implements PlatformService {
         }
         copyWriting.getParams().put("text", text);
         //调用写作宝服务
-        RequestBody requestBody = RequestBody.create(JSON.toJSONString(copyWriting), null);
+        RequestBody requestBody = RequestBody.create(JSON.toJSONString(copyWriting), okhttp3.MediaType.get("application/json"));
         Request request = new Request
                 .Builder()
                 .addHeader("secret-id", user.getXie_secret_id())
@@ -199,11 +199,13 @@ public class PlatformServiceImpl implements PlatformService {
                 .build();
         EventSource.Factory factory = EventSources.createFactory(okHttpClient);
         SseEmitter sseEmitter = new SseEmitter(300000L);
+
         EventSourceListener listener = new EventSourceListener() {
             @Override
             public void onClosed(@NotNull EventSource eventSource) {
                 super.onClosed(eventSource);
                 log.info("用户{}sse连接关闭", user.getId());
+                sseEmitter.complete();
             }
 
             @Override
@@ -236,6 +238,10 @@ public class PlatformServiceImpl implements PlatformService {
             }
         };
         factory.newEventSource(request, listener);
+        sseEmitter.onError(throwable->{
+            log.info("用户{}sse连接出错", user.getId());
+            throwable.printStackTrace();
+        });
         return sseEmitter;
     }
 
