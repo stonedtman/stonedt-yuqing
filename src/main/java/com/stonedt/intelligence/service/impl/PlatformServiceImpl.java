@@ -174,6 +174,9 @@ public class PlatformServiceImpl implements PlatformService {
         String text = copyWriting.getParams().get("text");
         //去除html标签,保留文字
         text = text.replaceAll("<[^>]*>", "");
+        if (text.length() > PromptConstant.MAX_INPUT_LENGTH) {
+            text = text.substring(0, PromptConstant.MAX_INPUT_LENGTH);
+        }
         copyWriting.getParams().put("text", text);
         //调用写作宝服务
         RequestBody requestBody = RequestBody.create(JSON.toJSONString(copyWriting), null);
@@ -236,6 +239,9 @@ public class PlatformServiceImpl implements PlatformService {
         String text = copyWriting.getParams().get("text");
         //去除html标签,保留文字
         text = text.replaceAll("<[^>]*>", "");
+        if (text.length() > 2900) {
+            text = text.substring(0, 2900);
+        }
         copyWriting.getParams().put("text", text);
         //设置请求头
         HttpHeaders headers = new HttpHeaders();
