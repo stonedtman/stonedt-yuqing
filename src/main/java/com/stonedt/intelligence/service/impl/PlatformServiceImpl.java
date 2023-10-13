@@ -6,6 +6,7 @@ import com.stonedt.intelligence.dao.UserDao;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.service.PlatformService;
 import com.stonedt.intelligence.util.ResultUtil;
+import com.stonedt.intelligence.util.UserUtil;
 import com.stonedt.intelligence.vo.BindParamsVo;
 import com.stonedt.intelligence.vo.CopyWriting;
 import lombok.extern.slf4j.Slf4j;
@@ -28,11 +29,10 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Set;
 
 /**
  * @author 文轩
@@ -47,6 +47,8 @@ public class PlatformServiceImpl implements PlatformService {
 
     private final OkHttpClient okHttpClient;
 
+    private final UserUtil userUtil;
+
     @Value("${platform.nlp.ocr-url}")
     private String nlpOcrUrl;
 
@@ -55,10 +57,12 @@ public class PlatformServiceImpl implements PlatformService {
 
     public PlatformServiceImpl(UserDao userDao,
                                RestTemplate restTemplate,
-                               OkHttpClient okHttpClient) {
+                               OkHttpClient okHttpClient,
+                               UserUtil userUtil) {
         this.userDao = userDao;
         this.restTemplate = restTemplate;
         this.okHttpClient = okHttpClient;
+        this.userUtil = userUtil;
     }
 
 
@@ -66,12 +70,18 @@ public class PlatformServiceImpl implements PlatformService {
      * nlp服务绑定
      *
      * @param bindParamsVo 绑定参数
+     * @param request
      */
     @Override
-    public ResultUtil nlpBind(BindParamsVo bindParamsVo) {
+    public ResultUtil nlpBind(BindParamsVo bindParamsVo, HttpServletRequest request) {
+        // 获取用户id
+        User user = userUtil.getuser(request);
+        bindParamsVo.setUserId(user.getId());
 
         try {
             userDao.bindNlp(bindParamsVo);
+            user.setNlp_flag(1);
+            request.getSession().setAttribute("User", user);
         } catch (Exception e) {
             e.printStackTrace();
             return ResultUtil.build(500, "绑定失败");
@@ -127,12 +137,18 @@ public class PlatformServiceImpl implements PlatformService {
      * 写作宝服务绑定
      *
      * @param bindParamsVo 绑定参数
+     * @param request
      * @return 绑定结果
      */
     @Override
-    public ResultUtil xieBind(BindParamsVo bindParamsVo) {
+    public ResultUtil xieBind(BindParamsVo bindParamsVo, HttpServletRequest request) {
+        // 获取用户id
+        User user = userUtil.getuser(request);
+        bindParamsVo.setUserId(user.getId());
         try {
             userDao.bindXie(bindParamsVo);
+            user.setXie_flag(1);
+            request.getSession().setAttribute("User", user);
         } catch (Exception e) {
             e.printStackTrace();
             return ResultUtil.build(500, "绑定失败");

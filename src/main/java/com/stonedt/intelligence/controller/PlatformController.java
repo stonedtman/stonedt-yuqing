@@ -12,7 +12,6 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.net.URL;
 
 /**
  * 跨平台服务控制层
@@ -37,11 +36,8 @@ public class PlatformController {
      */
     @PostMapping(value = "/nlp/bind")
     public ResultUtil nlpBind(@RequestBody BindParamsVo bindParamsVo, HttpServletRequest request) {
-        // 获取用户id
-        long userId = userUtil.getUserId(request);
-        bindParamsVo.setUserId(userId);
-        // 绑定
-        return platformService.nlpBind(bindParamsVo);
+                // 绑定
+        return platformService.nlpBind(bindParamsVo,request);
     }
 
     /**
@@ -69,11 +65,9 @@ public class PlatformController {
      */
     @PostMapping(value = "/xie/bind")
     public ResultUtil xieBind(@RequestBody BindParamsVo bindParamsVo, HttpServletRequest request) {
-        // 获取用户id
-        long userId = userUtil.getUserId(request);
-        bindParamsVo.setUserId(userId);
+
         // 绑定
-        return platformService.xieBind(bindParamsVo);
+        return platformService.xieBind(bindParamsVo,request);
     }
 
     /**

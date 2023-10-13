@@ -7,6 +7,7 @@ import com.stonedt.intelligence.vo.CopyWriting;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
@@ -17,9 +18,11 @@ public interface PlatformService {
 
     /**
      * nlp服务绑定
+     *
      * @param bindParamsVo 绑定参数
+     * @param request
      */
-    ResultUtil nlpBind(BindParamsVo bindParamsVo);
+    ResultUtil nlpBind(BindParamsVo bindParamsVo, HttpServletRequest request);
 
     /**
      * nlp光学字符识别
@@ -30,10 +33,12 @@ public interface PlatformService {
 
     /**
      * 写作宝服务绑定
+     *
      * @param bindParamsVo 绑定参数
+     * @param request
      * @return 绑定结果
      */
-    ResultUtil xieBind(BindParamsVo bindParamsVo);
+    ResultUtil xieBind(BindParamsVo bindParamsVo, HttpServletRequest request);
 
     /**
      * 写作宝服务调用
