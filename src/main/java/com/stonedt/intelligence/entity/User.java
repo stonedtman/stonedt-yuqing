@@ -238,4 +238,32 @@ public class User implements java.io.Serializable{
     public void setTerm_of_validity(Date term_of_validity) {
         this.term_of_validity = term_of_validity;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", create_time='" + create_time + '\'' +
+                ", user_id=" + user_id +
+                ", telephone='" + telephone + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", end_login_time='" + end_login_time + '\'' +
+                ", status=" + status +
+                ", username='" + username + '\'' +
+                ", wechat_number='" + wechat_number + '\'' +
+                ", openid='" + openid + '\'' +
+                ", login_count=" + login_count +
+                ", identity=" + identity +
+                ", organization_id='" + organization_id + '\'' +
+                ", isOnline=" + isOnline +
+                ", nlp_secret_id='" + nlp_secret_id + '\'' +
+                ", nlp_secret_key='" + nlp_secret_key + '\'' +
+                ", nlp_flag=" + nlp_flag +
+                ", xie_secret_id='" + xie_secret_id + '\'' +
+                ", xie_secret_key='" + xie_secret_key + '\'' +
+                ", xie_flag=" + xie_flag +
+                ", term_of_validity=" + term_of_validity +
+                '}';
+    }
 }

@@ -16,12 +16,12 @@ import java.util.Map;
 public class UserUtil {
 	
     public User getuser(HttpServletRequest request) {
-        User user = (User) request.getSession(false).getAttribute("User");
+        User user = (User) request.getSession().getAttribute("User");
         return user;
     }
     
     public long getUserId(HttpServletRequest request) {
-    	User user = (User) request.getSession(false).getAttribute("User");
+    	User user = (User) request.getSession().getAttribute("User");
     	return user.getUser_id();
 	}
 }

@@ -17,6 +17,10 @@ spring:
     encoding: UTF-8
     servlet:
       content-type: text/html
+  session:
+    store-type: redis
+    redis:
+      namespace: stonedt-portal
   # 以下是邮件发送配置,换成你自己的邮箱
   mail:
     host: smtp.qq.com
