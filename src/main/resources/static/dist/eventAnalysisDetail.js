@@ -464,6 +464,10 @@ function statistics2(){
 function propagationAnalysis2(){
 	debugger;
      console.info("data:"+propagation_analysis)
+	//如果是string类型，转换成json
+	if (typeof propagation_analysis == "string") {
+		propagation_analysis = JSON.parse(propagation_analysis.replace(/\n|\r/g,""));
+	}
 	 // propagation_analysis = JSON.parse(propagation_analysis.replace(/\n|\r/g,""));
 	for(let i in propagation_analysis.media){
 		let fans = '-'
