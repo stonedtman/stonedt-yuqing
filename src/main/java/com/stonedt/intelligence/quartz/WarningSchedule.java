@@ -96,7 +96,7 @@ public class WarningSchedule {
                             int interval_type = warning_interval.getIntValue("type");
                             if (interval_type == 1) {
                                 // 实时预警
-                                search(listWarning.get(i), nowTime, 2000);
+                                search(listWarning.get(i), nowTime, 20);
                             } else {
                                 // 定时预警
                                 int interval_time = warning_interval.getIntValue("time");//预警间隔
@@ -303,6 +303,13 @@ public class WarningSchedule {
                     emailHtml += "</div> </body> </html>";
                     try {
                         String email_user = warning_source.getString("email");
+                        String senderUsername = javaMailSender.getUsername();
+                        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+                        simpleMailMessage.setFrom(senderUsername);
+                        simpleMailMessage.setTo(email_user);
+                        simpleMailMessage.setSubject("预警推送");
+                        simpleMailMessage.setText(emailHtml);
+                        javaMailSender.send(simpleMailMessage);
                         SendMailFox.Send(email_user, "预警推送", emailHtml);
                         logger.info("预警邮件发送成功......");
                     } catch (Exception e) {

@@ -1,5 +1,8 @@
 
 package com.stonedt.intelligence.entity;
+
+import java.util.Date;
+
 /**
 * <p>预警信息</p>
 * <p>Title: WarningSetting</p>  
@@ -30,6 +33,11 @@ public class WarningSetting {
 	private String project_name; //方案名称
 	private String group_name; //方案组名称
 	private Long user_id; //用户id
+
+	/**
+	 * 最后一次预警时间
+	 */
+	private Date last_update_time; //最后更新时间
 	
 	
 	public Integer getId() {
@@ -146,15 +154,38 @@ public class WarningSetting {
 	public void setUser_id(Long user_id) {
 		this.user_id = user_id;
 	}
+
+	public Date getLast_update_time() {
+		return last_update_time;
+	}
+
+	public void setLast_update_time(Date last_update_time) {
+		this.last_update_time = last_update_time;
+	}
+
 	@Override
 	public String toString() {
-		return "WarningSetting [id=" + id + ", create_time=" + create_time + ", warning_setting_id="
-				+ warning_setting_id + ", project_id=" + project_id + ", warning_status=" + warning_status
-				+ ", warning_name=" + warning_name + ", warning_word=" + warning_word + ", warning_classify="
-				+ warning_classify + ", warning_content=" + warning_content + ", warning_similar=" + warning_similar
-				+ ", warning_match=" + warning_match + ", warning_deduplication=" + warning_deduplication
-				+ ", warning_source=" + warning_source + ", warning_receive_time=" + warning_receive_time
-				+ ", weekend_warning=" + weekend_warning + ", warning_interval=" + warning_interval + ", project_name="
-				+ project_name + ", group_name=" + group_name + ", user_id=" + user_id + "]";
+		return "WarningSetting{" +
+				"id=" + id +
+				", create_time='" + create_time + '\'' +
+				", warning_setting_id=" + warning_setting_id +
+				", project_id=" + project_id +
+				", warning_status=" + warning_status +
+				", warning_name='" + warning_name + '\'' +
+				", warning_word='" + warning_word + '\'' +
+				", warning_classify='" + warning_classify + '\'' +
+				", warning_content=" + warning_content +
+				", warning_similar=" + warning_similar +
+				", warning_match=" + warning_match +
+				", warning_deduplication=" + warning_deduplication +
+				", warning_source='" + warning_source + '\'' +
+				", warning_receive_time='" + warning_receive_time + '\'' +
+				", weekend_warning=" + weekend_warning +
+				", warning_interval='" + warning_interval + '\'' +
+				", project_name='" + project_name + '\'' +
+				", group_name='" + group_name + '\'' +
+				", user_id=" + user_id +
+				", last_update_time=" + last_update_time +
+				'}';
 	}
 }
