@@ -1,0 +1,1 @@
+DELETE FROM `search_type` where id >1;

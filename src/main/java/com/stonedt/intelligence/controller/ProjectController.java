@@ -620,7 +620,8 @@ public class ProjectController {
         @SuppressWarnings("unused")
         Integer opinronCount = projectService.updateOpinionConditionById(opinionConditionParam);
         Integer count = projectService.editProjectInfo(editParam);
-        if (count > 0) {
+        Integer taskCount = projectTaskDao.updateProjectTask(editParam);
+        if (count > 0 && taskCount > 0) {
            
             String message = "";
             

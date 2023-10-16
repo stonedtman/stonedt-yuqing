@@ -17,11 +17,13 @@ public class UserUtil {
 	
     public User getuser(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("User");
+        System.out.println("user:"+user);
         return user;
     }
     
     public long getUserId(HttpServletRequest request) {
     	User user = (User) request.getSession().getAttribute("User");
+        System.out.println("user:"+user);
     	return user.getUser_id();
 	}
 }

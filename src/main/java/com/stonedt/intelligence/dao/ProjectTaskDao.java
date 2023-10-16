@@ -1,6 +1,7 @@
 package com.stonedt.intelligence.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -26,4 +27,9 @@ public interface ProjectTaskDao {
 
 	Boolean updateProjectTaskAnalysisToUnDealFlag(@Param("projectId") long projectId);
 
+	/**
+	 * 更新方案任务
+	 * @param editParam 编辑参数
+	 */
+    Integer updateProjectTask(Map<String, Object> editParam);
 }
