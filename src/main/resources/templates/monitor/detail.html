@@ -775,7 +775,11 @@ $("#currentyear").text((new Date()).getFullYear());
 //                        }
 //
 //                        pageStrAll = pageStrStart + currentBefore + currentAfter + pageStrEnd;
-                        let arr = JSON.parse(res.detail.extend_string_one).imglist
+                        let arr = [];
+                        if (res.detail.extend_string_one !== '' || res.detail.extend_string_one !== null) {
+                            arr = JSON.parse(res.detail.extend_string_one).imglist;
+                        }
+
                         for (let i = 0; i < arr.length; i++) {
                             let index = arr[i].imgurl.indexOf("data/image")
                             if(index==-1){
