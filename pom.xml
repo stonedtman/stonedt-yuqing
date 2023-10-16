@@ -237,6 +237,12 @@
             <artifactId>okhttp-sse</artifactId>
             <version>4.0.0</version>
         </dependency>
+
+        <!--        spring session-->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
     
     
     </dependencies>

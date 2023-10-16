@@ -8,7 +8,7 @@ import java.util.Date;
  * author: huajiancheng <br>
  * version: 1.0 <br>
  */
-public class User {
+public class User implements java.io.Serializable{
     private Integer id;
     private String create_time;
     private Long user_id;
