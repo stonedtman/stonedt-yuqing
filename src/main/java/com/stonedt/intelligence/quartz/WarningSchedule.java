@@ -14,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -62,6 +64,9 @@ public class WarningSchedule {
     private ProjectService projectService;
     @Autowired
     private EarlyWarningService earlyWarningService;
+
+    @Autowired
+    private JavaMailSenderImpl javaMailSender;
 
     //	@Scheduled(fixedRate = 10000000)
     @Scheduled(cron = "0 0/20 * * * ?")
@@ -119,7 +124,7 @@ public class WarningSchedule {
                     }
                 }
             }
-            logger.info("预警开始......");
+            logger.info("预警结束......");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -428,6 +433,13 @@ public class WarningSchedule {
                         emailHtml += "</div> </body> </html>";
                         try {
                             String email_user = warning_source.getString("email");
+                            String senderUsername = javaMailSender.getUsername();
+                            SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+                            simpleMailMessage.setFrom(senderUsername);
+                            simpleMailMessage.setTo(email_user);
+                            simpleMailMessage.setSubject("预警推送");
+                            simpleMailMessage.setText(emailHtml);
+                            javaMailSender.send(simpleMailMessage);
                             SendMailFox.Send(email_user, "预警推送", emailHtml);
                             logger.info("预警邮件发送成功......");
                         } catch (Exception e) {

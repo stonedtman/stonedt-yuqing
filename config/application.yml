@@ -17,6 +17,25 @@ spring:
     encoding: UTF-8
     servlet:
       content-type: text/html
+  # 以下是邮件发送配置,换成你自己的邮箱
+  mail:
+    host: smtp.qq.com
+    username: monitor@stonedt.com
+    password: ST_monit2019
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          ssl:
+            enable: true
+            required: true
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+            fallback: false
+          port: 465
   http:
   # 设置编码
     encoding:
