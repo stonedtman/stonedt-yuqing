@@ -83,31 +83,6 @@
 .moodfm{
 	color: #f62d51;
 }
-.recommend{
-	padding: 0px 20px;
-}
-.recommend-content{
-	height: 52px;
-	line-height: 52px;
-	padding: 0 20px;
-	margin-top: 20px;
-	margin-bottom: -10px;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	border: 1px solid #e5e5e5;
-	background-color: #fbffeb;
-}
-.recommend .text{
-	flex: 1;
-	margin-right: 20px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-.recommend .close{
-	cursor: pointer;
-}
 </style>
 </head>
 <body>
@@ -116,12 +91,6 @@
 		<div th:replace="common/monitor_left::monitor_left"></div>
 		<div class="page-wrapper">
 			<div class="right-part right-content" style="overflow-x: hidden;">
-				<div class="recommend">
-					<div class="recommend-content">
-						<div class="text">最新人工智能AIGC产品发布: https://www.xiezuobao.net 微信扫码即可体验</div>
-						<i class="close fa fa-times"></i>
-					</div>
-				</div>
 				<!-- nav start-->
 				<div class="page-breadcrumb">
 					<div class="row" id="chu">
@@ -141,8 +110,8 @@
 							<div
 								class="d-flex no-block justify-content-end align-items-center data-number-min">
 
-								<small class="font-13" id="updateanalysis"
-									style="cursor: pointer"> <i class="mdi mdi-refresh"></i>刷新
+								<small class="font-12" id="updateanalysis"
+									style="cursor: pointer;color: #FFF;background-color: #6184e6;padding: 2px 5px;border-radius: 2px;"> <i class="mdi mdi-refresh"></i>刷新
 								</small> <small class="font-13"> <i class="mdi mdi-clock"></i>数据统计更新于：<span
 									id="updateTime"></span>
 								</small>
@@ -1221,6 +1190,7 @@
 	<script
 		th:src="@{/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js}"></script>
 	<script th:src="@{/common/tools.js}"></script>
+	<script th:src="@{/assets/libs/sweetalert2/dist/sweetalert2.all.min.js}"></script>
 	<script th:src="@{/dist/js/echarts.min.js}"></script>
 	<script th:src="@{/dist/anycharts/anychart-base.min.js}"></script>
 	<script th:src="@{/dist/anycharts/anychart-exports.min.js}"></script>
@@ -1245,9 +1215,6 @@
 								anal_projectId);
 					})
 		})
-	$(".recommend .close").click(function () {
-		$(".recommend").remove()
-	})
 	</script>
 </body>
 
