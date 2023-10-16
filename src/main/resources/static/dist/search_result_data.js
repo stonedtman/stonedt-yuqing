@@ -798,9 +798,9 @@ function installHot(res) {
 						+ '       <a target="_blank" href="'
 						+ source.source_url
 						+ '" class="link font-bold">'
-						+ '           <span class="content-logo"style="background: url('
+						+ '           <img class="content-logo" src="'
 						+ iconUrl
-						+ ');"></span>'
+						+ '" onerror="javascript:this.src=\'/assets/images/default_source.png\'">'
 						+ source.topic
 						+ '       </a>'
 						+ '        <span class="sl-date  ">'
@@ -2089,9 +2089,9 @@ function installArticle3(res) {
 							+ pub_data
 							+ '&searchWord='
 							+ $('#searchWord').val()
-							+ '" class="link font-bold"><span class="content-logo" style="background: url('
+							+ '" class="link font-bold"><img class="content-logo" src="'
 							+ websitelogo
-							+ ');"></span>'
+							+ '" onerror="javascript:this.src=\'/assets/images/default_source.png\'">'
 							+ title
 							+ '</a>';
 					let category = dealCate(article_category);
@@ -2224,8 +2224,8 @@ function installArticle3(res) {
 									+ article_public_id
 									+ '" id="check1"><span></span></div>';
 							let strContentStart = '<div class="monitor-right">';
-							let websitelogoStr = '<span class="content-logo" style="background: url('
-									+ websitelogo + ');"></span>';
+							let websitelogoStr = '<img class="content-logo" src="'
+									+ websitelogo + '" onerror="javascript:this.src=\'/assets/images/default_source.png\'">';
 							if (full_type == 38) {
 								websitelogoStr = '';
 							}
@@ -2373,10 +2373,10 @@ function installArticle3(res) {
 								'</li>' +
 
 								//read+
-								'<li class="inline-block" style="float: left;" ng-show="view.resultPresent != 3"> <button type="button" data-tippy-placement="top" data-hover="dropdown" data-toggle="dropdown" data-animation="scale-up" data-delay="300" aria-expanded="false" class="tippy btn btn-default-icon fa-suyuan dropdown-toggle" data-tippy="" data-original-title="已读、未读"> </button>' +
-								'<ul class="dropdown-menu ng-scope" role="menu" ng-if="collectFoldersList!=null&amp;&amp;collectFoldersList.length>0">  ' +
-								'<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)"> <span data-type="' + article_public_id + '" data-flag="1" class="isread">已读</span> </a> </li>' +
-								'<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="deleteSolrIds(icc)"> <span data-type="' + article_public_id + '" data-flag="2" class="isread">未读</span> </a> </li> </ul> </li>' +
+								// '<li class="inline-block" style="float: left;" ng-show="view.resultPresent != 3"> <button type="button" data-tippy-placement="top" data-hover="dropdown" data-toggle="dropdown" data-animation="scale-up" data-delay="300" aria-expanded="false" class="tippy btn btn-default-icon fa-suyuan dropdown-toggle" data-tippy="" data-original-title="已读、未读"> </button>' +
+								// '<ul class="dropdown-menu ng-scope" role="menu" ng-if="collectFoldersList!=null&amp;&amp;collectFoldersList.length>0">  ' +
+								// '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)"> <span data-type="' + article_public_id + '" data-flag="1" class="isread">已读</span> </a> </li>' +
+								// '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="deleteSolrIds(icc)"> <span data-type="' + article_public_id + '" data-flag="2" class="isread">未读</span> </a> </li> </ul> </li>' +
 
 								//'<li class="inline-block  dropdown" style="float: left;" ng-class="{\'dropdown\':icclist.length != $index+1,\'dropup\':icclist.length == $index+1}" ng-show="view.resultPresent != 3"> <button ng-if="icclist.length != $index+1" type="button" data-tippy-placement="top" data-hover="dropdown" data-toggle="dropdown" data-animation="scale-up" data-delay="300" aria-expanded="false" class="tippy btn btn-default-icon fa-distribute dropdown-toggle ng-scope" id="scj_916007411683191177512726" data-tippy="" title="创建跟踪项"> </button><ul class="dropdown-menu ng-scope" role="menu" ng-if="collectFoldersList!=null&amp;&amp;collectFoldersList.length>0"> <li role="presentation" ng-repeat="collect in collectFoldersList" ng-if="collect!=null" class="ng-scope"> <a href="javascript:void(0)" role="menuitem" ng-click="insertMaterial(collect.folderId,1,icc)"> <span class="track" data-type="'+article_public_id+'" data-keywords="'+relatedWord.join("，")+'" ng-bind="collect.name">创建跟踪项</span> </a> </li> </ul> </li>'+
 
@@ -2398,8 +2398,8 @@ function installArticle3(res) {
 									+ article_public_id
 									+ '" id="check3"><span></span></div>';
 							let strContentStart = '<div class="monitor-right">';
-							let websitelogoStr = '<span class="content-logo" style="background: url('
-									+ websitelogo + ');"></span>';
+							let websitelogoStr = '<img class="content-logo" src="'
+									+ websitelogo + '" onerror="javascript:this.src=\'/assets/images/default_source.png\'">';
 							if (full_type == 38) {
 								websitelogoStr = '';
 							}
@@ -2533,10 +2533,10 @@ function installArticle3(res) {
 								'</li>' +
 
 								//read+
-								'<li class="inline-block" style="float: left;" ng-show="view.resultPresent != 3"> <button type="button" data-tippy-placement="top" data-hover="dropdown" data-toggle="dropdown" data-animation="scale-up" data-delay="300" aria-expanded="false" class="tippy btn btn-default-icon fa-suyuan dropdown-toggle" data-tippy="" data-original-title="已读、未读"> </button>' +
-								'<ul class="dropdown-menu ng-scope" role="menu" ng-if="collectFoldersList!=null&amp;&amp;collectFoldersList.length>0">  ' +
-								'<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)"> <span data-type="' + article_public_id + '" data-flag="1" class="isread">已读</span> </a> </li>' +
-								'<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="deleteSolrIds(icc)"> <span data-type="' + article_public_id + '" data-flag="2" class="isread">未读</span> </a> </li> </ul> </li>' +
+								// '<li class="inline-block" style="float: left;" ng-show="view.resultPresent != 3"> <button type="button" data-tippy-placement="top" data-hover="dropdown" data-toggle="dropdown" data-animation="scale-up" data-delay="300" aria-expanded="false" class="tippy btn btn-default-icon fa-suyuan dropdown-toggle" data-tippy="" data-original-title="已读、未读"> </button>' +
+								// '<ul class="dropdown-menu ng-scope" role="menu" ng-if="collectFoldersList!=null&amp;&amp;collectFoldersList.length>0">  ' +
+								// '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)"> <span data-type="' + article_public_id + '" data-flag="1" class="isread">已读</span> </a> </li>' +
+								// '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="deleteSolrIds(icc)"> <span data-type="' + article_public_id + '" data-flag="2" class="isread">未读</span> </a> </li> </ul> </li>' +
 
 								//'<li class="inline-block  dropdown" style="float: left;" ng-class="{\'dropdown\':icclist.length != $index+1,\'dropup\':icclist.length == $index+1}" ng-show="view.resultPresent != 3"> <button ng-if="icclist.length != $index+1" type="button" data-tippy-placement="top" data-hover="dropdown" data-toggle="dropdown" data-animation="scale-up" data-delay="300" aria-expanded="false" class="tippy btn btn-default-icon fa-distribute dropdown-toggle ng-scope" id="scj_916007411683191177512726" data-tippy="" title="创建跟踪项"> </button><ul class="dropdown-menu ng-scope" role="menu" ng-if="collectFoldersList!=null&amp;&amp;collectFoldersList.length>0"> <li role="presentation" ng-repeat="collect in collectFoldersList" ng-if="collect!=null" class="ng-scope"> <a href="javascript:void(0)" role="menuitem" ng-click="insertMaterial(collect.folderId,1,icc)"> <span class="track" data-type="'+article_public_id+'" data-keywords="'+relatedWord.join("，")+'" ng-bind="collect.name">创建跟踪项</span> </a> </li> </ul> </li>'+
 
@@ -2557,8 +2557,8 @@ function installArticle3(res) {
 								+ article_public_id
 								+ '" id="check3"><span></span></div>';
 						let strContentStart = '<div class="monitor-right">';
-						let websitelogoStr = '<span class="content-logo" style="background: url('
-								+ websitelogo + ');"></span>';
+						let websitelogoStr = '<img class="content-logo" src="'
+								+ websitelogo + '" onerror="javascript:this.src=\'/assets/images/default_source.png\'">';
 						if (full_type == 38) {
 							websitelogoStr = '';
 						}
@@ -2691,10 +2691,10 @@ function installArticle3(res) {
 							'</li>' +
 
 							//read+
-							'<li class="inline-block" style="float: left;" ng-show="view.resultPresent != 3"> <button type="button" data-tippy-placement="top" data-hover="dropdown" data-toggle="dropdown" data-animation="scale-up" data-delay="300" aria-expanded="false" class="tippy btn btn-default-icon fa-suyuan dropdown-toggle" data-tippy="" data-original-title="已读、未读"> </button>' +
-							'<ul class="dropdown-menu ng-scope" role="menu" ng-if="collectFoldersList!=null&amp;&amp;collectFoldersList.length>0">  ' +
-							'<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)"> <span data-type="' + article_public_id + '" data-flag="1" class="isread">已读</span> </a> </li>' +
-							'<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="deleteSolrIds(icc)"> <span data-type="' + article_public_id + '" data-flag="2" class="isread">未读</span> </a> </li> </ul> </li>' +
+							// '<li class="inline-block" style="float: left;" ng-show="view.resultPresent != 3"> <button type="button" data-tippy-placement="top" data-hover="dropdown" data-toggle="dropdown" data-animation="scale-up" data-delay="300" aria-expanded="false" class="tippy btn btn-default-icon fa-suyuan dropdown-toggle" data-tippy="" data-original-title="已读、未读"> </button>' +
+							// '<ul class="dropdown-menu ng-scope" role="menu" ng-if="collectFoldersList!=null&amp;&amp;collectFoldersList.length>0">  ' +
+							// '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)"> <span data-type="' + article_public_id + '" data-flag="1" class="isread">已读</span> </a> </li>' +
+							// '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="deleteSolrIds(icc)"> <span data-type="' + article_public_id + '" data-flag="2" class="isread">未读</span> </a> </li> </ul> </li>' +
 
 							//'<li class="inline-block  dropdown" style="float: left;" ng-class="{\'dropdown\':icclist.length != $index+1,\'dropup\':icclist.length == $index+1}" ng-show="view.resultPresent != 3"> <button ng-if="icclist.length != $index+1" type="button" data-tippy-placement="top" data-hover="dropdown" data-toggle="dropdown" data-animation="scale-up" data-delay="300" aria-expanded="false" class="tippy btn btn-default-icon fa-distribute dropdown-toggle ng-scope" id="scj_916007411683191177512726" data-tippy="" title="创建跟踪项"> </button><ul class="dropdown-menu ng-scope" role="menu" ng-if="collectFoldersList!=null&amp;&amp;collectFoldersList.length>0"> <li role="presentation" ng-repeat="collect in collectFoldersList" ng-if="collect!=null" class="ng-scope"> <a href="javascript:void(0)" role="menuitem" ng-click="insertMaterial(collect.folderId,1,icc)"> <span class="track" data-type="'+article_public_id+'" data-keywords="'+relatedWord.join("，")+'" ng-bind="collect.name">创建跟踪项</span> </a> </li> </ul> </li>'+
 

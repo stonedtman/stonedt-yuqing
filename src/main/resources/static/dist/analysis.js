@@ -394,7 +394,8 @@ function getAnalysisMonitorProjectid() {
             var lasttime = new Date(analysis.create_time).getTime();
             var diff = now - lasttime;
             if (diff > 172800000) {
-                showInfo('数据已超过48小时未更新，请点击刷新按钮更新数据！');
+                // showInfo('数据已超过48小时未更新，请点击刷新按钮更新数据！');
+                showNewInfo();
             }
             
         },
@@ -809,6 +810,26 @@ function showInfo(message) {
     });
 }
 
+function showNewInfo() {
+    swal({
+        title: "是否更新监测分析数据？",
+        text: "数据已超过48小时未更新，请点击刷新按钮更新数据!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#36bea6",
+        confirmButtonText: "刷新",
+        cancelButtonColor: "#6c757d",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }).then(function (that) {
+        if (that.value) {
+            $("#updateanalysis").click()
+        } else {
+
+        }
+    });
+}
 
 
 
@@ -1651,9 +1672,9 @@ function toHtmlMediaActivityAnalysis(data) {
         var logo = list[i].logo;
         var logoHtml = '';
         if (logo) {
-            logoHtml = '<img class="rounded-circle" width="24" src="' + logo + '" alt="">';
+            logoHtml = '<img class="rounded-circle" width="24" src="' + logo + '" alt="" onerror="javascript:this.src=\'/assets/images/default_source.png\'">';
         }else{
-            logoHtml = '<img class="rounded-circle" width="45" src="/assets/images/moren.jpg" alt="">';
+            logoHtml = '<img class="rounded-circle" width="45" src="/assets/images/default_source.png" alt="">';
         }
         var html = '<tr>' +
             '<td>' +

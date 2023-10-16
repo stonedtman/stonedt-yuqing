@@ -1957,13 +1957,15 @@
     })
     let recommendList = []
     let recommendListIndex = 0
+    let timer = null
+    let timermove = null
     $.ajax({
       url: window.location.origin+"/platform/notice",
       success: function (res) {
         if(res.status==200){
           recommendList = res.data
           let html = ""
-          if(recommendList.length==1){
+          if(recommendList.length>0){
             html=`
               <div class="text">${recommendList[0].content}</div>
             `
@@ -1977,6 +1979,8 @@
 
           $(".recommend .close").click(function () {
             $(".recommend").remove()
+            clearInterval(timer)
+            clearInterval(timermove)
           })
 
           if(recommendList.length>1){
@@ -1986,29 +1990,28 @@
       }
     })
     function recommendsettimeout() {
-      let timer = null
       let s = 52/(500/10)
-      setInterval(function(){
-        recommendListIndex++
-        if(recommendListIndex>recommendList.length){
+      timer = setInterval(function(){
+        if(recommendListIndex>recommendList.length-1){
           recommendListIndex=0
         }
-        timer = setInterval(function () {
+        timermove = setInterval(function () {
           let mt = document.querySelector(".recommend-content-list").style.marginTop
           let nowmt = mt.split("px")[0]-s
           document.querySelector(".recommend-content-list").style.marginTop = nowmt+"px"
         },10)
         setTimeout(function(){
-          clearInterval(timer)
+          clearInterval(timermove)
           changeRecommendList()
         },500)
       },3000)
     }
     function changeRecommendList(){
+      document.querySelector(".recommend-content-list").innerHTML+=`<div class="text">${recommendList[recommendListIndex].content}</div>`
+      recommendListIndex++
       let list = document.querySelectorAll(".recommend-content-list .text")
       list[0].remove()
       document.querySelector(".recommend-content-list").style.marginTop = 0
-      $(".recommend-content-list").append(`<div class="text">${recommendList[recommendListIndex-1].content}</div>`)
     }
   </script>
   <script type="text/javascript">

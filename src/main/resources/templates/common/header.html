@@ -80,13 +80,20 @@
                     </a>
                 </li>
 
-                 <li data-type="full_search" th:classappend="${menu=='full_search'?'nav-active3':''}"
+<!--                <li data-type="full_search" th:classappend="${menu=='full_search'?'nav-active3':''}"-->
+<!--                    class="nav-item dropdown hover-none navLi">-->
+<!--                    <a class="nav-link dropdown-toggle waves-effect  waves-dark">-->
+<!--                        <span class="d-none d-md-block"> <i class="fa fa-search"></i> 即时搜索</span>-->
+<!--                        <span class="d-block d-md-none">即时搜索</span>-->
+<!--                    </a>-->
+<!--                </li> -->
+                <li data-type="full_search" th:classappend="${menu=='full_search'?'nav-active3':''}"
                     class="nav-item dropdown hover-none navLi">
                     <a class="nav-link dropdown-toggle waves-effect  waves-dark">
-                        <span class="d-none d-md-block"> <i class="fa fa-search"></i> 即时搜索</span>
-                        <span class="d-block d-md-none">即时搜索</span>
+                        <span class="d-none d-md-block"> <i class="fa fa-search"></i> 情报搜索</span>
+                        <span class="d-block d-md-none">情报搜索</span>
                     </a>
-                </li> 
+                </li>
                 <li data-type="public_option" th:classappend="${menu=='public_option'?'nav-active3':''}"
                     class="nav-item dropdown hover-none navLi" id="yqypfx">
                     <a class="nav-link dropdown-toggle waves-effect  waves-dark">
@@ -522,7 +529,8 @@
                 window.location.href = ctxPath + 'volume' + param;
             }
             else if (menu == 'full_search') {
-                window.location.href = ctxPath + 'timelysearch';
+                // window.location.href = ctxPath + 'timelysearch';
+                window.location.href = ctxPath + 'fullsearch';
             }else if (menu == 'public_option') {
                 window.location.href = ctxPath + 'publicoption';
             }else if (menu == 'syswarning') {
