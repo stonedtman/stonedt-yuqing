@@ -26,18 +26,16 @@
                     </ul>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                    <a th:classappend="${settingLeft == 'preference' ? 'active' : ''}" class="sidebar-link  waves-effect waves-dark" th:href="@{/system/preference}" aria-expanded="false">
                         <i class="mdi mdi-filter-outline"></i>
                         <span class="hide-menu">偏好设置</span>
                     </a>
-                    <ul aria-expanded="false" class="collapse  first-level in">
-                        <li class="sidebar-item">
-                            <a th:classappend="${settingLeft == 'preference' ? 'active' : ''}" th:href="@{/system/preference}" class="sidebar-link"> <span class="hide-menu"> 偏好设置 </span> </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a th:classappend="${settingLeft == 'favorite' ? 'active' : ''}" th:href="@{/system/favorite}" class="sidebar-link"> <span class="hide-menu"> 收藏夹 </span> </a>
-                        </li>
-                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a th:classappend="${settingLeft == 'favorite' ? 'active' : ''}" class="sidebar-link  waves-effect waves-dark" th:href="@{/system/favorite}" aria-expanded="false">
+                        <i class="mdi mdi-filter-outline"></i>
+                        <span class="hide-menu">收藏夹</span>
+                    </a>
                 </li>
                 <li class="sidebar-item">
                     <a th:classappend="${settingLeft == 'user' ? 'active' : ''}" class="sidebar-link  waves-effect waves-dark" th:href="@{/user/{userid}(userid=${session.User.user_id})}" aria-expanded="false">
