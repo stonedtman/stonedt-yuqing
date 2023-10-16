@@ -96,7 +96,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Integer delProject(Map<String, Object> map) {
-        datafavoriteDao.delDatafavoriteByProjectId((Long)map.get("project_id"));
+        datafavoriteDao.delDatafavoriteByProjectId(Long.valueOf((String) map.get("project_id")));
         return projectDao.delProject(map);
     }
 

@@ -6,8 +6,8 @@ server:
       session:
         cookie:
           name: local-portal
-          max-age: 3600
-        timeout: 3600
+          max-age: 7200
+        timeout: 7200
           
 spring:
   thymeleaf:
