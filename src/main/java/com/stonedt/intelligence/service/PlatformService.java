@@ -1,5 +1,6 @@
 package com.stonedt.intelligence.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.util.ResultUtil;
 import com.stonedt.intelligence.vo.BindParamsVo;
@@ -9,6 +10,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * @author 文轩
@@ -75,4 +77,6 @@ public interface PlatformService {
      * @return 最新公告
      */
     ResultUtil getNewNotice();
+
+    Map<String,Object> getNewSynthesize();
 }

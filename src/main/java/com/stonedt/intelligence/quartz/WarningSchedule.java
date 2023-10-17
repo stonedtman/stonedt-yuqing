@@ -3,6 +3,7 @@ package com.stonedt.intelligence.quartz;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -74,6 +75,8 @@ public class WarningSchedule {
         try {
             if (warning_popup != 1) return;
             logger.info("预警开始......");
+            Date time = new Date();
+            String minuteTime = getMinuteTime(time);
             List<WarningSetting> listWarning = systemDao.listWarningMsg();//预警列表
             if (listWarning.size() > 0) {
                 Date date = new Date();
@@ -96,7 +99,7 @@ public class WarningSchedule {
                             int interval_type = warning_interval.getIntValue("type");
                             if (interval_type == 1) {
                                 // 实时预警
-                                search(listWarning.get(i), nowTime, 20);
+                                search(listWarning.get(i), minuteTime, 20);
                             } else {
                                 // 定时预警
                                 int interval_time = warning_interval.getIntValue("time");//预警间隔
@@ -650,5 +653,17 @@ public class WarningSchedule {
             e.printStackTrace();
         }
         return format;
+    }
+
+    /**
+     * 获取时间，精确到分钟
+     */
+    public static String getMinuteTime(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.SECOND, 0);
+        Date calendarTime = calendar.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(calendarTime);
     }
 }

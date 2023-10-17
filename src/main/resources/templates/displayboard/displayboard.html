@@ -1025,7 +1025,7 @@
 		<script th:src="@{/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js}"></script>
 		<script th:src="@{/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js}"></script>
 		<!-- <script th:src="@{/dist/displayboard.js}"></script> -->
-		<script th:src="@{/dist/displayboard/displayboard.js?t=0616}"></script>
+		<script th:src="@{/dist/displayboard/displayboard.js}"></script>
 		<!-- <script src=" dist/js/pages/dashboards/dashboard2.js"></script> -->
 		<script th:src="@{/dist/baidu/baidu_statistics.js}"></script>
 		<script th:src="@{/assets/libs/sweetalert/sweetalert.min.js}"></script>
@@ -1051,10 +1051,7 @@
 		let hot_36kr = "[[${hot_36kr}]]";
 		let hot_finaceData = "[[${hot_finaceData}]]";
 		let hot_policydata = "[[${hot_policydata}]]";
-		
-		
-		user = escape2Html(user)
-		user = JSON.parse(user)
+
 		console.log(user)
 		
 		function escape2Html(str) {

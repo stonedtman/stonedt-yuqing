@@ -68,6 +68,9 @@ public class PlatformServiceImpl implements PlatformService {
     @Value("${platform.notice.url}")
     private String noticeUrl;
 
+    @Value("${platform.synthesize.url}")
+    private String synthesizeUrl;
+
     public PlatformServiceImpl(UserDao userDao,
                                RestTemplate restTemplate,
                                OkHttpClient okHttpClient,
@@ -319,5 +322,23 @@ public class PlatformServiceImpl implements PlatformService {
             return ResultUtil.build(500, "获取失败");
         }
         return JSON.parseObject(result, ResultUtil.class);
+    }
+
+    @Override
+    public JSONObject getNewSynthesize() {
+        String result = null;
+        try {
+            result = restTemplate.getForObject(synthesizeUrl, String.class);
+        } catch (RestClientException e) {
+            e.printStackTrace();
+            return null;
+        }
+        JSONObject jsonObject = JSON.parseObject(result);
+        Integer status = (Integer) jsonObject.get("status");
+
+        if (status ==null ||status != 200) {
+            return null;
+        }
+        return jsonObject.getJSONObject("data");
     }
 }
