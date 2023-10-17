@@ -776,7 +776,7 @@ $("#currentyear").text((new Date()).getFullYear());
 //
 //                        pageStrAll = pageStrStart + currentBefore + currentAfter + pageStrEnd;
                         let arr = [];
-                        if (res.detail.extend_string_one !== '' || res.detail.extend_string_one !== null) {
+                        if (res.detail.extend_string_one !== '' && res.detail.extend_string_one !== null) {
                             arr = JSON.parse(res.detail.extend_string_one).imglist;
                         }
 
