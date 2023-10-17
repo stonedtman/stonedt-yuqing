@@ -397,7 +397,6 @@ function getAnalysisMonitorProjectid() {
                 // showInfo('数据已超过48小时未更新，请点击刷新按钮更新数据！');
                 showNewInfo();
             }
-            
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
@@ -814,7 +813,7 @@ function showNewInfo() {
     swal({
         title: "是否更新监测分析数据？",
         text: "数据已超过48小时未更新，请点击刷新按钮更新数据!",
-        type: "warning",
+        type: "question",
         showCancelButton: true,
         confirmButtonColor: "#36bea6",
         confirmButtonText: "刷新",
