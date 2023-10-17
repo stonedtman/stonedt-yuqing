@@ -721,9 +721,404 @@ public class MonitorServiceImpl implements MonitorService {
         }
         return response;
     }
-    
-    
-    
+
+    @Override
+    public JSONObject getSimilarArticleList(JSONObject paramJson) {
+        JSONObject response = new JSONObject();
+        JSONObject dataGroupJson = new JSONObject();
+        Long projectid = paramJson.getLong("projectid");
+        Map<String, Object> projectParamMap = new HashMap<String, Object>();
+        projectParamMap.put("project_id", projectid);
+        Map<String, Object> projectInfo = projectDao.getProjectInfo(projectParamMap);
+        if (projectInfo == null) {
+            response.put("code", 200);
+            response.put("msg", "舆情列表es返回成功");
+            dataGroupJson.put("data", new ArrayList<>());
+            response.put("data", dataGroupJson);
+            return response;
+        }
+        int projectType = (int) projectInfo.get("project_type");
+        String subject_word = String.valueOf(projectInfo.get("subject_word"));
+        String regional_word = String.valueOf(projectInfo.get("regional_word"));
+        String character_word = String.valueOf(projectInfo.get("character_word"));
+        String event_word = String.valueOf(projectInfo.get("event_word"));
+        String stop_word = String.valueOf(projectInfo.get("stop_word"));
+        String searchkeyword = paramJson.getString("searchkeyword");
+        String user_id = projectInfo.get("user_id").toString();
+        if (StringUtils.isNotBlank(subject_word)) subject_word = subject_word.trim();
+        if (StringUtils.isNotBlank(stop_word)) stop_word = stop_word.trim();
+        if (StringUtils.isNotBlank(searchkeyword)) searchkeyword = searchkeyword.trim();
+//        if (projectid == 1) {
+//            paramJson.put("keyword", searchkeyword);
+//            paramJson.put("searchkeyword", "");
+//        } else {
+//            paramJson.put("keyword", subject_word);
+//        }
+        paramJson.put("keyword", subject_word);
+        paramJson.put("stopword", stop_word);
+        if (projectType == 2) {
+            paramJson.put("projecttype", "2");
+            paramJson.put("keyword", ProjectWordUtil.highProjectKeyword(subject_word, regional_word, character_word, event_word));
+            paramJson.put("stopword", ProjectWordUtil.highProjectStopword(stop_word));
+        }
+
+        if (projectType == 1) {
+            paramJson.put("projecttype", "2");
+            paramJson.put("keyword", ProjectWordUtil.QuickProjectKeyword(subject_word));
+            paramJson.put("stopword", ProjectWordUtil.highProjectStopword(stop_word));
+        }
+        Integer similar = paramJson.getInteger("similar");
+        Integer matchingmode = paramJson.getInteger("matchingmode") - 1; // 关键词匹配规则
+        JSONArray emotionArray = paramJson.getJSONArray("emotionalIndex");
+        String emotionalIndex = StringUtils.join(emotionArray, ",");
+        if (StringUtils.isBlank(emotionalIndex)) {
+            emotionalIndex = "1,2,3";
+        }
+        //机构类型
+        JSONArray orgarray = paramJson.getJSONArray("organizationtype");
+        String orgtypelist = StringUtils.join(orgarray, ",");
+        if (StringUtils.isBlank(orgtypelist)) {
+            orgtypelist = "0";
+        }
+
+        paramJson.put("orgtypelist", orgtypelist);
+        paramJson.remove("organizationtype");
+
+
+        //文章分类
+        JSONArray categorylabledataarray = paramJson.getJSONArray("categorylabledata");
+        String categorylable = StringUtils.join(categorylabledataarray, ",");
+        if (StringUtils.isBlank(categorylable)) {
+            categorylable = "0";
+        }
+        paramJson.put("categorylable", categorylable);
+        paramJson.remove("categorylabledata");
+
+
+        //企业类型
+
+        JSONArray enterprisetypelistarray = paramJson.getJSONArray("enterprisetypelist");
+        String enterprisetypelist = StringUtils.join(enterprisetypelistarray, ",");
+        if (StringUtils.isBlank(enterprisetypelist)) {
+            enterprisetypelist = "0";
+        }
+        paramJson.put("enterprisetypelist", enterprisetypelist);
+
+
+
+        //高科技型企业
+        JSONArray hightechtypelistarray = paramJson.getJSONArray("hightechtypelist");
+        String hightechtypelist = StringUtils.join(hightechtypelistarray, ",");
+        if (StringUtils.isBlank(hightechtypelist)) {
+            hightechtypelist = "0";
+        }
+        paramJson.put("hightechtypelist", hightechtypelist);
+
+        //政策
+        JSONArray policylableflagarray = paramJson.getJSONArray("policylableflag");
+        String policylableflag = StringUtils.join(policylableflagarray, ",");
+        if (StringUtils.isBlank(policylableflag)) {
+            policylableflag = "0";
+        }
+        paramJson.put("policylableflag", policylableflag);
+
+        //数据来源
+        JSONArray classify = paramJson.getJSONArray("classify");
+        String classifylist= StringUtils.join(classify, ",");
+        if (StringUtils.isBlank(classifylist)) {
+            classifylist = "0";
+        }
+        paramJson.put("classify", classifylist);
+
+        /*数据品类*/
+        JSONArray datasource_type = paramJson.getJSONArray("datasource_type");
+        String dataCategoryList = StringUtils.join(datasource_type, ",");
+        if (StringUtils.isBlank(dataCategoryList)){
+            dataCategoryList = "0";
+        }
+        paramJson.put("datasource_type" , dataCategoryList);
+
+
+        Integer searchType = paramJson.getInteger("searchType");
+        String times = "";
+        String timee = "";
+        Integer timeType = paramJson.getInteger("timeType");
+        JSONObject timeJson = new JSONObject();
+        switch (timeType) {
+            case 1:
+                timeJson = DateUtil.dateRoll(new Date(), Calendar.HOUR, -24);
+                times = timeJson.getString("times");
+                timee = timeJson.getString("timee");
+                break;
+            case 2:
+                timeJson = DateUtil.getDifferOneDayTimes(0);
+                times = timeJson.getString("times") + " 00:00:00";
+                timee = timeJson.getString("timee") + " 23:59:59";
+                break;
+            case 3:
+                timeJson = DateUtil.getDifferOneDayTimes(-1);
+                times = timeJson.getString("times") + " 00:00:00";
+                timee = timeJson.getString("times") + " 23:59:59";
+                break;
+            case 4:
+                timeJson = DateUtil.getDifferOneDayTimes(-3);
+                times = timeJson.getString("times") + " 00:00:00";
+                timee = timeJson.getString("timee") + " 23:59:59";
+                break;
+            case 5:
+                timeJson = DateUtil.getDifferOneDayTimes(-7);
+                times = timeJson.getString("times") + " 00:00:00";
+                timee = timeJson.getString("timee") + " 23:59:59";
+                break;
+            case 6:
+                timeJson = DateUtil.getDifferOneDayTimes(-15);
+                times = timeJson.getString("times") + " 00:00:00";
+                timee = timeJson.getString("timee") + " 23:59:59";
+                break;
+            case 7:
+                timeJson = DateUtil.getDifferOneDayTimes(-30);
+                times = timeJson.getString("times") + " 00:00:00";
+                timee = timeJson.getString("timee") + " 23:59:59";
+                break;
+            case 8:
+                times = paramJson.getString("times") + " 00:00:00";
+                timee = paramJson.getString("timee") + " 23:59:59";
+                break;
+        }
+        paramJson.put("times", times);
+        paramJson.put("timee", timee);
+        paramJson.put("matchingmode", matchingmode);
+        paramJson.put("emotionalIndex", emotionalIndex);
+        paramJson.put("searchType", searchType);
+        paramJson.put("size", 30);
+
+        JSONArray eventArray = paramJson.getJSONArray("eventIndex");
+        String eventlable = "";
+        if(eventArray!=null) {
+            eventlable = StringUtils.join(eventArray, ",");
+            eventlable = eventlable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+            if(eventlable.endsWith(",")) {
+                eventlable = eventlable.substring(0, eventlable.length()-1);
+            }
+        }
+        paramJson.put("eventlable", eventlable);
+
+        paramJson.remove("eventIndex");
+        JSONArray industryArray = paramJson.getJSONArray("industryIndex");
+        String industrylable = "";
+        if(industryArray!=null) {
+            industrylable = StringUtils.join(industryArray, ",");
+            industrylable = industrylable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+            if(industrylable.endsWith(",")) {
+                industrylable = industrylable.substring(0, industrylable.length()-1);
+            }
+        }
+        paramJson.put("industrylable", industrylable);
+        paramJson.remove("industryIndex");
+
+        String province = "";
+        JSONArray provinceArray = paramJson.getJSONArray("province");
+        if(provinceArray!=null) {
+            province = StringUtils.join(provinceArray, ",");
+            if(!StringUtils.isEmpty(province)) {
+                province = province.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+            }else {
+                province = "";
+            }
+            if(province.endsWith(",")) {
+                province = province.substring(0, province.length()-1);
+            }
+        }
+
+
+        paramJson.put("province", province);
+
+
+
+        JSONArray cityArray = paramJson.getJSONArray("city");
+        String city = StringUtils.join(cityArray, ",");
+
+        if(!StringUtils.isEmpty(city)) {
+            city = city.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+        }else {
+            city = "";
+        }
+        if(city.endsWith(",")) {
+            city = city.substring(0, city.length()-1);
+        }
+        paramJson.put("city", city);
+
+
+        int precise = paramJson.getIntValue("precise");
+        if (precise == 0) {
+            // precise == 0 为精准关闭，即不传屏蔽词
+            paramJson.put("stopword", "");
+        }
+        paramJson.remove("projectid");
+        paramJson.remove("group_id");
+        paramJson.remove("precise");
+        paramJson.remove("similar");
+        paramJson.remove("groupid");
+        paramJson.remove("projectId");
+        switch (searchType) {
+            case 1:
+                searchType = 1;
+                break;
+            case 2:
+                searchType = 0;
+                break;
+            case 3:
+                searchType = 2;
+                break;
+        }
+        paramJson.put("searchType", searchType);
+        // 查询es数据
+        String url = "";
+        Integer totalCount = 0;
+        Integer totalNum = 0;
+        Integer currentPage = paramJson.getInteger("page");
+        String article_public_idStr = paramJson.getString("article_public_idstr");
+        if (article_public_idStr == null) {
+            article_public_idStr = "";
+        }
+        /*String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+timeType+matchingmode+searchType+emotionalIndex+searchkeyword;*/
+        /*2021.6.25修改*/                                                                                                                                                                                                                                                                                                                                                                                                                                    /*数据品类*/
+        String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getString("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+paramJson.getString("classify")+paramJson.getString("datasource_type")+paramJson.getString("sourceWebsite")+"author"+paramJson.getString("author")+"timeType"+timeType+matchingmode+"searchtype"+searchType+"emotion"+emotionalIndex+searchkeyword;
+        String params = MapUtil.getUrlParamsByMap(paramJson);
+        url = es_search_url + MonitorConstant.es_api_similar_list;
+        String esResponse = MyHttpRequestUtil.sendPostEsSearch(url, params);
+        JSONObject articleResponseJson = JSON.parseObject(esResponse);
+        String code = articleResponseJson.getString("code");
+        if (code.equals("200")) {
+            Integer page_count = articleResponseJson.getInteger("page_count");
+            Integer count = articleResponseJson.getInteger("count");
+            Integer page = articleResponseJson.getInteger("page");
+
+            Integer totalPage = paramJson.getInteger("totalPage");
+            totalCount = paramJson.getInteger("totalCount");
+            dataGroupJson.put("totalPage", totalPage);
+            dataGroupJson.put("totalCount", totalCount);
+            dataGroupJson.put("totalNum", JSONObject.parseObject(redisUtil.getKey(key)).getString("totalnum"));
+
+            dataGroupJson.put("currentPage", page);
+            JSONArray esDataArray = articleResponseJson.getJSONArray("data");
+            JSONArray dataArray = new JSONArray();
+            for (int i = 0; i < esDataArray.size(); i++) {
+                JSONObject dataJson = (JSONObject) esDataArray.get(i);
+                JSONObject highlightJson = dataJson.getJSONObject("highlight"); // 高亮
+                JSONObject _sourceJson = dataJson.getJSONObject("_source");
+                Set<String> relatedWord = new HashSet<>();
+                if(projectType==2) {
+                    relatedWord = ProjectWordUtil
+                            .projectRelatedWord(_sourceJson.getString("title") + _sourceJson.getString("content"), subject_word, regional_word, character_word, event_word);
+                    _sourceJson.put("relatedWord", relatedWord);
+                }else if(projectType==1) {
+                    relatedWord = ProjectWordUtil
+                            .CommononprojectRelatedWord(_sourceJson.getString("title") + _sourceJson.getString("content"), subject_word, regional_word, character_word, event_word);
+                    _sourceJson.put("relatedWord", relatedWord);
+                }
+
+                String title = "";
+                if (highlightJson.containsKey("title")) {
+                    title = highlightJson.getJSONArray("title").getString(0);
+                    title = title.replaceAll("\"", "");
+
+                    //title = ProjectWordUtil.highlightcontent(title, subject_word, regional_word, character_word, event_word);
+
+                    _sourceJson.put("title", title);
+                }
+                String content = "";
+                if (highlightJson.containsKey("content")) {
+                    content = highlightJson.getJSONArray("content").getString(0);
+                    // content = ProjectWordUtil.highlightcontent(content, subject_word, regional_word, character_word, event_word);
+                    _sourceJson.put("content", content);
+                }
+//                        content = content.replaceAll("\\s*", "");
+//                        _sourceJson.put("content", content);
+                title = _sourceJson.getString("title");
+                if (title.contains("_http://") || title.contains("_https://")) {
+                    title = title.substring(0, title.indexOf("_"));
+                    _sourceJson.put("title", title);
+                }
+//                        title = title.replaceAll("\\s*", "");
+//                        _sourceJson.put("title", title);
+
+                if (_sourceJson.containsKey("extend_string_one")) {
+                    String extend_string_one = _sourceJson.getString("extend_string_one");
+                    if (!extend_string_one.equals("")) {
+                        JSONObject extend_string_oneJson = JSON.parseObject(extend_string_one);
+                        JSONArray imglist = extend_string_oneJson.getJSONArray("imglist");
+                        extend_string_oneJson.put("imglist", imglist);
+                        _sourceJson.put("extend_string_one", extend_string_oneJson);
+                    }
+                } else {
+                    _sourceJson.put("extend_string_one", "");
+                }
+                //事件标签
+                if (_sourceJson.containsKey("eventlable")) {
+                    _sourceJson.put("eventlable", _sourceJson.get("eventlable").toString());
+                }else {
+                    _sourceJson.put("eventlable", "");
+                }
+                //行业标签
+                if (_sourceJson.containsKey("industrylable")) {
+                    _sourceJson.put("industrylable", _sourceJson.get("industrylable").toString());
+                }else {
+                    _sourceJson.put("industrylable", "");
+                }
+                //文章分类
+                if (_sourceJson.containsKey("article_category")) {
+                    _sourceJson.put("article_category", _sourceJson.get("article_category").toString());
+                }else {
+                    _sourceJson.put("article_category", "");
+                }
+                //相似文章数量
+                _sourceJson.put("num", 1);
+                JSONArray similarArray = JSON.parseArray(JSONObject.parseObject(redisUtil.getKey(key)).getString("data"));
+                for (Object object : similarArray) {
+                    JSONObject parseObject = JSONObject.parseObject(object.toString());
+                    if(parseObject.get("article_public_id").equals(_sourceJson.getString("article_public_id"))) {
+                        _sourceJson.put("num", Integer.parseInt(parseObject.getString("num")));
+                    }
+                }
+                String key_words = _sourceJson.getString("key_words");
+                if (!"".equals(key_words)) {
+                    String sb = "";
+                    JSONObject key_wordsJson = JSON.parseObject(key_words);
+                    Integer index = 0;
+                    for (Map.Entry entry : key_wordsJson.entrySet()) {
+                        if (index < 5 && index >= 0) {
+                            String keywords = String.valueOf(entry.getKey());
+                            if (index < 4) {
+                                sb += keywords + "，";
+                            } else {
+                                sb += keywords;
+                            }
+                            index++;
+                        } else {
+                            break;
+                        }
+                    }
+                    if (sb.endsWith("，")) {
+                        sb = sb.substring(0, sb.lastIndexOf("，"));
+                    }
+                    _sourceJson.put("key_words", sb);
+                }
+                dataArray.add(_sourceJson);
+            }
+            dataGroupJson.put("data", dataArray);
+            response.put("code", 200);
+            response.put("msg", "舆情列表es返回成功");
+            response.put("data", dataGroupJson);
+        } else {
+            response.put("code", 500);
+            response.put("msg", "舆情列表es返回错误");
+            response.put("data", dataGroupJson);
+        }
+        return response;
+    }
+
+
     /**
      * @param [paramJson]
      * @return com.alibaba.fastjson.JSONObject

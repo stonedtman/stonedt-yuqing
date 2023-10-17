@@ -1,6 +1,7 @@
 package com.stonedt.intelligence.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.stonedt.intelligence.aop.SystemControllerLog;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.service.PlatformService;
 import com.stonedt.intelligence.util.UserUtil;
@@ -28,6 +29,7 @@ public class DisplayBoardController {
         this.userUtil = userUtil;
     }
 
+    @SystemControllerLog(module = "综合看板", submodule = "综合看板", type = "查询", operation = "displayboardlist")
     @RequestMapping("")
     public ModelAndView displayBoard(HttpServletRequest request) {
         User user = userUtil.getuser(request);

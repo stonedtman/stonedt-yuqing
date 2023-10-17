@@ -16,6 +16,13 @@ public interface MonitorService {
 
     JSONObject getArticleList(JSONObject paramJson);
 
+    /**
+     * 获取相似文章列表
+     * @param paramJson
+     * @return
+     */
+    JSONObject getSimilarArticleList(JSONObject paramJson);
+
     JSONObject getGroupNameById(JSONObject paramJson);
 
     void exportArticleList(JSONObject paramJson, HttpServletResponse response, HttpServletRequest request);

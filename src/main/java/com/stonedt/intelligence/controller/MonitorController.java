@@ -246,6 +246,15 @@ public class MonitorController {
 		JSONObject response = monitorService.getArticleList(paramJson);
 		return response;
 	}
+
+	/**
+	 * 获取相似文章列表
+	 */
+	@PostMapping(value = "/getSimilarArticle")
+	@ResponseBody
+	public JSONObject getSimilarArticle(@RequestBody JSONObject paramJson) {
+        return monitorService.getSimilarArticleList(paramJson);
+	}
 	
 	/**
 	 * 

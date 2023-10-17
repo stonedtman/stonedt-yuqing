@@ -24,9 +24,14 @@ public interface MonitorConstant {
     
  // 监测列表  合并文章-市域
     public static String es_api_similar_city_list = "/yqsimilar/similarcity";
-    
-    
-    
+
+    /**
+     * 相似文章列表
+     */
+    public static String es_api_similar_list = "/yqsearch/searchlist";
+
+
+
     // 相似文章合并返回分组id
     public static String es_api_similarsearch_content = "/yqsimilar/qbsearchcontent";
     
