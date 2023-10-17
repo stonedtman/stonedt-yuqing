@@ -1582,7 +1582,25 @@ $("#currentyear").text((new Date()).getFullYear());
             }
         });
     }
+    let source = null
     function reporting() {
+        var eventHtml =
+            '<div class="shadebox" id="intelligentWrite">'+
+            '    <div class="showCreateEvent"> '+
+            '        <div class="event-box">'+
+            '            <i class="mdi mdi-close-circle-outline font-18 cursor-po" id="close_this"></i>'+
+            '            <div class="event-box-body" style="min-height: 400px;">'+
+            '            </div>'+
+            '        </div>'+
+            '    </div>'+
+            '</div>'
+
+        $("body").append(eventHtml)
+        $("#close_this").click(function (param) {
+            $("#intelligentWrite").remove()
+            source.close()
+        })
+        loading(".event-box-body")
         $.ajax({
             url: window.location.origin + "/platform/xie/report/title",
             method: "post",
@@ -1626,11 +1644,13 @@ $("#currentyear").text((new Date()).getFullYear());
 
                 if (xhr.status == 403) {
                     window.location.href = ctxPath + "login";
+                }else{
+                    $(".event-box-body").html("");
+                    dataerror(".event-box-body");
                 }
             }
         });
     }
-    let source = null
     async function sse() {
         let num = 0
         reporting_content(num)
@@ -1643,13 +1663,13 @@ $("#currentyear").text((new Date()).getFullYear());
             }
         }
         source.onmessage=function (e) {
-            console.log(e)
             if(e.type=="message"){
                 articleContent+=JSON.parse(e.data).data
                 reporting_content(num)
             }
         }
         source.onerror=function () {
+            source.close()
             console.log("连接断开")
             num++
         }
@@ -1657,28 +1677,17 @@ $("#currentyear").text((new Date()).getFullYear());
     function reporting_content(num) {
         if(num==0){
             var eventHtml =
-                '<div class="shadebox" id="intelligentWrite">'+
-                '    <div class="showCreateEvent"> '+
-                '        <div class="event-box">'+
-                '            <i class="mdi mdi-close-circle-outline font-18 cursor-po" id="close_this"></i>'+
-                '            <div class="event-box-body">'+
-                `                <div class="report-content">
-                                <div class="title">${articleTitle}</div>
-                                <div class="content"></div>
-                                <div class="support" style="text-align: center;">
-                                    本技术由 <a style="color: #0ba8ef" href="https://www.xiezuobao.net" target="_blank">思通数科·写作宝</a> 提供支持
-                                </div>
-                             </div>
-                                 `+
-                '            </div>'+
-                '        </div>'+
-                '    </div>'+
-                '</div>'
+                    `<div class="report-content">
+                        <div class="title">${articleTitle}</div>
+                        <div class="content"></div>
+                        <div class="support" style="text-align: center;">
+                            本技术由 <a style="color: #0ba8ef" href="https://www.xiezuobao.net" target="_blank">思通数科·写作宝</a> 提供支持
+                        </div>
+                     </div>
+                    `
 
-            $("body").append(eventHtml)
-            $("#close_this").click(function (param) {
-                $("#intelligentWrite").remove()
-            })
+            $(".event-box-body").html(eventHtml)
+            loading(".report-content .content")
         }else{
             $("#intelligentWrite .content").html(articleContent)
         }

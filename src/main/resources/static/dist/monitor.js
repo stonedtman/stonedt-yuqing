@@ -1076,6 +1076,7 @@ function installArticle(res) {
                 let eventlable = dataJson.eventlable;
                 let industrylable = dataJson.industrylable;
                 let article_category = dataJson.article_category;
+                let titlekeyword = dataJson.titlekeyword;
                 let num = 0
                 let similarflag = 0;
 
@@ -1158,7 +1159,7 @@ function installArticle(res) {
                     let strComment = '<span class="link m-r-10"> <i class="mdi mdi-comment-processing-outline"></i> 评论 ' + commentsvolume + '</span>';
                     let keyword = '';
                     if (similarflag == '1') {
-                        keyword = '<span class="link m-r-10"> <i class="mdi mdi-tag-outline"></i> 涉及词 ' + relatedWord.join("，") + '</span>' + '<span class="link m-r-10" onclick="similarArticles()" style="cursor: pointer"> <i class="mdi mdi-projector-screen"></i> 相似文章数 ' + num + '</span>';
+                        keyword = '<span class="link m-r-10"> <i class="mdi mdi-tag-outline"></i> 涉及词 ' + relatedWord.join("，") + '</span>' + '<span class="link m-r-10" onclick="similarArticles(\''+titlekeyword+'\')" style="cursor: pointer"> <i class="mdi mdi-projector-screen"></i> 相似文章数 ' + num + '</span>';
                     } else {
                         keyword = '<span class="link m-r-10"> <i class="mdi mdi-tag-outline"></i> 涉及词 ' + relatedWord.join("，") + '</span>';
                     }
@@ -1321,7 +1322,7 @@ function installArticle(res) {
 
                             let strKeywords = '';
                             if (similarflag == '1') {
-                                strKeywords = '<span class="link m-r-10"> <i class="mdi mdi-tag-outline"></i> 涉及词 ' + relatedWord.join("，") + '</span>' + '<span class="link m-r-10" onclick="similarArticles()" style="cursor: pointer"> <i class="mdi mdi-projector-screen"></i> 相似文章数 ' + num + '</span>';
+                                strKeywords = '<span class="link m-r-10"> <i class="mdi mdi-tag-outline"></i> 涉及词 ' + relatedWord.join("，") + '</span>' + '<span class="link m-r-10" onclick="similarArticles(\''+titlekeyword+'\')" style="cursor: pointer"> <i class="mdi mdi-projector-screen"></i> 相似文章数 ' + num + '</span>';
                             } else {
                                 strKeywords = '<span class="link m-r-10"> <i class="mdi mdi-tag-outline"></i> 涉及词 ' + relatedWord.join("，") + '</span>';
                             }
@@ -1478,7 +1479,7 @@ function installArticle(res) {
 
                             let strKeywords = '';
                             if (similarflag == '1') {
-                                strKeywords = '<span class="link m-r-10"> <i class="mdi mdi-tag-outline"></i> 涉及词 ' + relatedWord.join("，") + '</span>' + '<span class="link m-r-10" onclick="similarArticles()" style="cursor: pointer"> <i class="mdi mdi-projector-screen"></i> 相似文章数 ' + num + '</span>';
+                                strKeywords = '<span class="link m-r-10"> <i class="mdi mdi-tag-outline"></i> 涉及词 ' + relatedWord.join("，") + '</span>' + '<span class="link m-r-10" onclick="similarArticles(\''+titlekeyword+'\')" style="cursor: pointer"> <i class="mdi mdi-projector-screen"></i> 相似文章数 ' + num + '</span>';
                             } else {
                                 strKeywords = '<span class="link m-r-10"> <i class="mdi mdi-tag-outline"></i> 涉及词 ' + relatedWord.join("，") + '</span>';
                             }
@@ -1629,7 +1630,7 @@ function installArticle(res) {
 
                         let strKeywors = '';
                         if (similarflag == '1') {
-                            strKeywors = '<span class="link m-r-10"> <i class="mdi mdi-tag-outline"></i> 涉及词 ' + relatedWord.join("，") + '</span>' + '<span class="link m-r-10" onclick="similarArticles()" style="cursor: pointer"> <i class="mdi mdi-projector-screen"></i> 相似文章数 ' + num + '</span>';
+                            strKeywors = '<span class="link m-r-10"> <i class="mdi mdi-tag-outline"></i> 涉及词 ' + relatedWord.join("，") + '</span>' + '<span class="link m-r-10" onclick="similarArticles(\''+titlekeyword+'\')" style="cursor: pointer"> <i class="mdi mdi-projector-screen"></i> 相似文章数 ' + num + '</span>';
                         } else {
                             strKeywors = '<span class="link m-r-10"> <i class="mdi mdi-tag-outline"></i> 涉及词 ' + relatedWord.join("，") + '</span>';
                         }
@@ -1756,20 +1757,19 @@ function installArticle(res) {
 }
 
 
-
+let articleData = null;
 // 相似文章
-function similarArticles(){
-    return;
+function similarArticles(titlekeyword){
     var create =
         '<div class="shadebox" id="similarArticlesmodel">' +
-        '    <div class="modal-dialog" role="document">' +
+        '    <div class="modal-dialog" role="document" style="max-width: 800px">' +
         '        <div class="modal-content">' +
-        '            <div class="modal-header align-flexend" style="border:none">' +
-        '                <h5 class="modal-title">相似文章</h5>' +
-        '                <i class="mdi mdi-close-circle-outline font-18 cursor-po" id="closethis"></i>' +
-        '            </div>' +
-        '            <div class="modal-body">' +
-        '                <div class="similar_articles"></div>' +
+        '            <i class="mdi mdi-close-circle-outline font-18 cursor-po" id="closethis" style="position: absolute;right: 8px;top: 6px;z-index: 1;"></i>' +
+        '            <div class="modal-body" style="padding: 20px;">' +
+        '                <div class="similar_articles" style="height: 80vh;overflow-y: auto;"></div>' +
+        '                <div class="all-pagebox m-t-20">' +
+        '                   <ul class="pagination float-right" id="similarArticlespage"></ul>' +
+        '                </div>' +
         '            </div>' +
         '        </div>' +
         '    </div>' +
@@ -1779,20 +1779,121 @@ function similarArticles(){
     $("#closethis").click(function (param) {
         $("#similarArticlesmodel").remove()
     })
+    let obj = JSON.parse(JSON.stringify(articleData))
+    obj.titlekeyword = titlekeyword
+    $.ajax({
+        type: "post",
+        url: window.location.origin+"/monitor/getSimilarArticle",
+        dataType: 'json',
+        data: JSON.stringify(obj),
+        contentType: "application/json;charset=utf-8",
+        beforeSend: function () {
+            loading(".similar_articles")
+        },
+        success: function (res) {
+            console.log(res)
+            fuction_similarArticles(res)
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            if (xhr.status == 403) {
+                window.location.href = ctxPath + "login";
+            } else {
+                $(".similar_articles").html("");
+                dataerror(".similar_articles");
+            }
+        }
+    });
 
-    let html = ""
-    html+=`
-    <div class="wb-content just-bet">
-        <div class="monitor-right">
-            <div class="monitor-content-title">
-                <a href="" target="_blank" title="">
-                    <span style="width:95%;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"></span>
-                </a>
+}
+
+function fuction_similarArticles(res){
+    if(res.code==200){
+        let data = res.data.data
+        fuction_pageHelper(res.data.currentPage,res.data.totalPage)
+        let html = ""
+        for (let i = 0; i < data.length; i++) {
+            let publish_time = timeParse(data[i].publish_time);
+            html+=`
+            <div class="wb-content just-bet mb-3">
+                <div class="monitor-right">
+                    <div class="monitor-content-title">
+                        <a href="${window.location.origin}/monitor/detail/${data[i].article_public_id}?groupid=${monitor_groupid}&projectid=${monitor_projectid}&publish_time=${data[i].publish_time}&relatedWord=${data[i].relatedWord.join('，')}" target="_blank" title="${data[i].title}" class="link font-bold" style="display:inline-block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                            ${data[i].title}
+                        </a>
+                    </div>
+                    <div class="like-comm font-13">
+                        <img class="content-logo" style="margin-left: 4px;" src="${data[i].websitelogo}" onerror="javascript:this.src='/assets/images/default_source.png'" alt="">
+                        <span class="m-r-10">${data[i].sourcewebsitename}</span>
+                        <span>${publish_time}</span>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    `
-    $(".similar_articles").html(html)
+            `
+        }
+
+        $(".similar_articles").html(html)
+    }
+
+}
+
+function fuction_pageHelper(currentPage, totalPages) {
+
+    if (totalPages > 167) {
+        totalPages = 167;
+    }
+
+
+    $("#similarArticlespage").bootstrapPaginator({
+        bootstrapMajorVersion: 3, //版本
+        currentPage: currentPage, //当前页数
+        numberOfPages: 10, //每次显示页数
+        totalPages: totalPages, //总页数
+        shouldShowPage: true, //是否显示该按钮
+        useBootstrapTooltip: false,
+        onPageClicked: function (event, originalEvent, type, page) {
+            // if (page > 167) {
+            //     page = 167;
+            // }
+            // let seturl = "monitor?" + "projectid=" + monitor_projectid + "&groupid=" + monitor_groupid + "&page=" + page;
+            // setUrl(seturl);
+            //
+            // let articleParam = new Object();
+            // articleParam.type = "POST";
+            // articleParam.url = ctxPath + "monitor/getarticle";
+            // articleParam.contentType = 'application/json;charset=utf-8';
+            // let searchkeyword = $("#searchkeyword").val();
+            // let articleData = getArticleData(page, searchkeyword, monitor_projectid, monitor_groupid);
+            // let similar = articleData.similar;
+            // if (similar == 1) { // 合并
+            //     let start = 30 * page - 30
+            //     let end = start + 30
+            //     if (end > article_public_idList.length) {
+            //         end = article_public_idList.length
+            //     }
+            //
+            //     let ids = "";
+            //     for (let s = start; s < end; s++) {
+            //         if (s == (article_public_idList.length - 1)) {
+            //             ids += article_public_idList[s];
+            //         } else {
+            //             ids += article_public_idList[s] + ","
+            //         }
+            //     }
+            //
+            //     let totalPage = 1;
+            //     if (article_public_idList.length % 30 == 0) {
+            //         totalPage = article_public_idList.length / 30;
+            //     } else {
+            //         totalPage = article_public_idList.length / 30 + 1;
+            //     }
+            //     articleData.article_public_idstr = ids;
+            //     articleData.totalCount = article_public_idList.length;
+            //     articleData.totalPage = totalPage;
+            // }
+            // sendArticle(articleParam, JSON.stringify(articleData), installArticle);
+            // currentPageByDetail = page;
+        }
+    });
 }
 
 
@@ -1803,7 +1904,7 @@ function similarArticles(){
  * @description 分页
  */
 function getArticleData(page, searchkeyword, currentProjectid, currentGroupid) {
-    let articleData = new Object();
+    articleData = new Object();
     let times = $("input[name='start']").val();
     let timee = $("input[name='end']").val();
     let precise;

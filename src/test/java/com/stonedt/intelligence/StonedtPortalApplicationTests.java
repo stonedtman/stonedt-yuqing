@@ -6,7 +6,6 @@ import com.stonedt.intelligence.dao.ProjectTaskDao;
 import com.stonedt.intelligence.entity.AnalysisQuartzDo;
 import com.stonedt.intelligence.entity.ProjectTask;
 import com.stonedt.intelligence.quartz.AnalysisDataRequest;
-import com.stonedt.intelligence.quartz.SynthesizeSchedule;
 import com.stonedt.intelligence.util.DateUtil;
 import com.stonedt.intelligence.util.ProjectWordUtil;
 import com.stonedt.intelligence.util.SnowFlake;
@@ -45,8 +44,6 @@ public class StonedtPortalApplicationTests {
 	@Autowired
 	private ProjectTaskDao projectTaskDao;
 
-	@Autowired
-	private SynthesizeSchedule synthesizeSchedule;
 
 	private SnowFlake snowFlake = new SnowFlake();
 

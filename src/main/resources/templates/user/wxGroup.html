@@ -154,11 +154,11 @@
 <script type="text/javascript" th:inline="javascript">
     $("#currentyear").text((new Date()).getFullYear());
 
-    var gitee2 = document.getElementById("gitee2");
+    // var gitee2 = document.getElementById("gitee2");
     // 跳转到gitee源码
-    gitee2.onclick = function(){
-        window.open("https://gitee.com/stonedtx/yuqing");
-    };
+    // gitee2.onclick = function(){
+    //     window.open("https://gitee.com/stonedtx/yuqing");
+    // };
 
     var officialWebsite = document.getElementById("officialWebsite");
     // 跳转到公司官网
@@ -166,9 +166,9 @@
         window.open("http://www.stonedt.com/");
     };
 
-    $(function(){
-        getuser()
-    });
+    // $(function(){
+    //     getuser()
+    // });
 
     function goedit(param) {
         $("#changepassword").show()
