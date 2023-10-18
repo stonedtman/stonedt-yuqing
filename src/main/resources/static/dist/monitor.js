@@ -1758,7 +1758,7 @@ function installArticle(res) {
 
 
 let articleData = null;
-let obj = JSON.parse(JSON.stringify(articleData))
+let obj = null
 // 相似文章
 function similarArticles(titlekeyword){
     var create =
@@ -1780,11 +1780,12 @@ function similarArticles(titlekeyword){
     $("#closethis").click(function (param) {
         $("#similarArticlesmodel").remove()
     })
+
+    obj = JSON.parse(JSON.stringify(articleData))
+    obj.titlekeyword = titlekeyword
     similarArticlesData()
 }
 function similarArticlesData(){
-    let obj = JSON.parse(JSON.stringify(articleData))
-    obj.titlekeyword = titlekeyword
     $.ajax({
         type: "post",
         url: window.location.origin+"/monitor/getSimilarArticle",
@@ -1822,6 +1823,9 @@ function fuction_similarArticles(res){
                         <a href="${window.location.origin}/monitor/detail/${data[i].article_public_id}?groupid=${monitor_groupid}&projectid=${monitor_projectid}&publish_time=${data[i].publish_time}&relatedWord=${data[i].relatedWord.join('，')}" target="_blank" title="${data[i].title}" class="link font-bold" style="display:inline-block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
                             ${data[i].title}
                         </a>
+                    </div>
+                    <div class="monitor-content-con font-13">
+                        ${data[i].content}
                     </div>
                     <div class="like-comm font-13">
                         <img class="content-logo" style="margin-left: 4px;" src="${data[i].websitelogo}" onerror="javascript:this.src='/assets/images/default_source.png'" alt="">

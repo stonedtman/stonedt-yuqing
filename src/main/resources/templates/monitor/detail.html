@@ -97,6 +97,7 @@
         }
         .card-identify{
             display: flex;
+            height: 380px;
         }
         .identify-images{
             display: flex;
@@ -154,7 +155,6 @@
             height: 28px;
             align-items: center;
             display: flex;
-            justify-content: space-between;
             border-bottom: 1px solid #f2f3f5;
         }
         .result-title{
@@ -163,10 +163,19 @@
         }
         .identify-type{
             font-size: 16px;
+            margin-left: 20px;
+            display: flex;
+        }
+        .identify-tab{
+            cursor: pointer;
+            margin-right: 16px;
+        }
+        .identify-tab.active{
+            color: #6184e6;
         }
         .result-content{
             position: relative;
-            flex: 1;
+            height: 310px;
             overflow-y: auto;
             padding: 10px 0;
         }
@@ -359,45 +368,7 @@
                                 <div class="text">智写报告</div>
                             </div>
                         </div>
-                        <div class="card m-b-0 identify" style="height: calc(50vh - 147px);display: none">
-                            <div class="card-body" style="height: 100%">
-                                <div class="card-identify" style="height: 100%">
-                                    <div class="identify-images">
-                                        <div class="identify-img-list">
-                                            <div class="img-item active">
-                                                <img src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/e0m9Hs8ZWwtDW5CCZuJLUo8XCB1OQXCbS02hzKgGdohGgGPjLAfKXSof11TLXSwlpXiaenvCzlUmPhDVeBb8dibA/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1" alt="">
-                                            </div>
-                                            <div class="img-item">
-                                                <img src="https://mmbiz.qpic.cn/sz_mmbiz_png/e0m9Hs8ZWwvxnmYQzkqYPQt2icszu79alHxiaXTIgZamtRtu07dHDAltllrTfGnzF5C7PhfLCeChnfQiakmd78caQ/640?wx_fmt=png" alt="">
-                                            </div>
-                                            <div class="img-item">
-                                                <img src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/e0m9Hs8ZWwtDW5CCZuJLUo8XCB1OQXCblkm6unF0qd15ickq17FqdL2LPIrVBtVImaU4HLzsPpPaCyWY4fx9dibA/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="identify-img">
-                                            <img src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/e0m9Hs8ZWwtDW5CCZuJLUo8XCB1OQXCbS02hzKgGdohGgGPjLAfKXSof11TLXSwlpXiaenvCzlUmPhDVeBb8dibA/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="identify-result">
-                                        <div class="result-header">
-                                            <div class="result-title">识别结果</div>
-                                            <div class="identify-type">图像识别</div>
-                                        </div>
-                                        <div class="result-content">
-                                            <div class="not-identify">
-                                                <div class="tip">未识别图片中的文字内容</div>
-                                                <div class="tip">请点击下方按钮进行识别</div>
-                                                <div class="btn">图像识别</div>
-                                            </div>
-                                        </div>
-                                        <div class="result-footer">
-                                            本技术由 <a href="https://nlp.stonedt.com/dist/assets/page/login/login.html" target="_blank">思通数科·智能识别引擎</a> 提供支持
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                        </div>
                     </div>
                     <div class="col-lg-4" style="height: 100%;overflow-y: auto;">
                         <div class="card">
@@ -1189,12 +1160,20 @@ $("#currentyear").text((new Date()).getFullYear());
     }
 
     $(".not-identify .btn").click(function () {
+        if(imageList.length==0){
+            not_image_recognition()
+            return;
+        }
         getBlob(imageList[0].imgurl)
     })
     function image_recognition_btn() {
+        if(imageList.length==0){
+            not_image_recognition()
+            return;
+        }
         getBlob(imageList[0].imgurl)
     }
-    async function getBlob(url) {
+    async function getBlob(url,t) {
         // fetch 为ES6新增，不支持IE兼容，请注意分辨
         await fetch(url)
             .then(response=>{
@@ -1203,12 +1182,62 @@ $("#currentyear").text((new Date()).getFullYear());
             .then((res) => {
             let blob = new Blob([res])
             let imgFile = new File([blob], "image", { type: 'image/png' })
-            nlp_ocr(imgFile)
+            nlp_ocr(url,imgFile,t)
         })
     }
-    function nlp_ocr(imgFile) {
+    function nlp_ocr(url,imgFile,t) {
         let formdata = new FormData()
         formdata.append("images",imgFile)
+        formdata.append("imageUrl",url)
+        if(t=="图像识别"){
+            $.ajax({
+                url: window.location.origin + "/platform/nlp/image",
+                method: "post",
+                data: formdata,
+                async:false,
+                processData : false,
+                contentType : false,
+                success: function (res) {
+                    if(res.status==200){
+                        imageidentifyresult(res.data.result)
+                    }else if(res.status==424){
+                        image_recognition()
+                    }else{
+                        $.blockUI({
+                            message: res.msg,
+                            fadeIn: 700,
+                            fadeOut: 700,
+                            timeout: 3000,
+                            showOverlay: false,
+                            centerY: false,
+                            css: {
+                                width: '250px',
+                                top: '20px',
+                                left: '',
+                                right: '20px',
+                                border: 'none',
+                                padding: '15px 5px',
+                                backgroundColor: '#000',
+                                '-webkit-border-radius': '10px',
+                                '-moz-border-radius': '10px',
+                                opacity: 0.9,
+                                color: '#fff'
+                            }
+                        });
+                    }
+                    if(res.status==1201){
+                        image_recognition()
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+
+                    if (xhr.status == 403) {
+                        window.location.href = ctxPath + "login";
+                    }
+                }
+            });
+            return
+        }
         $.ajax({
             url: window.location.origin + "/platform/nlp/ocr",
             method: "post",
@@ -1218,6 +1247,7 @@ $("#currentyear").text((new Date()).getFullYear());
             contentType : false,
             success: function (res) {
                 if(res.status==200){
+                    imageIdentifyPopup()
                     $("#imageRecognition").remove()
                     identifyresult(res.data[0].data)
                 }else if(res.status==424){
@@ -1480,6 +1510,10 @@ $("#currentyear").text((new Date()).getFullYear());
         if(nowstep==3){
             $("#imageRecognition").remove()
             if(type=="image"){
+                if(imageList.length==0){
+                    not_image_recognition()
+                    return;
+                }
                 getBlob(imageList[0].imgurl)
             }
             if(type=="write"){
@@ -1487,8 +1521,93 @@ $("#currentyear").text((new Date()).getFullYear());
             }
         }
     }
+    function imageIdentifyPopup() {
+        $("#imageIdentify").remove()
+        var eventHtml =
+            '<div class="shadebox" id="imageIdentify">'+
+            '    <div class="showCreateEvent"> '+
+            '        <div class="event-box">'+
+            '            <i class="mdi mdi-close-circle-outline font-18 cursor-po" id="close_this"></i>'+
+            '            <div class="event-box-body" style="min-height: 400px;">'+
+            '            </div>'+
+            '        </div>'+
+            '    </div>'+
+            '</div>'
 
+        $("body").append(eventHtml)
+        $("#close_this").click(function (param) {
+            $("#imageIdentify").remove()
+        })
+        loading(".event-box-body")
+
+    }
+    function imageidentifyresult(listdata){
+        let contenthtml = ""
+        for (let i = 0; i < listdata.length; i++) {
+            contenthtml+=`
+                <div>${listdata[i].keyword}</div>
+            `
+        }
+        if(listdata.length==0){
+            contenthtml="暂无识别"
+        }
+        $(".result-content").html(contenthtml)
+    }
     function identifyresult(listdata) {
+        let eventhtml = `
+        <div class="card-identify" style="height: 100%">
+            <div class="identify-images">
+                <div class="identify-img-list">
+
+                </div>
+                <div class="identify-img">
+
+                </div>
+            </div>
+            <div class="identify-result">
+                <div class="result-header">
+                    <div class="result-title">识别结果</div>
+                    <div class="identify-type">
+                        <div class="identify-tab active" data-index="1">文本识别</div>
+                        <div class="identify-tab" data-index="2">图像识别</div>
+                    </div>
+                </div>
+                <div class="result-content">
+                    <div class="not-identify">
+                        <div class="tip">未识别图片中的文字内容</div>
+                        <div class="tip">请点击下方按钮进行识别</div>
+                        <div class="btn">图像识别</div>
+                    </div>
+                </div>
+                <div class="result-footer">
+                    本技术由 <a href="https://nlp.stonedt.com/dist/assets/page/login/login.html" target="_blank">思通数科·智能识别引擎</a> 提供支持
+                </div>
+            </div>
+        </div>
+        `
+        $(".event-box-body").html(eventhtml)
+        $(".identify-tab").click(function(){
+            if(this.className.indexOf("active")>-1){
+                return
+            }
+            $(".identify-tab").removeClass("active")
+            $(this).addClass("active")
+            loading(".result-content")
+            let index = this.getAttribute("data-index")
+            let idx = 0
+            let arr = document.querySelectorAll(".identify-img-list .img-item")
+            for (var i = 0; i < arr.length; i++) {
+                if(arr[i].className.indexOf("active")>-1){
+                    idx = i
+                }
+            }
+            if(index==1){
+                getBlob(imageList[idx].imgurl)
+            }
+            if(index==2){
+                getBlob(imageList[idx].imgurl,"图像识别")
+            }
+        })
         let imgList = imageList
         let html = ''
         for (let i = 0; i < imgList.length; i++) {
@@ -1506,8 +1625,6 @@ $("#currentyear").text((new Date()).getFullYear());
                 `
             }
         }
-        document.querySelector(".card-detail").style.height = "calc(50vh - 87px)"
-        document.querySelector(".identify").style.display = "flex"
         if(document.querySelector(".result-content .not-identify")){
             $(".identify-img-list").html(html)
             $(".identify-img").html(`<img src="${imgList[0].imgurl}" alt="">`)
@@ -1526,7 +1643,7 @@ $("#currentyear").text((new Date()).getFullYear());
         let contenthtml = ""
         for (let i = 0; i < listdata.length; i++) {
             contenthtml+=`
-                <div style="position: absolute;left: ${listdata[i].text_box_position[0][0]}px;top: ${listdata[i].text_box_position[0][1]}px;white-space: nowrap;">${listdata[i].text}</div>
+                <div>${listdata[i].text}</div>
             `
         }
         if(listdata.length==0){
@@ -1534,6 +1651,32 @@ $("#currentyear").text((new Date()).getFullYear());
         }
         $(".result-content").html(contenthtml)
     }
+
+    function not_image_recognition(){
+        $.blockUI({
+            message: "没有可识别图片",
+            fadeIn: 700,
+            fadeOut: 700,
+            timeout: 3000,
+            showOverlay: false,
+            centerY: false,
+            css: {
+                width: '250px',
+                top: '20px',
+                left: '',
+                right: '20px',
+                border: 'none',
+                padding: '15px 5px',
+                backgroundColor: '#000',
+                '-webkit-border-radius': '10px',
+                '-moz-border-radius': '10px',
+                opacity: 0.9,
+                color: '#fff'
+            }
+        });
+    }
+
+
 
     let articleTitle = ""
     let articleContent = ""
