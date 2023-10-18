@@ -32,4 +32,9 @@ public interface ProjectTaskDao {
 	 * @param editParam 编辑参数
 	 */
     Integer updateProjectTask(@Param("map") Map<String, Object> editParam);
+
+	/**
+	 * 获取任务状态
+	 */
+	Boolean getProjectTaskIsAnalysis(@Param("projectId") Long projectId);
 }

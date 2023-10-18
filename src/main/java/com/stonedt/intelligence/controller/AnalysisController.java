@@ -64,8 +64,10 @@ public class AnalysisController {
 	@SystemControllerLog(module = "监测分析", submodule = "监测分析页面", type = "查询", operation = "")
 	@GetMapping(value = "")
 	public ModelAndView analysis(HttpServletRequest request, ModelAndView mv) {
+
 		String groupId = request.getParameter("groupid");
 		String projectId = request.getParameter("projectid");
+		Boolean isRefresh = projectTaskDao.getProjectTaskIsAnalysis(Long.valueOf(projectId));
 		if (StringUtils.isBlank(groupId))
 			groupId = "";
 		if (StringUtils.isBlank(projectId))
@@ -75,6 +77,7 @@ public class AnalysisController {
 		mv.addObject("groupid", groupId);
 		mv.addObject("menu", "analysis");
 		mv.addObject("projectid", projectId);
+		mv.addObject("isRefresh", isRefresh);
 		mv.setViewName("monitor/overview");
 		return mv;
 	}

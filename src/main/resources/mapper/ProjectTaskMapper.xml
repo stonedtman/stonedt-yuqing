@@ -46,7 +46,10 @@
 		order by 
 			create_time ASC
 	</select>
-	
+	<select id="getProjectTaskIsAnalysis" resultType="java.lang.Boolean">
+		select analysis_flag from project_task where project_id = #{projectId}
+	</select>
+
 	<update id="updateProjectTaskAnalysisFlag">
 		update
 			project_task
