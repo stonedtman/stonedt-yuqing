@@ -12,6 +12,7 @@ import com.stonedt.intelligence.util.ResultUtil;
 import com.stonedt.intelligence.util.UserUtil;
 import com.stonedt.intelligence.vo.BindParamsVo;
 import com.stonedt.intelligence.vo.CopyWriting;
+import com.stonedt.intelligence.vo.SseData;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -211,13 +212,18 @@ public class PlatformServiceImpl implements PlatformService {
                 .build();
         EventSource.Factory factory = EventSources.createFactory(okHttpClient);
         SseEmitter sseEmitter = new SseEmitter(300000L);
+        sseEmitter.onError(e->{
+            log.error("与用户{}的sse连接发生错误",user.getId());
+            e.printStackTrace();
+        });
+        sseEmitter.onCompletion(()-> log.info("与用户{}的sse请求完成",user.getId()));
         //生成内容缓存
         StringBuilder contentCache = new StringBuilder();
         EventSourceListener listener = new EventSourceListener() {
             @Override
             public void onClosed(@NotNull EventSource eventSource) {
                 super.onClosed(eventSource);
-                log.info("用户{}sse连接关闭", user.getId());
+                log.info("用户{}的写作宝sse服务结束", user.getId());
                 sseEmitter.complete();
             }
 
@@ -225,12 +231,16 @@ public class PlatformServiceImpl implements PlatformService {
             public void onEvent(@NotNull EventSource eventSource, @Nullable String id, @Nullable String type, @NotNull String data) {
                 super.onEvent(eventSource, id, type, data);
                 switch (type){
-                    case "data":
+                    case "message":
                         JSONObject jsonObject = JSON.parseObject(data);
                         contentCache.append(jsonObject.get("data"));
                         break;
                     case "end":
+                        sseEmitter.complete();
                         redisTemplate.opsForValue().set(RedisPrefixConstant.XIE_REPORT+articleId,contentCache.toString(),2,TimeUnit.DAYS);
+                        break;
+                    default:
+                        break;
                 }
 
 
@@ -241,14 +251,14 @@ public class PlatformServiceImpl implements PlatformService {
                             .data(data));
                 } catch (IOException e) {
                     e.printStackTrace();
-                    log.error("用户{}sse{}事件发送失败",user.getId(),type);
+                    log.error("向用户{}发送的{}事件发送失败",user.getId(),type);
                 }
             }
 
             @Override
             public void onFailure(@NotNull EventSource eventSource, @Nullable Throwable t, @Nullable Response response) {
                 super.onFailure(eventSource, t, response);
-                log.error("用户{}sse连接出错", user.getId());
+                log.error("用户{}的写作宝服务连接出错", user.getId());
                 if (t != null) {
                     t.printStackTrace();
                 }
@@ -257,15 +267,11 @@ public class PlatformServiceImpl implements PlatformService {
 
             @Override
             public void onOpen(@NotNull EventSource eventSource, @NotNull Response response) {
-                log.info("用户{}sse连接建立", user.getId());
+                log.info("用户{}的写作宝服务连接建立", user.getId());
                 super.onOpen(eventSource, response);
             }
         };
         factory.newEventSource(request, listener);
-        sseEmitter.onError(throwable->{
-            log.info("用户{}sse连接出错", user.getId());
-            throwable.printStackTrace();
-        });
         return sseEmitter;
     }
 
@@ -307,6 +313,11 @@ public class PlatformServiceImpl implements PlatformService {
     private SseEmitter sseFromCache(String cache,User user) {
         int id = 1;
         SseEmitter sseEmitter = new SseEmitter(300000L);
+        sseEmitter.onError(e->{
+            log.error("与用户{}的sse连接发生错误",user.getId());
+            e.printStackTrace();
+        });
+        sseEmitter.onCompletion(()-> log.info("与用户{}的sse请求完成",user.getId()));
         try {
             sseEmitter.send(SseEmitter
                     .event()
@@ -317,28 +328,28 @@ public class PlatformServiceImpl implements PlatformService {
             log.error("用户{}sse{}事件发送失败",user.getId(),"start");
             e.printStackTrace();
         }
-        int endIndex = 3;
+        int endIndex;
         for (int i = 0; i < cache.length(); i+=3) {
             id++;
+            endIndex = i + 3;
             if (endIndex > cache.length()) {
                 endIndex = cache.length();
             }
+            String substring = cache.substring(i, endIndex);
+            SseData sseData = new SseData();
+            sseData.setData(substring);
             try {
                 sseEmitter.send(SseEmitter
                         .event()
                         .id(String.valueOf(id))
-                        .name("data")
-                        .data("{\"data\":\""+ cache.substring(i,endIndex) +"\"}"));
+                        .name("message")
+                        .data(JSON.toJSONString(sseData)));
+
             } catch (IOException e) {
                 log.error("用户{}sse{}事件发送失败",user.getId(),"data");
                 e.printStackTrace();
             }
-            //线程休眠200ms
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
         }
         id++;
         try {
@@ -351,6 +362,7 @@ public class PlatformServiceImpl implements PlatformService {
             log.error("用户{}sse{}事件发送失败",user.getId(),"end");
             e.printStackTrace();
         }
+        sseEmitter.complete();
         return sseEmitter;
     }
 
