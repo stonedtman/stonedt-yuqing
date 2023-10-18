@@ -850,7 +850,7 @@ $("#currentyear").text((new Date()).getFullYear());
                         if (detail.sourcewebsitename == "微博" && detail.extend_string_one != "") {
                             $('#content').html(res.text + imgListAll);
                         } else {
-                        	if(detail.sourcewebsitename == "微信"){
+                        	if(detail.sourcewebsitename.includes("微信")){
                         		let datahtml = res.text;
                         		//datahtml = '<img data-ratio="1" data-src="https://mmbiz.qpic.cn/mmbiz_jpg/YdtjuibsaqbsAkluHgg5lCtTSm0TRRByI8y8QNouvwWYSvN8TYVB5Rfskqn5pnsibEAI7VqXEekvjYveJHdIk4rg/640?wx_fmt=jpeg" data-type="jpeg" data-w="1" height="475" style="box-sizing:border-box;width: 299px;height: 475px;" width="299">';
                         		datahtml = datahtml.replace(/data-src/g, "src");
