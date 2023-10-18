@@ -6,7 +6,7 @@ let anal_projectId = '';
 let anal_groupId = '';
 let reporttime = '';
 let nerresultdata = '';
-
+let isRefresh = false;
 
 let event_statistics = [];
 
@@ -215,6 +215,7 @@ function getAnalysisMonitorProjectid() {
 
             var analysis = JSON.parse(res);
             reporttime = analysis.create_time;
+            isRefresh = analysis.isRefresh
             $('#updateTime').html(timeParse(analysis.create_time));
 
             // 数据概览
@@ -395,6 +396,9 @@ function getAnalysisMonitorProjectid() {
             var diff = now - lasttime;
             if (diff > 172800000) {
                 // showInfo('数据已超过48小时未更新，请点击刷新按钮更新数据！');
+                if(isRefresh){ // 已经更新过了，数据还需要几分钟更新
+                    return;
+                }
                 showNewInfo();
             }
         },
@@ -715,7 +719,9 @@ $(document).on('click','#updateanalysis', function () {
 	var currenttime = new Date(new Date().Format("yyyy-MM-dd hh:mm:ss").replace(/-/g, "/"));
 	var lasttime = new Date(reporttime.replace(/-/g, "/"));
 	let minutesdiff = parseInt(currenttime - lasttime)/1000/60;// 两个时间相差的分钟数
-	
+	if(isRefresh){ // 已经更新过了
+        minutesdiff=0
+    }
 	if(minutesdiff<15){
 		showInfo("更新太频繁，稍后15分钟再试");
 	}else{
