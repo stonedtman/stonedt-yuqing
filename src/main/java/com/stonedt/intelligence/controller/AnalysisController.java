@@ -54,7 +54,9 @@ public class AnalysisController {
 	@PostMapping(value = "/getAanlysisByProjectidAndTimeperiod")
 	@ResponseBody
 	public String getAanlysisByProjectidAndTimeperiod(Long projectId, Integer timePeriod) {
+		Boolean isNeedRefresh = projectTaskDao.getProjectTaskIsAnalysis(projectId);
 		Analysis anlysisByProjectidAndTimeperiod = analysisService.getAanlysisByProjectidAndTimeperiod(projectId, timePeriod);
+		anlysisByProjectidAndTimeperiod.setIsNeedRefresh(isNeedRefresh);
 		return JSON.toJSONString(anlysisByProjectidAndTimeperiod);
 	}
 
