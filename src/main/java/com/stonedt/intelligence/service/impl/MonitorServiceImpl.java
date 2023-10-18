@@ -994,11 +994,11 @@ public class MonitorServiceImpl implements MonitorService {
             Integer count = articleResponseJson.getInteger("count");
             Integer page = articleResponseJson.getInteger("page");
 
-            Integer totalPage = paramJson.getInteger("totalPage");
-            totalCount = paramJson.getInteger("totalCount");
-            dataGroupJson.put("totalPage", totalPage);
-            dataGroupJson.put("totalCount", totalCount);
-            dataGroupJson.put("totalNum", JSONObject.parseObject(redisUtil.getKey(key)).getString("totalnum"));
+//            Integer totalPage = paramJson.getInteger("totalPage");
+//            totalCount = paramJson.getInteger("totalCount");
+            dataGroupJson.put("totalPage", page_count);
+            dataGroupJson.put("totalCount", count);
+//            dataGroupJson.put("totalNum", JSONObject.parseObject(redisUtil.getKey(key)).getString("totalnum"));
 
             dataGroupJson.put("currentPage", page);
             JSONArray esDataArray = articleResponseJson.getJSONArray("data");
