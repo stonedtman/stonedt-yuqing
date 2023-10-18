@@ -325,7 +325,7 @@ public class PlatformServiceImpl implements PlatformService {
                     .name("start")
                     .data("start"));
         } catch (IOException e) {
-            log.error("用户{}sse{}事件发送失败",user.getId(),"start");
+            log.error("向用户{}发送{}事件时发生异常",user.getId(),"start");
             e.printStackTrace();
         }
         int endIndex;
@@ -344,9 +344,8 @@ public class PlatformServiceImpl implements PlatformService {
                         .id(String.valueOf(id))
                         .name("message")
                         .data(JSON.toJSONString(sseData)));
-
             } catch (IOException e) {
-                log.error("用户{}sse{}事件发送失败",user.getId(),"data");
+                log.error("向用户{}发送{}事件时发生异常",user.getId(),"message");
                 e.printStackTrace();
             }
 
@@ -359,7 +358,7 @@ public class PlatformServiceImpl implements PlatformService {
                     .name("end")
                     .data("end"));
         } catch (IOException e) {
-            log.error("用户{}sse{}事件发送失败",user.getId(),"end");
+            log.error("向用户{}发送{}事件时发生异常",user.getId(),"end");
             e.printStackTrace();
         }
         sseEmitter.complete();

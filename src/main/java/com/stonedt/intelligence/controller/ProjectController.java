@@ -1,12 +1,15 @@
 package com.stonedt.intelligence.controller;
 
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.stonedt.intelligence.aop.SystemControllerLog;
 import com.stonedt.intelligence.service.*;
+import com.stonedt.intelligence.thred.ThreadPoolConst;
 import com.stonedt.intelligence.util.*;
 
 import org.apache.commons.lang3.StringUtils;
@@ -572,7 +575,7 @@ public class ProjectController {
     @PostMapping(value = "/commiteditproject")
     @ResponseBody
     @Transactional(rollbackFor = Exception.class)
-    public JSONObject commiteditproject(@RequestBody JSONObject paramJson, HttpServletRequest request) {
+    public JSONObject commiteditproject(@RequestBody JSONObject paramJson, HttpServletRequest request) throws ExecutionException, InterruptedException {
         JSONObject response = new JSONObject();
         if (paramJson.getIntValue("project_type") == 1) {
             paramJson.put("character_word", "");
@@ -619,73 +622,79 @@ public class ProjectController {
         } else {
             opinionConditionParam.put("precise", 1);
         }
-        @SuppressWarnings("unused")
-        Integer opinronCount = projectService.updateOpinionConditionById(opinionConditionParam);
-        Integer count = projectService.editProjectInfo(editParam);
-        Integer taskCount = projectTaskDao.updateProjectTask(editParam);
-        if (count > 0 && taskCount > 0) {
-           
-            String message = "";
-            
-            
-            if(CommonJson.getIntValue("project_type") == 1){
-            	message = ProjectWordUtil.CommononprojectKeyWord(kafukaJson.getString("subject_word"));
-            }else {
-            	
-            	if(kafukaJson.getString("subject_word").indexOf("\\|")!=-1||kafukaJson.getString("subject_word").indexOf("+")!=-1) {
-            		message = ProjectWordUtil.CommononprojectKeyWord(kafukaJson.getString("subject_word"));
-            	}else {
 
-               	 // 将词发给卡夫卡
-                   kafukaJson.remove("project_type");
-                   kafukaJson.remove("group_id");
-                   kafukaJson.remove("project_id");
-                   kafukaJson.remove("project_name");
-                   kafukaJson.remove("update_time");
-                   kafukaJson.remove("user_id");
-               	for (Map.Entry entry : kafukaJson.entrySet()) {
-                       String value = String.valueOf(entry.getValue());
-                       if (!value.equals("")) {
-                           if (value.endsWith(",")) {
-                               value = value.substring(0, value.lastIndexOf(","));
-                           }
+        ThreadPoolConst.IO_EXECUTOR.submit(() -> projectService.updateOpinionConditionById(opinionConditionParam));
+        Future<Integer> editProjectFuture = ThreadPoolConst.IO_EXECUTOR.submit(() -> projectService.editProjectInfo(editParam));
+        Future<Integer> editProjectTaskFuture = ThreadPoolConst.IO_EXECUTOR.submit(() -> projectTaskDao.updateProjectTask(editParam));
 
-                           if (!message.equals("")) {
-                               message = message + "," + value;
-                           } else {
-                               message = value;
-                           }
-                           if (message.endsWith(",")) {
-                               message = message.substring(0, message.lastIndexOf(","));
-                           }
-                       }
-                   }
-            	}
-            	
-            	
-            	
-            }
-            try {
-            	 String kafukaResponse = MyHttpRequestUtil.doPostKafka("ikHotWords", message, kafuka_url);
-                 RestTemplate template = new RestTemplate();
-                 MultiValueMap<String, Object> paramMap = new LinkedMultiValueMap<String, Object>();
-                 paramMap.add("text", message);
-                 String result = template.postForObject(insert_new_words_url, paramMap, String.class);
-                 System.out.println("result========================="+result);
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-           
-           
-            
+        if (editProjectFuture.get() > 0 && editProjectTaskFuture.get() > 0) {
+            JSONObject finalCommonJson = CommonJson;
+            JSONObject finalKafukaJson = kafukaJson;
+            ThreadPoolConst.IO_EXECUTOR.execute(() -> sendIkHotWordsToKafuka(finalCommonJson, finalKafukaJson));
 
             response.put("code", 200);
             response.put("msg", "方案信息修改成功！");
-        } else {
+        }else {
             response.put("code", 500);
             response.put("msg", "方案信息修改失败！");
         }
+
+
         return response;
+    }
+
+    private void sendIkHotWordsToKafuka(JSONObject CommonJson,JSONObject kafukaJson) {
+        String message = "";
+
+
+        if(CommonJson.getIntValue("project_type") == 1){
+            message = ProjectWordUtil.CommononprojectKeyWord(kafukaJson.getString("subject_word"));
+        }else {
+
+            if(kafukaJson.getString("subject_word").indexOf("\\|")!=-1||kafukaJson.getString("subject_word").indexOf("+")!=-1) {
+                message = ProjectWordUtil.CommononprojectKeyWord(kafukaJson.getString("subject_word"));
+            }else {
+
+                // 将词发给卡夫卡
+                kafukaJson.remove("project_type");
+                kafukaJson.remove("group_id");
+                kafukaJson.remove("project_id");
+                kafukaJson.remove("project_name");
+                kafukaJson.remove("update_time");
+                kafukaJson.remove("user_id");
+                for (Map.Entry entry : kafukaJson.entrySet()) {
+                    String value = String.valueOf(entry.getValue());
+                    if (!value.equals("")) {
+                        if (value.endsWith(",")) {
+                            value = value.substring(0, value.lastIndexOf(","));
+                        }
+
+                        if (!message.equals("")) {
+                            message = message + "," + value;
+                        } else {
+                            message = value;
+                        }
+                        if (message.endsWith(",")) {
+                            message = message.substring(0, message.lastIndexOf(","));
+                        }
+                    }
+                }
+            }
+
+
+
+        }
+        try {
+            String kafukaResponse = MyHttpRequestUtil.doPostKafka("ikHotWords", message, kafuka_url);
+            RestTemplate template = new RestTemplate();
+            MultiValueMap<String, Object> paramMap = new LinkedMultiValueMap<String, Object>();
+            paramMap.add("text", message);
+            String result = template.postForObject(insert_new_words_url, paramMap, String.class);
+            System.out.println("result========================="+result);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
     }
 
 
