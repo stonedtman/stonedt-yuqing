@@ -30,9 +30,9 @@
 </head>
 <body>
 <div id="main-wrapper">
-    <div th:replace="common/header::header"></div>
-    <div th:replace="common/search_left::search_left"></div>
-    <div class="page-wrapper">
+    <div th:replace="common/zhheader::header"></div>
+<!--    <div th:replace="common/search_left::search_left"></div>-->
+    <div class="page-wrapper" style="margin-left: 0">
         <div class="right-part right-content">
             <div class="p-20">
                 <div class="card">
@@ -151,7 +151,8 @@ $("#currentyear").text((new Date()).getFullYear());
     // 搜索按钮
     $('#searchBtn').click(function () {
         var searchWord = $('#searchWord').val().trim();
-        var params = '?searchword=' + searchWord + '&fulltype=' + full_type + '&full_poly=' + full_poly;
+        // var params = '?searchword=' + searchWord + '&fulltype=' + full_type + '&full_poly=' + full_poly;
+        var params = '?searchword=' + searchWord + '&fulltype=1&full_poly=1';
         window.location.href = ctx + 'fullsearch/result' + params;
     })
 
@@ -205,9 +206,9 @@ $("#currentyear").text((new Date()).getFullYear());
                 let index = i % 2;
 
                 if (index == 0) {
-                    str1 += '<li><span class="v-hot">' + (i + 1) + '</span> <a href=""><span>' + search_word + '</span></a></li>';
+                    str1 += '<li><span class="v-hot">' + (i + 1) + '</span> <a href="javascript:void(0)"><span>' + search_word + '</span></a></li>';
                 } else {
-                    str2 += '<li><span class="v-hot">' + (i + 1) + '</span> <a href=""><span>' + search_word + '</span></a></li>';
+                    str2 += '<li><span class="v-hot">' + (i + 1) + '</span> <a href="javascript:void(0)"><span>' + search_word + '</span></a></li>';
                 }
             }
             let str3 = '<ul class="timeline timeline-left hot-content-list" style="padding-left: 200px;">' + str1 + '</ul>';
@@ -218,7 +219,8 @@ $("#currentyear").text((new Date()).getFullYear());
 
             $("#searchwords a").click(function () {
                 var searchWord = this.innerText.trim();
-                var params = '?searchword=' + searchWord + '&fulltype=' + full_type + '&full_poly=' + full_poly;
+                // var params = '?searchword=' + searchWord + '&fulltype=' + full_type + '&full_poly=' + full_poly;
+                var params = '?searchword=' + searchWord + '&fulltype=1&full_poly=1';
                 window.location.href = ctx + 'fullsearch/result' + params;
             })
         }
