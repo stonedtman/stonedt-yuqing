@@ -30,7 +30,17 @@ public interface PlatformService {
      * @param user 用户
      * @param images 图片
      */
-    ResultUtil nlpOcr(User user, MultipartFile images) throws IOException;
+    ResultUtil nlpOcr(User user, MultipartFile images,String imageUrl) throws IOException;
+
+
+    /**
+     * nlp图像识别
+     * @param user 用户
+     * @param images 图片
+     * @param imageUrl 图片地址
+     * @return 图像识别结果
+     */
+    ResultUtil nlpImage(User user, MultipartFile images, String imageUrl)throws IOException;
 
     /**
      * 写作宝服务绑定

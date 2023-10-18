@@ -14,6 +14,7 @@ import com.stonedt.intelligence.util.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -604,11 +605,11 @@ public class ProjectController {
         Long user_id = user.getUser_id();
         Map<String, Object> editParam = paramJson;
         JSONObject kafukaJson = new JSONObject();
-        kafukaJson = paramJson;
-        
+        BeanUtils.copyProperties(paramJson,kafukaJson);
+
         JSONObject CommonJson = new JSONObject();
-        CommonJson = paramJson;
-        
+        BeanUtils.copyProperties(paramJson,CommonJson);
+
         String update_time = DateUtil.nowTime();
         editParam.put("user_id", user_id);
         editParam.put("update_time", update_time);
@@ -622,15 +623,14 @@ public class ProjectController {
         } else {
             opinionConditionParam.put("precise", 1);
         }
-
+        // 执行数据库io操作
         ThreadPoolConst.IO_EXECUTOR.submit(() -> projectService.updateOpinionConditionById(opinionConditionParam));
         Future<Integer> editProjectFuture = ThreadPoolConst.IO_EXECUTOR.submit(() -> projectService.editProjectInfo(editParam));
         Future<Integer> editProjectTaskFuture = ThreadPoolConst.IO_EXECUTOR.submit(() -> projectTaskDao.updateProjectTask(editParam));
 
         if (editProjectFuture.get() > 0 && editProjectTaskFuture.get() > 0) {
-            JSONObject finalCommonJson = CommonJson;
-            JSONObject finalKafukaJson = kafukaJson;
-            ThreadPoolConst.IO_EXECUTOR.execute(() -> sendIkHotWordsToKafuka(finalCommonJson, finalKafukaJson));
+
+            ThreadPoolConst.IO_EXECUTOR.execute(() -> sendIkHotWordsToKafuka(CommonJson, kafukaJson));
 
             response.put("code", 200);
             response.put("msg", "方案信息修改成功！");

@@ -66,6 +66,9 @@ public class PlatformServiceImpl implements PlatformService {
     @Value("${platform.nlp.ocr-url}")
     private String nlpOcrUrl;
 
+    @Value("${platform.nlp.classpic-url}")
+    private String nlpClasspicUrl;
+
     @Value("${platform.xie.copy-writing}")
     private String xieCopyWritingUrl;
 
@@ -117,13 +120,15 @@ public class PlatformServiceImpl implements PlatformService {
     }
 
     /**
-     * nlp光学字符识别
-     *
-     * @param user   用户
+     * 调用nlp图像服务
+     * @param user 用户
      * @param images 图片
+     * @param url 调用地址
+     * @return nlp服务返回结果
+     * @throws IOException io异常
      */
-    @Override
-    public ResultUtil nlpOcr(User user, MultipartFile images) throws IOException {
+
+    private String callNlpImages(User user, MultipartFile images,String url) throws IOException {
         //调用nlp服务,参数为图片
 
         MultiValueMap<String,Object> params = new LinkedMultiValueMap<>();
@@ -145,7 +150,24 @@ public class PlatformServiceImpl implements PlatformService {
         headers.set("secret-id",user.getNlp_secret_id());
         headers.set("secret-key",user.getNlp_secret_key());
         HttpEntity<MultiValueMap<String,Object>> requestEntity  = new HttpEntity<>(params, headers);
-        String result = restTemplate.postForObject(nlpOcrUrl, requestEntity, String.class);
+        return restTemplate.postForObject(url, requestEntity, String.class);
+    }
+
+    /**
+     * nlp光学字符识别
+     *
+     * @param user   用户
+     * @param images 图片
+     */
+    @Override
+    public ResultUtil nlpOcr(User user, MultipartFile images,String imageUrl) throws IOException {
+        String cache = redisTemplate.opsForValue().get(RedisPrefixConstant.NLP_OCR + imageUrl);
+        if (cache != null) {
+            return ResultUtil.ok(JSON.parse(cache));
+        }
+        //调用nlp服务,参数为图片
+
+        String result = callNlpImages(user, images, nlpOcrUrl);
 
         if (result == null){
             return ResultUtil.build(500, "nlp服务调用失败");
@@ -157,7 +179,34 @@ public class PlatformServiceImpl implements PlatformService {
         if (codeInt != 200){
             return ResultUtil.build(codeInt, jsonObject.get("msg").toString());
         }
-        return ResultUtil.ok(jsonObject.get("results"));
+        Object results = jsonObject.get("results");
+        //缓存48小时
+        redisTemplate.opsForValue().set(RedisPrefixConstant.NLP_OCR + imageUrl,JSON.toJSONString(results),2, TimeUnit.DAYS);
+        return ResultUtil.ok(results);
+    }
+
+    @Override
+    public ResultUtil nlpImage(User user, MultipartFile images, String imageUrl) throws IOException {
+        String cache = redisTemplate.opsForValue().get(RedisPrefixConstant.NLP_IMAGE + imageUrl);
+        if (cache != null) {
+            return ResultUtil.ok(JSON.parse(cache));
+        }
+        //调用nlp服务,参数为图片
+        String result = callNlpImages(user, images, nlpClasspicUrl);
+        if (result == null){
+            return ResultUtil.build(500, "nlp服务调用失败");
+        }
+        JSONObject jsonObject = JSON.parseObject(result);
+        Object code = jsonObject.get("code");
+        //转Integer
+        int codeInt = Integer.parseInt(code.toString());
+        if (codeInt != 200){
+            return ResultUtil.build(codeInt, jsonObject.get("msg").toString());
+        }
+        Object results = jsonObject.get("results");
+        //缓存48小时
+        redisTemplate.opsForValue().set(RedisPrefixConstant.NLP_IMAGE + imageUrl,JSON.toJSONString(results),2, TimeUnit.DAYS);
+        return ResultUtil.ok(results);
     }
 
     /**

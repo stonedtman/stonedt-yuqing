@@ -45,7 +45,8 @@ public class PlatformController {
      * nlp光学字符识别
      */
     @PostMapping(value = "/nlp/ocr")
-    public ResultUtil nlpOcr(MultipartFile images, HttpServletRequest request) {
+    public ResultUtil nlpOcr(MultipartFile images,@RequestParam String imageUrl, HttpServletRequest request) {
+
         // 获取用户id
         User user = userUtil.getuser(request);
         if (!user.getNlp_flag().equals(1)){
@@ -53,11 +54,32 @@ public class PlatformController {
         }
         // 调用
         try {
-            return platformService.nlpOcr(user, images);
+            return platformService.nlpOcr(user, images,imageUrl);
         } catch (IOException e) {
             e.printStackTrace();
             return ResultUtil.build(500, "ocr识别失败");
         }
+
+    }
+
+    /**
+     * nlp图像识别
+     */
+    @PostMapping(value = "/nlp/image")
+    public ResultUtil nlpImage(MultipartFile images, @RequestParam String imageUrl, HttpServletRequest request) {
+
+            // 获取用户id
+            User user = userUtil.getuser(request);
+            if (!user.getNlp_flag().equals(1)){
+                return ResultUtil.build(424, "未绑定nlp服务");
+            }
+            // 调用
+            try {
+                return platformService.nlpImage(user, images,imageUrl);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return ResultUtil.build(500, "图像识别失败");
+            }
 
     }
 
