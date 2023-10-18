@@ -1758,6 +1758,7 @@ function installArticle(res) {
 
 
 let articleData = null;
+let obj = JSON.parse(JSON.stringify(articleData))
 // 相似文章
 function similarArticles(titlekeyword){
     var create =
@@ -1779,6 +1780,9 @@ function similarArticles(titlekeyword){
     $("#closethis").click(function (param) {
         $("#similarArticlesmodel").remove()
     })
+    similarArticlesData()
+}
+function similarArticlesData(){
     let obj = JSON.parse(JSON.stringify(articleData))
     obj.titlekeyword = titlekeyword
     $.ajax({
@@ -1803,9 +1807,7 @@ function similarArticles(titlekeyword){
             }
         }
     });
-
 }
-
 function fuction_similarArticles(res){
     if(res.code==200){
         let data = res.data.data

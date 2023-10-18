@@ -162,6 +162,7 @@ $("#currentyear").text((new Date()).getFullYear());
         }
     });
 
+
     // 顶部导航跳转
     $('.navLi').click(function () {
         jumpNavLocation($(this).data('type'), null, null);
@@ -213,6 +214,13 @@ $("#currentyear").text((new Date()).getFullYear());
             let str4 = '<ul class="timeline timeline-left hot-content-list" style="padding-left: 100px;">' + str2 + '</ul>';
             StrAll = str3 + str4;
             $("#searchwords").html(StrAll);
+
+
+            $("#searchwords a").click(function () {
+                var searchWord = this.innerText.trim();
+                var params = '?searchword=' + searchWord + '&fulltype=' + full_type + '&full_poly=' + full_poly;
+                window.location.href = ctx + 'fullsearch/result' + params;
+            })
         }
     }
 </script>
