@@ -65,8 +65,16 @@ public class PublicOptionContoller {
 	@SystemControllerLog(module = "事件分析", submodule = "事件分析页面", type = "查询", operation = "")
 	@GetMapping(value = "")
 	public ModelAndView displayboardlist(HttpServletRequest request,ModelAndView mv) {
+		String groupId = request.getParameter("groupid");
+		String projectId = request.getParameter("projectid");
+		if (StringUtils.isBlank(groupId))
+			groupId = "";
+		if (StringUtils.isBlank(projectId))
+			projectId = "";
 		mv.addObject("menu", "public_option");
 		mv.addObject("publicoptionleft_menu", "public_optionlist");
+		mv.addObject("groupid",groupId);
+		mv.addObject("projectid",projectId);
 		mv.setViewName("publicoption/eventAnalysisList");
 		return mv;
 		

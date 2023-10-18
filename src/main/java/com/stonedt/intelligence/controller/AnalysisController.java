@@ -67,7 +67,6 @@ public class AnalysisController {
 
 		String groupId = request.getParameter("groupid");
 		String projectId = request.getParameter("projectid");
-		Boolean isRefresh = projectTaskDao.getProjectTaskIsAnalysis(Long.valueOf(projectId));
 		if (StringUtils.isBlank(groupId))
 			groupId = "";
 		if (StringUtils.isBlank(projectId))
@@ -77,7 +76,6 @@ public class AnalysisController {
 		mv.addObject("groupid", groupId);
 		mv.addObject("menu", "analysis");
 		mv.addObject("projectid", projectId);
-		mv.addObject("isRefresh", isRefresh);
 		mv.setViewName("monitor/overview");
 		return mv;
 	}
@@ -90,7 +88,9 @@ public class AnalysisController {
 	@PostMapping(value = "/getAnalysisMonitorProjectid")
 	@ResponseBody
 	public String getAnalysisMonitorProjectid(Long projectId, Integer timePeriod) {
+		Boolean isNeedRefresh = projectTaskDao.getProjectTaskIsAnalysis(projectId);
 		Analysis analysisMonitorProjectid = analysisService.getAnalysisMonitorProjectid(projectId, timePeriod);
+		analysisMonitorProjectid.setIsNeedRefresh(isNeedRefresh);
 		return JSON.toJSONString(analysisMonitorProjectid);
 	}
 
@@ -321,7 +321,7 @@ public class AnalysisController {
 		if (StringUtils.isBlank(groupId))groupId = "";
 		if (StringUtils.isBlank(projectId))projectId = "";
 		try {
-			Boolean exits = redisTemplate.hasKey("analysisProject_" + projectId);
+			Boolean exits = redisTemplate.hasKey("analysisProject:" + projectId);
 			if (exits) {
 				map.put("status", 422);
 				map.put("result", "fail");
@@ -331,7 +331,7 @@ public class AnalysisController {
 			Boolean flag = projectTaskDao.updateProjectTaskAnalysisToUnDealFlag(Long.parseLong(projectId));
 			if(flag==true) {
 				// 15分钟内不允许重复请求
-				redisTemplate.opsForValue().set("analysisProject_" + projectId, "1", 15, java.util.concurrent.TimeUnit.MINUTES);
+				redisTemplate.opsForValue().set("analysisProject:" + projectId, "1", 15, java.util.concurrent.TimeUnit.MINUTES);
 				 map.put("status", 200);
 				 map.put("result", "success");
 			}

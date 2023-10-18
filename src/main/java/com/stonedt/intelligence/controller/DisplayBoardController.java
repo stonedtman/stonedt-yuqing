@@ -5,6 +5,7 @@ import com.stonedt.intelligence.aop.SystemControllerLog;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.service.PlatformService;
 import com.stonedt.intelligence.util.UserUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,6 +33,12 @@ public class DisplayBoardController {
     @SystemControllerLog(module = "综合看板", submodule = "综合看板", type = "查询", operation = "displayboardlist")
     @RequestMapping("")
     public ModelAndView displayBoard(HttpServletRequest request) {
+        String groupId = request.getParameter("groupid");
+        String projectId = request.getParameter("projectid");
+        if (StringUtils.isBlank(groupId))
+            groupId = "";
+        if (StringUtils.isBlank(projectId))
+            projectId = "";
         User user = userUtil.getuser(request);
         Map<String,Object> newSynthesize = platformService.getNewSynthesize();
         ModelAndView modelAndView = new ModelAndView();
@@ -39,6 +46,8 @@ public class DisplayBoardController {
         newSynthesize.forEach(modelAndView::addObject);
         modelAndView.addObject("menu", "displayboard");
         modelAndView.addObject("user",user);
+        modelAndView.addObject("groupid",groupId);
+        modelAndView.addObject("projectid",projectId);
         modelAndView.setViewName("displayboard/displayboard");
         return modelAndView;
     }
