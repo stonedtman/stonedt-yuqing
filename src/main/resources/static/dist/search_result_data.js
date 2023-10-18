@@ -2276,9 +2276,7 @@ function installArticle3(res) {
 							// style="background: url(' + websitelogo +
 							// ');"></span>' + title + '</a><span class="sl-date
 							// ">' + publish_time + ' </span></div>';
-							let strContent = '<div class="wb-content-imgbox"><div class="wb-left-imgbox"><img src="'
-									+ imglist[0].imgurl
-									+ '" class="img-cover" alt=""></div><div class="wb-right-content"><div class="monitor-content-con font-13">'
+							let strContent = '<div class="wb-content-imgbox"><div class="wb-right-content"><div class="monitor-content-con font-13">'
 									+ content + '</div></div></div>';
 							let strLikeStrat = '<div class="like-comm m-t-10 font-13">';
 							let strSource = '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 '

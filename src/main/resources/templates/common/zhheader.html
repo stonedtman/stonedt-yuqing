@@ -15,7 +15,7 @@
                         <i class="mdi mdi-menu font-24"></i>
                     </a>
                 </li>
-                <li data-type="displayboard" th:classappend="nav-active3"
+                <li data-type="displayboard" th:classappend="${menu=='displayboard'?'nav-active3':''}"
                     class="nav-item dropdown hover-none navLi">
                     <a class="nav-link dropdown-toggle waves-effect  waves-dark">
                         <span class="d-none d-md-block"> <i class="fa fa-list-alt"></i> 今日热点</span>

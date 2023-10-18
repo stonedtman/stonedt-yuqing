@@ -193,15 +193,18 @@
             float: left;
             margin: 0 auto;
         }
+        .wb-right-content{
+            width: auto;
+        }
     </style>
 </head>
 <body>
 <div id="main-wrapper">
-    <div th:replace="common/header::header"></div>
-    <div th:replace="common/search_left::search_left"></div>
-    <div class="page-wrapper">
+    <div th:replace="common/zhheader::header"></div>
+<!--    <div th:replace="common/search_left::search_left"></div>-->
+    <div class="page-wrapper" style="margin-left: 0">
         <div class="right-part right-content left-filtrate">
-            <div class="custom-page-breadcrumb">
+            <div class="custom-page-breadcrumb" style="width: calc(100% - 260px) !important;left: 0;">
             	<div class="custom-box-info">
                 <div class="row">
                     <div class="col-lg-10 align-self-center">
@@ -210,7 +213,7 @@
 								<div style="width: 100%;">
 									<input id="searchWord" th:value="${searchWord}" type="text" class="form-control" placeholder="请输入企业名称、企业简称、产品名、行业名称、政策法规、人名等，多关键词用空格隔开">
 								</div>
-								<button id="searchBtn" style="z-index: 1; border-radius: 0 2px 2px 0 !important;width: auto;" class="btn btn-info">全文搜索</button>
+								<button id="searchBtn" style="z-index: 1; border-radius: 0 2px 2px 0 !important;width: auto;padding: 0 12px;" class="btn btn-info">全文搜索</button>
 							</div>
                         </div>
                     </div>
@@ -1687,6 +1690,7 @@
 <script th:src="@{/dist/monitorsearch.js?unixtemp=888888}"></script>
 <script th:src="@{/dist/baidu/baidu_statistics.js}"></script>
 
+<script th:src="@{/common/common.js}"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/jutils-src"></script> -->
 <script th:src="@{/dist/js/jutils.min.js}"></script>
 <script th:inline="javascript" type="text/javascript">
@@ -1746,6 +1750,18 @@ $("#currentyear").text((new Date()).getFullYear());
     		executionPersonList(1)
     	}
     }
+</script>
+<script th:inline="javascript">
+    var ctx = [[@{/}]];
+    var full_type = [[${fulltype}]];
+    var full_poly = [[${full_poly}]];
+    var menuStyle = [[${menuStyle}]];
+    var pageSize = [[${pageSize}]];
+    var searchWord = [[${searchWord}]]
+    //0聚合模式  1展开模式 默认为聚合模式
+    if(!full_poly) full_poly = 1
+    var idList = ''
+
 </script>
 <script th:src="@{/dist/search_result_data.js?unixtemp=888888}"></script>
 <script th:src="@{/dist/search_result.js?unixtemp=888888}"></script>
