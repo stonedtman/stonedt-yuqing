@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -99,7 +100,7 @@ public class WarningSchedule {
                             int interval_type = warning_interval.getIntValue("type");
                             if (interval_type == 1) {
                                 // 实时预警
-                                search(listWarning.get(i), minuteTime, 20);
+                                search(listWarning.get(i), minuteTime, 1440);
                             } else {
                                 // 定时预警
                                 int interval_time = warning_interval.getIntValue("time");//预警间隔
@@ -203,7 +204,7 @@ public class WarningSchedule {
             //相似文章合并（0：取消合并 1：合并）
            
             String params = "keyword=" + highKeyword + "&searchkeyword=" + yjword + "&emotionalIndex=" + emotionalIndex + "&times=" + getTimee(nowtime, time)
-                    + "&timee=" + nowtime + "&searchType=0&stopword=" + listStopwords + "&page=1&size=10&origintype=" + origintype
+                    + "&timee=" + nowtime + "&searchType=5&stopword=" + listStopwords + "&page=1&size=10&origintype=" + origintype
                     + "&classify=" + classify + "&province=" + province + "&city=" + city+"&projecttype="+projectType;
             if(warningSetting.getWarning_similar()==0) {
             String urls = es_search_url + searchearlywarningApi;

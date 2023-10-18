@@ -4,6 +4,7 @@ import com.stonedt.intelligence.entity.User;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -16,13 +17,17 @@ import java.util.Map;
 public class UserUtil {
 	
     public User getuser(HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("User");
+        HttpSession session = request.getSession();
+        System.out.println(session.getId());
+        User user = (User) session.getAttribute("User");
         System.out.println("user:"+user);
         return user;
     }
     
     public long getUserId(HttpServletRequest request) {
-    	User user = (User) request.getSession().getAttribute("User");
+        HttpSession session = request.getSession();
+        System.out.println(session.getId());
+    	User user = (User) session.getAttribute("User");
         System.out.println("user:"+user);
     	return user.getUser_id();
 	}
