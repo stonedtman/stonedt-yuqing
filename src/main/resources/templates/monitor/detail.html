@@ -1602,7 +1602,7 @@ $("#currentyear").text((new Date()).getFullYear());
         })
         loading(".event-box-body")
         $.ajax({
-            url: window.location.origin + "/platform/xie/report/title",
+            url: window.location.origin + "/platform/xie/title",
             method: "post",
             dataType: "json",
             data: JSON.stringify({

@@ -3,6 +3,7 @@ package com.stonedt.intelligence.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.stonedt.intelligence.constant.PromptConstant;
+import com.stonedt.intelligence.constant.RedisPrefixConstant;
 import com.stonedt.intelligence.dao.UserDao;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.service.ArticleService;
@@ -23,6 +24,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -38,6 +41,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author 文轩
@@ -55,6 +59,8 @@ public class PlatformServiceImpl implements PlatformService {
     private final UserUtil userUtil;
 
     private final ArticleService articleService;
+
+    private final StringRedisTemplate redisTemplate;
 
     @Value("${platform.nlp.ocr-url}")
     private String nlpOcrUrl;
@@ -75,12 +81,14 @@ public class PlatformServiceImpl implements PlatformService {
                                RestTemplate restTemplate,
                                OkHttpClient okHttpClient,
                                UserUtil userUtil,
-                               ArticleService articleService) {
+                               ArticleService articleService,
+                               StringRedisTemplate redisTemplate) {
         this.userDao = userDao;
         this.restTemplate = restTemplate;
         this.okHttpClient = okHttpClient;
         this.userUtil = userUtil;
         this.articleService = articleService;
+        this.redisTemplate = redisTemplate;
     }
 
 
@@ -179,10 +187,11 @@ public class PlatformServiceImpl implements PlatformService {
      *
      * @param user        用户
      * @param copyWriting 写作宝参数
+     * @param articleId 文章id
      * @return 写作宝结果
      */
     @Override
-    public SseEmitter xieReport(User user, CopyWriting copyWriting) {
+    public SseEmitter xieReport(User user, CopyWriting copyWriting, String articleId) {
         copyWriting.setPromptId(PromptConstant.XIE_REPORT);
         String text = copyWriting.getParams().get("text");
         //去除html标签,保留文字
@@ -202,7 +211,8 @@ public class PlatformServiceImpl implements PlatformService {
                 .build();
         EventSource.Factory factory = EventSources.createFactory(okHttpClient);
         SseEmitter sseEmitter = new SseEmitter(300000L);
-
+        //生成内容缓存
+        StringBuilder contentCache = new StringBuilder();
         EventSourceListener listener = new EventSourceListener() {
             @Override
             public void onClosed(@NotNull EventSource eventSource) {
@@ -214,6 +224,16 @@ public class PlatformServiceImpl implements PlatformService {
             @Override
             public void onEvent(@NotNull EventSource eventSource, @Nullable String id, @Nullable String type, @NotNull String data) {
                 super.onEvent(eventSource, id, type, data);
+                switch (type){
+                    case "data":
+                        JSONObject jsonObject = JSON.parseObject(data);
+                        contentCache.append(jsonObject.get("data"));
+                        break;
+                    case "end":
+                        redisTemplate.opsForValue().set(RedisPrefixConstant.XIE_REPORT+articleId,contentCache.toString(),2,TimeUnit.DAYS);
+                }
+
+
                 try {
                     sseEmitter.send(SseEmitter.event()
                             .id(id)
@@ -221,6 +241,7 @@ public class PlatformServiceImpl implements PlatformService {
                             .data(data));
                 } catch (IOException e) {
                     e.printStackTrace();
+                    log.error("用户{}sse{}事件发送失败",user.getId(),type);
                 }
             }
 
@@ -261,6 +282,12 @@ public class PlatformServiceImpl implements PlatformService {
      */
     @Override
     public SseEmitter xieReport(User user, String articleId, Long projectId, String relatedword, String publishTime, String title) {
+        String contentCache = redisTemplate.opsForValue().get(RedisPrefixConstant.XIE_REPORT + articleId);
+        String titleCache = redisTemplate.opsForValue().get(RedisPrefixConstant.XIE_TITLE + articleId);
+        if (contentCache != null&&title.equals(titleCache)) {
+            return sseFromCache(contentCache,user);
+        }
+
         Map<String, Object> articleDetail = articleService.articleDetail(articleId, projectId, relatedword,publishTime);
         Object text = articleDetail.get("text");
         CopyWriting copyWriting = new CopyWriting();
@@ -269,7 +296,62 @@ public class PlatformServiceImpl implements PlatformService {
         params.put("title", title);
         params.put("text", String.valueOf(text));
         copyWriting.setParams(params);
-        return xieReport(user, copyWriting);
+        return xieReport(user, copyWriting,articleId);
+    }
+
+    /**
+     * 将缓存数据通过sse流的形式返回
+     * @param cache
+     * @return
+     */
+    private SseEmitter sseFromCache(String cache,User user) {
+        int id = 1;
+        SseEmitter sseEmitter = new SseEmitter(300000L);
+        try {
+            sseEmitter.send(SseEmitter
+                    .event()
+                    .id(String.valueOf(id))
+                    .name("start")
+                    .data("start"));
+        } catch (IOException e) {
+            log.error("用户{}sse{}事件发送失败",user.getId(),"start");
+            e.printStackTrace();
+        }
+        int endIndex = 3;
+        for (int i = 0; i < cache.length(); i+=3) {
+            id++;
+            if (endIndex > cache.length()) {
+                endIndex = cache.length();
+            }
+            try {
+                sseEmitter.send(SseEmitter
+                        .event()
+                        .id(String.valueOf(id))
+                        .name("data")
+                        .data("{\"data\":\""+ cache.substring(i,endIndex) +"\"}"));
+            } catch (IOException e) {
+                log.error("用户{}sse{}事件发送失败",user.getId(),"data");
+                e.printStackTrace();
+            }
+            //线程休眠200ms
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        id++;
+        try {
+            sseEmitter.send(SseEmitter
+                    .event()
+                    .id(String.valueOf(id))
+                    .name("end")
+                    .data("end"));
+        } catch (IOException e) {
+            log.error("用户{}sse{}事件发送失败",user.getId(),"end");
+            e.printStackTrace();
+        }
+        return sseEmitter;
     }
 
     /**
@@ -277,10 +359,17 @@ public class PlatformServiceImpl implements PlatformService {
      *
      * @param user        用户
      * @param copyWriting 写作宝参数
+     * @param articleId
      * @return 标题
      */
     @Override
-    public ResultUtil xieReportTitle(User user, CopyWriting copyWriting) {
+    public ResultUtil xieReportTitle(User user, CopyWriting copyWriting, String articleId) {
+        //查询缓存
+        String titleCache = redisTemplate.opsForValue().get(RedisPrefixConstant.XIE_TITLE + articleId);
+        if (titleCache != null) {
+            return ResultUtil.ok(titleCache);
+        }
+
         copyWriting.setPromptId(PromptConstant.XIE_REPORT);
         String text = copyWriting.getParams().get("text");
         //去除html标签,保留文字
@@ -304,6 +393,10 @@ public class PlatformServiceImpl implements PlatformService {
         Object code = jsonObject.get("code");
         Object msg = jsonObject.get("msg");
         Object data = jsonObject.get("data");
+        if ((int)code==200) {
+            //缓存48小时
+            redisTemplate.opsForValue().set(RedisPrefixConstant.XIE_TITLE + articleId,(String)data,2, TimeUnit.DAYS);
+        }
         return ResultUtil.build(Integer.parseInt(code.toString()), msg.toString(), data);
     }
 

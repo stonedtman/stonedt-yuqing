@@ -1,5 +1,6 @@
 package com.stonedt.intelligence.interceptor;
 
+import com.stonedt.intelligence.entity.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,6 +37,7 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
 //        }
 
         Object attribute = request.getSession().getAttribute("User");
+        System.out.println(attribute);
         if (attribute == null) {
             if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))){
 //                //告诉ajax我是重定向

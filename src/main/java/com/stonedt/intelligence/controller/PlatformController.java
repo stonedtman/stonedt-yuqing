@@ -89,28 +89,34 @@ public class PlatformController {
     /**
      * 写作宝标题生成
      */
-    @PostMapping(value = "/xie/report/title")
-    public ResultUtil xieReportTitle(@RequestBody CopyWriting copyWriting, HttpServletRequest request) {
-        // 获取用户
-        User user = userUtil.getuser(request);
+    @PostMapping(value = "/xie/title/{articleId}")
+    public ResultUtil xieReportTitle(@RequestBody CopyWriting copyWriting,
+                                     @PathVariable String articleId,
+                                     HttpServletRequest request,
+                                     HttpServletResponse response) {
 
-        // 调用
-        return platformService.xieReportTitle(user, copyWriting);
-    }
-
-
-    /**
-     * 写作宝智写报告
-     */
-    @PostMapping(value = "/xie/report")
-    public SseEmitter xieReport(@RequestBody CopyWriting copyWriting, HttpServletRequest request, HttpServletResponse response) {
         response.addHeader("X-Accel-Buffering", "no");
         response.setHeader("Content-Encoding", "none");
         // 获取用户
         User user = userUtil.getuser(request);
 
         // 调用
-        return platformService.xieReport(user, copyWriting);
+        return platformService.xieReportTitle(user, copyWriting,articleId);
+    }
+
+
+    /**
+     * 写作宝智写报告
+     */
+    @PostMapping(value = "/xie/report/{articleId}")
+    public SseEmitter xieReport(@RequestBody CopyWriting copyWriting,@PathVariable String articleId, HttpServletRequest request, HttpServletResponse response) {
+        response.addHeader("X-Accel-Buffering", "no");
+        response.setHeader("Content-Encoding", "none");
+        // 获取用户
+        User user = userUtil.getuser(request);
+
+        // 调用
+        return platformService.xieReport(user, copyWriting,articleId);
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.stonedt.intelligence.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.util.ResultUtil;
 import com.stonedt.intelligence.vo.BindParamsVo;
@@ -44,11 +43,13 @@ public interface PlatformService {
 
     /**
      * 写作宝服务调用
-     * @param user 用户
+     *
+     * @param user        用户
      * @param copyWriting 写作宝参数
+     * @param articleId
      * @return 写作宝结果
      */
-    SseEmitter xieReport(User user, CopyWriting copyWriting);
+    SseEmitter xieReport(User user, CopyWriting copyWriting,String articleId);
 
 
     /**
@@ -66,11 +67,13 @@ public interface PlatformService {
 
     /**
      * 写作宝标题生成
-     * @param user 用户
+     *
+     * @param user        用户
      * @param copyWriting 写作宝参数
+     * @param articleId
      * @return 标题
      */
-    ResultUtil xieReportTitle(User user, CopyWriting copyWriting);
+    ResultUtil xieReportTitle(User user, CopyWriting copyWriting, String articleId);
 
     /**
      * 获取最新公告

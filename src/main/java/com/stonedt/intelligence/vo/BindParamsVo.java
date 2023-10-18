@@ -13,7 +13,7 @@ public class BindParamsVo {
     /**
      * 用户id
      */
-    private long userId;
+    private int userId;
 
     /**
      * 认证id
