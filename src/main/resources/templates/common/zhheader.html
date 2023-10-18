@@ -325,7 +325,10 @@
                         nodata("#warning-list", '暂无预警消息')
                     }
                 },
-                error: function (res) {
+                error: function (xhr, ajaxOptions, thrownError) {
+                    if (xhr.status == 403) {
+                        console.log(xhr, ajaxOptions, thrownError)
+                    }
                     dataerror("#warning-list")
                 }
             });
