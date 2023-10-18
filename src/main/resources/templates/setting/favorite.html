@@ -261,7 +261,7 @@
           projectList = list;
         }, error: function (xhr, ajaxOptions, thrownError) {
           if (xhr.status == 403) {
-            window.location.href = ctxPath + "login";
+            console.log(xhr, ajaxOptions, thrownError)
           }
         }
       });
@@ -296,7 +296,7 @@
       },
       error: function (xhr, ajaxOptions, thrownError) {
         if (xhr.status == 403) {
-          window.location.href = ctxPath + "login";
+          console.log(xhr, ajaxOptions, thrownError)
         }
       }
     });
@@ -334,7 +334,7 @@
         },
         error: function (xhr, ajaxOptions, thrownError) {
           if (xhr.status == 403) {
-            window.location.href = ctxPath + "login";
+            console.log(xhr, ajaxOptions, thrownError)
           }
         }
       });
@@ -420,7 +420,7 @@
       },
       error: function (xhr, ajaxOptions, thrownError) {
         if (xhr.status == 403) {
-          window.location.href = ctxPath + "login";
+          console.log(xhr, ajaxOptions, thrownError)
         } else {
           dataerror("#prolist-warning-box")
         }

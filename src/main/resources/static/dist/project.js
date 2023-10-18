@@ -20,7 +20,7 @@ function sendGroup() {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                window.location.href = ctxPath + "login";
+                console.log(xhr, ajaxOptions, thrownError)
             } else {
                 console.log(thrownError);
             }
@@ -132,7 +132,7 @@ function getGroupName(id) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                window.location.href = ctxPath + "login";
+                console.log(xhr, ajaxOptions, thrownError)
             } else {
                 console.log(thrownError);
             }
@@ -167,7 +167,7 @@ function sendProjectList(groupid, projectsearch, page) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                window.location.href = ctxPath + "login";
+                console.log(xhr, ajaxOptions, thrownError)
             } else {
                 console.log(thrownError);
             }
@@ -323,7 +323,7 @@ function verifyGroupCount() {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                window.location.href = ctxPath + "login";
+                console.log(xhr, ajaxOptions, thrownError)
             } else {
                 console.log(thrownError);
             }
@@ -388,7 +388,7 @@ function sendGroupByadd() {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                window.location.href = ctxPath + "login";
+                console.log(xhr, ajaxOptions, thrownError)
             } else {
                 console.log(thrownError);
             }
@@ -450,7 +450,7 @@ function sendProjectInfo(data) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                window.location.href = ctxPath + "login";
+                console.log(xhr, ajaxOptions, thrownError)
             } else {
                 console.log(thrownError);
             }
@@ -538,7 +538,7 @@ function editGroupData(group_id, group_name) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                window.location.href = ctxPath + "login";
+                console.log(xhr, ajaxOptions, thrownError)
             } else {
                 console.log(thrownError);
             }
@@ -610,7 +610,7 @@ function delGroup(group_id) {
 				            },
 				            error: function (xhr, ajaxOptions, thrownError) {
 				                if (xhr.status == 403) {
-				                    window.location.href = ctxPath + "login";
+				                    console.log(xhr, ajaxOptions, thrownError)
 				                } else {
 				                    console.log(thrownError);
 				                }
@@ -652,7 +652,7 @@ function delGroup(group_id) {
 		  },
 		  error: function (xhr, ajaxOptions, thrownError) {
 		      if (xhr.status == 403) {
-		          window.location.href = ctxPath + "login";
+		          console.log(xhr, ajaxOptions, thrownError)
 		      } else {
 		          console.log(thrownError);
 		      }
@@ -842,7 +842,7 @@ function confirmDelete(id) {
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status == 403) {
-                    window.location.href = ctxPath + "login";
+                    console.log(xhr, ajaxOptions, thrownError)
                 } else {
                     console.log(thrownError);
                 }
@@ -879,7 +879,7 @@ function getEditInfo(edit_projectid) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                window.location.href = ctxPath + "login";
+                console.log(xhr, ajaxOptions, thrownError)
             } else {
                 console.log(thrownError);
             }
@@ -970,7 +970,7 @@ function sendEditProjectInfo(data) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                window.location.href = ctxPath + "login";
+                console.log(xhr, ajaxOptions, thrownError)
             } else {
                 console.log(thrownError);
             }
@@ -999,7 +999,7 @@ function breadCrumbs(groupId) {
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status == 403) {
-                    window.location.href = ctxPath + "login";
+                    console.log(xhr, ajaxOptions, thrownError)
                 } else {
                     var html = '<li class="breadcrumb-item">监测管理</li>' +
                         '<li class="breadcrumb-item">暂无方案组</li>' +

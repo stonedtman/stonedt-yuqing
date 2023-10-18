@@ -681,7 +681,7 @@ $("#currentyear").text((new Date()).getFullYear());
                 error: function (xhr, ajaxOptions, thrownError) {
                     // console.log(xhr);
                     if (xhr.status == 403) {
-                        window.location.href = ctxPath + "login";
+                        console.log(xhr, ajaxOptions, thrownError)
                     }
                 }
             });
@@ -1152,7 +1152,7 @@ $("#currentyear").text((new Date()).getFullYear());
                 error: function (xhr, ajaxOptions, thrownError) {
                     // console.log(xhr);
                     if (xhr.status == 403) {
-                        window.location.href = ctxPath + "login";
+                        console.log(xhr, ajaxOptions, thrownError)
                     }
                 }
             }
@@ -1232,7 +1232,7 @@ $("#currentyear").text((new Date()).getFullYear());
                 error: function (xhr, ajaxOptions, thrownError) {
 
                     if (xhr.status == 403) {
-                        window.location.href = ctxPath + "login";
+                        console.log(xhr, ajaxOptions, thrownError)
                     }
                 }
             });
@@ -1282,7 +1282,7 @@ $("#currentyear").text((new Date()).getFullYear());
             error: function (xhr, ajaxOptions, thrownError) {
 
                 if (xhr.status == 403) {
-                    window.location.href = ctxPath + "login";
+                    console.log(xhr, ajaxOptions, thrownError)
                 }
             }
         });
@@ -1450,7 +1450,7 @@ $("#currentyear").text((new Date()).getFullYear());
                     error: function (xhr, ajaxOptions, thrownError) {
 
                         if (xhr.status == 403) {
-                            window.location.href = ctxPath + "login";
+                            console.log(xhr, ajaxOptions, thrownError)
                         }
                     }
                 });
@@ -1501,7 +1501,7 @@ $("#currentyear").text((new Date()).getFullYear());
                     error: function (xhr, ajaxOptions, thrownError) {
 
                         if (xhr.status == 403) {
-                            window.location.href = ctxPath + "login";
+                            console.log(xhr, ajaxOptions, thrownError)
                         }
                     }
                 });
@@ -1719,7 +1719,7 @@ $("#currentyear").text((new Date()).getFullYear());
             error: function (xhr, ajaxOptions, thrownError) {
 
                 if (xhr.status == 403) {
-                    window.location.href = ctxPath + "login";
+                    console.log(xhr, ajaxOptions, thrownError)
                 }
             }
         });
@@ -1785,7 +1785,7 @@ $("#currentyear").text((new Date()).getFullYear());
             error: function (xhr, ajaxOptions, thrownError) {
 
                 if (xhr.status == 403) {
-                    window.location.href = ctxPath + "login";
+                    console.log(xhr, ajaxOptions, thrownError)
                 }else{
                     $(".event-box-body").html("");
                     dataerror(".event-box-body");
@@ -1934,7 +1934,7 @@ $("#currentyear").text((new Date()).getFullYear());
             error: function (xhr, ajaxOptions, thrownError) {
                 // console.log(xhr);
                 if (xhr.status == 403) {
-                    window.location.href = ctxPath + "login";
+                    console.log(xhr, ajaxOptions, thrownError)
                 }
             }
         });

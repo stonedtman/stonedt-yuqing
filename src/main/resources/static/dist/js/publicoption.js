@@ -95,7 +95,7 @@ function adddata(){
 		error : function(xhr, ajaxOptions, thrownError) {
 			console.log(xhr);
 			if (xhr.status == 403) {
-				window.location.href = ctxPath + "login";
+				console.log(xhr, ajaxOptions, thrownError)
 			}
 		}
 });

@@ -307,7 +307,7 @@ function sendArticle(param, data, funcname) {
 		},
 		error : function(xhr, ajaxOptions, thrownError) {
 			if (xhr.status == 403) {
-				window.location.href = ctxPath + "login";
+				console.log(xhr, ajaxOptions, thrownError)
 			} else {
 				$("#page").html("");
 				dataerror("#monitor-content");

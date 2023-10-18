@@ -258,7 +258,7 @@ $("#currentyear").text((new Date()).getFullYear());
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status == 403) {
-                    window.location.href = ctxPath + "login";
+                    console.log(xhr, ajaxOptions, thrownError)
                 }
             }
         });
@@ -296,7 +296,7 @@ $("#currentyear").text((new Date()).getFullYear());
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     if (xhr.status == 403) {
-                        window.location.href = ctxPath + "login";
+                        console.log(xhr, ajaxOptions, thrownError)
                     }
                 }
             });
@@ -371,7 +371,7 @@ $("#currentyear").text((new Date()).getFullYear());
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status == 403) {
-                    window.location.href = ctxPath + "login";
+                    console.log(xhr, ajaxOptions, thrownError)
                 } else {
                     dataerror("#prolist-warning-box")
                 }

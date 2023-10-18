@@ -56,7 +56,7 @@ function projectname(projectid, groupId) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                window.location.href = ctxPath + "login";
+                console.log(xhr, ajaxOptions, thrownError)
             } else {
                 console.log("请求出错");
             }
@@ -265,7 +265,7 @@ function project(projectId, time_period) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                window.location.href = ctxPath + "login";
+                console.log(xhr, ajaxOptions, thrownError)
             } else {
                 $("#popularinformation").css({"position": "relative", "min-height": "300px"})
                 dataerror("#popularinformation")
