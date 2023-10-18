@@ -80,17 +80,13 @@
     <update id="updateProjectTask" parameterType="map">
 		update project_task
 		set
-			project_name = #{map.project_name},
 			project_type = #{map.project_type},
-			update_time = #{map.update_time},
-			project_description = #{map.project_description},
 			subject_word = #{map.subject_word},
 			character_word = #{map.character_word},
 			event_word = #{map.event_word},
 			regional_word = #{map.regional_word},
 			stop_word = #{map.stop_word},
-			group_id = #{map.group_id},
-			analysis_flag = 0,
+			analysis_flag = 0
 		where
 			project_id = #{map.project_id}
 	</update>

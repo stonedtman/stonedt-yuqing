@@ -31,5 +31,5 @@ public interface ProjectTaskDao {
 	 * 更新方案任务
 	 * @param editParam 编辑参数
 	 */
-    Integer updateProjectTask(Map<String, Object> editParam);
+    Integer updateProjectTask(@Param("map") Map<String, Object> editParam);
 }

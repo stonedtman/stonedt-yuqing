@@ -14,6 +14,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -570,6 +571,7 @@ public class ProjectController {
     @SystemControllerLog(module = "监测管理", submodule = "监测管理-修改方案", type = "提交修改", operation = "commiteditproject")
     @PostMapping(value = "/commiteditproject")
     @ResponseBody
+    @Transactional(rollbackFor = Exception.class)
     public JSONObject commiteditproject(@RequestBody JSONObject paramJson, HttpServletRequest request) {
         JSONObject response = new JSONObject();
         if (paramJson.getIntValue("project_type") == 1) {

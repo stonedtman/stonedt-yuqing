@@ -37,7 +37,7 @@ public class DisplayBoardController {
         ModelAndView modelAndView = new ModelAndView();
         // 将数据存入modelAndView
         newSynthesize.forEach(modelAndView::addObject);
-
+        modelAndView.addObject("menu", "displayboard");
         modelAndView.addObject("user",user);
         modelAndView.setViewName("displayboard/displayboard");
         return modelAndView;
