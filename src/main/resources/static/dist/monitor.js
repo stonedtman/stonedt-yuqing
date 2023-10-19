@@ -1796,7 +1796,6 @@ function similarArticlesData(){
             loading(".similar_articles")
         },
         success: function (res) {
-            console.log(res)
             fuction_similarArticles(res)
         },
         error: function (xhr, ajaxOptions, thrownError) {

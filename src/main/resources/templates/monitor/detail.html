@@ -107,7 +107,7 @@
         }
         .identify-img-list{
             width: 60px;
-            height: 100%;
+            height: 380px;
             overflow-y: auto;
             margin-right: 10px;
         }
@@ -296,6 +296,9 @@
             margin-bottom: 20px;
             word-wrap: break-word;
             white-space: pre-wrap;
+        }
+        #wx_pic {
+            display: none !important;
         }
     </style>
 </head>
@@ -1186,6 +1189,9 @@ $("#currentyear").text((new Date()).getFullYear());
         nlp_ocr(url,"",t,content_only)
     }
     function nlp_ocr(url,imgFile,t,content_only) {
+        if(!content_only){
+            imageIdentifyPopup()
+        }
         let formdata = new FormData()
         // formdata.append("images",imgFile)
         formdata.append("imageUrl",url)
@@ -1200,14 +1206,17 @@ $("#currentyear").text((new Date()).getFullYear());
                 success: function (res) {
                     if(res.status==200){
                         if(!content_only){
-                            $("#imageRecognition").remove()
-                            imageIdentifyPopup()
                             identifyresult("图像识别")
                         }
                         imageidentifyresult(res.data.result)
                     }else if(res.status==424){
+                        $("#imageIdentify").remove()
                         image_recognition("图像识别")
                     }else{
+                        $(".event-box-body").html(res.msg)
+                    }
+                    if(res.status==1201){
+                        $("#imageIdentify").remove()
                         $.blockUI({
                             message: res.msg,
                             fadeIn: 700,
@@ -1218,19 +1227,18 @@ $("#currentyear").text((new Date()).getFullYear());
                             css: {
                                 width: '250px',
                                 top: '20px',
-                                left: '',
-                                right: '20px',
+                                left: '50%',
+                                right: '',
                                 border: 'none',
+                                zIndex: 1051,
                                 padding: '15px 5px',
-                                backgroundColor: '#000',
+                                transform: "translateX(-50%)",
+                                backgroundColor: '#fff',
                                 '-webkit-border-radius': '10px',
                                 '-moz-border-radius': '10px',
-                                opacity: 0.9,
-                                color: '#fff'
+                                color: '#000'
                             }
                         });
-                    }
-                    if(res.status==1201){
                         image_recognition("图像识别")
                     }
                 },
@@ -1245,15 +1253,16 @@ $("#currentyear").text((new Date()).getFullYear());
                         css: {
                             width: '250px',
                             top: '20px',
-                            left: '',
-                            right: '20px',
+                            left: '48%',
+                            right: '',
                             border: 'none',
+                            zIndex: 1051,
                             padding: '15px 5px',
-                            backgroundColor: '#000',
+                            backgroundColor: '#fff',
                             '-webkit-border-radius': '10px',
                             '-moz-border-radius': '10px',
                             opacity: 0.9,
-                            color: '#fff'
+                            color: '#000'
                         }
                     });
                     if (xhr.status == 403) {
@@ -1273,14 +1282,17 @@ $("#currentyear").text((new Date()).getFullYear());
             success: function (res) {
                 if(res.status==200){
                     if(!content_only){
-                        $("#imageRecognition").remove()
-                        imageIdentifyPopup()
                         identifyresult("文字识别")
                     }
                     text_content_only(res.data[0].data,"文字识别")
                 }else if(res.status==424){
+                    $("#imageIdentify").remove()
                     image_recognition("文字识别")
                 }else{
+                    $(".event-box-body").html(res.msg)
+                }
+                if(res.status==1201){
+                    $("#imageIdentify").remove()
                     $.blockUI({
                         message: res.msg,
                         fadeIn: 700,
@@ -1291,19 +1303,18 @@ $("#currentyear").text((new Date()).getFullYear());
                         css: {
                             width: '250px',
                             top: '20px',
-                            left: '',
-                            right: '20px',
+                            left: '50%',
+                            right: '',
                             border: 'none',
+                            zIndex: 1051,
                             padding: '15px 5px',
-                            backgroundColor: '#000',
+                            transform: "translateX(-50%)",
+                            backgroundColor: '#fff',
                             '-webkit-border-radius': '10px',
                             '-moz-border-radius': '10px',
-                            opacity: 0.9,
-                            color: '#fff'
+                            color: '#000'
                         }
                     });
-                }
-                if(res.status==1201){
                     image_recognition("文字识别")
                 }
             },
@@ -1570,7 +1581,6 @@ $("#currentyear").text((new Date()).getFullYear());
         }
     }
     function imageIdentifyPopup() {
-        $("#imageIdentify").remove()
         var eventHtml =
             '<div class="shadebox" id="imageIdentify">'+
             '    <div class="showCreateEvent"> '+
@@ -1647,7 +1657,10 @@ $("#currentyear").text((new Date()).getFullYear());
                 this.classList.add("active")
                 $(".identify-img img").attr("src",$(this).find("img")[0].src)
                 if(!document.querySelector(".result-content .not-identify")){
-                    getBlob($(this).find("img")[0].src,t,true)
+                    loading(".result-content")
+                    setTimeout(()=>{
+                        getBlob($(this).find("img")[0].src,t,true)
+                    },100)
                 }
             })
         }
@@ -1786,6 +1799,31 @@ $("#currentyear").text((new Date()).getFullYear());
                 if(res.status==200){
                     articleTitle = res.data
                     sse()
+                }else if(res.status==302){
+                    $("#intelligentWrite").remove()
+                    $.blockUI({
+                        message: "secren_id或者secren_key绑定错误，请重新绑定",
+                        fadeIn: 700,
+                        fadeOut: 700,
+                        timeout: 3000,
+                        showOverlay: false,
+                        centerY: false,
+                        css: {
+                            width: '250px',
+                            top: '20px',
+                            left: '50%',
+                            right: '',
+                            border: 'none',
+                            zIndex: 1051,
+                            padding: '15px 5px',
+                            transform: "translateX(-50%)",
+                            backgroundColor: '#fff',
+                            '-webkit-border-radius': '10px',
+                            '-moz-border-radius': '10px',
+                            color: '#000'
+                        }
+                    });
+                    intelligent_write_recognition()
                 }else{
                     $(".event-box-body").html(res.msg);
                 }
@@ -1808,6 +1846,9 @@ $("#currentyear").text((new Date()).getFullYear());
         source = new EventSource(window.location.origin + `/platform/xie/report?title=${encodeURIComponent(articleTitle)}&articleId=${encodeURIComponent(articleId)}&projectId=${encodeURIComponent(projectId)}&relatedword=${encodeURIComponent(relatedword)}&publish_time=${encodeURIComponent(publish_time)}`)
         source.onopen=function () {
             if(num>1){
+                source.close()
+            }
+            if(!document.querySelector("#intelligentWrite")){
                 source.close()
             }
         }
@@ -1838,6 +1879,10 @@ $("#currentyear").text((new Date()).getFullYear());
             loading(".report-content .content")
         }else{
             $("#intelligentWrite .content").html(articleContent)
+            let dialoguelist = document.querySelector("#intelligentWrite .content")
+            dialoguelist.scrollTo({
+                top: dialoguelist.scrollHeight
+            });
         }
     }
     function intelligent_write_recognition() {
