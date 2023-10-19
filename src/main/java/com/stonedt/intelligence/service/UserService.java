@@ -44,4 +44,11 @@ public interface UserService {
     void updateLoginFailCountAndTime(Map<String, Object> mapParam);
 
     void updateEndLoginTime(Long userId);
+
+    /**
+     * 生成用户token
+     * @param user 用户信息
+     * @return token
+     */
+    String getToken(User user) throws Exception;
 }

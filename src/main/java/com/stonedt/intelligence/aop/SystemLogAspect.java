@@ -9,6 +9,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.stonedt.intelligence.util.JWTUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -91,7 +92,19 @@ public class SystemLogAspect {
         	}
         	
         }else {
-        	 User use = (User)request.getSession().getAttribute("User");
+			User use = null;
+			// 从 http 请求头中取出 token
+			String token = request.getHeader("token");
+			// 如果存在,则从token中获取，否则从session中获取
+			if (token != null && !token.isEmpty()) {
+				try {
+					use = JWTUtils.getEntity(token, User.class);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}else {
+				use = (User)request.getSession().getAttribute("User");
+			}
              username = use.getUsername();
              id = use.getId();
         }

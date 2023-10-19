@@ -6,7 +6,7 @@ server:
       session:
         cookie:
           name: local-portal
-          max-age: -1
+          max-age: 3600
         timeout: 3600
           
 spring:
@@ -23,7 +23,7 @@ spring:
       namespace: stonedt-portal
   # 以下是邮件发送配置,换成你自己的邮箱
   mail:
-    host: smtp.qq.com
+    host: smtp.exmail.qq.com
     username: monitor@stonedt.com
     password: ST_monit2019
     properties:
@@ -100,3 +100,11 @@ kaptcha:
     height: 50
   session:
     key: code
+
+springdoc:
+  api-docs:
+    path: /api-docs
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui
+    enabled: true

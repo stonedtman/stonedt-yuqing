@@ -17,6 +17,16 @@ import java.util.Map;
 public class UserUtil {
 	
     public User getuser(HttpServletRequest request) {
+        // 从 http 请求头中取出 token
+        String token = request.getHeader("token");
+        // 如果存在,则从token中获取，否则从session中获取
+        if (token != null && !token.isEmpty()) {
+            try {
+                return JWTUtils.getEntity(token, User.class);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         HttpSession session = request.getSession();
         System.out.println(session.getId());
         User user = (User) session.getAttribute("User");
@@ -25,6 +35,16 @@ public class UserUtil {
     }
     
     public long getUserId(HttpServletRequest request) {
+        // 从 http 请求头中取出 token
+        String token = request.getHeader("token");
+        // 如果存在,则从token中获取，否则从session中获取
+        if (token != null && !token.isEmpty()) {
+            try {
+                return JWTUtils.getEntity(token, User.class).getUser_id();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         HttpSession session = request.getSession();
         System.out.println(session.getId());
     	User user = (User) session.getAttribute("User");

@@ -57,8 +57,8 @@ public class StonedtPortalApplicationTests {
 //	@Autowired
 //	private JavaMailSenderImpl javaMailSender;
 
-	@Autowired
-	PlatformService platformService;
+//	@Autowired
+//	PlatformService platformService;
 
 	@Test
 	public void contextLoads() throws IOException {

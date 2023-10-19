@@ -1,11 +1,18 @@
 package com.stonedt.intelligence.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.stonedt.intelligence.dao.UserDao;
+import com.stonedt.intelligence.dto.UserDTO;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.service.UserService;
+import com.stonedt.intelligence.util.JWTUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +26,9 @@ import java.util.Map;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserDao userDao;
+
+	@Value("${token.private-key}")
+	private String privateKey;
 
     @Override
     public User selectUserByTelephone(String telephone) {
@@ -110,5 +120,15 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void updateEndLoginTime(Long userId) {
 		userDao.updateEndLoginTime(userId);
+	}
+
+	@Override
+	public String getToken(User user) throws Exception {
+		user.setPassword(null);
+		UserDTO userDTO = new UserDTO();
+		BeanUtils.copyProperties(user, userDTO);
+		// 设置token签发时间
+		userDTO.setTokenIssueTime(System.currentTimeMillis());
+        return JWTUtils.createJWT(JSON.toJSONString(userDTO, SerializerFeature.WriteMapNullValue), privateKey);
 	}
 }

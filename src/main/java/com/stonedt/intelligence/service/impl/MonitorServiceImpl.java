@@ -1073,14 +1073,14 @@ public class MonitorServiceImpl implements MonitorService {
                     _sourceJson.put("article_category", "");
                 }
                 //相似文章数量
-                _sourceJson.put("num", 1);
-                JSONArray similarArray = JSON.parseArray(JSONObject.parseObject(redisUtil.getKey(key)).getString("data"));
-                for (Object object : similarArray) {
-                    JSONObject parseObject = JSONObject.parseObject(object.toString());
-                    if(parseObject.get("article_public_id").equals(_sourceJson.getString("article_public_id"))) {
-                        _sourceJson.put("num", Integer.parseInt(parseObject.getString("num")));
-                    }
-                }
+//                _sourceJson.put("num", 1);
+//                JSONArray similarArray = JSON.parseArray(JSONObject.parseObject(redisUtil.getKey(key)).getString("data"));
+//                for (Object object : similarArray) {
+//                    JSONObject parseObject = JSONObject.parseObject(object.toString());
+//                    if(parseObject.get("article_public_id").equals(_sourceJson.getString("article_public_id"))) {
+//                        _sourceJson.put("num", Integer.parseInt(parseObject.getString("num")));
+//                    }
+//                }
                 String key_words = _sourceJson.getString("key_words");
                 if (!"".equals(key_words)) {
                     String sb = "";

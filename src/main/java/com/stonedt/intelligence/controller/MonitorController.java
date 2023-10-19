@@ -12,6 +12,13 @@ import com.stonedt.intelligence.service.ProjectService;
 import com.stonedt.intelligence.util.UserUtil;
 import com.stonedt.intelligence.aop.SystemControllerLog;
 
+import com.stonedt.intelligence.vo.*;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -76,19 +83,20 @@ public class MonitorController {
 	 * @author: huajiancheng <br>
 	 */
 	/*@SystemControllerLog(module = "数据监测", submodule = "数据监测-列表", type = "查询", operation = "")*/
+	@Operation(summary = "数据监测-列表", description = "数据监测-列表页面",
+			parameters = {
+			@Parameter(name = "groupid", description = "方案组id", required = false),
+			@Parameter(name = "projectid", description = "方案id", required = false),
+			@Parameter(name = "page", description = "分页参数", required = false),
+			@Parameter(name = "searchflag", description = "搜索标识", required = false),
+			@Parameter(name = "searchword", description = "搜索关键词", required = false)
+			},
+			responses = @ApiResponse(content = @Content(mediaType = "html/text"),description = "数据监测列表页面")
+	)
 	@GetMapping(value = "")
 	public ModelAndView monitor(@RequestParam(value = "groupid", required = false) String groupid,
 			@RequestParam(value = "projectid", required = false) String projectid,
-			@RequestParam(value = "monitorsearch", required = false) String monitorsearch,
-			@RequestParam(value = "start", required = false) String start,
-			@RequestParam(value = "end", required = false) String end,
-			@RequestParam(value = "emotion", required = false) String emotion,
-			@RequestParam(value = "sort", required = false) String sort,
-			@RequestParam(value = "match", required = false) String match,
-			@RequestParam(value = "precise", required = false) String precise,
-			@RequestParam(value = "merge", required = false) String merge,
 			@RequestParam(value = "page", required = false) Integer page,
-			@RequestParam(value = "menu", required = false) String menu,
 			@RequestParam(value = "searchflag", required = false, defaultValue = "false") boolean searchflag,
 			@RequestParam(value = "searchword", required = false) String searchword, ModelAndView mv,
 			HttpServletRequest request) {
@@ -124,6 +132,7 @@ public class MonitorController {
 	 * @date: 2020/4/13 14:22 <br>
 	 * @author: huajiancheng <br>
 	 */
+	@Deprecated
 
 	/*@SystemControllerLog(module = "数据监测", submodule = "数据监测-列表", type = "查询", operation = "listarticle")*/
 	@PostMapping(value = "/listarticle")
@@ -144,10 +153,21 @@ public class MonitorController {
 	 * @date: 2020/4/13 14:32 <br>
 	 * @author: huajiancheng <br>
 	 */
+	@Operation(summary = "数据监测-详情", description = "数据监测-详情页面",
+			parameters = {
+				@Parameter(name = "groupid", description = "方案组id", required = false),
+				@Parameter(name = "projectid", description = "方案id", required = false),
+				@Parameter(name = "relatedWord", description = "相关词", required = false),
+				@Parameter(name = "publish_time", description = "发布时间", required = false),
+				@Parameter(name = "menu", description = "顶部菜单导航", required = false)
+			},
+			responses = @ApiResponse(content = @Content(mediaType = "html/text"),description = "数据监测详情页面")
+	)
+
 	@SystemControllerLog(module = "数据监测", submodule = "数据监测-详情", type = "详情" /*type = "查询"*/, operation = "detail")
 	@GetMapping(value = "/detail/{articleid}")
 	public ModelAndView skiparticle(@PathVariable() String articleid, String groupid, String projectid,
-			String relatedWord,String publish_time, String menu, String page, ModelAndView mv, HttpServletRequest request) {
+			String relatedWord,String publish_time, String menu, ModelAndView mv, HttpServletRequest request) {
 //        String groupid = request.getParameter("groupid");
 //        String projectid = request.getParameter("projectid");
 //        String menu = request.getParameter("menu");
@@ -186,10 +206,19 @@ public class MonitorController {
 	 * @date: 2020/4/13 14:35 <br>
 	 * @author: huajiancheng <br>
 	 */
+	@Operation(summary = "数据监测-详情", description = "数据监测-详情数据",
+			parameters = {
+				@Parameter(name = "articleid", description = "文章id", required = false),
+				@Parameter(name = "groupid", description = "方案组id", required = false),
+				@Parameter(name = "projectid", description = "方案id", required = false),
+				@Parameter(name = "publish_time", description = "发布时间", required = false),
+			},
+			responses = @ApiResponse(content = @Content(mediaType = "application/json"),description = "数据监测详情数据")
+	)
 	/*@SystemControllerLog(module = "数据监测", submodule = "数据监测-详情", type = "查询", operation = "articleDetail")*/
 	@PostMapping(value = "/articleDetail")
 	@ResponseBody
-	public String articleDetail(String articleId, Long projectId, String articleIds, String relatedword,String publish_time,
+	public String articleDetail(String articleId, Long projectId,  String relatedword,String publish_time,
 			HttpServletRequest resRequest) {
 		long startTime = System.currentTimeMillis();
 		long userId = userUtil.getUserId(resRequest);
@@ -239,21 +268,32 @@ public class MonitorController {
 	 * @date: 2020/4/16 19:34 <br>
 	 * @author: huajiancheng <br>
 	 */
+	@Operation(summary = "获取文章列表",
+			description = "根据条件获取文章列表",
+			requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+					content = @Content(mediaType = "application/json",schema = @Schema(implementation = SearchCondition.class)))
+	)
 	/*@SystemControllerLog(module = "数据监测", submodule = "数据监测-列表", type = "查询", operation = "getarticle")*/
 	@PostMapping(value = "/getarticle")
 	@ResponseBody
-	public JSONObject getArticleList(@RequestBody JSONObject paramJson) {
+	public ResultVO<PageInfo<ArticleData>> getArticleList(@RequestBody JSONObject paramJson) {
 		JSONObject response = monitorService.getArticleList(paramJson);
-		return response;
+		return JSON.parseObject(response.toJSONString(), ResultVO.class);
 	}
 
 	/**
 	 * 获取相似文章列表
 	 */
+	@Operation(summary = "获取相似文章列表",
+			description = "根据条件获取相似文章列表",
+			requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+					content = @Content(mediaType = "application/json",schema = @Schema(implementation = SimilarSearchCondition.class)))
+	)
 	@PostMapping(value = "/getSimilarArticle")
 	@ResponseBody
-	public JSONObject getSimilarArticle(@RequestBody JSONObject paramJson) {
-        return monitorService.getSimilarArticleList(paramJson);
+	public ResultVO<PageInfo<ArticleData>> getSimilarArticle(@RequestBody JSONObject paramJson) {
+		JSONObject similarArticleList = monitorService.getSimilarArticleList(paramJson);
+		return JSON.parseObject(similarArticleList.toJSONString(), ResultVO.class);
 	}
 	
 	/**
