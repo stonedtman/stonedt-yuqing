@@ -1824,7 +1824,7 @@ function fuction_similarArticles(res){
                             ${data[i].title}
                         </a>
                     </div>
-                    <div class="monitor-content-con font-13">
+                    <div class="monitor-content-con font-13 mb-2">
                         ${data[i].content}
                     </div>
                     <div class="like-comm font-13">
@@ -1857,9 +1857,11 @@ function fuction_pageHelper(currentPage, totalPages) {
         shouldShowPage: true, //是否显示该按钮
         useBootstrapTooltip: false,
         onPageClicked: function (event, originalEvent, type, page) {
-            // if (page > 167) {
-            //     page = 167;
-            // }
+            if (page > 167) {
+                page = 167;
+            }
+            obj.page = page
+            similarArticlesData()
             // let seturl = "monitor?" + "projectid=" + monitor_projectid + "&groupid=" + monitor_groupid + "&page=" + page;
             // setUrl(seturl);
             //

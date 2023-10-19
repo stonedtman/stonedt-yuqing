@@ -155,6 +155,7 @@
             height: 28px;
             align-items: center;
             display: flex;
+            justify-content: space-between;
             border-bottom: 1px solid #f2f3f5;
         }
         .result-title{
@@ -163,15 +164,6 @@
         }
         .identify-type{
             font-size: 16px;
-            margin-left: 20px;
-            display: flex;
-        }
-        .identify-tab{
-            cursor: pointer;
-            margin-right: 16px;
-        }
-        .identify-tab.active{
-            color: #6184e6;
         }
         .result-content{
             position: relative;
@@ -359,6 +351,10 @@
                             <span id="post_statement"></span>
                         </div>
                         <div class="btns" style="display: none">
+                            <div class="item" onclick="text_recognition_btn()">
+                                <span style="display: block;position: absolute;font-size: 12px;color: #fff;margin-left: 54px;background-color: #fe475d;height: 14px;line-height: 14px;border-radius: 45%;padding: 0 4px;transform: scale(0.9);">new</span>
+                                <div class="text">文字识别</div>
+                            </div>
                             <div class="item" onclick="image_recognition_btn()">
                                 <span style="display: block;position: absolute;font-size: 12px;color: #fff;margin-left: 54px;background-color: #fe475d;height: 14px;line-height: 14px;border-radius: 45%;padding: 0 4px;transform: scale(0.9);">new</span>
                                 <div class="text">图像识别</div>
@@ -751,7 +747,7 @@ $("#currentyear").text((new Date()).getFullYear());
                         }
 
                         for (let i = 0; i < arr.length; i++) {
-                            let index = arr[i].imgurl.indexOf("data/image")
+                            let index = arr[i].imgurl.indexOf("data:image/png")
                             if(index==-1){
                                 imageList.push(arr[i])
                             }else if(index==0){
@@ -1159,11 +1155,14 @@ $("#currentyear").text((new Date()).getFullYear());
         );
     }
 
-    $(".not-identify .btn").click(function () {
+    function text_recognition_btn(){
         if(imageList.length==0){
             not_image_recognition()
             return;
         }
+        getBlob(imageList[0].imgurl,"文字识别")
+    }
+    $(".not-identify .btn").click(function () {
         getBlob(imageList[0].imgurl)
     })
     function image_recognition_btn() {
@@ -1171,23 +1170,24 @@ $("#currentyear").text((new Date()).getFullYear());
             not_image_recognition()
             return;
         }
-        getBlob(imageList[0].imgurl)
+        getBlob(imageList[0].imgurl,"图像识别")
     }
-    async function getBlob(url,t) {
+    async function getBlob(url,t,content_only) {
         // fetch 为ES6新增，不支持IE兼容，请注意分辨
-        await fetch(url)
-            .then(response=>{
-                return response.blob()
-            })
-            .then((res) => {
-            let blob = new Blob([res])
-            let imgFile = new File([blob], "image", { type: 'image/png' })
-            nlp_ocr(url,imgFile,t)
-        })
+        // await fetch(url)
+        //     .then(response=>{
+        //         return response.blob()
+        //     })
+        //     .then((res) => {
+        //     let blob = new Blob([res])
+        //     let imgFile = new File([blob], "image", { type: 'image/png' })
+        //     nlp_ocr(url,imgFile,t,content_only)
+        // })
+        nlp_ocr(url,"",t,content_only)
     }
-    function nlp_ocr(url,imgFile,t) {
+    function nlp_ocr(url,imgFile,t,content_only) {
         let formdata = new FormData()
-        formdata.append("images",imgFile)
+        // formdata.append("images",imgFile)
         formdata.append("imageUrl",url)
         if(t=="图像识别"){
             $.ajax({
@@ -1199,9 +1199,14 @@ $("#currentyear").text((new Date()).getFullYear());
                 contentType : false,
                 success: function (res) {
                     if(res.status==200){
+                        if(!content_only){
+                            $("#imageRecognition").remove()
+                            imageIdentifyPopup()
+                            identifyresult("图像识别")
+                        }
                         imageidentifyresult(res.data.result)
                     }else if(res.status==424){
-                        image_recognition()
+                        image_recognition("图像识别")
                     }else{
                         $.blockUI({
                             message: res.msg,
@@ -1226,11 +1231,31 @@ $("#currentyear").text((new Date()).getFullYear());
                         });
                     }
                     if(res.status==1201){
-                        image_recognition()
+                        image_recognition("图像识别")
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-
+                    $.blockUI({
+                        message: "图像识别出错",
+                        fadeIn: 700,
+                        fadeOut: 700,
+                        timeout: 3000,
+                        showOverlay: false,
+                        centerY: false,
+                        css: {
+                            width: '250px',
+                            top: '20px',
+                            left: '',
+                            right: '20px',
+                            border: 'none',
+                            padding: '15px 5px',
+                            backgroundColor: '#000',
+                            '-webkit-border-radius': '10px',
+                            '-moz-border-radius': '10px',
+                            opacity: 0.9,
+                            color: '#fff'
+                        }
+                    });
                     if (xhr.status == 403) {
                         console.log(xhr, ajaxOptions, thrownError)
                     }
@@ -1247,11 +1272,14 @@ $("#currentyear").text((new Date()).getFullYear());
             contentType : false,
             success: function (res) {
                 if(res.status==200){
-                    imageIdentifyPopup()
-                    $("#imageRecognition").remove()
-                    identifyresult(res.data[0].data)
+                    if(!content_only){
+                        $("#imageRecognition").remove()
+                        imageIdentifyPopup()
+                        identifyresult("文字识别")
+                    }
+                    text_content_only(res.data[0].data,"文字识别")
                 }else if(res.status==424){
-                    image_recognition()
+                    image_recognition("文字识别")
                 }else{
                     $.blockUI({
                         message: res.msg,
@@ -1276,24 +1304,44 @@ $("#currentyear").text((new Date()).getFullYear());
                     });
                 }
                 if(res.status==1201){
-                    image_recognition()
+                    image_recognition("文字识别")
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
-
+                $.blockUI({
+                    message: "文字识别出错",
+                    fadeIn: 700,
+                    fadeOut: 700,
+                    timeout: 3000,
+                    showOverlay: false,
+                    centerY: false,
+                    css: {
+                        width: '250px',
+                        top: '20px',
+                        left: '',
+                        right: '20px',
+                        border: 'none',
+                        padding: '15px 5px',
+                        backgroundColor: '#000',
+                        '-webkit-border-radius': '10px',
+                        '-moz-border-radius': '10px',
+                        opacity: 0.9,
+                        color: '#fff'
+                    }
+                });
                 if (xhr.status == 403) {
                     console.log(xhr, ajaxOptions, thrownError)
                 }
             }
         });
     }
-    function image_recognition() {
+    function image_recognition(t) {
         var eventHtml =
             '<div class="shadebox" id="imageRecognition">'+
             '    <div class="showCreateEvent"> '+
             '        <div class="event-box">'+
             '            <div class="event-box-header"> '+
-            '                <h5 class="modal-title">图像识别绑定</h5>'+
+            '                <h5 class="modal-title">'+t+'绑定</h5>'+
             '                <i class="mdi mdi-close-circle-outline font-18 cursor-po" id="closethis"></i>'+
             '            </div>'+
             '            <div class="event-box-body">'+
@@ -1330,13 +1378,13 @@ $("#currentyear").text((new Date()).getFullYear());
             $("#imageRecognition").remove()
         })
         $(".step-btn").click(function () {
-            changestep("image")
+            changestep(t)
         })
         $(".steps .step").click(function (e) {
             let index = $(this).index()
             if(index==0){
                 $("#imageRecognition").remove()
-                image_recognition()
+                image_recognition(t)
             }
         })
 
@@ -1404,7 +1452,7 @@ $("#currentyear").text((new Date()).getFullYear());
                 secretId: secren_id,
                 secretKey: secren_key,
             }
-            if(type=="image"){
+            if(type=="文字识别"||type=="图像识别"){
                 $.ajax({
                     url: window.location.origin + "/platform/nlp/bind",
                     method: "post",
@@ -1509,12 +1557,12 @@ $("#currentyear").text((new Date()).getFullYear());
         }
         if(nowstep==3){
             $("#imageRecognition").remove()
-            if(type=="image"){
+            if(type=="文字识别"||type=="图像识别"){
                 if(imageList.length==0){
                     not_image_recognition()
                     return;
                 }
-                getBlob(imageList[0].imgurl)
+                getBlob(imageList[0].imgurl,type)
             }
             if(type=="write"){
                 reporting()
@@ -1541,19 +1589,7 @@ $("#currentyear").text((new Date()).getFullYear());
         loading(".event-box-body")
 
     }
-    function imageidentifyresult(listdata){
-        let contenthtml = ""
-        for (let i = 0; i < listdata.length; i++) {
-            contenthtml+=`
-                <div>${listdata[i].keyword}</div>
-            `
-        }
-        if(listdata.length==0){
-            contenthtml="暂无识别"
-        }
-        $(".result-content").html(contenthtml)
-    }
-    function identifyresult(listdata) {
+    function identifyresult(t) {
         let eventhtml = `
         <div class="card-identify" style="height: 100%">
             <div class="identify-images">
@@ -1567,16 +1603,13 @@ $("#currentyear").text((new Date()).getFullYear());
             <div class="identify-result">
                 <div class="result-header">
                     <div class="result-title">识别结果</div>
-                    <div class="identify-type">
-                        <div class="identify-tab active" data-index="1">文本识别</div>
-                        <div class="identify-tab" data-index="2">图像识别</div>
-                    </div>
+                    <div class="identify-type">${t}</div>
                 </div>
                 <div class="result-content">
                     <div class="not-identify">
                         <div class="tip">未识别图片中的文字内容</div>
                         <div class="tip">请点击下方按钮进行识别</div>
-                        <div class="btn">图像识别</div>
+                        <div class="btn">${t}</div>
                     </div>
                 </div>
                 <div class="result-footer">
@@ -1586,28 +1619,6 @@ $("#currentyear").text((new Date()).getFullYear());
         </div>
         `
         $(".event-box-body").html(eventhtml)
-        $(".identify-tab").click(function(){
-            if(this.className.indexOf("active")>-1){
-                return
-            }
-            $(".identify-tab").removeClass("active")
-            $(this).addClass("active")
-            loading(".result-content")
-            let index = this.getAttribute("data-index")
-            let idx = 0
-            let arr = document.querySelectorAll(".identify-img-list .img-item")
-            for (var i = 0; i < arr.length; i++) {
-                if(arr[i].className.indexOf("active")>-1){
-                    idx = i
-                }
-            }
-            if(index==1){
-                getBlob(imageList[idx].imgurl)
-            }
-            if(index==2){
-                getBlob(imageList[idx].imgurl,"图像识别")
-            }
-        })
         let imgList = imageList
         let html = ''
         for (let i = 0; i < imgList.length; i++) {
@@ -1636,15 +1647,30 @@ $("#currentyear").text((new Date()).getFullYear());
                 this.classList.add("active")
                 $(".identify-img img").attr("src",$(this).find("img")[0].src)
                 if(!document.querySelector(".result-content .not-identify")){
-                    getBlob($(this).find("img")[0].src)
+                    getBlob($(this).find("img")[0].src,t,true)
                 }
             })
         }
+
+    }
+    function text_content_only(listdata){
         let contenthtml = ""
         for (let i = 0; i < listdata.length; i++) {
             contenthtml+=`
                 <div>${listdata[i].text}</div>
             `
+        }
+        if(listdata.length==0){
+            contenthtml="暂无识别"
+        }
+        $(".result-content").html(contenthtml)
+    }
+    function imageidentifyresult(listdata){
+        let contenthtml = ""
+        for (let i = 0; i < listdata.length; i++) {
+            contenthtml+=`
+                    <div>${listdata[i].keyword}</div>
+                `
         }
         if(listdata.length==0){
             contenthtml="暂无识别"
@@ -1740,7 +1766,9 @@ $("#currentyear").text((new Date()).getFullYear());
         $("body").append(eventHtml)
         $("#close_this").click(function (param) {
             $("#intelligentWrite").remove()
-            source.close()
+            if(source!=null){
+                source.close()
+            }
         })
         loading(".event-box-body")
         $.ajax({
@@ -1759,27 +1787,7 @@ $("#currentyear").text((new Date()).getFullYear());
                     articleTitle = res.data
                     sse()
                 }else{
-                    $.blockUI({
-                        message: res.msg,
-                        fadeIn: 700,
-                        fadeOut: 700,
-                        timeout: 3000,
-                        showOverlay: false,
-                        centerY: false,
-                        css: {
-                            width: '250px',
-                            top: '20px',
-                            left: '',
-                            right: '20px',
-                            border: 'none',
-                            padding: '15px 5px',
-                            backgroundColor: '#000',
-                            '-webkit-border-radius': '10px',
-                            '-moz-border-radius': '10px',
-                            opacity: 0.9,
-                            color: '#fff'
-                        }
-                    });
+                    $(".event-box-body").html(res.msg);
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
