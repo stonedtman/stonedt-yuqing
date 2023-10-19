@@ -27,10 +27,10 @@ public interface PlatformService {
 
     /**
      * nlp光学字符识别
+     *
      * @param user 用户
-     * @param images 图片
      */
-    ResultUtil nlpOcr(User user, MultipartFile images,String imageUrl) throws IOException;
+    ResultUtil nlpOcr(User user, String imageUrl) throws IOException;
 
 
     /**
@@ -40,7 +40,7 @@ public interface PlatformService {
      * @param imageUrl 图片地址
      * @return 图像识别结果
      */
-    ResultUtil nlpImage(User user, MultipartFile images, String imageUrl)throws IOException;
+    ResultUtil nlpImage(User user, String imageUrl)throws IOException;
 
     /**
      * 写作宝服务绑定

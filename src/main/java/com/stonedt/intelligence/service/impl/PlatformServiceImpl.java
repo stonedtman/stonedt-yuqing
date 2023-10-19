@@ -25,7 +25,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -39,7 +38,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -120,6 +119,77 @@ public class PlatformServiceImpl implements PlatformService {
     }
 
     /**
+     * 根据url获取图片
+     */
+    private MultipartFile getImageByUrl(String url) throws IOException {
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        String fileName;
+        byte[] bytes;
+        try (Response response = okHttpClient.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                return null;
+            }
+            //获取图片字真实链接地址
+            String realUrl = response.request().url().toString();
+            //获取图片文件名
+            fileName = realUrl.substring(realUrl.lastIndexOf("/") + 1);
+            //获取图片字节流
+            if (response.body() != null) {
+                bytes = response.body().bytes();
+            }else {
+                return null;
+            }
+        }
+        return new MultipartFile() {
+            @Override
+            public String getName() {
+                return fileName;
+            }
+
+            @Override
+            public String getOriginalFilename() {
+                return fileName;
+            }
+
+            @Override
+            public String getContentType() {
+                return "image/jpeg";
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return bytes.length == 0;
+            }
+
+            @Override
+            public long getSize() {
+                return bytes.length;
+            }
+
+            @Override
+            public byte[] getBytes() {
+                return bytes;
+            }
+
+            @Override
+            public InputStream getInputStream() {
+                return new ByteArrayInputStream(bytes);
+            }
+
+            @Override
+            public void transferTo(File file) throws IOException, IllegalStateException {
+                try(FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+                    fileOutputStream.write(bytes);
+                }
+            }
+        };
+
+
+    }
+
+    /**
      * 调用nlp图像服务
      * @param user 用户
      * @param images 图片
@@ -156,17 +226,20 @@ public class PlatformServiceImpl implements PlatformService {
     /**
      * nlp光学字符识别
      *
-     * @param user   用户
-     * @param images 图片
+     * @param user 用户
      */
     @Override
-    public ResultUtil nlpOcr(User user, MultipartFile images,String imageUrl) throws IOException {
+    public ResultUtil nlpOcr(User user, String imageUrl) throws IOException {
         String cache = redisTemplate.opsForValue().get(RedisPrefixConstant.NLP_OCR + imageUrl);
         if (cache != null) {
             return ResultUtil.ok(JSON.parse(cache));
         }
+        //获取图片文件对象
+        MultipartFile images = getImageByUrl(imageUrl);
+        if (images == null) {
+            return ResultUtil.build(500, "图片获取失败");
+        }
         //调用nlp服务,参数为图片
-
         String result = callNlpImages(user, images, nlpOcrUrl);
 
         if (result == null){
@@ -186,10 +259,15 @@ public class PlatformServiceImpl implements PlatformService {
     }
 
     @Override
-    public ResultUtil nlpImage(User user, MultipartFile images, String imageUrl) throws IOException {
+    public ResultUtil nlpImage(User user, String imageUrl) throws IOException {
         String cache = redisTemplate.opsForValue().get(RedisPrefixConstant.NLP_IMAGE + imageUrl);
         if (cache != null) {
             return ResultUtil.ok(JSON.parse(cache));
+        }
+        //获取图片文件对象
+        MultipartFile images = getImageByUrl(imageUrl);
+        if (images == null) {
+            return ResultUtil.build(500, "图片获取失败");
         }
         //调用nlp服务,参数为图片
         String result = callNlpImages(user, images, nlpClasspicUrl);
