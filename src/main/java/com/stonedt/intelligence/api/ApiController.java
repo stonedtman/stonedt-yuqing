@@ -48,27 +48,51 @@ public class ApiController {
                     content = @Content(mediaType = "application/json",schema = @Schema(implementation = SearchCondition.class)))
     )
     /*@SystemControllerLog(module = "数据监测", submodule = "数据监测-列表", type = "查询", operation = "getarticle")*/
-    @PostMapping(value = "/getarticle")
+    @PostMapping(value = "/getArticle")
     @ResponseBody
     public ResultVO<PageInfo<ArticleData>> getArticleList(@RequestBody JSONObject paramJson) {
+        paramJson.put("similar", 0);
         JSONObject response = monitorService.getArticleList(paramJson);
         return JSON.parseObject(response.toJSONString(), ResultVO.class);
     }
 
+
     /**
-     * 获取相似文章列表
+     * @param [paramJson]
+     * @return com.alibaba.fastjson.JSONObject
+     * @description: 获取文章列表 <br>
+     * @version: 1.0 <br>
+     * @date: 2020/4/16 19:34 <br>
+     * @author: huajiancheng <br>
      */
-    @Operation(summary = "获取相似文章列表",
-            description = "根据条件获取相似文章列表",
+    @Operation(summary = "获取文章列表(合并相似文章)",
+            description = "根据条件获取文章列表(合并相似文章)",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    content = @Content(mediaType = "application/json",schema = @Schema(implementation = SimilarSearchCondition.class)))
+                    content = @Content(mediaType = "application/json",schema = @Schema(implementation = SearchCondition.class)))
     )
-    @PostMapping(value = "/getSimilarArticle")
+    /*@SystemControllerLog(module = "数据监测", submodule = "数据监测-列表", type = "查询", operation = "getarticle")*/
+    @PostMapping(value = "/getMergeArticle")
     @ResponseBody
-    public ResultVO<PageInfo<ArticleData>> getSimilarArticle(@RequestBody JSONObject paramJson) {
-        JSONObject similarArticleList = monitorService.getSimilarArticleList(paramJson);
-        return JSON.parseObject(similarArticleList.toJSONString(), ResultVO.class);
+    public ResultVO<PageInfo<ArticleData>> getMergeArticleList(@RequestBody JSONObject paramJson) {
+        paramJson.put("similar", 1);
+        JSONObject response = monitorService.getArticleList(paramJson);
+        return JSON.parseObject(response.toJSONString(), ResultVO.class);
     }
+
+//    /**
+//     * 获取相似文章列表
+//     */
+//    @Operation(summary = "获取相似文章列表",
+//            description = "根据条件获取相似文章列表",
+//            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+//                    content = @Content(mediaType = "application/json",schema = @Schema(implementation = SimilarSearchCondition.class)))
+//    )
+//    @PostMapping(value = "/getSimilarArticle")
+//    @ResponseBody
+//    public ResultVO<PageInfo<ArticleData>> getSimilarArticle(@RequestBody JSONObject paramJson) {
+//        JSONObject similarArticleList = monitorService.getSimilarArticleList(paramJson);
+//        return JSON.parseObject(similarArticleList.toJSONString(), ResultVO.class);
+//    }
 
 
     @PostMapping(value = "/getToken")

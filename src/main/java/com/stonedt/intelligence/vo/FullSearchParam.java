@@ -54,10 +54,10 @@ public class FullSearchParam {
 
 
 	//筛选项
-	private String city;
+	private List<String> city;
 	private List<String> eventIndex;
 	private List<String> industryIndex;
-	private String province;
+	private List<String> province;
 	private Integer similar;
 	private Integer searchType;
 	private List<String> emotionalIndex;
@@ -287,11 +287,11 @@ public class FullSearchParam {
 		this.timee = timee;
 	}
 
-	public String getCity() {
+	public List<String> getCity() {
 		return city;
 	}
 
-	public void setCity(String city) {
+	public void setCity(List<String> city) {
 		this.city = city;
 	}
 
@@ -311,11 +311,11 @@ public class FullSearchParam {
 		this.industryIndex = industryIndex;
 	}
 
-	public String getProvince() {
+	public List<String> getProvince() {
 		return province;
 	}
 
-	public void setProvince(String province) {
+	public void setProvince(List<String> province) {
 		this.province = province;
 	}
 
