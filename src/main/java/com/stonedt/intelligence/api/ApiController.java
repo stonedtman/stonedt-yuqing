@@ -71,7 +71,7 @@ public class ApiController {
     }
 
 
-    @PostMapping(value = "/user/getToken")
+    @PostMapping(value = "/getToken")
     @ResponseBody
     public ResultVO<String> getToken(@RequestBody LoginVO loginVO, HttpServletRequest request) {
         loginVO.trim();

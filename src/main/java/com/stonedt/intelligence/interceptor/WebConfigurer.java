@@ -30,6 +30,9 @@ public class WebConfigurer implements WebMvcConfigurer {
     @Autowired
     private LoginHandlerInterceptor loginInterceptor;
 
+    @Autowired
+    private ApiHandlerInterceptor apiHandlerInterceptor;
+
     // 这个方法是用来配置静态资源的，比如html，js，css，等等
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -47,7 +50,11 @@ public class WebConfigurer implements WebMvcConfigurer {
                 .excludePathPatterns("/login", "/loginredirect", "/project/keywords", "/logout", "static/**", "/forgotpwd", "/assets/**", "/dist/**", "/common/**", "/monitor/weChatToken", "/hot/**")
                 .excludePathPatterns("/fullsearch/listFullTypeByThird", "/fullsearch/hotList", "/hot/hotpage/**", "/img/**", "/logonCode")
                 .excludePathPatterns("/swagger-ui/**", "/api-docs/**")
-                .excludePathPatterns("/user/getToken");
+                .excludePathPatterns("/api/**");
+
+        registry.addInterceptor(apiHandlerInterceptor)
+                .addPathPatterns("/api/**")
+                .excludePathPatterns("/api/getToken");
     }
 
 

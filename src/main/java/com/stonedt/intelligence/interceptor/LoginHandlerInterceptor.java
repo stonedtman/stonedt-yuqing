@@ -23,12 +23,6 @@ import javax.servlet.http.HttpSession;
 @Component
 public class LoginHandlerInterceptor implements HandlerInterceptor {
 
-    @Value("${token.expire-time}")
-    private Long expireTime;
-
-    @Value("${token.private-key}")
-    private String privateKey;
-
     // 目标方法执行之前
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -45,32 +39,6 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
 //            // 已登录，放行
 //            return true;
 //        }
-        // 从 http 请求头中取出 token
-        String token = request.getHeader("token");
-        // 如果不存在,则从session中获取
-        if (token != null && !token.isEmpty()) {
-            // 验证 token
-            if (JWTUtils.decode(token, privateKey)) {
-                UserDTO userDTO = JWTUtils.getEntity(token, UserDTO.class);
-                // 判断 token 是否过期
-                long currentTimeMillis = System.currentTimeMillis();
-                if (userDTO.getTokenIssueTime() + expireTime * 1000 > currentTimeMillis) {
-                    return true;
-                }else {
-                    // 返回utf-8 json格式的错误信息
-                    response.setCharacterEncoding("UTF-8");
-                    response.setContentType("application/json; charset=utf-8");
-                    response.getWriter().write("{\"code\":401,\"msg\":\"token过期\"}");
-                    return false;
-                }
-            }else {
-                // 返回utf-8 json格式的错误信息
-                response.setCharacterEncoding("UTF-8");
-                response.setContentType("application/json; charset=utf-8");
-                response.getWriter().write("{\"code\":403,\"msg\":\"token错误\"}");
-                return false;
-            }
-        }
 
         Object attribute = request.getSession().getAttribute("User");
         System.out.println(attribute);
