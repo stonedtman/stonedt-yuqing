@@ -2752,8 +2752,6 @@ function getnow() {
 function ajaxAsync(type, url, data, funcname) {
 	let data_ = JSON.parse(JSON.stringify(data))
 	data_ = JSON.parse(data_)
-	data_.city = data_.city.join()
-	data_.province = data_.province.join()
 	data_.classify = data_.classify.join()
 	data_.searchWord = data_.searchword
 	data_ = JSON.stringify(data_)

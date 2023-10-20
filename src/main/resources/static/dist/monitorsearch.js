@@ -25,8 +25,6 @@ function sendArticleSearch(param, data, funcname) {
     window.clearInterval(timeb);
     debugger;
     let data_ = JSON.parse(JSON.stringify(data))
-    data_.city = data_.city.join()
-    data_.province = data_.province.join()
     data_.classify = data_.classify.join()
     data_.searchWord = data_.searchword
     let s = JSON.stringify(data_);
