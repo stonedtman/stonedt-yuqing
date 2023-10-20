@@ -1193,9 +1193,9 @@ function installArticle(res) {
                         '<li class="inline-block" style="float: left;" ng-show="view.resultPresent != 3"> ' +
                         '<button type="button" data-tippy-placement="top" data-hover="dropdown" data-toggle="dropdown" data-animation="scale-up" data-delay="300" aria-expanded="false" class="tippy btn btn-default-icon fa-re-analysis dropdown-toggle" data-tippy="" title="情感标注"> </button>' +
                         '<ul class="dropdown-menu ng-scope" role="menu" ng-if="collectFoldersList!=null&amp;&amp;collectFoldersList.length>0">' +
-                        '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)"> <span class="dataemtion" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="1">正面</span> </a> </li>' +
-                        '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="deleteSolrIds(icc)"> <span class="dataemtion" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="2">中性</span> </a> </li>' +
-                        '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)"> <span class="dataemtion" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="3">负面</span> </a> </li> ' +
+                        '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="1"> <span class="dataemtion">正面</span> </a> </li>' +
+                        '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="deleteSolrIds(icc)" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="2"> <span class="dataemtion">中性</span> </a> </li>' +
+                        '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="3"> <span class="dataemtion">负面</span> </a> </li> ' +
                         '</ul>' +
                         '</li>' +
 
@@ -1357,9 +1357,9 @@ function installArticle(res) {
                                 '<li class="inline-block" style="float: left;" ng-show="view.resultPresent != 3"> ' +
                                 '<button type="button" data-tippy-placement="top" data-hover="dropdown" data-toggle="dropdown" data-animation="scale-up" data-delay="300" aria-expanded="false" class="tippy btn btn-default-icon fa-re-analysis dropdown-toggle" data-tippy="" title="情感标注"> </button>' +
                                 '<ul class="dropdown-menu ng-scope" role="menu" ng-if="collectFoldersList!=null&amp;&amp;collectFoldersList.length>0">' +
-                                '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)"> <span class="dataemtion" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="1">正面</span> </a> </li>' +
-                                '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="deleteSolrIds(icc)"> <span class="dataemtion" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="2">中性</span> </a> </li>' +
-                                '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)"> <span class="dataemtion" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="3">负面</span> </a> </li> ' +
+                                '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="1"> <span class="dataemtion">正面</span> </a> </li>' +
+                                '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="deleteSolrIds(icc)" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="2"> <span class="dataemtion">中性</span> </a> </li>' +
+                                '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="3"> <span class="dataemtion">负面</span> </a> </li> ' +
                                 '</ul>' +
                                 '</li>' +
 
@@ -1515,9 +1515,9 @@ function installArticle(res) {
                                 '<li class="inline-block" style="float: left;" ng-show="view.resultPresent != 3"> ' +
                                 '<button type="button" data-tippy-placement="top" data-hover="dropdown" data-toggle="dropdown" data-animation="scale-up" data-delay="300" aria-expanded="false" class="tippy btn btn-default-icon fa-re-analysis dropdown-toggle" data-tippy="" title="情感标注"> </button>' +
                                 '<ul class="dropdown-menu ng-scope" role="menu" ng-if="collectFoldersList!=null&amp;&amp;collectFoldersList.length>0">' +
-                                '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)"> <span class="dataemtion" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="1">正面</span> </a> </li>' +
-                                '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="deleteSolrIds(icc)"> <span class="dataemtion" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="2">中性</span> </a> </li>' +
-                                '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)"> <span class="dataemtion" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="3">负面</span> </a> </li> ' +
+                                '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="1"> <span class="dataemtion">正面</span> </a> </li>' +
+                                '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="deleteSolrIds(icc)" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="2"> <span class="dataemtion">中性</span> </a> </li>' +
+                                '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="3"> <span class="dataemtion">负面</span> </a> </li> ' +
                                 '</ul>' +
                                 '</li>' +
 
@@ -1662,9 +1662,9 @@ function installArticle(res) {
                             '<li class="inline-block" style="float: left;" ng-show="view.resultPresent != 3"> ' +
                             '<button type="button" data-tippy-placement="top" data-hover="dropdown" data-toggle="dropdown" data-animation="scale-up" data-delay="300" aria-expanded="false" class="tippy btn btn-default-icon fa-re-analysis dropdown-toggle" data-tippy="" title="情感标注"> </button>' +
                             '<ul class="dropdown-menu ng-scope" role="menu" ng-if="collectFoldersList!=null&amp;&amp;collectFoldersList.length>0">' +
-                            '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)"> <span class="dataemtion" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="1">正面</span> </a> </li>' +
-                            '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="deleteSolrIds(icc)"> <span class="dataemtion" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="2">中性</span> </a> </li>' +
-                            '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)"> <span class="dataemtion" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="3">负面</span> </a> </li> ' +
+                            '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="1"> <span class="dataemtion">正面</span> </a> </li>' +
+                            '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="deleteSolrIds(icc)" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="2"> <span class="dataemtion">中性</span> </a> </li>' +
+                            '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="3"> <span class="dataemtion">负面</span> </a> </li> ' +
                             '</ul>' +
                             '</li>' +
 
@@ -4240,7 +4240,7 @@ $(document).on('click', '.sending', function () {
 
 //情感标记
 
-$(document).on('click', '.dataemtion', function () {
+$(document).on('click', '.dropdown-menu>li>a', function () {
     let id = $(this).data('type');
     let flag = $(this).data('flag');
     let publish_time = $(this).data('time');
