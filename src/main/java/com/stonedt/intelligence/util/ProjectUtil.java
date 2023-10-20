@@ -79,6 +79,16 @@ public class ProjectUtil {
 
             PageHelper.startPage(page, pageSize);
             projectList = projectService.getProjectInfoByGroupIdAndUserId(paramMap);
+            //group_id和project_id的转string
+            for (int i = 0; i < projectList.size(); i++) {
+                Map<String, Object> map = projectList.get(i);
+                Long project_id = (Long) map.get("project_id");
+                Long group_id_map = (Long) map.get("group_id");
+                String project_id_str = String.valueOf(project_id);
+                String group_id_str = String.valueOf(group_id_map);
+                map.put("project_id", project_id_str);
+                map.put("group_id", group_id_str);
+            }
             PageInfo<Map<String, Object>> pageInfo = new PageInfo<>(projectList);
             Integer totalPage = pageInfo.getPages();
             Long totalData = pageInfo.getTotal();
