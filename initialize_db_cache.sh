@@ -93,6 +93,7 @@ INSERT INTO `flyway_schema_history` VALUES (2, '1.1', 'InitTableAndData', 'SQL',
 INSERT INTO `flyway_schema_history` VALUES (3, '1.2', 'InitTableAndData', 'SQL', 'V1.2__InitTableAndData.sql', 1177090637, 'root', '2023-10-16 19:43:24', 14, 1);
 INSERT INTO `flyway_schema_history` VALUES (4, '1.3', 'InitTableAndData', 'SQL', 'V1.3__InitTableAndData.sql', 1117735008, 'root', '2023-10-16 19:43:24', 2, 1);
 INSERT INTO `flyway_schema_history` VALUES (5, '1.4', 'InitTableAndData', 'SQL', 'V1.4__InitTableAndData.sql', -383198443, 'root', '2023-10-16 19:47:20', 2, 1);
+INSERT INTO `flyway_schema_history` VALUES (6, '1.5',	'InitTableAndData',	'SQL',	'V1.5__InitTableAndData.sql',	1847882235,	'root',	'2023-10-20 15:12:27',	317,	1)
 
 -- ----------------------------
 -- Table structure for full_menu
@@ -360,7 +361,6 @@ CREATE TABLE `organization`  (
   `term_of_validity` datetime NULL DEFAULT NULL COMMENT '有效期',
   `status` int NULL DEFAULT 1 COMMENT '状态（1代表正常 2代表注销）',
   `organization_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '组织代码',
-  `logo_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'logo地址',
   `system_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '系统名称',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
