@@ -724,7 +724,7 @@ public class FullSearchServiceImpl implements FullSearchService{
         Integer similar = param.getMergeType();
         Integer matchingmode = param.getMatchType() - 1; // 关键词匹配规则
         String emotionalIndex = param.getEmotions();
-        String classify = param.getClassify();
+		String classify = param.getClassify();
         if (StringUtils.isBlank(emotionalIndex)) {
             emotionalIndex = "1,2,3";
         }
@@ -1084,9 +1084,14 @@ public class FullSearchServiceImpl implements FullSearchService{
 		JSONObject paramJson = new JSONObject();
 
 		String searchkeyword = param.getSearchWord();
+		if (StringUtils.isNotBlank(searchkeyword)) {
+            searchkeyword = searchkeyword.trim();
+        }else {
+			searchkeyword = "";
+		}
 		searchkeyword = searchkeyword.replace(" ", ",");
 		paramJson.put("keyword", searchkeyword);
-		if (StringUtils.isNotBlank(searchkeyword)) searchkeyword = searchkeyword.trim();
+
 //		Integer similar = param.getMergeType();
 		Integer similar = param.getSimilar();
 		Integer matchingmode =Integer.parseInt( param.getMatchingmode()) - 1; // 关键词匹配规则
@@ -1162,8 +1167,8 @@ public class FullSearchServiceImpl implements FullSearchService{
 		paramJson.put("totalCount", param.getTotalCount());
 		paramJson.put("classify", classify);
 		paramJson.put("city", param.getCity());
-		paramJson.put("eventIndex", param.getEventIndex());
-		paramJson.put("industryIndex", param.getIndustryIndex());
+		paramJson.put("eventIndex", StringUtils.join(param.getEventIndex(),","));
+		paramJson.put("industryIndex", StringUtils.join(param.getIndustryIndex(),","));
 		paramJson.put("province", param.getProvince());
 
 
@@ -1188,26 +1193,31 @@ public class FullSearchServiceImpl implements FullSearchService{
 
 
 		JSONArray eventArray = paramJson.getJSONArray("eventIndex");
-		String eventlable = StringUtils.join(eventArray, ",");
+		String eventlable = "";
+		if (eventArray != null) {
+			eventlable = StringUtils.join(eventArray, ",");
 
-		eventlable = eventlable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
-		if(eventlable.endsWith(",")) {
-			eventlable = eventlable.substring(0, eventlable.length()-1);
+			eventlable = eventlable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+			if(eventlable.endsWith(",")) {
+				eventlable = eventlable.substring(0, eventlable.length()-1);
+			}
 		}
+
 		paramJson.put("eventlable", eventlable);
 
 		paramJson.remove("eventIndex");
 
 
 		JSONArray industryArray = paramJson.getJSONArray("industryIndex");
-		String industrylable = StringUtils.join(industryArray, ",");
-
-
-
-		industrylable = industrylable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
-		if(industrylable.endsWith(",")) {
-			industrylable = industrylable.substring(0, industrylable.length()-1);
+		String industrylable = "";
+		if (industryArray != null) {
+			industrylable = StringUtils.join(industryArray, ",");
+			industrylable = industrylable.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
+			if(industrylable.endsWith(",")) {
+				industrylable = industrylable.substring(0, industrylable.length()-1);
+			}
 		}
+
 		paramJson.put("industrylable", industrylable);
 		paramJson.remove("industryIndex");
 
@@ -1291,11 +1301,7 @@ public class FullSearchServiceImpl implements FullSearchService{
 
 
 		//数据来源
-		JSONArray classify1 = paramJson.getJSONArray("classify");
-		String classifylist= StringUtils.join(classify1, ",");
-		if (StringUtils.isBlank(classifylist)) {
-			classifylist = "0";
-		}
+		String classifylist = paramJson.getString("classify");
 		paramJson.put("classify", classifylist);
 
 

@@ -1,6 +1,6 @@
 package com.stonedt.intelligence.vo;
 
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -12,6 +12,10 @@ import java.util.Objects;
 * @author Mapeng 
 * @date Jun 23, 2020
  */
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class FullSearchParam {
 	
 	private Integer timeType;
@@ -51,56 +55,13 @@ public class FullSearchParam {
 
 	//筛选项
 	private String city;
-	private String eventIndex;
-	private String industryIndex;
+	private List<String> eventIndex;
+	private List<String> industryIndex;
 	private String province;
 	private Integer similar;
 	private Integer searchType;
 	private List<String> emotionalIndex;
 	private Integer page;
-
-
-	public FullSearchParam() {
-	}
-
-	public FullSearchParam(Integer timeType, Integer mergeType, String matchMethod, Integer pageNum, Integer pageSize, String totalCount, String totalPage, String article_public_idstr, String searchWord, String classify, String startTime, String endTime, Integer sortType, String emotions, Integer matchType, String searchParam, String topic, String source_name, String timetype, String rtype, String website_id, Integer establish, Integer status, Integer publish, String matchingmode, String kinds, String times, String timee, String city, String eventIndex, String industryIndex, String province, Integer similar, Integer searchType, List<String> emotionalIndex, Integer page) {
-		this.timeType = timeType;
-		this.mergeType = mergeType;
-		this.matchMethod = matchMethod;
-		this.pageNum = pageNum;
-		this.pageSize = pageSize;
-		this.totalCount = totalCount;
-		this.totalPage = totalPage;
-		this.article_public_idstr = article_public_idstr;
-		this.searchWord = searchWord;
-		this.classify = classify;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.sortType = sortType;
-		this.emotions = emotions;
-		this.matchType = matchType;
-		this.searchParam = searchParam;
-		this.topic = topic;
-		this.source_name = source_name;
-		this.timetype = timetype;
-		this.rtype = rtype;
-		this.website_id = website_id;
-		this.establish = establish;
-		this.status = status;
-		this.publish = publish;
-		this.matchingmode = matchingmode;
-		this.kinds = kinds;
-		this.times = times;
-		this.timee = timee;
-		this.city = city;
-		this.eventIndex = eventIndex;
-		this.industryIndex = industryIndex;
-		this.province = province;
-		this.similar = similar;
-		this.searchType = searchType;
-		this.emotionalIndex = emotionalIndex;
-		this.page = page;
-	}
 
 	public Integer getTimeType() {
 		return timeType;
@@ -334,19 +295,19 @@ public class FullSearchParam {
 		this.city = city;
 	}
 
-	public String getEventIndex() {
+	public List<String> getEventIndex() {
 		return eventIndex;
 	}
 
-	public void setEventIndex(String eventIndex) {
+	public void setEventIndex(List<String> eventIndex) {
 		this.eventIndex = eventIndex;
 	}
 
-	public String getIndustryIndex() {
+	public List<String> getIndustryIndex() {
 		return industryIndex;
 	}
 
-	public void setIndustryIndex(String industryIndex) {
+	public void setIndustryIndex(List<String> industryIndex) {
 		this.industryIndex = industryIndex;
 	}
 
@@ -388,60 +349,5 @@ public class FullSearchParam {
 
 	public void setPage(Integer page) {
 		this.page = page;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		FullSearchParam that = (FullSearchParam) o;
-		return Objects.equals(timeType, that.timeType) && Objects.equals(mergeType, that.mergeType) && Objects.equals(matchMethod, that.matchMethod) && Objects.equals(pageNum, that.pageNum) && Objects.equals(pageSize, that.pageSize) && Objects.equals(totalCount, that.totalCount) && Objects.equals(totalPage, that.totalPage) && Objects.equals(article_public_idstr, that.article_public_idstr) && Objects.equals(searchWord, that.searchWord) && Objects.equals(classify, that.classify) && Objects.equals(startTime, that.startTime) && Objects.equals(endTime, that.endTime) && Objects.equals(sortType, that.sortType) && Objects.equals(emotions, that.emotions) && Objects.equals(matchType, that.matchType) && Objects.equals(searchParam, that.searchParam) && Objects.equals(topic, that.topic) && Objects.equals(source_name, that.source_name) && Objects.equals(timetype, that.timetype) && Objects.equals(rtype, that.rtype) && Objects.equals(website_id, that.website_id) && Objects.equals(establish, that.establish) && Objects.equals(status, that.status) && Objects.equals(publish, that.publish) && Objects.equals(matchingmode, that.matchingmode) && Objects.equals(kinds, that.kinds) && Objects.equals(times, that.times) && Objects.equals(timee, that.timee) && Objects.equals(city, that.city) && Objects.equals(eventIndex, that.eventIndex) && Objects.equals(industryIndex, that.industryIndex) && Objects.equals(province, that.province) && Objects.equals(similar, that.similar) && Objects.equals(searchType, that.searchType) && Objects.equals(emotionalIndex, that.emotionalIndex) && Objects.equals(page, that.page);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(timeType, mergeType, matchMethod, pageNum, pageSize, totalCount, totalPage, article_public_idstr, searchWord, classify, startTime, endTime, sortType, emotions, matchType, searchParam, topic, source_name, timetype, rtype, website_id, establish, status, publish, matchingmode, kinds, times, timee, city, eventIndex, industryIndex, province, similar, searchType, emotionalIndex, page);
-	}
-
-	@Override
-	public String toString() {
-		return "FullSearchParam{" +
-				"timeType=" + timeType +
-				", mergeType=" + mergeType +
-				", matchMethod='" + matchMethod + '\'' +
-				", pageNum=" + pageNum +
-				", pageSize=" + pageSize +
-				", totalCount='" + totalCount + '\'' +
-				", totalPage='" + totalPage + '\'' +
-				", article_public_idstr='" + article_public_idstr + '\'' +
-				", searchWord='" + searchWord + '\'' +
-				", classify='" + classify + '\'' +
-				", startTime='" + startTime + '\'' +
-				", endTime='" + endTime + '\'' +
-				", sortType=" + sortType +
-				", emotions='" + emotions + '\'' +
-				", matchType=" + matchType +
-				", searchParam='" + searchParam + '\'' +
-				", topic='" + topic + '\'' +
-				", source_name='" + source_name + '\'' +
-				", timetype='" + timetype + '\'' +
-				", rtype='" + rtype + '\'' +
-				", website_id='" + website_id + '\'' +
-				", establish=" + establish +
-				", status=" + status +
-				", publish=" + publish +
-				", matchingmode='" + matchingmode + '\'' +
-				", kinds='" + kinds + '\'' +
-				", times='" + times + '\'' +
-				", timee='" + timee + '\'' +
-				", city='" + city + '\'' +
-				", eventIndex='" + eventIndex + '\'' +
-				", industryIndex='" + industryIndex + '\'' +
-				", province='" + province + '\'' +
-				", similar=" + similar +
-				", searchType=" + searchType +
-				", emotionalIndex=" + emotionalIndex +
-				", page=" + page +
-				'}';
 	}
 }
