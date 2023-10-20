@@ -2753,6 +2753,7 @@ function ajaxAsync(type, url, data, funcname) {
 	data = JSON.parse(data)
 	data.city = data.city.join()
 	data.province = data.province.join()
+	data.classify = data.classify.join()
 	data = JSON.stringify(data)
 	$.ajax({
 		type : type,
