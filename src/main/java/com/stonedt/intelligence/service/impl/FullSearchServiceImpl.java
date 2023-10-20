@@ -1167,8 +1167,8 @@ public class FullSearchServiceImpl implements FullSearchService{
 		paramJson.put("totalCount", param.getTotalCount());
 		paramJson.put("classify", classify);
 		paramJson.put("city", param.getCity());
-		paramJson.put("eventIndex", StringUtils.join(param.getEventIndex(),","));
-		paramJson.put("industryIndex", StringUtils.join(param.getIndustryIndex(),","));
+		paramJson.put("eventIndex", param.getEventIndex());
+		paramJson.put("industryIndex", param.getIndustryIndex());
 		paramJson.put("province", param.getProvince());
 
 
