@@ -568,9 +568,9 @@ a {
     width: calc(100% - 170px);
 }
 
-.wb-right-content>div {
-    -webkit-line-clamp: 4;
-}
+/*.wb-right-content>div {*/
+/*    -webkit-line-clamp: 4;*/
+/*}*/
 
 .disabled {
     cursor: no-drop;
