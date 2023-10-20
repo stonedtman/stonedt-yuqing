@@ -1090,7 +1090,7 @@ public class FullSearchServiceImpl implements FullSearchService{
 //		Integer similar = param.getMergeType();
 		Integer similar = param.getSimilar();
 		Integer matchingmode =Integer.parseInt( param.getMatchingmode()) - 1; // 关键词匹配规则
-		String emotionArray = param.getEmotionalIndex();
+		List<String> emotionArray = param.getEmotionalIndex();
 		String classify = param.getClassify();
 		String emotionalIndex = StringUtils.join(emotionArray, ",");
 		emotionalIndex = emotionalIndex.replaceAll("\"", "").replaceAll("0", "").replaceAll("\\[", "").replaceAll("\\]", "");
