@@ -2750,17 +2750,18 @@ function getnow() {
  * @returns
  */
 function ajaxAsync(type, url, data, funcname) {
-	data = JSON.parse(data)
-	data.city = data.city.join()
-	data.province = data.province.join()
-	data.classify = data.classify.join()
-	data.searchWord = data.searchword
-	data = JSON.stringify(data)
+	let data_ = JSON.parse(JSON.stringify(data))
+	data_ = JSON.parse(data_)
+	data_.city = data_.city.join()
+	data_.province = data_.province.join()
+	data_.classify = data_.classify.join()
+	data_.searchWord = data_.searchword
+	data_ = JSON.stringify(data_)
 	$.ajax({
 		type : type,
 		url : url,
 		dataType : 'json',
-		data : data,
+		data : data_,
 		async : true,
 		contentType : 'application/json;charset=utf-8',
 		beforeSend : function() {

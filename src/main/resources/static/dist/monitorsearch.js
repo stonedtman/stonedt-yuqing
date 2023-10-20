@@ -24,7 +24,12 @@ function sendArticleSearch(param, data, funcname) {
     window.clearTimeout(timea);
     window.clearInterval(timeb);
     debugger;
-    let s = JSON.stringify(data);
+    let data_ = JSON.parse(JSON.stringify(data))
+    data_.city = data_.city.join()
+    data_.province = data_.province.join()
+    data_.classify = data_.classify.join()
+    data_.searchWord = data_.searchword
+    let s = JSON.stringify(data_);
     $("#page").html("");
     $.ajax({
         type: 'POST',
