@@ -1056,7 +1056,13 @@
 		
 		function escape2Html(str) {
 		 var arrEntities={'lt':'<','gt':'>','nbsp':' ','amp':'&','quot':'"'};
-		 return str.replace(/&(lt|gt|nbsp|amp|quot);/ig,function(all,t){return arrEntities[t];});
+		 let newStr = str.replace(/&(lt|gt|nbsp|amp|quot);/ig,function(all,t){return arrEntities[t];})
+			try {
+				JSON.parse(newStr)
+			} catch (e) {
+				return str;
+			}
+			return newStr;
 		}
 		
 		function getProjects(){
