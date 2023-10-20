@@ -2,13 +2,15 @@ package com.stonedt.intelligence.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.stonedt.intelligence.constant.PromptConstant;
+import com.stonedt.intelligence.constant.XieConstant;
 import com.stonedt.intelligence.constant.RedisPrefixConstant;
 import com.stonedt.intelligence.dao.UserDao;
+import com.stonedt.intelligence.dto.SecretDTO;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.service.ArticleService;
 import com.stonedt.intelligence.service.PlatformService;
 import com.stonedt.intelligence.util.ResultUtil;
+import com.stonedt.intelligence.util.ShaUtil;
 import com.stonedt.intelligence.util.UserUtil;
 import com.stonedt.intelligence.vo.BindParamsVo;
 import com.stonedt.intelligence.vo.CopyWriting;
@@ -23,6 +25,7 @@ import okhttp3.sse.EventSourceListener;
 import okhttp3.sse.EventSources;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -68,11 +71,8 @@ public class PlatformServiceImpl implements PlatformService {
     @Value("${platform.nlp.classpic-url}")
     private String nlpClasspicUrl;
 
-    @Value("${platform.xie.copy-writing}")
-    private String xieCopyWritingUrl;
-
-    @Value("${platform.xie.title}")
-    private String xieTitleUrl;
+    @Value("${platform.xie.url}")
+    private String xieUrl;
 
     @Value("${platform.notice.url}")
     private String noticeUrl;
@@ -299,6 +299,32 @@ public class PlatformServiceImpl implements PlatformService {
         // 获取用户id
         User user = userUtil.getuser(request);
         bindParamsVo.setUserId(user.getId());
+        String secretId = bindParamsVo.getSecretId();
+        String secretKey = bindParamsVo.getSecretKey();
+        if(secretId == null || secretKey == null) {
+            return ResultUtil.build(500, "secretId和secretKey不能为空!");
+        }
+        //校验secretId和secretKey
+        String sha1 = ShaUtil.getSHA1(secretId, false);
+        if(!sha1.equals(secretKey)) {
+            return ResultUtil.build(500, "secretId和secretKey不匹配!");
+        }
+        //根据secretId和secretKey获取用户
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        SecretDTO secretDTO = new SecretDTO();
+        BeanUtils.copyProperties(bindParamsVo, secretDTO);
+        String jsonString = JSON.toJSONString(secretDTO);
+        HttpEntity<String> requestEntity = new HttpEntity<>(jsonString, headers);
+        String result = restTemplate.postForObject(xieUrl + XieConstant.XIE_CHECK_SECRET, requestEntity, String.class);
+        if (result == null) {
+            return ResultUtil.build(500, "写作宝服务调用失败");
+        }
+        JSONObject jsonObject = JSON.parseObject(result);
+        Boolean exist = jsonObject.getBoolean("data");
+        if (!exist) {
+            return ResultUtil.build(500, "该写作宝账号不存在");
+        }
         try {
             userDao.bindXie(bindParamsVo);
             User newUser = userDao.selectById(user.getId());
@@ -320,12 +346,12 @@ public class PlatformServiceImpl implements PlatformService {
      */
     @Override
     public SseEmitter xieReport(User user, CopyWriting copyWriting, String articleId) {
-        copyWriting.setPromptId(PromptConstant.XIE_REPORT);
+        copyWriting.setPromptId(XieConstant.XIE_REPORT_PROMPT_ID);
         String text = copyWriting.getParams().get("text");
         //去除html标签,保留文字
         text = text.replaceAll("<[^>]*>", "");
-        if (text.length() > PromptConstant.MAX_INPUT_LENGTH) {
-            text = text.substring(0, PromptConstant.MAX_INPUT_LENGTH);
+        if (text.length() > XieConstant.MAX_INPUT_LENGTH) {
+            text = text.substring(0, XieConstant.MAX_INPUT_LENGTH);
         }
         copyWriting.getParams().put("text", text);
         //调用写作宝服务
@@ -335,7 +361,7 @@ public class PlatformServiceImpl implements PlatformService {
                 .addHeader("secret-id", user.getXie_secret_id())
                 .addHeader("secret-key", user.getXie_secret_key())
                 .method("POST", requestBody)
-                .url(xieCopyWritingUrl)
+                .url(xieUrl+XieConstant.XIE_COPY_WRITING)
                 .build();
         EventSource.Factory factory = EventSources.createFactory(okHttpClient);
         SseEmitter sseEmitter = new SseEmitter(300000L);
@@ -508,7 +534,7 @@ public class PlatformServiceImpl implements PlatformService {
             return ResultUtil.ok(titleCache);
         }
 
-        copyWriting.setPromptId(PromptConstant.XIE_REPORT);
+        copyWriting.setPromptId(XieConstant.XIE_REPORT_PROMPT_ID);
         String text = copyWriting.getParams().get("text");
         //去除html标签,保留文字
         text = text.replaceAll("<[^>]*>", "");
@@ -523,7 +549,7 @@ public class PlatformServiceImpl implements PlatformService {
         headers.set("secret-key", user.getXie_secret_key());
         String jsonString = JSON.toJSONString(copyWriting);
         HttpEntity<String> requestEntity = new HttpEntity<>(jsonString, headers);
-        String result = restTemplate.postForObject(xieTitleUrl, requestEntity, String.class);
+        String result = restTemplate.postForObject(xieUrl+XieConstant.XIE_TITLE, requestEntity, String.class);
         if (result == null) {
             return ResultUtil.build(500, "写作宝服务调用失败");
         }
