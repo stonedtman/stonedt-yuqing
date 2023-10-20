@@ -300,6 +300,13 @@
         #wx_pic {
             display: none !important;
         }
+        .error-tips{
+            margin-top: 160px;
+            font-size: 18px;
+            color: #333;
+            font-weight: bold;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -705,8 +712,8 @@ $("#currentyear").text((new Date()).getFullYear());
                     if (res.emotionText) {
                         $('#emotionText').html(res.emotionText);
                     }
-                    if (res.detail) {
-                    	
+                    if (res.detail&&res.detail.code==200) {
+
                     	
                     	
 //                    let articleIdArray = articleIds.split(",");
@@ -745,15 +752,15 @@ $("#currentyear").text((new Date()).getFullYear());
 //
 //                        pageStrAll = pageStrStart + currentBefore + currentAfter + pageStrEnd;
                         let arr = [];
-                        if (res.detail.extend_string_one !== '' && res.detail.extend_string_one !== null) {
+                        if (res.detail.extend_string_one !== '' && res.detail.extend_string_one !== null && res.detail.extend_string_one !== undefined) {
                             arr = JSON.parse(res.detail.extend_string_one).imglist;
                         }
 
                         for (let i = 0; i < arr.length; i++) {
                             let index = arr[i].imgurl.indexOf("data:image/png")
-                            if(index==-1){
+                            if(index==-1&&arr[i].imgurl!="https://n.sinaimg.cn/default/2fb77759/20151125/320X320.png"){
                                 imageList.push(arr[i])
-                            }else if(index==0){
+                            }else if(index==0&&arr[i].imgurl!="https://n.sinaimg.cn/default/2fb77759/20151125/320X320.png"){
                                 imageList.push(arr[i])
                             }
                         }
@@ -1144,6 +1151,16 @@ $("#currentyear").text((new Date()).getFullYear());
                         
                         
                     }
+                    if(res.detail&&res.detail.code==500){
+                        dataerror(".card.card-detail")
+                        $(".btns").remove()
+                        let list = $(".col-lg-4").find(".card")
+                        for (var i = 0; i < list.length; i++) {
+                            if(i>1){
+                                list[i].remove()
+                            }
+                        }
+                    }
                     if (res.emotionChart) {
                         emotionChart(res.emotionChart);
                     }
@@ -1175,7 +1192,7 @@ $("#currentyear").text((new Date()).getFullYear());
         }
         getBlob(imageList[0].imgurl,"图像识别")
     }
-    async function getBlob(url,t,content_only) {
+    function getBlob(url,t,content_only) {
         // fetch 为ES6新增，不支持IE兼容，请注意分辨
         // await fetch(url)
         //     .then(response=>{
@@ -1186,12 +1203,14 @@ $("#currentyear").text((new Date()).getFullYear());
         //     let imgFile = new File([blob], "image", { type: 'image/png' })
         //     nlp_ocr(url,imgFile,t,content_only)
         // })
-        nlp_ocr(url,"",t,content_only)
-    }
-    function nlp_ocr(url,imgFile,t,content_only) {
         if(!content_only){
             imageIdentifyPopup()
         }
+        setTimeout(function(){
+            nlp_ocr(url,"",t,content_only)
+        },100)
+    }
+    function nlp_ocr(url,imgFile,t,content_only) {
         let formdata = new FormData()
         // formdata.append("images",imgFile)
         formdata.append("imageUrl",url)
@@ -1213,7 +1232,7 @@ $("#currentyear").text((new Date()).getFullYear());
                         $("#imageIdentify").remove()
                         image_recognition("图像识别")
                     }else{
-                        $(".event-box-body").html(res.msg)
+                        $(".event-box-body").html("<div class='error-tips'>"+res.msg+"</div>")
                     }
                     if(res.status==1201){
                         $("#imageIdentify").remove()
@@ -1243,28 +1262,7 @@ $("#currentyear").text((new Date()).getFullYear());
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    $.blockUI({
-                        message: "图像识别出错",
-                        fadeIn: 700,
-                        fadeOut: 700,
-                        timeout: 3000,
-                        showOverlay: false,
-                        centerY: false,
-                        css: {
-                            width: '250px',
-                            top: '20px',
-                            left: '48%',
-                            right: '',
-                            border: 'none',
-                            zIndex: 1051,
-                            padding: '15px 5px',
-                            backgroundColor: '#fff',
-                            '-webkit-border-radius': '10px',
-                            '-moz-border-radius': '10px',
-                            opacity: 0.9,
-                            color: '#000'
-                        }
-                    });
+                    $(".event-box-body").html("<div class='error-tips'>图像识别出错</div>")
                     if (xhr.status == 403) {
                         console.log(xhr, ajaxOptions, thrownError)
                     }
@@ -1289,7 +1287,7 @@ $("#currentyear").text((new Date()).getFullYear());
                     $("#imageIdentify").remove()
                     image_recognition("文字识别")
                 }else{
-                    $(".event-box-body").html(res.msg)
+                    $(".event-box-body").html("<div class='error-tips'>"+res.msg+"</div>")
                 }
                 if(res.status==1201){
                     $("#imageIdentify").remove()
@@ -1319,27 +1317,8 @@ $("#currentyear").text((new Date()).getFullYear());
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                $.blockUI({
-                    message: "文字识别出错",
-                    fadeIn: 700,
-                    fadeOut: 700,
-                    timeout: 3000,
-                    showOverlay: false,
-                    centerY: false,
-                    css: {
-                        width: '250px',
-                        top: '20px',
-                        left: '',
-                        right: '20px',
-                        border: 'none',
-                        padding: '15px 5px',
-                        backgroundColor: '#000',
-                        '-webkit-border-radius': '10px',
-                        '-moz-border-radius': '10px',
-                        opacity: 0.9,
-                        color: '#fff'
-                    }
-                });
+                $(".event-box-body").html("<div class='error-tips'>文字识别出错</div>")
+
                 if (xhr.status == 403) {
                     console.log(xhr, ajaxOptions, thrownError)
                 }
@@ -1446,15 +1425,16 @@ $("#currentyear").text((new Date()).getFullYear());
                     css: {
                         width: '250px',
                         top: '20px',
-                        left: '',
-                        right: '20px',
+                        left: '50%',
+                        right: '',
                         border: 'none',
+                        zIndex: 1051,
                         padding: '15px 5px',
-                        backgroundColor: '#000',
+                        transform: "translateX(-50%)",
+                        backgroundColor: '#fff',
                         '-webkit-border-radius': '10px',
                         '-moz-border-radius': '10px',
-                        opacity: 0.9,
-                        color: '#fff'
+                        color: '#000'
                     }
                 });
                 return
@@ -1493,15 +1473,16 @@ $("#currentyear").text((new Date()).getFullYear());
                                 css: {
                                     width: '250px',
                                     top: '20px',
-                                    left: '',
-                                    right: '20px',
+                                    left: '50%',
+                                    right: '',
                                     border: 'none',
+                                    zIndex: 1051,
                                     padding: '15px 5px',
-                                    backgroundColor: '#000',
+                                    transform: "translateX(-50%)",
+                                    backgroundColor: '#fff',
                                     '-webkit-border-radius': '10px',
                                     '-moz-border-radius': '10px',
-                                    opacity: 0.9,
-                                    color: '#fff'
+                                    color: '#000'
                                 }
                             });
                         }
@@ -1544,15 +1525,16 @@ $("#currentyear").text((new Date()).getFullYear());
                                 css: {
                                     width: '250px',
                                     top: '20px',
-                                    left: '',
-                                    right: '20px',
+                                    left: '50%',
+                                    right: '',
                                     border: 'none',
+                                    zIndex: 1051,
                                     padding: '15px 5px',
-                                    backgroundColor: '#000',
+                                    transform: "translateX(-50%)",
+                                    backgroundColor: '#fff',
                                     '-webkit-border-radius': '10px',
                                     '-moz-border-radius': '10px',
-                                    opacity: 0.9,
-                                    color: '#fff'
+                                    color: '#000'
                                 }
                             });
                         }
@@ -1597,7 +1579,6 @@ $("#currentyear").text((new Date()).getFullYear());
             $("#imageIdentify").remove()
         })
         loading(".event-box-body")
-
     }
     function identifyresult(t) {
         let eventhtml = `
@@ -1825,7 +1806,7 @@ $("#currentyear").text((new Date()).getFullYear());
                     });
                     intelligent_write_recognition()
                 }else{
-                    $(".event-box-body").html(res.msg);
+                    $(".event-box-body").html("<div class='error-tips'>"+res.msg+"</div>");
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
