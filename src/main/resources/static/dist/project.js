@@ -830,7 +830,7 @@ function confirmDelete(id) {
     $("#confirm").click(function (param) {
         $.ajax({
             type: "POST",
-            url: ctxPath + "project/delProject",
+            url: ctxPath + "project/delProjectDetail",
             dataType: 'json',
             data: {
                 groupid: groupid,
