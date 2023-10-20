@@ -2754,6 +2754,7 @@ function ajaxAsync(type, url, data, funcname) {
 	data.city = data.city.join()
 	data.province = data.province.join()
 	data.classify = data.classify.join()
+	data.searchWord = data.searchword
 	data = JSON.stringify(data)
 	$.ajax({
 		type : type,
