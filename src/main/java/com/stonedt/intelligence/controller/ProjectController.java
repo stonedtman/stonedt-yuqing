@@ -328,7 +328,7 @@ public class ProjectController {
     @SystemControllerLog(module = "监测管理", submodule = "监测管理-新增方案", type = "提交新增", operation = "commitproject")
     @PostMapping(value = "/commitproject")
     @ResponseBody
-    public JSONObject commitproject(@RequestBody JSONObject paramJson, HttpServletRequest request) {
+    public JSONObject commitproject(@RequestBody JSONObject paramJson, HttpServletRequest request) throws ExecutionException, InterruptedException {
         JSONObject response = new JSONObject();
         JSONObject kafukaJson = new JSONObject();
         kafukaJson = paramJson;
@@ -373,7 +373,7 @@ public class ProjectController {
             p.setRegionalWord(regional_word);
             p.setStopWord(stop_word);
             p.setGroupId(paramJson.getLong("group_id"));
-            p.setUserId(userUtil.getuser(request).getUser_id());
+            p.setUserId(user_id);
             //新增方案
             int i = projectService.insertProject(p);
             if (i > 0) {
@@ -393,7 +393,7 @@ public class ProjectController {
                 paramOpinionMap.put("similar", 0);
                 paramOpinionMap.put("sort", 1);
                 paramOpinionMap.put("matchs", 1);
-                Integer opinionConditionCount = opinionConditionService.addOpinionConditionById(paramOpinionMap);
+                Future<Integer> opinionConditionSubmit = ThreadPoolConst.IO_EXECUTOR.submit(() -> opinionConditionService.addOpinionConditionById(paramOpinionMap));
 
                 Map<String, Object> warningMap = new HashMap<String, Object>();
                 Long warning_setting_id = SnowflakeUtil.getId();
@@ -416,7 +416,7 @@ public class ProjectController {
 
                 idJson.put("project_id", projectid);
                 idJson.put("group_id", group_id);
-
+                Integer opinionConditionCount = opinionConditionSubmit.get();
                 if (opinionConditionCount > 0 && warningCount > 0) {
                     response.put("code", 200);
                     response.put("msg", "方案新增成功");
@@ -444,7 +444,7 @@ public class ProjectController {
                 projectTask.setStop_word(stop_word);
                 projectTask.setSubject_word(subject_word);
                 projectTask.setVolume_flag(0);
-                projectTaskDao.saveProjectTask(projectTask);
+                ThreadPoolConst.IO_EXECUTOR.execute(() -> projectTaskDao.saveProjectTask(projectTask));
 
 
                 String message = "";
@@ -479,12 +479,15 @@ public class ProjectController {
                    }
                 }
                 try {
-                    String kafukaResponse = MyHttpRequestUtil.doPostKafka("ikHotWords", message, kafuka_url);
+                    String finalMessage = message;
+                    ThreadPoolConst.IO_EXECUTOR.execute(() -> MyHttpRequestUtil.doPostKafka("ikHotWords", finalMessage, kafuka_url));
                     RestTemplate template = new RestTemplate();
                     MultiValueMap<String, Object> paramMap = new LinkedMultiValueMap<String, Object>();
                     paramMap.add("text", message);
-                    String result = template.postForObject(insert_new_words_url, paramMap, String.class);
-                    System.out.println("result========================="+result);
+                    ThreadPoolConst.IO_EXECUTOR.execute(() -> {
+                        String result = template.postForObject(insert_new_words_url, paramMap, String.class);
+                        System.out.println("result========================="+result);
+                    });
                 } catch (Exception e) {
                     // TODO: handle exception
                 }
