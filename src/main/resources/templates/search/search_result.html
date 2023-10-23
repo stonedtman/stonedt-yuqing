@@ -196,6 +196,9 @@
         .wb-right-content{
             width: auto;
         }
+        .tippy {
+            padding: 3px;
+        }
     </style>
 </head>
 <body>
@@ -1462,7 +1465,7 @@
         </div>
         <div class="right-filtrate bg-white">
             <div class="scrollable position-relative ps-container ps-theme-default" style="height:100%;">
-                <div class="filter-box">
+                <div class="filter-box" style="display: none">
                     <div class="card-title filter-title">
                        	 筛选项
                         <i class="mdi mdi-minus-circle-outline" id="classifyhide"></i>
@@ -1576,25 +1579,33 @@
                 <div class="filter-box" id="timesbox">
                     <div class="card-title filter-title">时间范围</div>
                     <div class="inline-list inlineTimebox" id="inlineTime">
-                        <span data-time=6 class="badge badge-pill badge-info">15天</span>
                         <span data-time=1 class="badge badge-pill badge-light">24小时</span>
-                        <span data-time=4 class="badge badge-pill badge-light">3天</span>
-
-                        <span data-time=0 class="badge badge-pill badge-light">更多..</span>
-
-                    </div>
-                </div>
-                <div class="filter-box" id="time-box" style="display: none;padding-top:0px">
-                    <div class="inline-list inlineTimebox" id="inlineTime">
+                        <span data-time=3 class="badge badge-pill badge-light">昨天</span>
+                        <span data-time=4 class="badge badge-pill badge-info">3天</span>
                         <span data-time=5 class="badge badge-pill badge-light">7天</span>
+                        <span data-time=6 class="badge badge-pill badge-light">15天</span>
                         <span data-time=7 class="badge badge-pill badge-light">30天</span>
                         <span data-time=2 class="badge badge-pill badge-light">一年</span>
                         <span data-time=8 class="badge badge-pill badge-light">自定义</span>
+<!--                        <span data-time=0 class="badge badge-pill badge-light">更多..</span>-->
+
                     </div>
                     <div class="input-daterange input-group monitor-date m-t-10" style="display: none" id="date-range">
                         <input type="text" class="form-control" name="start" placeholder="开始日期"/>
                         <input type="text" class="form-control" name="end" placeholder="结束日期"/>
                     </div>
+                </div>
+                <div class="filter-box" id="time-box" style="padding:0px">
+<!--                    <div class="inline-list inlineTimebox" id="inlineTime">-->
+<!--                        <span data-time=6 class="badge badge-pill badge-light">15天</span>-->
+<!--                        <span data-time=7 class="badge badge-pill badge-light">30天</span>-->
+<!--                        <span data-time=2 class="badge badge-pill badge-light">一年</span>-->
+<!--                        <span data-time=8 class="badge badge-pill badge-light">自定义</span>-->
+<!--                    </div>-->
+<!--                    <div class="input-daterange input-group monitor-date m-t-10" style="display: none" id="date-range">-->
+<!--                        <input type="text" class="form-control" name="start" placeholder="开始日期"/>-->
+<!--                        <input type="text" class="form-control" name="end" placeholder="结束日期"/>-->
+<!--                    </div>-->
                 </div>
                 <div class="filter-box" id="similarbox">
                     <div class="card-title filter-title">

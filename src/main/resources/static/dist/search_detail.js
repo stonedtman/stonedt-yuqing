@@ -37,15 +37,15 @@ function breadCrumbs() {
         contentType: 'application/json;charset=utf-8',
         success: function (res) {
         	console.log(res)
-        	var menuHtml = '情报搜索';
+        	var menuHtml = '全文搜索';
             var html = '<li class="breadcrumb-item">' + menuHtml + '</li>';
-            if(menuStyle == 1){ //展开模式
-            	 html += '<li class="breadcrumb-item">'+ res.fullTypeName +'</li>';
-            }
-            if(menuStyle == 0){//聚合模式
-            	html += '<li class="breadcrumb-item">'+ res.polyIdName +'</li>';
-            	html += '<li class="breadcrumb-item">'+ res.onlyIdName +'</li>';
-            }
+            // if(menuStyle == 1){ //展开模式
+            // 	 html += '<li class="breadcrumb-item">'+ res.fullTypeName +'</li>';
+            // }
+            // if(menuStyle == 0){//聚合模式
+            // 	html += '<li class="breadcrumb-item">'+ res.polyIdName +'</li>';
+            // 	html += '<li class="breadcrumb-item">'+ res.onlyIdName +'</li>';
+            // }
            
             html += '<li class="breadcrumb-item">文章详情</li>';
             $('#breadCrumbs').html(html);

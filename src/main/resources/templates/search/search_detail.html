@@ -63,9 +63,9 @@
 </head>
 <body>
 <div id="main-wrapper">
-    <div th:replace="common/header::header"></div>
-    <div th:replace="common/search_left::search_left"></div>
-    <div class="page-wrapper">
+    <div th:replace="common/zhheader::header"></div>
+<!--    <div th:replace="common/search_left::search_left"></div>-->
+    <div class="page-wrapper" style="margin-left: 0;">
         <div class="right-part right-content">
             <!-- nav start-->
             <div class="page-breadcrumb">
@@ -102,8 +102,8 @@
                                     <span id="category"></span>
                                     <span id="industrylable"></span>
                                     <span id="eventlable"></span>
-                                    
-                                    
+
+
                                     <span id="yuanwen"></span>
                                 </div>
                             </div>
@@ -241,8 +241,8 @@
                                 <div class="detail-tags" id="loc"></div>
                             </div>
                         </div>
-                        
-                        
+
+
                         <div class="card" id="policyCard">
                             <div class="card-body">
                                 <div class="detail-card-title">涉及政策条例</div>
@@ -261,10 +261,10 @@
                                 <div class="detail-tags" id="eventlable"></div>
                             </div>
                         </div>
-                        
-                        
-                        
-                        
+
+
+
+
 
                         <div class="card m-b-0">
                             <div class="card-body">
@@ -304,6 +304,12 @@
 <script th:src="@{/dist/baidu/baidu_statistics.js}"></script>
 
 <script type="text/javascript" th:inline="javascript">
+    var ctx = [[@{/}]];
+    var full_type = [[${fulltype}]];
+    var full_poly = [[${full_poly}]];
+    var menuStyle = [[${menuStyle}]];
+    var pageSize = [[${pageSize}]];
+    var searchWord = [[${searchWord}]]
 $("#currentyear").text((new Date()).getFullYear());
 
     var groupId = [[${groupid}]];

@@ -662,9 +662,9 @@ function thesisnList(page){
  * @date 2020/04/16
  * @description 分页
  */
+let articleData = new Object();
 function getArticleData(page) {
 	debugger;
-    let articleData = new Object();
     let times = $("input[name='start']").val();
     let timee = $("input[name='end']").val();
     let timeType; //时间范围
@@ -909,7 +909,7 @@ function getArticleData(page) {
     articleData.publish = publish;
     articleData.pageSize = pageSize;
 
-	console.log(articleData, "1111111111111111");
+	// console.log(articleData, "1111111111111111");
 
     return articleData;
 }
@@ -1044,17 +1044,17 @@ function pageHelper(currentPage, totalPages) {
                 }
 
                 let totalPage = 1;
-                console.log(article_public_idList.length)
+                // console.log(article_public_idList.length)
                 if (article_public_idList.length % 10 == 0) {
                     totalPage = article_public_idList.length / 10;
                 } else {
                     totalPage = Math.ceil(article_public_idList.length/10);
                 }
-                console.log(ids)
+                // console.log(ids)
                 articleData.article_public_idstr = ids;
                 articleData.totalCount = article_public_idList.length;
                 articleData.totalPage = totalPage;
-                console.log(articleData)
+                // console.log(articleData)
             }
             if(full_type == 8) sendArticle(articleParam, articleData, installHot);
             if(full_type == 1) {
@@ -1274,7 +1274,7 @@ $("#company-status span").click(function (e) {
     var active = "badge-info";
     var normal = "badge-light";
     var act = $(this).hasClass(active);
-    console.log(act)
+    // console.log(act)
     if (!act) {
         $(this).siblings().removeClass(active);
         $(this).siblings().addClass(normal);
