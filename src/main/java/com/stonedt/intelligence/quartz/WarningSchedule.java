@@ -174,11 +174,11 @@ public class WarningSchedule {
             String listStopwords = stop_word;
             //预警词
             String yjword = warningSetting.getWarning_word();
+            yjword = yjword.replaceAll(",", " OR ").replaceAll("，", " OR ").replaceAll(" ", " OR ");
             //分类
             String classify = warningSetting.getWarning_classify();
             //匹配方式  0全文 1标题 2正文
-            String sitesearchtype = String.valueOf(warningSetting.getWarning_match());
-            String origintype = sitesearchtype;
+            String matchingMode = String.valueOf(warningSetting.getWarning_match());
             //预警内容 0 全部 1敏感
             String jycon = String.valueOf(warningSetting.getWarning_content());
             String emotionalIndex = "1";
@@ -204,7 +204,7 @@ public class WarningSchedule {
             //相似文章合并（0：取消合并 1：合并）
            
             String params = "keyword=" + highKeyword + "&searchkeyword=" + yjword + "&emotionalIndex=" + emotionalIndex + "&times=" + getTimee(nowtime, time)
-                    + "&timee=" + nowtime + "&searchType=5&stopword=" + listStopwords + "&page=1&size=10&origintype=" + origintype
+                    + "&timee=" + nowtime + "&searchType=5&stopword=" + listStopwords + "&page=1&size=10&matchingmode=" + matchingMode
                     + "&classify=" + classify + "&province=" + province + "&city=" + city+"&projecttype="+projectType;
             if(warningSetting.getWarning_similar()==0) {
             String urls = es_search_url + searchearlywarningApi;

@@ -449,6 +449,20 @@ public class PlatformServiceImpl implements PlatformService {
 
         Map<String, Object> articleDetail = articleService.articleDetail(articleId, projectId, relatedword,publishTime);
         Object text = articleDetail.get("text");
+        if (text == null) {
+            SseEmitter sseEmitter = new SseEmitter(300000L);
+            try {
+                sseEmitter.send(SseEmitter
+                        .event()
+                        .id("1")
+                        .name("message")
+                        .data("啊哦,网络开小差了,请稍后再试"));
+            } catch (IOException e) {
+                log.error("向用户{}发送{}事件时发生异常",user.getId(),"message");
+                e.printStackTrace();
+            }
+            sseEmitter.complete();
+        }
         CopyWriting copyWriting = new CopyWriting();
         copyWriting.setTemperature(0.7f);
         HashMap<String, String> params = new HashMap<>(2);

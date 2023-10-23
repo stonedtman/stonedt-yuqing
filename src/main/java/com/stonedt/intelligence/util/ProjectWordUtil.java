@@ -184,7 +184,7 @@ public class ProjectWordUtil {
 		if(StringUtils.isBlank(stopword) || "null".equals(stopword)) {
 			return keyword.toString();
 		}
-		keyword.append("(").append(stopword.replaceAll(",", " OR ")).append(")");
+		keyword.append("(").append(stopword.replaceAll("\\|", " OR ").replaceAll("\\+"," AND ")).append(")");
 		return keyword.toString();
 	}
 
