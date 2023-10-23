@@ -177,7 +177,12 @@ public class AnalysisServiceImpl implements AnalysisService {
                     source_name = source_name + "-" + title;
 
                     String params = "article_public_id=" + article_public_id + "&esindex=postal&estype=infor";
-                    String response = sendPost(es_search_url + MonitorConstant.es_api_article_newdetail, params);
+                    String response = redisTemplate.opsForValue().get(es_search_url + MonitorConstant.es_api_article_newdetail + "?" + params);
+                    if (StringUtils.isBlank(response)){
+                        response = sendPost(es_search_url + MonitorConstant.es_api_article_newdetail, params);
+                        redisTemplate.opsForValue().set(es_search_url + MonitorConstant.es_api_article_newdetail + "?" + params, response,1, TimeUnit.HOURS);
+                    }
+
                     JSONObject responseJson = JSON.parseObject(response);
                     if (responseJson.containsKey("content")) {
                         String content = responseJson.getString("content");
