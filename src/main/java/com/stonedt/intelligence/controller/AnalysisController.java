@@ -56,6 +56,24 @@ public class AnalysisController {
 	public String getAanlysisByProjectidAndTimeperiod(Long projectId, Integer timePeriod) {
 		Boolean isNeedRefresh = projectTaskDao.getProjectTaskIsAnalysis(projectId);
 		Analysis anlysisByProjectidAndTimeperiod = analysisService.getAanlysisByProjectidAndTimeperiod(projectId, timePeriod);
+		String planWordHit = anlysisByProjectidAndTimeperiod.getPlan_word_hit();
+		if (StringUtils.isNotBlank(planWordHit)) {
+			JSONArray parseArray = JSONArray.parseArray(planWordHit);
+			if (parseArray.size() > 0) {
+				// 合并keyword相同的数据
+				Map<String, JSONObject> map = new HashMap<>();
+				for (int i = 0; i < parseArray.size(); i++) {
+					JSONObject jsonObject = parseArray.getJSONObject(i);
+					String keyword = jsonObject.getString("keyword");
+					map.put(keyword, jsonObject);
+				}
+				JSONArray jsonArray = new JSONArray();
+				for (Map.Entry<String, JSONObject> entry : map.entrySet()) {
+					jsonArray.add(entry.getValue());
+				}
+				anlysisByProjectidAndTimeperiod.setPlan_word_hit(jsonArray.toJSONString());
+			}
+		}
 		anlysisByProjectidAndTimeperiod.setIsNeedRefresh(isNeedRefresh);
 		return JSON.toJSONString(anlysisByProjectidAndTimeperiod);
 	}

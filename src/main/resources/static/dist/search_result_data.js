@@ -2088,7 +2088,7 @@ function installArticle3(res) {
 							+ '&publish_time='
 							+ pub_data
 							+ '&searchWord='
-							+ $('#searchWord').val()
+							+ encodeURIComponent($('#searchWord').val())
 							+ '" class="link font-bold"><img class="content-logo" src="'
 							+ websitelogo
 							+ '" onerror="javascript:this.src=\'/assets/images/default_source.png\'">'
@@ -2244,7 +2244,7 @@ function installArticle3(res) {
 									+ '&publish_time='
 									+ pub_data
 									+ '&searchWord='
-									+ $('#searchWord').val()
+									+ encodeURIComponent($('#searchWord').val())
 									+ '"  class="link font-bold">'
 									+ websitelogoStr
 									+ title
@@ -2409,7 +2409,7 @@ function installArticle3(res) {
 									+ '&publish_time='
 									+ pub_data
 									+ '&searchWord='
-									+ $('#searchWord').val()
+									+ encodeURIComponent($('#searchWord').val())
 									+ '"  class="link font-bold">'
 									+ websitelogoStr
 									+ title
@@ -2563,7 +2563,7 @@ function installArticle3(res) {
 								+ '&publish_time='
 								+ pub_data
 								+ '&searchWord='
-								+ $('#searchWord').val()
+								+ encodeURIComponent($('#searchWord').val())
 								+ '"  class="link font-bold">'
 								+ websitelogoStr
 								+ title
