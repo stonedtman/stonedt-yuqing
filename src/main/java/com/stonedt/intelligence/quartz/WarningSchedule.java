@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -35,6 +36,8 @@ import com.stonedt.intelligence.util.ProjectWordUtil;
 import com.stonedt.intelligence.util.SendMailFox;
 import com.stonedt.intelligence.util.SnowFlake;
 import com.stonedt.intelligence.util.TextUtil;
+
+import javax.mail.internet.MimeMessage;
 
 /**
  * <p>预警定时任务</p>
@@ -306,14 +309,16 @@ public class WarningSchedule {
                 if (emailpushboolean) {
                     emailHtml += "</div> </body> </html>";
                     try {
+                        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+                        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, "utf-8");
                         String email_user = warning_source.getString("email");
                         String senderUsername = javaMailSender.getUsername();
-                        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-                        simpleMailMessage.setFrom(senderUsername);
-                        simpleMailMessage.setTo(email_user);
-                        simpleMailMessage.setSubject("预警推送");
-                        simpleMailMessage.setText(emailHtml);
-                        javaMailSender.send(simpleMailMessage);
+
+                        mimeMessageHelper.setFrom(senderUsername);
+                        mimeMessageHelper.setTo(email_user);
+                        mimeMessageHelper.setSubject("预警推送");
+                        mimeMessageHelper.setText(emailHtml,true);
+                        javaMailSender.send(mimeMessage);
                         SendMailFox.Send(email_user, "预警推送", emailHtml);
                         logger.info("预警邮件发送成功......");
                     } catch (Exception e) {
@@ -443,14 +448,16 @@ public class WarningSchedule {
                     if (emailpushboolean) {
                         emailHtml += "</div> </body> </html>";
                         try {
+                            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+                            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, "utf-8");
                             String email_user = warning_source.getString("email");
                             String senderUsername = javaMailSender.getUsername();
-                            SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-                            simpleMailMessage.setFrom(senderUsername);
-                            simpleMailMessage.setTo(email_user);
-                            simpleMailMessage.setSubject("预警推送");
-                            simpleMailMessage.setText(emailHtml);
-                            javaMailSender.send(simpleMailMessage);
+
+                            mimeMessageHelper.setFrom(senderUsername);
+                            mimeMessageHelper.setTo(email_user);
+                            mimeMessageHelper.setSubject("预警推送");
+                            mimeMessageHelper.setText(emailHtml,true);
+                            javaMailSender.send(mimeMessage);
                             SendMailFox.Send(email_user, "预警推送", emailHtml);
                             logger.info("预警邮件发送成功......");
                         } catch (Exception e) {
