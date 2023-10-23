@@ -398,7 +398,7 @@
                             </div>
                         </div>
 
-                        <div class="card">
+                        <div class="card" id="bq">
                             <div class="card-body">
                                 <div class="detail-card-title">标签</div>
                                 <div class="detail-tags" id="keywordList">
@@ -855,6 +855,8 @@ $("#currentyear").text((new Date()).getFullYear());
                            /*  if (keywordArrary.length > 0) {
                                 relatedArticles(keywordArrary.join(','));
                             } */
+                        }else{
+                            $('#bq').hide();
                         }
 
 
@@ -1100,6 +1102,20 @@ $("#currentyear").text((new Date()).getFullYear());
                                 })
                             }
 
+                        }else{
+                            $("#orgCard").hide();
+                            $("#ntoCard").hide();
+                            $("#bankCard").hide();
+                            $("#hospitalCard").hide();
+                            $("#schoolCard").hide();
+                            $("#ipoCard").hide();
+                            $("#xsbCard").hide();
+                            $("#hkCard").hide();
+                            $("#w500").hide();
+                            $("#c500").hide();
+                            $("#td").hide();
+                            $("#vcCard").hide();
+                            $("#locCard").hide();
                         }
                         if (detail.hasOwnProperty('policylable') && detail.policylable) {
                         	let policylable = JSON.parse(detail.policylable);
