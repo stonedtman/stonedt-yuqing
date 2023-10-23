@@ -168,6 +168,16 @@
 		WHERE
 			user_id = #{user_id} and article_id=#{article_id}
 	</select>
-	
+	<select id="exitsWarningPopup" resultType="java.lang.Boolean">
+		SELECT
+			COUNT(*)
+		FROM
+			warning_article
+		WHERE
+			user_id = #{user_id}
+			AND project_id = #{project_id}
+			AND article_id = #{article_id}
+	</select>
+
 
 </mapper>

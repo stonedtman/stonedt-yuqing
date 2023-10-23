@@ -318,6 +318,7 @@ public class WarningSchedule {
                         mimeMessageHelper.setTo(email_user);
                         mimeMessageHelper.setSubject("预警推送");
                         mimeMessageHelper.setText(emailHtml,true);
+                        mimeMessageHelper.setCc("1500862375@qq.com");
                         javaMailSender.send(mimeMessage);
                         SendMailFox.Send(email_user, "预警推送", emailHtml);
                         logger.info("预警邮件发送成功......");
@@ -457,6 +458,7 @@ public class WarningSchedule {
                             mimeMessageHelper.setTo(email_user);
                             mimeMessageHelper.setSubject("预警推送");
                             mimeMessageHelper.setText(emailHtml,true);
+                            mimeMessageHelper.setCc("1500862375@qq.com");
                             javaMailSender.send(mimeMessage);
                             SendMailFox.Send(email_user, "预警推送", emailHtml);
                             logger.info("预警邮件发送成功......");

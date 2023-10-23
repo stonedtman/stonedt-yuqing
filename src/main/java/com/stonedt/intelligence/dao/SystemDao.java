@@ -66,12 +66,13 @@ public interface SystemDao {
 
 	void deleteguideAssess(Integer id);
 
-	
-	
-	
-	
-	
-	
+
+	/**
+	 * 判断是否已经存在
+	 * @param warningPopup
+	 * @return
+	 */
+	boolean exitsWarningPopup(Map<String, Object> warningPopup);
 }
 
 

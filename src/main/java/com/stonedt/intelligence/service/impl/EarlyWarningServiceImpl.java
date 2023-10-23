@@ -4,6 +4,7 @@ package com.stonedt.intelligence.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import com.stonedt.intelligence.service.EarlyWarningService;
 * @author Mapeng 
 * @date Apr 18, 2020  
 */
+@Slf4j
 @Service
 public class EarlyWarningServiceImpl implements EarlyWarningService{
 
@@ -32,6 +34,10 @@ public class EarlyWarningServiceImpl implements EarlyWarningService{
 	
 	@Override
 	public boolean saveWarningPopup(Map<String, Object> warning_popup) {
+		if (systemDao.exitsWarningPopup(warning_popup)) {
+			log.info("预警信息已存在，不再重复预警");
+			return false;
+		}
 		return systemDao.saveWarningPopup(warning_popup);
 	}
 
