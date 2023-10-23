@@ -247,7 +247,7 @@ public class WarningSchedule {
                         String article_public_id = Earlywarning.getString("article_public_id");
                         Integer similarvolume = Earlywarning.getInteger("similarvolume");
                         String emotionalIndex1 = Earlywarning.getString("emotionalIndex");
-                        String url = system_url + "/monitor/detail/" + article_public_id;
+                        String url = Earlywarning.getString("source_url");
                         if (systempush) {//系统预警
                             Map<String, Object> warning_popup = new HashMap<>();
                             warning_popup.put("create_time", DateUtil.nowTime());
@@ -539,9 +539,6 @@ public class WarningSchedule {
                 "	</head>\r\n" +
                 "	<body>\r\n" +
                 "		<div class=\"main\">\r\n" +
-                "			<div class=\"imglogo\">\r\n" +
-                "				<img src=\"http://www.chinapost.com.cn/res/chinapostplan/structure/181041269.png\" >\r\n" +
-                "			</div>\r\n" +
                 "			<div class=\"title\">" +
                 "				<p>截止时间:<span class=\"time\">" + nowtime + "</span></p>	\r\n" +
                 "				<p>您的监测方案<span>［" + warningSetting.getProject_name() + "］</span>新增<span>" + warnSize + "</span>条预警。显示如下:</p>	\r\n" +
