@@ -1,5 +1,6 @@
 package com.stonedt.intelligence.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.stonedt.intelligence.aop.SystemControllerLog;
 import com.stonedt.intelligence.entity.User;
@@ -40,7 +41,21 @@ public class DisplayBoardController {
         if (StringUtils.isBlank(projectId))
             projectId = "";
         User user = userUtil.getuser(request);
-        Map<String,Object> newSynthesize = platformService.getNewSynthesize();
+        JSONObject newSynthesize = platformService.getNewSynthesize();
+        // 转码html
+        Map<String, Object> map = newSynthesize.getInnerMap();
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            if (value instanceof String) {
+                String s = (String) value;
+                s = s.replaceAll("&lt;", "<");
+                s = s.replaceAll("&gt;", ">");
+                s = s.replaceAll("&quot;", "\"");
+                s = s.replaceAll("&amp;", "&");
+                map.put(key, s);
+            }
+        }
         ModelAndView modelAndView = new ModelAndView();
         // 将数据存入modelAndView
         newSynthesize.forEach(modelAndView::addObject);

@@ -1758,6 +1758,7 @@ $("#currentyear").text((new Date()).getFullYear());
     var menuStyle = [[${menuStyle}]];
     var pageSize = [[${pageSize}]];
     var searchWord = [[${searchWord}]]
+    searchWord = decodeURI(searchWord);
     //0聚合模式  1展开模式 默认为聚合模式
     if(!full_poly) full_poly = 1
     var idList = ''

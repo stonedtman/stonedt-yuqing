@@ -1089,8 +1089,8 @@ public class FullSearchServiceImpl implements FullSearchService{
         }else {
 			searchkeyword = "";
 		}
-		searchkeyword = searchkeyword.replace(" ", ",");
-		paramJson.put("keyword", searchkeyword);
+//		searchkeyword = searchkeyword.replace(" ", ",");
+		paramJson.put("keyword", ProjectWordUtil.QuickProjectKeyword(searchkeyword));
 
 //		Integer similar = param.getMergeType();
 		Integer similar = param.getSimilar();
@@ -1303,6 +1303,8 @@ public class FullSearchServiceImpl implements FullSearchService{
 		//数据来源
 		String classifylist = paramJson.getString("classify");
 		paramJson.put("classify", classifylist);
+
+		paramJson.put("projecttype", 2);
 
 
 		// 查询es数据

@@ -45,7 +45,7 @@ public class ImageController {
         String createText = defaultKaptcha.createText();
         HttpSession session = request.getSession();
         session.setAttribute(Constants.KAPTCHA_SESSION_KEY, createText);
-        session.setMaxInactiveInterval(60);
+//        session.setMaxInactiveInterval(60);
         System.out.println(createText);
 //        getyzm(createText);
 //        存储数据库

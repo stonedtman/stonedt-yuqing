@@ -1,5 +1,6 @@
 package com.stonedt.intelligence.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.util.ResultUtil;
 import com.stonedt.intelligence.vo.BindParamsVo;
@@ -91,5 +92,5 @@ public interface PlatformService {
      */
     ResultUtil getNewNotice();
 
-    Map<String,Object> getNewSynthesize();
+    JSONObject getNewSynthesize();
 }

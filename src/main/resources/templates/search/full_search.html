@@ -152,7 +152,7 @@ $("#currentyear").text((new Date()).getFullYear());
     $('#searchBtn').click(function () {
         var searchWord = $('#searchWord').val().trim();
         // var params = '?searchword=' + searchWord + '&fulltype=' + full_type + '&full_poly=' + full_poly;
-        var params = '?searchword=' + searchWord + '&fulltype=1&full_poly=1';
+        var params = '?searchword=' + encodeURI(searchWord) + '&fulltype=1&full_poly=1';
         window.location.href = ctx + 'fullsearch/result' + params;
     })
 
@@ -220,7 +220,7 @@ $("#currentyear").text((new Date()).getFullYear());
             $("#searchwords a").click(function () {
                 var searchWord = this.innerText.trim();
                 // var params = '?searchword=' + searchWord + '&fulltype=' + full_type + '&full_poly=' + full_poly;
-                var params = '?searchword=' + searchWord + '&fulltype=1&full_poly=1';
+                var params = '?searchword=' + encodeURIComponent(searchWord) + '&fulltype=1&full_poly=1';
                 window.location.href = ctx + 'fullsearch/result' + params;
             })
         }
