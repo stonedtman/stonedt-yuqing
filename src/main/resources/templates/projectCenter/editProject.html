@@ -628,7 +628,19 @@ $("#currentyear").text((new Date()).getFullYear());
         	showtips("关键词与屏蔽词不能相同");
             return;
         }
-        
+
+        if (prokeywords.indexOf("|")>-1||prokeywords.indexOf("+")>-1||prokeywords.indexOf("(")>-1||prokeywords.indexOf(")")>-1||prokeywords.indexOf("（")>-1||prokeywords.indexOf("）")>-1) {
+            $("#prokeywords").addClass("text-error");
+            showtips("关键词内容不能有|，+，括号");
+            return;
+        }
+
+        if (proshield.indexOf("|")>-1||proshield.indexOf("+")>-1||proshield.indexOf("(")>-1||proshield.indexOf(")")>-1||proshield.indexOf("（")>-1||proshield.indexOf("）")>-1) {
+            $("#prokeywords").addClass("text-error");
+            showtips("屏蔽词内容不能有|，+，括号");
+            return;
+        }
+
         prokeywords = prokeywords.toString().replace(/(\s|;|-|"|‘|；|、|‘’|'|’|“”|》|《|<|>|\.|。)/g, ",");
         prokeywords = prokeywords.toString().replace(/,{1,}/, ",");
         if (prokeywords.indexOf("，") != -1) {
