@@ -13,14 +13,17 @@ import com.stonedt.intelligence.service.ProjectService;
 import com.stonedt.intelligence.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * description: MonitorServiceImpl <br>
@@ -45,6 +48,9 @@ public class MonitorServiceImpl implements MonitorService {
     UserUtil userUtil;
     @Autowired
     private RedisUtil redisUtil;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
     
 
     /**
@@ -3625,7 +3631,19 @@ public class MonitorServiceImpl implements MonitorService {
                 paramJson.remove("stopword");
                 String params1 = MapUtil.getUrlParamsByMap(paramJson);
                 url = es_search_url + MonitorConstant.es_api_similar_contentlist;
-                String articleResponse = MyHttpRequestUtil.sendPostEsSearch(url, params1);
+                /**
+                 * 查询缓存
+                 */
+                JSONObject redisParams = new JSONObject();
+                BeanUtils.copyProperties(paramJson, redisParams);
+                redisParams.remove("times");
+                redisParams.remove("timee");
+                String redisKey = MapUtil.getUrlParamsByMap(redisParams);
+                String articleResponse = redisTemplate.opsForValue().get(url + "?" + redisKey);
+                if (StringUtils.isBlank(articleResponse)) {
+                    articleResponse = MyHttpRequestUtil.sendPostEsSearch(url, params1);
+                    redisTemplate.opsForValue().set(url + "?" + redisKey, articleResponse, 1, TimeUnit.HOURS);
+                }
                 JSONObject articleResponseJson = JSON.parseObject(articleResponse);
                 String code = articleResponseJson.getString("code");
                 if (code.equals("200")) {
@@ -3786,11 +3804,26 @@ public class MonitorServiceImpl implements MonitorService {
             String params = MapUtil.getUrlParamsByMap(paramJson);
             url = es_search_url + MonitorConstant.es_api_search_list;
             /**
+             * 查询缓存
+             */
+            JSONObject redisParams = new JSONObject();
+            BeanUtils.copyProperties(paramJson, redisParams);
+            redisParams.remove("times");
+            redisParams.remove("timee");
+            String redisKey = MapUtil.getUrlParamsByMap(redisParams);
+            String esResponse = redisTemplate.opsForValue().get(url + "?" + redisKey);
+            /**
              * 查询ES时间
              */
-            System.out.println("ES查询开始时间：" + TimeUtil.getCurrenttime());
-            String esResponse = MyHttpRequestUtil.sendPostEsSearch(url, params);
-            System.out.println("ES查询结束开始时间：" + TimeUtil.getCurrenttime());
+            if (esResponse == null) {
+                System.out.println("ES查询开始时间：" + TimeUtil.getCurrenttime());
+                esResponse = MyHttpRequestUtil.sendPostEsSearch(url, params);
+                System.out.println("ES查询结束开始时间：" + TimeUtil.getCurrenttime());
+                /**
+                 * 推入缓存
+                 */
+                redisTemplate.opsForValue().set(url + "?" + redisKey, esResponse, 1, TimeUnit.HOURS);
+            }
             if (!esResponse.equals("")) {
                 JSONObject esResponseJson = JSON.parseObject(esResponse);
                 String code = esResponseJson.getString("code");

@@ -15,12 +15,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import com.alibaba.fastjson.JSON;
 import com.stonedt.intelligence.constant.MonitorConstant;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
@@ -46,6 +48,8 @@ public class AnalysisServiceImpl implements AnalysisService {
     private ProjectDao projectDao;
     @Autowired
     private OpinionConditionDao opinionConditionDao;
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     @Override
     public Analysis getAanlysisByProjectidAndTimeperiod(Long projectId, Integer timePeriod) {
@@ -150,7 +154,11 @@ public class AnalysisServiceImpl implements AnalysisService {
 //       if(1==1) {
         // if(similar==0) {
         try {
-            String result = sendPost(es_search_url + "/yqsearch/searchsimplelist", param);
+            String result = redisTemplate.opsForValue().get(es_search_url + "/yqsearch/searchsimplelist?" + param);
+            if (StringUtils.isBlank(result)) {
+                result = sendPost(es_search_url + "/yqsearch/searchsimplelist", param);
+                redisTemplate.opsForValue().set(es_search_url + "/yqsearch/searchsimplelist?" + param, result,1, TimeUnit.HOURS);
+            }
             JSONObject json = JSONObject.parseObject(result);
             JSONArray resultArray = json.getJSONArray("data");
             Map<String, Object> datamap = new HashMap<String, Object>();// 用户去除重复数据
