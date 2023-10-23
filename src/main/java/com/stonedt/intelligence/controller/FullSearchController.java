@@ -10,7 +10,6 @@ import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.service.FullSearchService;
 import com.stonedt.intelligence.util.DateUtil;
 import com.stonedt.intelligence.util.UserUtil;
-import com.stonedt.intelligence.vo.FullSearchPageInputVo;
 import com.stonedt.intelligence.vo.FullSearchParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,17 +52,20 @@ public class FullSearchController {
     /**
      * 全文搜索结果页面
      */
-    @PostMapping(value = "/result")
+    @GetMapping(value = "/result")
     @SystemControllerLog(module = "全文搜索", submodule = "搜索结果", type = "查询", operation = "result")
-    public String result(@RequestBody FullSearchPageInputVo fullSearchPageInputVo, Model model,
-                         HttpServletRequest request) {
-    	model.addAttribute("searchWord", fullSearchPageInputVo.getSearchword());
-        model.addAttribute("page", fullSearchPageInputVo.getPage());
-        model.addAttribute("source_name", fullSearchPageInputVo.getSourcename());
-        model.addAttribute("fulltype", fullSearchPageInputVo.getFulltype());
-        model.addAttribute("full_poly", fullSearchPageInputVo.getFull_poly());
-        model.addAttribute("menuStyle", fullSearchPageInputVo.getMenuStyle());
-        model.addAttribute("pageSize", fullSearchPageInputVo.getPageSize());
+    public String result(@RequestParam(value = "menuStyle", required = false, defaultValue = "1") Integer menuStyle,
+                         @RequestParam(value = "pageSize", required = false, defaultValue = "50") Integer pageSize,
+                         Integer full_poly, String fulltype, String searchword,
+                         String sourcename, Integer page, Model model,
+                         HttpServletRequest request) throws UnsupportedEncodingException {
+    	model.addAttribute("searchWord", searchword);
+        model.addAttribute("page", page);
+        model.addAttribute("source_name", sourcename);
+        model.addAttribute("fulltype", fulltype);
+        model.addAttribute("full_poly", full_poly);
+        model.addAttribute("menuStyle", menuStyle);
+        model.addAttribute("pageSize", pageSize);
         model.addAttribute("menu", "full_search");
 
         //将搜索的词存到数据库
@@ -70,11 +73,11 @@ public class FullSearchController {
         String user_id = String.valueOf(user.getUser_id());
         String create_time = DateUtil.getNowTime();
 
-        if (!fullSearchPageInputVo.getSearchword().isEmpty()) {
+        if (!searchword.equals("")) {
             FullWord fullWord = new FullWord();
             fullWord.setUser_id(Long.valueOf(user_id));
             fullWord.setCreate_time(create_time);
-            fullWord.setSearch_word(fullSearchPageInputVo.getSearchword());
+            fullWord.setSearch_word(searchword);
             boolean result = fullSearchService.saveFullWord(fullWord);
         }
         return "search/search_result";
