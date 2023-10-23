@@ -4,12 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -369,10 +364,17 @@ public class WarningSchedule {
                         systempush = true;
                     }
                     String emailHtml = emailHtml(nowtime, warningSetting, jsonArray.size());
+                    Set<String> titleSet = new HashSet<>();
                     for (int i = 0; i < jsonArray.size(); i++) {
                         try {
                             JSONObject Earlywarning = jsonArray.getJSONObject(i).getJSONObject("_source");
                             String title = Earlywarning.getString("title").split("_http")[0];
+                            //去重
+                            if (titleSet.contains(title)) {
+                                continue;
+                            }else {
+                                titleSet.add(title);
+                            }
                             String content = Earlywarning.getString("content");
                             if (content.length() > 255) {
                                 content = content.substring(0, 254);
