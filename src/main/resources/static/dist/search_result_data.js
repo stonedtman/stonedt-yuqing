@@ -2057,12 +2057,12 @@ function installArticle3(res) {
 
 				if (similarflag == '1') {
 					debugger;
-					console.log("合并")
-					console.log(dataJson);
+					// console.log("合并")
+					// console.log(dataJson);
 					num = dataJson.num;
 				}else {
-					console.log("不合并");
-					console.log(dataJson);
+					// console.log("不合并");
+					// console.log(dataJson);
 				}
 
 

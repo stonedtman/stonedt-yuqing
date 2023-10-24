@@ -1176,7 +1176,7 @@ function installArticle(res) {
 
 
                         '<li role="presentation"> <a href="javascript:void(0)" id="link_916007411683191177512726" role="menuitem" ng-click="copyLink(icc.webpageUrl,icc.id);"> <span class="fa-key copyurl" data-type="' + article_public_id + '" data-flag="' + source_url + '" >拷贝地址</span> </a> </li>' +
-                        '<li role="presentation"> <a href="javascript:void(0)" class="copy-link-custom" role="menuitem" ng-click="aKeyToCopy(icc);"> <span class="fa-key copytext" data-type="' + article_public_id + '" data-flag="' + copytext + '" >一键复制</span> </a> </li> </ul> </li>' +
+                        '<li role="presentation"> <a href="javascript:void(0)" class="copy-link-custom" role="menuitem" ng-click="aKeyToCopy(icc);" data-type="' + article_public_id + '" data-flag="' + copytext + '"> <span class="fa-key copytext" >一键复制</span> </a> </li> </ul> </li>' +
                         //	'<li class="inline-block ng-scope" style="float: left;" ng-show="icc.readFlag==undefined &amp;&amp; view.resultPresent != 3" ng-if="view.showBatchLabel==0"> <button type="button" data-tippy-placement="top" class="tippy btn btn-default-icon fa-unread-status" ng-click="readNews($event,icc)" data-tippy="" title="标已读"> </button> </li>'+
                         //	'<li class="inline-block ng-hide" style="float: left;" ng-show="icc.readFlag==\'1\' &amp;&amp; view.resultPresent != 3"> <button type="button" data-tippy-placement="top" class="tippy btn btn-default-icon fa-read-status waves-effect waves-light color-blue" data-tippy="" data-original-title="已读"> </button> </li>'+
                         //	'<li class="inline-block dropdown" style="float: left;" ng-show="view.resultPresent != 3"> <button type="button" data-tippy-placement="top" data-hover="dropdown" data-toggle="dropdown" data-animation="scale-up" data-delay="300" aria-expanded="false" class="tippy btn btn-default-icon fa-distribute dropdown-toggle" data-tippy="" title="上报"> </button> <ul class="dropdown-menu" role="menu"> <li role="presentation"> <a href="#group_fenfa" ng-click="groupDistribute(icc,1);" data-toggle="modal" role="menuitem"> <span class="fa-key">上报</span> </a> </li>  </ul> </li>'+
@@ -1190,7 +1190,7 @@ function installArticle(res) {
                         //'<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)"> <span   data-type="'+article_public_id+'" data-flag="2" class="fa-key deletedata">删除信息并排除来源</span> </a> </li> '+
                         /*'</ul> </li>' +*/
 
-                        '<li class="inline-block" style="float: left;" ng-show="view.resultPresent != 3"> ' +
+                        '<li class="inline-block emotional_markers" style="float: left;" ng-show="view.resultPresent != 3"> ' +
                         '<button type="button" data-tippy-placement="top" data-hover="dropdown" data-toggle="dropdown" data-animation="scale-up" data-delay="300" aria-expanded="false" class="tippy btn btn-default-icon fa-re-analysis dropdown-toggle" data-tippy="" title="情感标注"> </button>' +
                         '<ul class="dropdown-menu ng-scope" role="menu" ng-if="collectFoldersList!=null&amp;&amp;collectFoldersList.length>0">' +
                         '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="1"> <span class="dataemtion">正面</span> </a> </li>' +
@@ -1340,7 +1340,7 @@ function installArticle(res) {
 
 
                                 '<li role="presentation"> <a href="javascript:void(0)" id="link_916007411683191177512726" role="menuitem" ng-click="copyLink(icc.webpageUrl,icc.id);"> <span class="fa-key copyurl" data-type="' + article_public_id + '" data-flag="' + source_url + '" >拷贝地址</span> </a> </li>' +
-                                '<li role="presentation"> <a href="javascript:void(0)" class="copy-link-custom" role="menuitem" ng-click="aKeyToCopy(icc);"> <span class="fa-key copytext" data-type="' + article_public_id + '" data-flag="' + copytext + '" >一键复制</span> </a> </li> </ul> </li>' +
+                                '<li role="presentation"> <a href="javascript:void(0)" class="copy-link-custom" role="menuitem" ng-click="aKeyToCopy(icc);" data-type="' + article_public_id + '" data-flag="' + copytext + '"> <span class="fa-key copytext" >一键复制</span> </a> </li> </ul> </li>' +
                                 //'<li class="inline-block ng-scope" style="float: left;" ng-show="icc.readFlag==undefined &amp;&amp; view.resultPresent != 3" ng-if="view.showBatchLabel==0"> <button type="button" data-tippy-placement="top" class="tippy btn btn-default-icon fa-unread-status" ng-click="readNews($event,icc)" data-tippy="" title="标已读"> </button> </li>'+
                                 //'<li class="inline-block ng-hide" style="float: left;" ng-show="icc.readFlag==\'1\' &amp;&amp; view.resultPresent != 3"> <button type="button" data-tippy-placement="top" class="tippy btn btn-default-icon fa-read-status waves-effect waves-light color-blue" data-tippy="" data-original-title="已读"> </button> </li>'+
                                 //'<li class="inline-block dropdown" style="float: left;" ng-show="view.resultPresent != 3"> <button type="button" data-tippy-placement="top" data-hover="dropdown" data-toggle="dropdown" data-animation="scale-up" data-delay="300" aria-expanded="false" class="tippy btn btn-default-icon fa-distribute dropdown-toggle" data-tippy="" title="上报"> </button> <ul class="dropdown-menu" role="menu"> <li role="presentation"> <a href="#group_fenfa" ng-click="groupDistribute(icc,1);" data-toggle="modal" role="menuitem"> <span class="fa-key">上报</span> </a> </li>  </ul> </li>'+
@@ -1354,7 +1354,7 @@ function installArticle(res) {
                                 //'<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)"> <span   data-type="'+article_public_id+'" data-flag="2" class="fa-key deletedata">删除信息并排除来源</span> </a> </li> '+
                                 '</ul> </li>' +*/
 
-                                '<li class="inline-block" style="float: left;" ng-show="view.resultPresent != 3"> ' +
+                                '<li class="inline-block emotional_markers" style="float: left;" ng-show="view.resultPresent != 3"> ' +
                                 '<button type="button" data-tippy-placement="top" data-hover="dropdown" data-toggle="dropdown" data-animation="scale-up" data-delay="300" aria-expanded="false" class="tippy btn btn-default-icon fa-re-analysis dropdown-toggle" data-tippy="" title="情感标注"> </button>' +
                                 '<ul class="dropdown-menu ng-scope" role="menu" ng-if="collectFoldersList!=null&amp;&amp;collectFoldersList.length>0">' +
                                 '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="1"> <span class="dataemtion">正面</span> </a> </li>' +
@@ -1498,7 +1498,7 @@ function installArticle(res) {
 
 
                                 '<li role="presentation"> <a href="javascript:void(0)" id="link_916007411683191177512726" role="menuitem" ng-click="copyLink(icc.webpageUrl,icc.id);"> <span class="copyurl" data-type="' + article_public_id + '" data-flag="' + source_url + '" >拷贝地址</span> </a> </li>' +
-                                '<li role="presentation"> <a href="javascript:void(0)" class="copy-link-custom" role="menuitem" ng-click="aKeyToCopy(icc);"> <span class="copytext" data-type="' + article_public_id + '" data-flag="' + copytext + '" >一键复制</span> </a> </li> </ul> </li>' +
+                                '<li role="presentation"> <a href="javascript:void(0)" class="copy-link-custom" role="menuitem" ng-click="aKeyToCopy(icc);" data-type="' + article_public_id + '" data-flag="' + copytext + '"> <span class="copytext" >一键复制</span> </a> </li> </ul> </li>' +
                                 //'<li class="inline-block ng-scope" style="float: left;" ng-show="icc.readFlag==undefined &amp;&amp; view.resultPresent != 3" ng-if="view.showBatchLabel==0"> <button type="button" data-tippy-placement="top" class="tippy btn btn-default-icon fa-unread-status" ng-click="readNews($event,icc)" data-tippy="" title="标已读"> </button> </li>'+
                                 //'<li class="inline-block ng-hide" style="float: left;" ng-show="icc.readFlag==\'1\' &amp;&amp; view.resultPresent != 3"> <button type="button" data-tippy-placement="top" class="tippy btn btn-default-icon fa-read-status waves-effect waves-light color-blue" data-tippy="" data-original-title="已读"> </button> </li>'+
                                 //'<li class="inline-block dropdown" style="float: left;" ng-show="view.resultPresent != 3"> <button type="button" data-tippy-placement="top" data-hover="dropdown" data-toggle="dropdown" data-animation="scale-up" data-delay="300" aria-expanded="false" class="tippy btn btn-default-icon fa-distribute dropdown-toggle" data-tippy="" title="上报"> </button> <ul class="dropdown-menu" role="menu"> <li role="presentation"> <a href="#group_fenfa" ng-click="groupDistribute(icc,1);" data-toggle="modal" role="menuitem"> <span class="fa-key">上报</span> </a> </li>  </ul> </li>'+
@@ -1512,7 +1512,7 @@ function installArticle(res) {
                                 //'<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)"> <span   data-type="'+article_public_id+'" data-flag="2" class="fa-key deletedata">删除信息并排除来源</span> </a> </li> '+
                                 '</ul> </li>' +*/
 
-                                '<li class="inline-block" style="float: left;" ng-show="view.resultPresent != 3"> ' +
+                                '<li class="inline-block emotional_markers" style="float: left;" ng-show="view.resultPresent != 3"> ' +
                                 '<button type="button" data-tippy-placement="top" data-hover="dropdown" data-toggle="dropdown" data-animation="scale-up" data-delay="300" aria-expanded="false" class="tippy btn btn-default-icon fa-re-analysis dropdown-toggle" data-tippy="" title="情感标注"> </button>' +
                                 '<ul class="dropdown-menu ng-scope" role="menu" ng-if="collectFoldersList!=null&amp;&amp;collectFoldersList.length>0">' +
                                 '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="1"> <span class="dataemtion">正面</span> </a> </li>' +
@@ -1650,7 +1650,7 @@ function installArticle(res) {
 
 
                             '<li role="presentation"> <a href="javascript:void(0)" id="link_916007411683191177512726" role="menuitem" ng-click="copyLink(icc.webpageUrl,icc.id);"> <span class="copyurl" data-type="' + article_public_id + '" data-flag="' + source_url + '" >拷贝地址</span> </a> </li>' +
-                            '<li role="presentation"> <a href="javascript:void(0)" class="copy-link-custom" role="menuitem" ng-click="aKeyToCopy(icc);"> <span class="copytext" data-type="' + article_public_id + '" data-flag="' + copytext + '" >一键复制</span> </a> </li> </ul> </li>' +
+                            '<li role="presentation"> <a href="javascript:void(0)" class="copy-link-custom" role="menuitem" ng-click="aKeyToCopy(icc);" data-type="' + article_public_id + '" data-flag="' + copytext + '"> <span class="copytext" >一键复制</span> </a> </li> </ul> </li>' +
                             //'<li class="inline-block ng-scope" style="float: left;" ng-show="icc.readFlag==undefined &amp;&amp; view.resultPresent != 3" ng-if="view.showBatchLabel==0"> <button type="button" data-tippy-placement="top" class="tippy btn btn-default-icon fa-unread-status" ng-click="readNews($event,icc)" data-tippy="" title="标已读"> </button> </li>'+
                             //'<li class="inline-block ng-hide" style="float: left;" ng-show="icc.readFlag==\'1\' &amp;&amp; view.resultPresent != 3"> <button type="button" data-tippy-placement="top" class="tippy btn btn-default-icon fa-read-status waves-effect waves-light color-blue" data-tippy="" data-original-title="已读"> </button> </li>'+
                             //'<li class="inline-block dropdown" style="float: left;" ng-show="view.resultPresent != 3"> <button type="button" data-tippy-placement="top" data-hover="dropdown" data-toggle="dropdown" data-animation="scale-up" data-delay="300" aria-expanded="false" class="tippy btn btn-default-icon fa-distribute dropdown-toggle" data-tippy="" title="上报"> </button> <ul class="dropdown-menu" role="menu"> <li role="presentation"> <a href="#group_fenfa" ng-click="groupDistribute(icc,1);" data-toggle="modal" role="menuitem"> <span class="fa-key">上报</span> </a> </li>  </ul> </li>'+
@@ -1659,7 +1659,7 @@ function installArticle(res) {
                             //'<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)"> <span   data-type="'+article_public_id+'" data-flag="2" class="fa-key deletedata">删除信息并排除来源</span> </a> </li> '+
                             '</ul> </li>' +*/
 
-                            '<li class="inline-block" style="float: left;" ng-show="view.resultPresent != 3"> ' +
+                            '<li class="inline-block emotional_markers" style="float: left;" ng-show="view.resultPresent != 3"> ' +
                             '<button type="button" data-tippy-placement="top" data-hover="dropdown" data-toggle="dropdown" data-animation="scale-up" data-delay="300" aria-expanded="false" class="tippy btn btn-default-icon fa-re-analysis dropdown-toggle" data-tippy="" title="情感标注"> </button>' +
                             '<ul class="dropdown-menu ng-scope" role="menu" ng-if="collectFoldersList!=null&amp;&amp;collectFoldersList.length>0">' +
                             '<li role="presentation"> <a href="javascript:void(0)" role="menuitem" ng-click="excludeCaptureWebsiteNameList(icc)" data-time="' + pub_data + '" data-type="' + article_public_id + '" data-flag="1"> <span class="dataemtion">正面</span> </a> </li>' +
@@ -4240,7 +4240,7 @@ $(document).on('click', '.sending', function () {
 
 //情感标记
 
-$(document).on('click', '.dropdown-menu>li>a', function () {
+$(document).on('click', '.emotional_markers a', function () {
     let id = $(this).data('type');
     let flag = $(this).data('flag');
     let publish_time = $(this).data('time');
@@ -4600,7 +4600,7 @@ $(document).on('click', '.copyurl', function () {
 
 
 //文章拷贝	
-$(document).on('click', '.copytext', function () {
+$(document).on('click', '.copy-link-custom', function () {
     let flag = $(this).data('type');
     $.ajax({
         url: ctxPath + 'datamonitor/copytext',
@@ -4651,25 +4651,34 @@ $(document).on('click', '.copytext', function () {
 
 
 function copyText(text) {
-    var textarea = document.createElement("textarea");
-    var currentFocus = document.activeElement;
-    let state = false;
-    document.body.appendChild(textarea);
-    textarea.value = text;
-    textarea.focus();
-    if (textarea.setSelectionRange) {
-        textarea.setSelectionRange(0, textarea.value.length);
-    } else {
-        textarea.select();
-    }
-    try {
-        state = document.execCommand("copy");
-    } catch (err) {
-        state = false;
-    }
-    document.body.removeChild(textarea);
-    currentFocus.focus();
-    return state;
+    let inputNode = document.createElement('input')  // 创建input
+    inputNode.value = text // 赋值给 input 值
+    document.body.appendChild(inputNode) // 插入进去
+    inputNode.select() // 选择对象
+    document.execCommand('Copy') // 原生调用执行浏览器复制命令
+    inputNode.className = 'oInput'
+    inputNode.style.display = 'none' // 隐藏
+    inputNode.remove() // 删除自身
+
+    // var textarea = document.createElement("textarea");
+    // var currentFocus = document.activeElement;
+    // let state = false;
+    // document.body.appendChild(textarea);
+    // textarea.value = text;
+    // textarea.focus();
+    // if (textarea.setSelectionRange) {
+    //     textarea.setSelectionRange(0, textarea.value.length);
+    // } else {
+    //     textarea.select();
+    // }
+    // try {
+    //     state = document.execCommand("copy");
+    // } catch (err) {
+    //     state = false;
+    // }
+    // document.body.removeChild(textarea);
+    // currentFocus.focus();
+    // return state;
 };
 
 
