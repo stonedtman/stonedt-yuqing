@@ -2,85 +2,143 @@ package com.stonedt.intelligence.service.impl;
 
 
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.alibaba.fastjson.JSON;
+import com.stonedt.intelligence.dao.UserDao;
+import com.stonedt.intelligence.dao.UserWechatInfoDao;
+import com.stonedt.intelligence.dto.QrcodeData;
+import com.stonedt.intelligence.dto.WechatUserInfo;
+import com.stonedt.intelligence.dto.WxMpXmlMessage;
+import com.stonedt.intelligence.entity.User;
+import com.stonedt.intelligence.service.UserService;
+import com.stonedt.intelligence.util.DateUtil;
+import com.stonedt.intelligence.util.ResultUtil;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import com.stonedt.intelligence.dao.UserDao;
-import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.service.WechatService;
-import com.stonedt.intelligence.util.CheckoutUtil;
-import com.stonedt.intelligence.util.WechatUtil;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class WechatServiceImpl implements WechatService {
-	
-	@Autowired
-	private UserDao userDao;
 
-	@Override
-	public void dealevent(HttpServletRequest request, HttpServletResponse response) {
-		boolean isGet = request.getMethod().toLowerCase().equals("get");
-        /*System.out.println("isGet:"+isGet);*/
-        if (isGet) {
-            // 微信加密签名
-            String signature = request.getParameter("signature");
-            // 时间戳
-            String timestamp = request.getParameter("timestamp");
-            // 随机数
-            String nonce = request.getParameter("nonce");
-            // 随机字符串
-            String echostr = request.getParameter("echostr");
-            // 通过检验signature对请求进行校验，若校验成功则原样返回echostr，表示接入成功，否则接入失败
-            if (signature != null && CheckoutUtil.checkSignature(signature, timestamp, nonce)) {
-                try {
-                    PrintWriter print = response.getWriter();
-                    print.write(echostr);
-                    print.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }else {
-        	 try {
-             	Map<String, String> wxdata = WechatUtil.xmlToMap(request);
-             	       if(wxdata.get("MsgType")!=null){
-             	            if("event".equals(wxdata.get("MsgType"))){
-             	            	System.out.println("2.1解析消息内容为：事件推送");
-             	                 if("subscribe".equals(wxdata.get("Event"))){
-             	                	String EventKey = wxdata.get("EventKey").toString();
-             	                	String telephone = EventKey.split("_")[1];//获取手机号码
-             	                	String openid = wxdata.get("FromUserName").toString();//获取openid
-             	                   User user = userDao.selectUserByTelephone(telephone);
-             	                   System.out.println("2.2用户第一次关注 返回true哦");
-             	                   if (null != user) {
-             	                	   //更新用户绑定微信的状态
-             	                	  boolean updateUseropenidById = userDao.updateUseropenidById(user.getUser_id(),openid);
-             	                   }
-             	                }
-             	                 //取消关注
-             	                if("unsubscribe".equals(wxdata.get("Event"))){
-             	                	System.out.println("用户id:"+wxdata.get("FromUserName"));
-             	                	//解绑用户状态
-             	                	boolean updateUseropenidById = userDao.updateUseropenidstatusById(wxdata.get("FromUserName"));
-            	                	 System.out.println("取消关注");
-            	                }
-             	              }
-             	        }
-             	
-             } catch (Exception e) {
-                 e.printStackTrace();
-             }
-        }
-		
+	private final RestTemplate restTemplate;
+
+	private final StringRedisTemplate redisTemplate;
+
+	private final UserWechatInfoDao userWechatInfoDao;
+
+	private final UserDao userDao;
+
+	@Value("${wechat.qrcode.url}")
+	private String getQrcodeUrl;
+
+	public WechatServiceImpl(RestTemplate restTemplate,
+							 StringRedisTemplate redisTemplate,
+							 UserWechatInfoDao userWechatInfoDao,
+							 UserDao userDao) {
+		this.restTemplate = restTemplate;
+		this.redisTemplate = redisTemplate;
+		this.userWechatInfoDao = userWechatInfoDao;
+		this.userDao = userDao;
 	}
 
-    
 
+	/**
+	 * 根据场景值生成二维码地址
+	 *
+	 * @return 二维码地址
+	 */
+	@Override
+	public ResultUtil getQRCodeUrl() {
+		//生成场景值,以yuqing:开头
+		String sceneStr = "yuqing:" + System.nanoTime();
+		//二维码有效时间
+		Integer expireSeconds = 600;
+		//生成二维码
+		String qrcodeUrl = null;
+		try {
+			qrcodeUrl = restTemplate.getForObject(getQrcodeUrl, String.class, sceneStr, expireSeconds);
+		} catch (RestClientException e) {
+			e.printStackTrace();
+			return ResultUtil.build(500,"生成二维码失败");
+		}
+		//返回二维码地址
+		QrcodeData qrcodeData = new QrcodeData(qrcodeUrl, sceneStr);
+		return ResultUtil.ok(qrcodeData);
+	}
+
+	/**
+	 * 关注事件处理
+	 *
+	 * @param wxMpXmlMessage 微信消息
+	 * @return 该用户是否已经存在
+	 */
+	@Override
+	public Boolean handleSubscribe(WxMpXmlMessage wxMpXmlMessage) {
+		//获取用户openid
+		String openid = wxMpXmlMessage.getFromUser();
+		//获取场景值
+		String eventKey = wxMpXmlMessage.getEventKey();
+		//查询数据库是否存在该用户
+		User user = userDao.selectUserByOpenid(openid);
+		if (user != null) {
+			redisTemplate.opsForValue().set(eventKey, JSON.toJSONString(user), 10, TimeUnit.MINUTES);
+			return true;
+		}
+		//如果不存在,则将openid存入redis,并设置过期时间为10分钟
+		redisTemplate.opsForValue().set(openid, eventKey, 10, TimeUnit.MINUTES);
+		return false;
+	}
+
+	/**
+	 * 授权事件处理
+	 *
+	 * @param wechatUserInfo
+	 */
+	@Override
+	public void handleAuthorize(WechatUserInfo wechatUserInfo) {
+		String openid = wechatUserInfo.getOpenid();
+		//查询用户是否存在
+		User user = userDao.selectUserByOpenid(openid);
+		if (user == null) {
+			//如果不存在,则创建用户
+			user = new User();
+			user.setOpenid(openid);
+			user.setUsername(wechatUserInfo.getNickname());
+			user.setLogin_count(0);
+			user.setCreate_time(DateUtil.nowTime());
+			user.setTerm_of_validity(new Date(2524608000000L));
+			userDao.saveUser(user);
+			//获取事件key
+			String eventKey = redisTemplate.opsForValue().get(openid);
+			//将用户信息存入redis
+			redisTemplate.opsForValue().set(eventKey, JSON.toJSONString(user), 10, TimeUnit.MINUTES);
+			//将用户信息存入数据库
+			wechatUserInfo.setUser_id(user.getId());
+			userWechatInfoDao.saveWechatUserInfo(wechatUserInfo);
+		}
+
+	}
+
+	@Override
+	public ResultUtil checkLogin(String sceneStr, HttpServletRequest request) {
+		if (sceneStr == null || "".equals(sceneStr)) {
+			return ResultUtil.build(500, "场景值不能为空");
+		}
+
+//        String openId = SENSE_STR.get(sceneStr);
+		String result = redisTemplate.opsForValue().get(sceneStr);
+		if (result == null||"".equals(result)) {
+			return ResultUtil.build(204, "未获取到用户操作");
+		}
+		User user = JSON.parseObject(result, User.class);
+		request.getSession().setAttribute("User", user);
+		return ResultUtil.ok();
+	}
 }

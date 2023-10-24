@@ -44,7 +44,7 @@
 	</update> -->
 	
 	
-	<insert id="saveUser">
+	<insert id="saveUser" useGeneratedKeys="true" keyProperty="id">
 		insert into
 			user(
 				create_time, user_id, telephone, password, email, end_login_time, status, username, wechat_number, openid,
@@ -143,7 +143,10 @@ select user_id,username from user where user_type = 2 and user_id not in (${user
 	<select id="selectById" resultType="com.stonedt.intelligence.entity.User">
 		select * from user where id = #{id}
 	</select>
-	<update id="updateLoginFailCountAndTime" parameterType="java.util.Map">
+    <select id="selectUserByOpenid" resultType="com.stonedt.intelligence.entity.User">
+		select * from user where openid = #{openid}
+	</select>
+    <update id="updateLoginFailCountAndTime" parameterType="java.util.Map">
 		update user set login_fail_count=#{loginFailCount}
 		<if test="loginFailTime != null">
 			,end_login_fail_time=now()

@@ -307,8 +307,8 @@ public class WarningSchedule {
                             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
                             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, "utf-8");
                             String email_user = warning_source.getString("email");
-
-                            mimeMessageHelper.setFrom("舆情预警");
+                            String senderUsername = javaMailSender.getUsername();
+                            mimeMessageHelper.setFrom(senderUsername);
                             mimeMessageHelper.setTo(email_user);
                             mimeMessageHelper.setSubject("思通舆情  预警邮件推送");
                             mimeMessageHelper.setText(emailHtml,true);
@@ -445,8 +445,8 @@ public class WarningSchedule {
                             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
                             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, "utf-8");
                             String email_user = warning_source.getString("email");
-
-                            mimeMessageHelper.setFrom("舆情预警");
+                            String senderUsername = javaMailSender.getUsername();
+                            mimeMessageHelper.setFrom(senderUsername);
                             mimeMessageHelper.setTo(email_user);
                             mimeMessageHelper.setSubject("思通舆情  预警邮件推送");
                             mimeMessageHelper.setText(emailHtml,true);

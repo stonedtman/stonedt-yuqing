@@ -909,3 +909,40 @@ CREATE TABLE `wechatqrcode`  (
 -- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+
+/*
+ Navicat Premium Data Transfer
+
+ Target Server Type    : MySQL
+ Target Server Version : 50742
+ File Encoding         : 65001
+
+ Date: 24/10/2023 16:34:24
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for user_wechat_info
+-- ----------------------------
+DROP TABLE IF EXISTS `user_wechat_info`;
+CREATE TABLE `user_wechat_info`  (
+  `user_id` int(11) NOT NULL COMMENT '用户id',
+  `openid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户微信id',
+  `nickname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户微信昵称',
+  `sex` int(1) NULL DEFAULT NULL COMMENT '普通用户性别，1为男性，2为女性',
+  `city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '普通用户个人资料填写的城市',
+  `province` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '普通用户个人资料填写的省份',
+  `country` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '国家，如中国为CN',
+  `head_img_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像）， 用户没有头像时该项为空',
+  `unionId` int(11) NULL DEFAULT NULL COMMENT '用户统一标识。针对一个微信开放平台帐号下的应用，同一用户的unionid是唯一的。',
+  `privileges` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '用户特权信息，json数组，如微信沃卡用户为（chinaunicom）',
+  `snapshot_user` int(1) NULL DEFAULT NULL COMMENT 'is_snapshotuser 是否为快照页模式虚拟账号，值为0时是普通用户，1时是虚拟帐号',
+  PRIMARY KEY (`user_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
