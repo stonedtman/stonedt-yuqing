@@ -50,6 +50,10 @@ public class EarlyWarningServiceImpl implements EarlyWarningService{
 			Long group_id = Long.valueOf(String.valueOf(warningArticle.get(i).get("group_id")));
 			String groupName = solutionGroupDao.getGroupName(group_id);
 			warningArticle.get(i).put("groupName", groupName);
+			Long projectId = (Long)warningArticle.get(i).get("project_id");
+			warningArticle.get(i).put("project_id", String.valueOf(projectId));
+			Long groupId = (Long)warningArticle.get(i).get("group_id");
+			warningArticle.get(i).put("group_id", String.valueOf(groupId));
 		}
 		PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String,Object>>(warningArticle);
 		resMap.put("warningArticle", warningArticle);
