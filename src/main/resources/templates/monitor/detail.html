@@ -1854,6 +1854,9 @@ $("#currentyear").text((new Date()).getFullYear());
                 articleContent+=JSON.parse(e.data).data
                 reporting_content(num)
             }
+            if(e.type=="error"){
+                $("#intelligentWrite .content").html("<div class='error-tips'>"+e.data+"</div>")
+            }
         }
         source.onerror=function () {
             source.close()
