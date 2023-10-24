@@ -308,11 +308,11 @@ public class WarningSchedule {
                             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, "utf-8");
                             String email_user = warning_source.getString("email");
                             String senderUsername = javaMailSender.getUsername();
-                            mimeMessageHelper.setFrom(senderUsername);
+                            mimeMessageHelper.setFrom("舆情预警<"+senderUsername+">");
                             mimeMessageHelper.setTo(email_user);
                             mimeMessageHelper.setSubject("思通舆情  预警邮件推送");
                             mimeMessageHelper.setText(emailHtml,true);
-                            mimeMessageHelper.setCc("1500862375@qq.com");
+                            mimeMessageHelper.setCc("shengwenxuan@stonedt.com");
                             javaMailSender.send(mimeMessage);
                             logger.info("预警邮件发送成功......");
                         } catch (Exception e) {
@@ -446,11 +446,11 @@ public class WarningSchedule {
                             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, "utf-8");
                             String email_user = warning_source.getString("email");
                             String senderUsername = javaMailSender.getUsername();
-                            mimeMessageHelper.setFrom(senderUsername);
+                            mimeMessageHelper.setFrom("舆情预警<"+senderUsername+">");
                             mimeMessageHelper.setTo(email_user);
                             mimeMessageHelper.setSubject("思通舆情  预警邮件推送");
                             mimeMessageHelper.setText(emailHtml,true);
-                            mimeMessageHelper.setCc("1500862375@qq.com");
+                            mimeMessageHelper.setCc("shengwenxuan@stonedt.com");
                             javaMailSender.send(mimeMessage);
                             logger.info("预警邮件发送成功......");
                         } catch (Exception e) {
