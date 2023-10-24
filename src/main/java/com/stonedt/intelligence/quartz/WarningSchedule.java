@@ -380,7 +380,7 @@ public class WarningSchedule {
                             String article_public_id = Earlywarning.getString("article_public_id");
                             Integer similarvolume = Earlywarning.getInteger("similarvolume");
                             String emotionalIndex1 = Earlywarning.getString("emotionalIndex");
-                            String url = system_url + "/monitor/detail/" + article_public_id;
+                            String url = Earlywarning.getString("source_url");
                             if (systempush) {//系统预警
                                 Map<String, Object> warning_popup = new HashMap<>();
                                 warning_popup.put("create_time", DateUtil.nowTime());
