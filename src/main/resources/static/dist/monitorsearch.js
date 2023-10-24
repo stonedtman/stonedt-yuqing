@@ -3140,25 +3140,34 @@ $(document).on('click', '.copytext', function () {
 
 
 function copyText(text) {
-    var textarea = document.createElement("textarea");
-    var currentFocus = document.activeElement;
-    let state = false;
-    document.body.appendChild(textarea);
-    textarea.value = text;
-    textarea.focus();
-    if (textarea.setSelectionRange) {
-        textarea.setSelectionRange(0, textarea.value.length);
-    } else {
-        textarea.select();
-    }
-    try {
-        state = document.execCommand("copy");
-    } catch (err) {
-        state = false;
-    }
-    document.body.removeChild(textarea);
-    currentFocus.focus();
-    return state;
+    let inputNode = document.createElement('input')  // 创建input
+    inputNode.value = text // 赋值给 input 值
+    document.body.appendChild(inputNode) // 插入进去
+    inputNode.select() // 选择对象
+    document.execCommand('Copy') // 原生调用执行浏览器复制命令
+    inputNode.className = 'oInput'
+    inputNode.style.display = 'none' // 隐藏
+    inputNode.remove() // 删除自身
+
+    // var textarea = document.createElement("textarea");
+    // var currentFocus = document.activeElement;
+    // let state = false;
+    // document.body.appendChild(textarea);
+    // textarea.value = text;
+    // textarea.focus();
+    // if (textarea.setSelectionRange) {
+    //     textarea.setSelectionRange(0, textarea.value.length);
+    // } else {
+    //     textarea.select();
+    // }
+    // try {
+    //     state = document.execCommand("copy");
+    // } catch (err) {
+    //     state = false;
+    // }
+    // document.body.removeChild(textarea);
+    // currentFocus.focus();
+    // return state;
 };
 
 
