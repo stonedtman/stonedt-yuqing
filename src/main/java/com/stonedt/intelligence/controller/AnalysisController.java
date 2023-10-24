@@ -59,7 +59,7 @@ public class AnalysisController {
 		String planWordHit = anlysisByProjectidAndTimeperiod.getPlan_word_hit();
 		if (StringUtils.isNotBlank(planWordHit)) {
 			JSONArray parseArray = JSONArray.parseArray(planWordHit);
-			if (parseArray.size() > 0) {
+			if (!parseArray.isEmpty()) {
 				// 合并keyword相同的数据
 				Map<String, JSONObject> map = new HashMap<>();
 				for (int i = 0; i < parseArray.size(); i++) {

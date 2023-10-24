@@ -3634,8 +3634,7 @@ public class MonitorServiceImpl implements MonitorService {
                 /**
                  * 查询缓存
                  */
-                JSONObject redisParams = new JSONObject();
-                BeanUtils.copyProperties(paramJson, redisParams);
+                JSONObject redisParams = (JSONObject) paramJson.clone();
                 redisParams.remove("times");
                 redisParams.remove("timee");
                 String redisKey = MapUtil.getUrlParamsByMap(redisParams);
@@ -3806,8 +3805,7 @@ public class MonitorServiceImpl implements MonitorService {
             /**
              * 查询缓存
              */
-            JSONObject redisParams = new JSONObject();
-            BeanUtils.copyProperties(paramJson, redisParams);
+            JSONObject redisParams = (JSONObject) paramJson.clone();
             redisParams.remove("times");
             redisParams.remove("timee");
             String redisKey = MapUtil.getUrlParamsByMap(redisParams);
@@ -3824,7 +3822,7 @@ public class MonitorServiceImpl implements MonitorService {
                  */
                 redisTemplate.opsForValue().set(url + "?" + redisKey, esResponse, 1, TimeUnit.HOURS);
             }
-            if (!esResponse.equals("")) {
+            if (!"".equals(esResponse)) {
                 JSONObject esResponseJson = JSON.parseObject(esResponse);
                 String code = esResponseJson.getString("code");
                 if (code.equals("200")) {
