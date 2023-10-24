@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stonedt.intelligence.dao.UserWechatInfoDao">
+
+    <resultMap id="BaseResultMap" type="com.stonedt.intelligence.entity.UserWechatInfo">
+            <id property="userId" column="user_id" jdbcType="INTEGER"/>
+            <result property="openid" column="openid" jdbcType="VARCHAR"/>
+            <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+            <result property="sex" column="sex" jdbcType="INTEGER"/>
+            <result property="city" column="city" jdbcType="VARCHAR"/>
+            <result property="province" column="province" jdbcType="VARCHAR"/>
+            <result property="country" column="country" jdbcType="VARCHAR"/>
+            <result property="headImgUrl" column="head_img_url" jdbcType="VARCHAR"/>
+            <result property="unionid" column="unionId" jdbcType="INTEGER"/>
+            <result property="privileges" column="privileges" jdbcType="VARCHAR"/>
+            <result property="snapshotUser" column="snapshot_user" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,openid,nickname,
+        sex,city,province,
+        country,head_img_url,unionId,
+        privileges,snapshot_user
+    </sql>
+    <insert id="saveWechatUserInfo">
+        insert into user_wechat_info(
+            user_id, openid, nickname, sex, city, province, country, head_img_url, unionId, privileges, snapshot_user
+        )
+        values(
+                  #{userId,jdbcType=INTEGER},#{openid},#{nickname},#{sex},#{city},#{province},#{country},#{headImgUrl},#{unionid},#{privileges},#{snapshotUser}
+              )
+    </insert>
+    <select id="selectByOpenid" resultType="com.stonedt.intelligence.entity.UserWechatInfo">
+        select *
+        from user_wechat_info
+        where openid = #{openid,jdbcType=VARCHAR}
+    </select>
+</mapper>

@@ -1,24 +1,14 @@
 package com.stonedt.intelligence.controller;
 
+import com.stonedt.intelligence.dto.WechatUserInfo;
+import com.stonedt.intelligence.dto.WxMpXmlMessage;
 import com.stonedt.intelligence.service.WechatService;
-import com.stonedt.intelligence.util.CheckoutUtil;
 
-import org.dom4j.Document;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.stonedt.intelligence.util.ResultUtil;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
 @RestController
@@ -26,24 +16,44 @@ import java.util.Map;
 public class WechatController {
 	
 	
-	@Autowired
-	private WechatService wechatService;
-	
-	
-	
-	@RequestMapping("/weChatToken")
-    public void weChat(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        wechatService.dealevent(request,response);
+
+	private final WechatService wechatService;
+
+
+    public WechatController(WechatService wechatService) {
+        this.wechatService = wechatService;
     }
 
-    @RequestMapping("/wxGroup")
-    public ModelAndView wxGroup(HttpServletRequest request, HttpServletResponse response,ModelAndView mv) throws IOException {
-        String groupid = request.getParameter("groupid");
-        mv.addObject("groupid", groupid);
-        mv.addObject("settingLeft", "wxGroup");
-        mv.setViewName("user/wxGroup");
-        return mv;
+    /**
+     * 获取微信二维码地址
+     */
+    @GetMapping("/getQrCode")
+    public ResultUtil getQrCode() {
+        return wechatService.getQRCodeUrl();
     }
-	
+
+    /**
+     * 关注事件处理
+     */
+    @PostMapping("/handleSubscribe")
+    public Boolean handleSubscribe(@RequestBody WxMpXmlMessage wxMpXmlMessage) {
+        return wechatService.handleSubscribe(wxMpXmlMessage);
+    }
+
+    /**
+     * 授权事件处理
+     */
+    @PostMapping("/handleAuthorize")
+    public void handleAuthorize(@RequestBody WechatUserInfo wechatUserInfo) {
+        wechatService.handleAuthorize(wechatUserInfo);
+    }
+
+    /**
+     * 登录检查
+     */
+    @GetMapping("/checkLogin")
+    public ResultUtil checkLogin(@RequestParam String sceneStr, HttpServletRequest request) {
+        return wechatService.checkLogin(sceneStr,request);
+    }
 
 }

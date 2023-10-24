@@ -129,4 +129,11 @@ public interface UserDao {
 	void bindXie(BindParamsVo bindParamsVo);
 
 	User selectById(Integer id);
+
+	/**
+	 * 根据openid查询用户信息
+	 * @param openid 微信openid
+	 * @return 用户信息
+	 */
+    User selectUserByOpenid(String openid);
 }
