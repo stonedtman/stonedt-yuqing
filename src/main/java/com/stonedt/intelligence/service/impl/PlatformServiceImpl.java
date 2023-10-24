@@ -455,13 +455,14 @@ public class PlatformServiceImpl implements PlatformService {
                 sseEmitter.send(SseEmitter
                         .event()
                         .id("1")
-                        .name("message")
+                        .name("error")
                         .data("啊哦,网络开小差了,请稍后再试"));
             } catch (IOException e) {
-                log.error("向用户{}发送{}事件时发生异常",user.getId(),"message");
+                log.error("向用户{}发送{}事件时发生异常",user.getId(),"error");
                 e.printStackTrace();
             }
             sseEmitter.complete();
+            return sseEmitter;
         }
         CopyWriting copyWriting = new CopyWriting();
         copyWriting.setTemperature(0.7f);

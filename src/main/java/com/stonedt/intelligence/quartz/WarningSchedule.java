@@ -202,128 +202,126 @@ public class WarningSchedule {
             //相似文章合并（0：取消合并 1：合并）
            
             String params = "keyword=" + highKeyword + "&searchkeyword=" + yjword + "&emotionalIndex=" + emotionalIndex + "&times=" + getTimee(nowtime, time)
-                    + "&timee=" + nowtime + "&searchType=5&stopword=" + listStopwords + "&page=1&size=10&matchingmode=" + matchingMode
+                    + "&timee=" + nowtime + "&searchType=1&stopword=" + listStopwords + "&page=1&size=10&matchingmode=" + matchingMode
                     + "&classify=" + classify + "&province=" + province + "&city=" + city+"&projecttype="+projectType;
             if(warningSetting.getWarning_similar()==0) {
-            String urls = es_search_url + searchearlywarningApi;
-            System.err.println(urls + "?" + params);
-            logger.info("预警查询es开始......");
-            String esEarlywarning = MyHttpRequestUtil.sendPostEsSearch(urls, params);
-            JSONObject Earlywarnings = JSONObject.parseObject(esEarlywarning);
-            logger.info("预警查询结束......共计：{}", Earlywarnings.getInteger("count"));
-            if (Earlywarnings.getInteger("code") == 200 && Earlywarnings.getInteger("count") > 0) {
-                JSONArray jsonArray = Earlywarnings.getJSONArray("data");
-                JSONObject warning_source = JSONObject.parseObject(warningSetting.getWarning_source());
-                int email_type = warning_source.getIntValue("type");
+                String urls = es_search_url + searchearlywarningApi;
+                System.err.println(urls + "?" + params);
+                logger.info("预警查询es开始......");
+                String esEarlywarning = MyHttpRequestUtil.sendPostEsSearch(urls, params);
+                JSONObject Earlywarnings = JSONObject.parseObject(esEarlywarning);
+                logger.info("预警查询结束......共计：{}", Earlywarnings.getInteger("count"));
+                if (Earlywarnings.getInteger("code") == 200 && Earlywarnings.getInteger("count") > 0) {
+                    JSONArray jsonArray = Earlywarnings.getJSONArray("data");
+                    JSONObject warning_source = JSONObject.parseObject(warningSetting.getWarning_source());
+                    int email_type = warning_source.getIntValue("type");
 
-                Boolean emailpushboolean = false;//是否是邮箱预警
-                Boolean systempush = false;//是否是系统预警
-                if (email_type == 2) {
-                    emailpushboolean = true;
-                } else {
-                    systempush = true;
-                }
-                String emailHtml = emailHtml(nowtime, warningSetting, jsonArray.size());
-                for (int i = 0; i < jsonArray.size(); i++) {
-                    try {
-                        JSONObject Earlywarning = jsonArray.getJSONObject(i).getJSONObject("_source");
-                        String title = Earlywarning.getString("title").split("_http")[0];
-                        String content = Earlywarning.getString("content");
-                        if (content.length() > 255) {
-                            content = content.substring(0, 254);
-                        }
-//                        String text = title + content;
-//                        String relatedWords = TextUtil.getRelatedWords(listKeywords, yjword, text);
-//                        if (org.apache.commons.lang3.StringUtils.isNotEmpty(relatedWords)) {
-//                            relatedWords = relatedWords.substring(0, relatedWords.length() - 1);
-//                        }
-                        String sourcewebsitename = Earlywarning.getString("sourcewebsitename");
-                        String publish_time = Earlywarning.getString("publish_time");
-                        String article_public_id = Earlywarning.getString("article_public_id");
-                        Integer similarvolume = Earlywarning.getInteger("similarvolume");
-                        String emotionalIndex1 = Earlywarning.getString("emotionalIndex");
-                        String url = Earlywarning.getString("source_url");
-                        if (systempush) {//系统预警
-                            Map<String, Object> warning_popup = new HashMap<>();
-                            warning_popup.put("create_time", DateUtil.nowTime());
-                            warning_popup.put("warning_article_id", snowFlake.getId());
-                            warning_popup.put("user_id", warningSetting.getUser_id());
-                            warning_popup.put("popup_id", snowFlake.getId());
-                            warning_popup.put("popup_content", content);
-                            warning_popup.put("popup_time", DateUtil.nowTime());
-                            warning_popup.put("article_id", article_public_id);
-                            warning_popup.put("article_time", publish_time);
-                            warning_popup.put("article_title", title);
-                            warning_popup.put("article_emotion", emotionalIndex1);
-                            warning_popup.put("status", 0);
-                            warning_popup.put("project_id", warningSetting.getProject_id());
-                            warning_popup.put("read_status", 0);
-                            Map<String, Object> article_detail = new HashMap<>();
-                            article_detail.put("sourcewebsitename", sourcewebsitename);
-                            warning_popup.put("article_detail", JSON.toJSONString(article_detail));
-                            // 入库
-                            try {
-                                boolean warning_popupresult = earlyWarningService.saveWarningPopup(warning_popup);
-                                if (warning_popupresult) {
-                                    logger.info("预警推送插入成功");
-                                } else {
-                                    logger.error("预警推送插入失败");
+                    Boolean emailpushboolean = false;//是否是邮箱预警
+                    Boolean systempush = false;//是否是系统预警
+                    if (email_type == 2) {
+                        emailpushboolean = true;
+                    } else {
+                        systempush = true;
+                    }
+                    String emailHtml = emailHtml(nowtime, warningSetting, jsonArray.size());
+                    for (int i = 0; i < jsonArray.size(); i++) {
+                        try {
+                            JSONObject Earlywarning = jsonArray.getJSONObject(i).getJSONObject("_source");
+                            String title = Earlywarning.getString("title").split("_http")[0];
+                            String content = Earlywarning.getString("content");
+                            if (content.length() > 255) {
+                                content = content.substring(0, 254);
+                            }
+    //                        String text = title + content;
+    //                        String relatedWords = TextUtil.getRelatedWords(listKeywords, yjword, text);
+    //                        if (org.apache.commons.lang3.StringUtils.isNotEmpty(relatedWords)) {
+    //                            relatedWords = relatedWords.substring(0, relatedWords.length() - 1);
+    //                        }
+                            String sourcewebsitename = Earlywarning.getString("sourcewebsitename");
+                            String publish_time = Earlywarning.getString("publish_time");
+                            String article_public_id = Earlywarning.getString("article_public_id");
+                            Integer similarvolume = Earlywarning.getInteger("similarvolume");
+                            String emotionalIndex1 = Earlywarning.getString("emotionalIndex");
+                            String url = Earlywarning.getString("source_url");
+                            if (systempush) {//系统预警
+                                Map<String, Object> warning_popup = new HashMap<>();
+                                warning_popup.put("create_time", DateUtil.nowTime());
+                                warning_popup.put("warning_article_id", snowFlake.getId());
+                                warning_popup.put("user_id", warningSetting.getUser_id());
+                                warning_popup.put("popup_id", snowFlake.getId());
+                                warning_popup.put("popup_content", content);
+                                warning_popup.put("popup_time", DateUtil.nowTime());
+                                warning_popup.put("article_id", article_public_id);
+                                warning_popup.put("article_time", publish_time);
+                                warning_popup.put("article_title", title);
+                                warning_popup.put("article_emotion", emotionalIndex1);
+                                warning_popup.put("status", 0);
+                                warning_popup.put("project_id", warningSetting.getProject_id());
+                                warning_popup.put("read_status", 0);
+                                Map<String, Object> article_detail = new HashMap<>();
+                                article_detail.put("sourcewebsitename", sourcewebsitename);
+                                warning_popup.put("article_detail", JSON.toJSONString(article_detail));
+                                // 入库
+                                try {
+                                    boolean warning_popupresult = earlyWarningService.saveWarningPopup(warning_popup);
+                                    if (warning_popupresult) {
+                                        logger.info("预警推送插入成功");
+                                    } else {
+                                        logger.error("预警推送插入失败");
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (Exception e) {
-                                e.printStackTrace();
                             }
+                            if (emailpushboolean) { //邮箱预警
+                                if (content.length() > 180) {
+                                    content = content.substring(0, 180) + "...";
+                                }
+                                String econtent = jsonArray.getJSONObject(i).getJSONObject("highlight").getString("content");
+                                if (econtent == null || "".equals(econtent.trim())) {
+                                    econtent = content;
+                                }
+                                JSONArray maillist = new JSONArray();
+                                JSONObject maildetail = new JSONObject();
+                                maildetail.put("publish_time", publish_time);
+                                maildetail.put("similarvolume", similarvolume);
+                                maildetail.put("sourcewebsitename", sourcewebsitename);
+                                maildetail.put("article_id", article_public_id);
+                                maildetail.put("title", title);
+                                maildetail.put("econtent", econtent);
+                                maillist.add(maildetail);
+                                emailHtml += "<div class=\"content\">\r\n" +
+                                        "<p>" + publish_time + " 相似文章:" + similarvolume + " 来自:" + sourcewebsitename + "</p>\r\n" +
+                                        "<a href=\"" + url + "\" target=\"_blank\">" + title + "</a>\r\n" +
+                                        "<div class=\"con\"> " + econtent + "\r\n" +
+                                        "</div>\r\n" +
+                                        "</div>";
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                        if (emailpushboolean) { //邮箱预警
-                            if (content.length() > 180) {
-                                content = content.substring(0, 180) + "...";
-                            }
-                            String econtent = jsonArray.getJSONObject(i).getJSONObject("highlight").getString("content");
-                            if (econtent == null || "".equals(econtent.trim())) {
-                                econtent = content;
-                            }
-                            JSONArray maillist = new JSONArray();
-                            JSONObject maildetail = new JSONObject();
-                            maildetail.put("publish_time", publish_time);
-                            maildetail.put("similarvolume", similarvolume);
-                            maildetail.put("sourcewebsitename", sourcewebsitename);
-                            maildetail.put("article_id", article_public_id);
-                            maildetail.put("title", title);
-                            maildetail.put("econtent", econtent);
-                            maillist.add(maildetail);
-                            emailHtml += "<div class=\"content\">\r\n" +
-                                    "<p>" + publish_time + " 相似文章:" + similarvolume + " 来自:" + sourcewebsitename + "</p>\r\n" +
-                                    "<a href=\"" + url + "\" target=\"_blank\">" + title + "</a>\r\n" +
-                                    "<div class=\"con\"> " + econtent + "\r\n" +
-                                    "</div>\r\n" +
-                                    "</div>";
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
-                }
-                if (emailpushboolean) {
-                    emailHtml += "</div> </body> </html>";
-                    try {
-                        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-                        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, "utf-8");
-                        String email_user = warning_source.getString("email");
-                        String senderUsername = javaMailSender.getUsername();
+                    if (emailpushboolean) {
+                        emailHtml += "</div> </body> </html>";
+                        try {
+                            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+                            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, "utf-8");
+                            String email_user = warning_source.getString("email");
 
-                        mimeMessageHelper.setFrom(senderUsername);
-                        mimeMessageHelper.setTo(email_user);
-                        mimeMessageHelper.setSubject("预警推送");
-                        mimeMessageHelper.setText(emailHtml,true);
-                        mimeMessageHelper.setCc("1500862375@qq.com");
-                        javaMailSender.send(mimeMessage);
-                        SendMailFox.Send(email_user, "预警推送", emailHtml);
-                        logger.info("预警邮件发送成功......");
-                    } catch (Exception e) {
-                        logger.info("预警邮件发送失败......{}", e.getMessage());
+                            mimeMessageHelper.setFrom("舆情预警");
+                            mimeMessageHelper.setTo(email_user);
+                            mimeMessageHelper.setSubject("思通舆情  预警邮件推送");
+                            mimeMessageHelper.setText(emailHtml,true);
+                            mimeMessageHelper.setCc("1500862375@qq.com");
+                            javaMailSender.send(mimeMessage);
+                            logger.info("预警邮件发送成功......");
+                        } catch (Exception e) {
+                            logger.info("预警邮件发送失败......{}", e.getMessage());
+                        }
                     }
+                } else {
+                    logger.info("预警查询结束...未查询到数据......");
                 }
-            } else {
-                logger.info("预警查询结束...未查询到数据......");
-            }
             }else {
             	
             	String similarUrl = es_search_url + MonitorConstant.es_api_similarsearch_content;
@@ -332,7 +330,7 @@ public class WarningSchedule {
                 if (!esSimilarResponse.equals("")) {
                     List article_public_idList = new ArrayList();
                     JSONArray similarArray = JSON.parseArray(esSimilarResponse);
-                    if(similarArray.size()==0) {
+                    if(similarArray.isEmpty()) {
                         logger.info("预警查询结束...未查询到数据......");
                     	return ;
                     }
@@ -364,17 +362,10 @@ public class WarningSchedule {
                         systempush = true;
                     }
                     String emailHtml = emailHtml(nowtime, warningSetting, jsonArray.size());
-                    Set<String> titleSet = new HashSet<>();
                     for (int i = 0; i < jsonArray.size(); i++) {
                         try {
                             JSONObject Earlywarning = jsonArray.getJSONObject(i).getJSONObject("_source");
                             String title = Earlywarning.getString("title").split("_http")[0];
-                            //去重
-                            if (titleSet.contains(title)) {
-                                continue;
-                            }else {
-                                titleSet.add(title);
-                            }
                             String content = Earlywarning.getString("content");
                             if (content.length() > 255) {
                                 content = content.substring(0, 254);
@@ -454,15 +445,13 @@ public class WarningSchedule {
                             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
                             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, "utf-8");
                             String email_user = warning_source.getString("email");
-                            String senderUsername = javaMailSender.getUsername();
 
-                            mimeMessageHelper.setFrom(senderUsername);
+                            mimeMessageHelper.setFrom("舆情预警");
                             mimeMessageHelper.setTo(email_user);
-                            mimeMessageHelper.setSubject("预警推送");
+                            mimeMessageHelper.setSubject("思通舆情  预警邮件推送");
                             mimeMessageHelper.setText(emailHtml,true);
                             mimeMessageHelper.setCc("1500862375@qq.com");
                             javaMailSender.send(mimeMessage);
-                            SendMailFox.Send(email_user, "预警推送", emailHtml);
                             logger.info("预警邮件发送成功......");
                         } catch (Exception e) {
                             logger.info("预警邮件发送失败......{}", e.getMessage());
