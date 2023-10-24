@@ -1604,7 +1604,7 @@ function funcLable(res){
 	$("#labletab").html('');
 	let lablestr = "";
 	let totalindustrystr = '';
-	let data = res.data.code==200?res.data.data:[];
+	let data = res.code==200?res.data.data:[];
 	let flag = 0;
 	for (let i = 0;i < data.length;i++){
 		if(data[i].key!='其它'&&data[i].key!='total'){
