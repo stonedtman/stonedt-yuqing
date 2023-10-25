@@ -219,34 +219,8 @@ public class WarningSchedule {
                 logger.info("预警查询结束......共计：{}", Earlywarnings.getInteger("count"));
                 if (Earlywarnings.getInteger("code") == 200 && Earlywarnings.getInteger("count") > 0) {
                     JSONArray jsonArray = Earlywarnings.getJSONArray("data");
-                    //获取已经预警的文章id集合
-                    Set<String> alertedList = redisTemplate.opsForZSet().range("alertedList:projectId:"+warningSetting.getProject_id(), 0, -1);
-                    if (alertedList == null) {
-                        alertedList = new HashSet<>();
-                    }
-                    //过滤已经预警的文章
-                    Set<String> finalAlertedList = alertedList;
-                    jsonArray.removeIf(json -> finalAlertedList.contains(((JSONObject) json).getJSONObject("_source").getString("article_public_id")));
-
-
-                    //获取当前时间
-                    long currentTimeMillis = System.currentTimeMillis();
-                    //获取小时数
-                    double hours = currentTimeMillis / 3600000.0;
-                    //淘汰过期的预警文章,只保留12小时内的
-                    redisTemplate.opsForZSet().removeRangeByScore("alertedList:projectId:"+warningSetting.getProject_id(), 0, hours - 12);
-
-                    //准备预警的文章
-                    Set<ZSetOperations.TypedTuple<String>> tuples = new HashSet<>();
-                    for (int i = 0; i < jsonArray.size(); i++) {
-                        tuples.add(new DefaultTypedTuple<>(jsonArray.getJSONObject(i).getJSONObject("_source").getString("article_public_id"),hours));
-                    }
-                    //存入集合
-                    if (tuples.size() > 0) {
-                        redisTemplate.opsForZSet().add("alertedList:projectId:"+warningSetting.getProject_id(), tuples);
-                        //设置过期时间
-                        redisTemplate.expire("alertedList:projectId:"+warningSetting.getProject_id(), 12, TimeUnit.HOURS);
-                    }
+                    //去除重复预警
+                    removeDuplicate(jsonArray,warningSetting);
 
                     JSONObject warning_source = JSONObject.parseObject(warningSetting.getWarning_source());
                     int email_type = warning_source.getIntValue("type");
@@ -259,7 +233,6 @@ public class WarningSchedule {
                         systempush = true;
                     }
                     String emailHtml = emailHtml(nowtime, warningSetting, jsonArray.size());
-                    logger.info("预警去重结束......去重后共计：{}条", jsonArray.size());
                     for (int i = 0; i < jsonArray.size(); i++) {
 
                         try {
@@ -398,36 +371,8 @@ public class WarningSchedule {
                 logger.info("预警查询结束......共计：{}", articleResponseJson.getInteger("count"));
                 if (articleResponseJson.getInteger("code") == 200 && articleResponseJson.getInteger("count") > 0) {
                     JSONArray jsonArray = articleResponseJson.getJSONArray("data");
-
-                    //获取已经预警的文章id集合
-                    Set<String> alertedList = redisTemplate.opsForZSet().range("alertedList:projectId:"+warningSetting.getProject_id(), 0, -1);
-                    if (alertedList == null) {
-                        alertedList = new HashSet<>();
-                    }
-                    //过滤已经预警的文章
-                    Set<String> finalAlertedList = alertedList;
-                    jsonArray.removeIf(json -> finalAlertedList.contains(((JSONObject) json).getJSONObject("_source").getString("article_public_id")));
-
-
-                    //获取当前时间
-                    long currentTimeMillis = System.currentTimeMillis();
-                    //获取小时数
-                    double hours = currentTimeMillis / 3600000.0;
-                    //淘汰过期的预警文章,只保留12小时内的
-                    redisTemplate.opsForZSet().removeRangeByScore("alertedList:projectId:"+warningSetting.getProject_id(), 0, hours - 12);
-
-                    //准备预警的文章
-                    Set<ZSetOperations.TypedTuple<String>> tuples = new HashSet<>();
-                    for (int i = 0; i < jsonArray.size(); i++) {
-                        tuples.add(new DefaultTypedTuple<>(jsonArray.getJSONObject(i).getJSONObject("_source").getString("article_public_id"),hours));
-                    }
-                    //存入集合
-                    if (tuples.size() > 0) {
-                        redisTemplate.opsForZSet().add("alertedList:projectId:"+warningSetting.getProject_id(), tuples);
-                        //设置过期时间
-                        redisTemplate.expire("alertedList:projectId:"+warningSetting.getProject_id(), 3, TimeUnit.HOURS);
-                    }
-
+                    //去除重复预警
+                    removeDuplicate(jsonArray,warningSetting);
                     JSONObject warning_source = JSONObject.parseObject(warningSetting.getWarning_source());
                     int email_type = warning_source.getIntValue("type");
 
@@ -439,7 +384,7 @@ public class WarningSchedule {
                         systempush = true;
                     }
                     String emailHtml = emailHtml(nowtime, warningSetting, jsonArray.size());
-                    logger.info("预警去重结束......去重后共计：{}条", jsonArray.size());
+
                     for (int i = 0; i < jsonArray.size(); i++) {
                         try {
                             JSONObject Earlywarning = jsonArray.getJSONObject(i).getJSONObject("_source");
@@ -751,5 +696,41 @@ public class WarningSchedule {
         Date calendarTime = calendar.getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(calendarTime);
+    }
+
+    /**
+     * 去重方法
+     */
+    public void removeDuplicate(JSONArray jsonArray, WarningSetting warningSetting) {
+        logger.info("预警去重开始......");
+        //获取已经预警的文章id集合
+        Set<String> alertedList = redisTemplate.opsForZSet().range("alertedList:projectId:" + warningSetting.getProject_id(), 0, -1);
+        if (alertedList == null) {
+            logger.info("预警去重结束......去重后共计：{}条", jsonArray.size());
+            return;
+        }
+        //过滤已经预警的文章
+        jsonArray.removeIf(json -> alertedList.contains(((JSONObject) json).getJSONObject("_source").getString("article_public_id")));
+
+
+        //获取当前时间
+        long currentTimeMillis = System.currentTimeMillis();
+        //获取小时数
+        double hours = currentTimeMillis / 3600000.0;
+        //淘汰过期的预警文章,只保留24小时内的
+        redisTemplate.opsForZSet().removeRangeByScore("alertedList:projectId:" + warningSetting.getProject_id(), 0, hours - 24);
+
+        //准备预警的文章
+        Set<ZSetOperations.TypedTuple<String>> tuples = new HashSet<>();
+        for (int i = 0; i < jsonArray.size(); i++) {
+            tuples.add(new DefaultTypedTuple<>(jsonArray.getJSONObject(i).getJSONObject("_source").getString("article_public_id"), hours));
+        }
+        //存入集合
+        if (tuples.size() > 0) {
+            redisTemplate.opsForZSet().add("alertedList:projectId:" + warningSetting.getProject_id(), tuples);
+            //刷新过期时间
+            redisTemplate.expire("alertedList:projectId:" + warningSetting.getProject_id(), 24, TimeUnit.HOURS);
+        }
+        logger.info("预警去重结束......去重后共计：{}条", jsonArray.size());
     }
 }
