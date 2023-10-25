@@ -3,8 +3,8 @@ package com.stonedt.intelligence.quartz;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import com.stonedt.intelligence.dao.UserDao;
 import com.stonedt.intelligence.dto.MailConfig;
@@ -14,10 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.data.redis.core.DefaultTypedTuple;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -32,11 +31,8 @@ import com.stonedt.intelligence.service.ProjectService;
 import com.stonedt.intelligence.util.DateUtil;
 import com.stonedt.intelligence.util.MyHttpRequestUtil;
 import com.stonedt.intelligence.util.ProjectWordUtil;
-import com.stonedt.intelligence.util.SendMailFox;
 import com.stonedt.intelligence.util.SnowFlake;
-import com.stonedt.intelligence.util.TextUtil;
 
-import javax.mail.internet.MimeMessage;
 
 /**
  * <p>预警定时任务</p>
@@ -74,6 +70,9 @@ public class WarningSchedule {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     //	@Scheduled(fixedRate = 10000000)
     @Scheduled(cron = "0 0/20 * * * ?")
@@ -220,6 +219,35 @@ public class WarningSchedule {
                 logger.info("预警查询结束......共计：{}", Earlywarnings.getInteger("count"));
                 if (Earlywarnings.getInteger("code") == 200 && Earlywarnings.getInteger("count") > 0) {
                     JSONArray jsonArray = Earlywarnings.getJSONArray("data");
+                    //获取已经预警的文章id集合
+                    Set<String> alertedList = redisTemplate.opsForZSet().range("alertedList:projectId:"+warningSetting.getProject_id(), 0, -1);
+                    if (alertedList == null) {
+                        alertedList = new HashSet<>();
+                    }
+                    //过滤已经预警的文章
+                    Set<String> finalAlertedList = alertedList;
+                    jsonArray.removeIf(json -> finalAlertedList.contains(((JSONObject) json).getJSONObject("_source").getString("article_public_id")));
+
+
+                    //获取当前时间
+                    long currentTimeMillis = System.currentTimeMillis();
+                    //获取小时数
+                    double hours = currentTimeMillis / 3600000.0;
+                    //淘汰过期的预警文章,只保留12小时内的
+                    redisTemplate.opsForZSet().removeRangeByScore("alertedList:projectId:"+warningSetting.getProject_id(), 0, hours - 12);
+
+                    //准备预警的文章
+                    Set<ZSetOperations.TypedTuple<String>> tuples = new HashSet<>();
+                    for (int i = 0; i < jsonArray.size(); i++) {
+                        tuples.add(new DefaultTypedTuple<>(jsonArray.getJSONObject(i).getJSONObject("_source").getString("article_public_id"),hours));
+                    }
+                    //存入集合
+                    if (tuples.size() > 0) {
+                        redisTemplate.opsForZSet().add("alertedList:projectId:"+warningSetting.getProject_id(), tuples);
+                        //设置过期时间
+                        redisTemplate.expire("alertedList:projectId:"+warningSetting.getProject_id(), 12, TimeUnit.HOURS);
+                    }
+
                     JSONObject warning_source = JSONObject.parseObject(warningSetting.getWarning_source());
                     int email_type = warning_source.getIntValue("type");
 
@@ -231,7 +259,9 @@ public class WarningSchedule {
                         systempush = true;
                     }
                     String emailHtml = emailHtml(nowtime, warningSetting, jsonArray.size());
+                    logger.info("预警去重结束......去重后共计：{}条", jsonArray.size());
                     for (int i = 0; i < jsonArray.size(); i++) {
+
                         try {
                             JSONObject Earlywarning = jsonArray.getJSONObject(i).getJSONObject("_source");
                             String title = Earlywarning.getString("title").split("_http")[0];
@@ -308,7 +338,7 @@ public class WarningSchedule {
                             e.printStackTrace();
                         }
                     }
-                    if (emailpushboolean) {
+                    if (emailpushboolean && !jsonArray.isEmpty()) {
                         emailHtml += "</div> </body> </html>";
                         String finalEmailHtml = emailHtml;
                         ThreadPoolConst.IO_EXECUTOR.execute(()->{
@@ -368,6 +398,36 @@ public class WarningSchedule {
                 logger.info("预警查询结束......共计：{}", articleResponseJson.getInteger("count"));
                 if (articleResponseJson.getInteger("code") == 200 && articleResponseJson.getInteger("count") > 0) {
                     JSONArray jsonArray = articleResponseJson.getJSONArray("data");
+
+                    //获取已经预警的文章id集合
+                    Set<String> alertedList = redisTemplate.opsForZSet().range("alertedList:projectId:"+warningSetting.getProject_id(), 0, -1);
+                    if (alertedList == null) {
+                        alertedList = new HashSet<>();
+                    }
+                    //过滤已经预警的文章
+                    Set<String> finalAlertedList = alertedList;
+                    jsonArray.removeIf(json -> finalAlertedList.contains(((JSONObject) json).getJSONObject("_source").getString("article_public_id")));
+
+
+                    //获取当前时间
+                    long currentTimeMillis = System.currentTimeMillis();
+                    //获取小时数
+                    double hours = currentTimeMillis / 3600000.0;
+                    //淘汰过期的预警文章,只保留12小时内的
+                    redisTemplate.opsForZSet().removeRangeByScore("alertedList:projectId:"+warningSetting.getProject_id(), 0, hours - 12);
+
+                    //准备预警的文章
+                    Set<ZSetOperations.TypedTuple<String>> tuples = new HashSet<>();
+                    for (int i = 0; i < jsonArray.size(); i++) {
+                        tuples.add(new DefaultTypedTuple<>(jsonArray.getJSONObject(i).getJSONObject("_source").getString("article_public_id"),hours));
+                    }
+                    //存入集合
+                    if (tuples.size() > 0) {
+                        redisTemplate.opsForZSet().add("alertedList:projectId:"+warningSetting.getProject_id(), tuples);
+                        //设置过期时间
+                        redisTemplate.expire("alertedList:projectId:"+warningSetting.getProject_id(), 3, TimeUnit.HOURS);
+                    }
+
                     JSONObject warning_source = JSONObject.parseObject(warningSetting.getWarning_source());
                     int email_type = warning_source.getIntValue("type");
 
@@ -379,6 +439,7 @@ public class WarningSchedule {
                         systempush = true;
                     }
                     String emailHtml = emailHtml(nowtime, warningSetting, jsonArray.size());
+                    logger.info("预警去重结束......去重后共计：{}条", jsonArray.size());
                     for (int i = 0; i < jsonArray.size(); i++) {
                         try {
                             JSONObject Earlywarning = jsonArray.getJSONObject(i).getJSONObject("_source");
@@ -456,7 +517,7 @@ public class WarningSchedule {
                             e.printStackTrace();
                         }
                     }
-                    if (emailpushboolean) {
+                    if (emailpushboolean && !jsonArray.isEmpty()) {
                         emailHtml += "</div> </body> </html>";
                         String finalEmailHtml = emailHtml;
                         ThreadPoolConst.IO_EXECUTOR.execute(()->{

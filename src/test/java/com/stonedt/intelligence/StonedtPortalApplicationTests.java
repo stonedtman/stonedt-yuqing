@@ -63,16 +63,14 @@ public class StonedtPortalApplicationTests {
 //	PlatformService platformService;
 
 	@Autowired
-	JavaMailSenderImpl javaMailSender;
-
+	WarningSchedule warningSchedule;
 	@Test
 	public void contextLoads() throws IOException, ParseException {
 //		String policyData = SynthesizeSchedule.getPolicyData();
 //		System.out.println(policyData);
 //		synthesizeSchedule.popularInformation();
 //		name();
-		System.out.println(javaMailSender.getJavaMailProperties());
-		System.out.println(javaMailSender.getProtocol());
+		warningSchedule.start();
 
 
 	}

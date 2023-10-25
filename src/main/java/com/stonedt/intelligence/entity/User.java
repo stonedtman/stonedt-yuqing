@@ -66,6 +66,8 @@ public class User implements java.io.Serializable{
      */
     private String mail_json;
 
+    private final static long serialVersionUID = 2L;
+
 
     public Integer getIsOnline() {
         return isOnline;
