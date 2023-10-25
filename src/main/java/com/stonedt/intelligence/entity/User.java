@@ -1,6 +1,7 @@
 package com.stonedt.intelligence.entity;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * description: 用户信息实体 <br>
@@ -59,6 +60,12 @@ public class User implements java.io.Serializable{
      * 账号有效期
      */
     private Date term_of_validity;
+
+    /**
+     * 邮箱配置json
+     */
+    private String mail_json;
+
 
     public Integer getIsOnline() {
         return isOnline;
@@ -239,6 +246,27 @@ public class User implements java.io.Serializable{
         this.term_of_validity = term_of_validity;
     }
 
+    public String getMail_json() {
+        return mail_json;
+    }
+
+    public void setMail_json(String mail_json) {
+        this.mail_json = mail_json;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) && Objects.equals(create_time, user.create_time) && Objects.equals(user_id, user.user_id) && Objects.equals(telephone, user.telephone) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(end_login_time, user.end_login_time) && Objects.equals(status, user.status) && Objects.equals(username, user.username) && Objects.equals(wechat_number, user.wechat_number) && Objects.equals(openid, user.openid) && Objects.equals(login_count, user.login_count) && Objects.equals(identity, user.identity) && Objects.equals(organization_id, user.organization_id) && Objects.equals(isOnline, user.isOnline) && Objects.equals(nlp_secret_id, user.nlp_secret_id) && Objects.equals(nlp_secret_key, user.nlp_secret_key) && Objects.equals(nlp_flag, user.nlp_flag) && Objects.equals(xie_secret_id, user.xie_secret_id) && Objects.equals(xie_secret_key, user.xie_secret_key) && Objects.equals(xie_flag, user.xie_flag) && Objects.equals(term_of_validity, user.term_of_validity) && Objects.equals(mail_json, user.mail_json);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, create_time, user_id, telephone, password, email, end_login_time, status, username, wechat_number, openid, login_count, identity, organization_id, isOnline, nlp_secret_id, nlp_secret_key, nlp_flag, xie_secret_id, xie_secret_key, xie_flag, term_of_validity, mail_json);
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -264,6 +292,7 @@ public class User implements java.io.Serializable{
                 ", xie_secret_key='" + xie_secret_key + '\'' +
                 ", xie_flag=" + xie_flag +
                 ", term_of_validity=" + term_of_validity +
+                ", mail_json='" + mail_json + '\'' +
                 '}';
     }
 }

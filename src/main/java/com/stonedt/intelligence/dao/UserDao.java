@@ -136,4 +136,17 @@ public interface UserDao {
 	 * @return 用户信息
 	 */
     User selectUserByOpenid(String openid);
+
+	/**
+	 * 保存邮件配置
+	 * @param id 用户id
+	 * @param mailJson 邮件配置json
+	 */
+    void saveMailConfig(@Param("id") Integer id, @Param("mailJson") String mailJson);
+
+	/**
+	 * 根据用户id查询邮件配置
+	 * @param userId
+	 */
+	String selectMailJsonByUserId(Long userId);
 }

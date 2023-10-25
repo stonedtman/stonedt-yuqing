@@ -6,6 +6,7 @@ import com.stonedt.intelligence.dao.ProjectTaskDao;
 import com.stonedt.intelligence.entity.AnalysisQuartzDo;
 import com.stonedt.intelligence.entity.ProjectTask;
 import com.stonedt.intelligence.quartz.AnalysisDataRequest;
+import com.stonedt.intelligence.quartz.WarningSchedule;
 import com.stonedt.intelligence.service.PlatformService;
 import com.stonedt.intelligence.util.DateUtil;
 import com.stonedt.intelligence.util.ProjectWordUtil;
@@ -24,6 +25,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -60,12 +62,17 @@ public class StonedtPortalApplicationTests {
 //	@Autowired
 //	PlatformService platformService;
 
+	@Autowired
+	JavaMailSenderImpl javaMailSender;
+
 	@Test
-	public void contextLoads() throws IOException {
+	public void contextLoads() throws IOException, ParseException {
 //		String policyData = SynthesizeSchedule.getPolicyData();
 //		System.out.println(policyData);
 //		synthesizeSchedule.popularInformation();
 //		name();
+		System.out.println(javaMailSender.getJavaMailProperties());
+		System.out.println(javaMailSender.getProtocol());
 
 
 	}

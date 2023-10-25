@@ -48,12 +48,15 @@
                 <div class="card">
                     <div class="card-body p-0">
                         <div class="d-flex no-block justify-content-start align-items-center"
-                             style="padding: 20px;padding-bottom: 0;">
+                             style="padding: 20px;padding-bottom: 0;justify-content: space-between !important;">
                             <select name="group-select" id="group-select" class="form-control custom-select"
                                     style="width: 120px;">
                                 <option th:each="group:${groupInfoList}" th:value="${group.group_id}"
                                         th:text="${group.group_name}"></option>
                             </select>
+                            <div style="text-align: right">
+                                <button class="btn btn-info" onclick="createUpdateEmailDialog()">邮箱配置</button>
+                            </div>
                         </div>
                         <!-- content start -->
                         <div class="table-responsive">
@@ -321,6 +324,125 @@ $("#currentyear").text((new Date()).getFullYear());
     $('.navLi').click(function(){
     	jumpNavLocation($(this).data('type'), null, null);
     })
+
+
+function createUpdateEmailDialog() {
+
+    const create =
+        '<div class="shadebox" id="createmodel">' +
+        '    <div class="modal-dialog" role="document">' +
+        '        <div class="modal-content">' +
+        '            <div class="modal-header align-flexend" style="border:none">' +
+        '                <h5 class="modal-title"><i class="ti-marker-alt m-r-10"></i>绑定发件邮箱</h5>' +
+        '                <i class="mdi mdi-close-circle-outline font-18 cursor-po" id="closethis"></i>' +
+        '            </div>' +
+        '            <div class="modal-body">' +
+        '                <div class="input-group mb-3" style="align-items: center">' +
+        '                    <div style="min-width: 120px">发件人邮箱:</div>' +
+        '                    <input type="text" class="form-control" id="username" placeholder="请输入发件人邮箱" maxlength="100">' +
+        '                </div>' +
+        '                <div class="input-group mb-3" style="align-items: center">' +
+        '                    <div style="min-width: 120px">SMTP服务器地址:</div>' +
+        '                    <input type="text" class="form-control" id="host" placeholder="请输入SMTP服务器地址" maxlength="100">' +
+        '                </div>' +
+        '                <div class="input-group mb-3" style="align-items: center">' +
+        '                    <div style="min-width: 120px">发件人授权码:</div>' +
+        '                    <input type="text" class="form-control" id="password" placeholder="请输入发件人授权码" maxlength="100">' +
+        '                </div>' +
+        '                <div class="input-group mb-3" style="align-items: center">' +
+        '                    <div style="min-width: 120px">SMTP服务器端口:</div>' +
+        '                    <input type="text" class="form-control" id="port" placeholder="请输入SMTP服务器端口" maxlength="100">' +
+        '                </div>' +
+        '            </div>' +
+        '            <div class="modal-footer" style="border:none">' +
+        '                <button type="button" class="btn btn-info" id="confirm"> 确定</button>' +
+        '                <button type="button" class="btn btn-secondary" id="cancel">取消</button>' +
+        '             </div>' +
+        '        </div>' +
+        '    </div>' +
+        '</div>'
+
+    $("body").append(create)
+
+    //获取当前用户的邮箱配置
+    $.ajax({
+        url: window.location.origin + '/mail/getMailConfig',
+        type: 'post',
+        contentType:"application/json; charset=utf-8",
+        dataType: 'json',
+        data: {},
+        success: function (res) {
+            if (res.status == 200) {
+                let mailConfig = res.data;
+                if (mailConfig != null) {
+                    $("#host").val(mailConfig.host);
+                    $("#username").val(mailConfig.username);
+                    $("#password").val(mailConfig.password);
+                    $("#port").val(mailConfig.port);
+                }
+            } else {
+                showtips(res.msg)
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            if (xhr.status === 403) {
+                console.log(xhr, ajaxOptions, thrownError)
+            }
+        }
+    });
+
+    $("#closethis").click(function (param) {
+        $("#createmodel").remove()
+    })
+    $("#cancel").click(function (param) {
+        $("#createmodel").remove()
+    })
+    $("#confirm").click(function () {
+        // 获取所有变量
+        let host = $("#host").val();
+        let username = $("#username").val();
+        let password = $("#password").val();
+        let port = $("#port").val();
+        if (host == '' || host == null) {
+            showtips("SMTP服务器地址不能为空！")
+        }
+        if (username == '' || username == null) {
+            showtips("发件人邮箱不能为空！")
+        }
+        if (password == '' || password == null) {
+            showtips("发件人授权码不能为空！")
+        }
+        if (port == '' || port == null) {
+            showtips("SMTP服务器端口不能为空！")
+        }
+        let requestBody = new Object();
+        requestBody.host = host;
+        requestBody.username = username;
+        requestBody.password = password;
+        requestBody.port = port;
+        showtips("正在绑定发件邮箱...,会有一定延迟，请耐心等待")
+        $.ajax({
+            url: window.location.origin + '/mail/saveMailConfig',
+            type: 'post',
+            contentType:"application/json; charset=utf-8",
+            dataType: 'json',
+            data: JSON.stringify(requestBody),
+            success: function (res) {
+                if (res.status == 200) {
+                    showtips("修改成功！")
+                    $("#createmodel").remove()
+                } else {
+                    showtips(res.msg)
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                if (xhr.status === 403) {
+                    console.log(xhr, ajaxOptions, thrownError)
+                }
+            }
+        });
+    })
+}
 
 </script>
 </body>

@@ -6,6 +6,10 @@ import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import com.stonedt.intelligence.dao.UserDao;
+import com.stonedt.intelligence.dto.MailConfig;
+import com.stonedt.intelligence.service.MailService;
+import com.stonedt.intelligence.thred.ThreadPoolConst;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +70,10 @@ public class WarningSchedule {
     private EarlyWarningService earlyWarningService;
 
     @Autowired
-    private JavaMailSenderImpl javaMailSender;
+    private MailService mailService;
+
+    @Autowired
+    private UserDao userDao;
 
     //	@Scheduled(fixedRate = 10000000)
     @Scheduled(cron = "0 0/20 * * * ?")
@@ -303,21 +310,31 @@ public class WarningSchedule {
                     }
                     if (emailpushboolean) {
                         emailHtml += "</div> </body> </html>";
-                        try {
-                            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-                            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, "utf-8");
-                            String email_user = warning_source.getString("email");
-                            String senderUsername = javaMailSender.getUsername();
-                            mimeMessageHelper.setFrom("舆情预警<"+senderUsername+">");
-                            mimeMessageHelper.setTo(email_user);
-                            mimeMessageHelper.setSubject("思通舆情  预警邮件推送");
-                            mimeMessageHelper.setText(emailHtml,true);
-                            mimeMessageHelper.setCc("shengwenxuan@stonedt.com");
-                            javaMailSender.send(mimeMessage);
-                            logger.info("预警邮件发送成功......");
-                        } catch (Exception e) {
-                            logger.info("预警邮件发送失败......{}", e.getMessage());
-                        }
+                        String finalEmailHtml = emailHtml;
+                        ThreadPoolConst.IO_EXECUTOR.execute(()->{
+                            try {
+                                Long userId = warningSetting.getUser_id();
+                                String mailJson = userDao.selectMailJsonByUserId(userId);
+                                if (mailJson == null || mailJson.isEmpty()) {
+                                    logger.info("预警邮件发送失败......用户未设置邮箱......");
+                                    return;
+                                }
+                                MailConfig mailConfig = JSON.parseObject(mailJson, MailConfig.class);
+                                String to = warning_source.getString("email");
+                                if (to != null && !to.isEmpty()) {
+                                    mailConfig.setTo(to);
+                                }
+                                if (mailConfig.getTo() == null || mailConfig.getTo().isEmpty()) {
+                                    logger.info("预警邮件发送失败......用户未指定收件人......");
+                                    return;
+                                }
+                                mailConfig.setCc(new String[]{"shengwenxuan@stonedt.com"});
+                                mailService.sendWarningMail(mailConfig, finalEmailHtml);
+                                logger.info("预警邮件发送成功......");
+                            } catch (Exception e) {
+                                logger.info("预警邮件发送失败......{}", e.getMessage());
+                            }
+                        });
                     }
                 } else {
                     logger.info("预警查询结束...未查询到数据......");
@@ -441,21 +458,31 @@ public class WarningSchedule {
                     }
                     if (emailpushboolean) {
                         emailHtml += "</div> </body> </html>";
-                        try {
-                            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-                            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, "utf-8");
-                            String email_user = warning_source.getString("email");
-                            String senderUsername = javaMailSender.getUsername();
-                            mimeMessageHelper.setFrom("舆情预警<"+senderUsername+">");
-                            mimeMessageHelper.setTo(email_user);
-                            mimeMessageHelper.setSubject("思通舆情  预警邮件推送");
-                            mimeMessageHelper.setText(emailHtml,true);
-                            mimeMessageHelper.setCc("shengwenxuan@stonedt.com");
-                            javaMailSender.send(mimeMessage);
-                            logger.info("预警邮件发送成功......");
-                        } catch (Exception e) {
-                            logger.info("预警邮件发送失败......{}", e.getMessage());
-                        }
+                        String finalEmailHtml = emailHtml;
+                        ThreadPoolConst.IO_EXECUTOR.execute(()->{
+                            try {
+                                Long userId = warningSetting.getUser_id();
+                                String mailJson = userDao.selectMailJsonByUserId(userId);
+                                if (mailJson == null || mailJson.isEmpty()) {
+                                    logger.info("预警邮件发送失败......用户未设置邮箱......");
+                                    return;
+                                }
+                                MailConfig mailConfig = JSON.parseObject(mailJson, MailConfig.class);
+                                String to = warning_source.getString("email");
+                                if (to != null && !to.isEmpty()) {
+                                    mailConfig.setTo(to);
+                                }
+                                if (mailConfig.getTo() == null || mailConfig.getTo().isEmpty()) {
+                                    logger.info("预警邮件发送失败......用户未指定收件人......");
+                                    return;
+                                }
+                                mailConfig.setCc(new String[]{"shengwenxuan@stonedt.com"});
+                                mailService.sendWarningMail(mailConfig, finalEmailHtml);
+                                logger.info("预警邮件发送成功......");
+                            } catch (Exception e) {
+                                logger.info("预警邮件发送失败......{}", e.getMessage());
+                            }
+                        });
                     }
                 } else {
                     logger.info("预警查询结束...未查询到数据......");

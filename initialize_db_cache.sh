@@ -946,3 +946,7 @@ CREATE TABLE `user_wechat_info`  (
 
 SET FOREIGN_KEY_CHECKS = 1;
 
+
+ALTER TABLE `stonedt_portal`.`user`
+ADD COLUMN `mail_json` text NULL COMMENT '邮件相关配置' AFTER `term_of_validity`;
+
