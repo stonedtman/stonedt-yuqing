@@ -195,7 +195,7 @@
                                     <div class="create-tips">
                                         <a tabindex="0" class="" data-html="true" role="button" data-toggle="popover"
                                            data-trigger="focus" title="方案主体关键词提示"
-                                           data-content="1、地域、人物、事件 三类都可输入多个关键词，关键词之间用空格分开。三个类型都可以为空。<br>2、每一类的多个关键词之间默认为或(或者)”的关系。<br>3、地域、人物、事件三个类型之间是“与(并且)”的关系。例如：地域配置了“上海”，人物配置了“周某”，事件配置了“撞车”，只有同时满足这3个条件的文章才会被监测到。">
+                                           data-content="1、地域、人物、事件 三类都可输入多个关键词，关键词之间用英文逗号分开。三个类型都可以为空。<br>2、每一类的多个关键词之间默认为或(或者)”的关系。<br>3、地域、人物、事件三个类型之间是“与(并且)”的关系。例如：地域配置了“上海”，人物配置了“周某”，事件配置了“撞车”，只有同时满足这3个条件的文章才会被监测到。">
                                             <i class="fa fa-question-circle"></i>
                                         </a>
                                     </div>
@@ -243,7 +243,7 @@
                                     <div class="create-tips">
                                         <a tabindex="0" class="" data-html="true" role="button" data-toggle="popover"
                                            data-trigger="focus" title="监测屏蔽歧义词提示"
-                                           data-content="1、地域、人物、事件 三类都可输入多个关键词，关键词之间用空格分开。三个类型都可以为空。<br>2、每一类的多个关键词之间默认为或(或者)”的关系。<br>3、地域、人物、事件三个类型之间是“与(并且)”的关系。例如：地域配置了“上海”，人物配置了“周某”，事件配置了“撞车”，只有同时满足这3个条件的文章才会被监测到。">
+                                           data-content="1、地域、人物、事件 三类都可输入多个关键词，关键词之间用英文逗号分开。三个类型都可以为空。<br>2、每一类的多个关键词之间默认为或(或者)”的关系。<br>3、地域、人物、事件三个类型之间是“与(并且)”的关系。例如：地域配置了“上海”，人物配置了“周某”，事件配置了“撞车”，只有同时满足这3个条件的文章才会被监测到。">
                                             <i class="fa fa-question-circle"></i>
                                         </a>
                                     </div>
@@ -441,8 +441,23 @@ $("#currentyear").text((new Date()).getFullYear());
         	showtips("关键词与屏蔽词不能相同");
             return;
         }
-        $("#createcomplete").addClass("line-active");
 
+        var flag = new RegExp("[`~!@#$^&*=\\-{}':;,'\\[\\].<>《》/?~！@#￥……&*（）——{}【】‘；：”“'。，、？ ]")
+
+        if (flag.test(prokeywords)) {
+            $("#prokeywords1").addClass("text-error");
+            showtips("关键词内容只能使用+|()这三种符号，不能使用其他特殊符号");
+            return;
+        }
+
+        if (flag.test(proshield)) {
+            $("#proshield1").addClass("text-error");
+            showtips("屏蔽词内容只能使用+|()这三种符号，不能使用其他特殊符号");
+            return;
+        }
+
+
+        $("#createcomplete").addClass("line-active");
 
         prokeywords = prokeywords.toString().replace(/(\s|;|-|"|‘|；|、|‘’|'|’|“”|》|《|<|>|\.|。)/g, ",");
         prokeywords = prokeywords.toString().replace(/,{1,}/, ",");
@@ -531,15 +546,17 @@ $("#currentyear").text((new Date()).getFullYear());
             return;
         }
 
-        if (prokeywords.indexOf("|")>-1||prokeywords.indexOf("+")>-1||prokeywords.indexOf("(")>-1||prokeywords.indexOf(")")>-1||prokeywords.indexOf("（")>-1||prokeywords.indexOf("）")>-1) {
-            $("#prokeywords").addClass("text-error");
-            showtips("关键词内容不能有|，+，括号");
+        var flag = new RegExp("[`~!@#$^&*()=+\\-|{}':;'\\[\\].<>《》/?~！@#￥……&*（）——{}【】‘；：”“'。，、？ ]")
+
+        if (flag.test(prokeywords)) {
+            $("#prokeywords1").addClass("text-error");
+            showtips("关键词内容只能使用英文逗号，不能使用其他特殊符号");
             return;
         }
 
-        if (proshield.indexOf("|")>-1||proshield.indexOf("+")>-1||proshield.indexOf("(")>-1||proshield.indexOf(")")>-1||proshield.indexOf("（")>-1||proshield.indexOf("）")>-1) {
-            $("#prokeywords").addClass("text-error");
-            showtips("屏蔽词内容不能有|，+，括号");
+        if (flag.test(proshield)) {
+            $("#proshield1").addClass("text-error");
+            showtips("屏蔽词内容只能使用英文逗号，不能使用其他特殊符号");
             return;
         }
 
