@@ -4,12 +4,9 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.stonedt.intelligence.dto.ImageUrl;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -134,8 +131,36 @@ public class ArticleServiceImpl implements ArticleService {
                 if (StringUtils.isNotBlank(sendPostEsSearch)) {
                     Map<String, String> parseObject2 = JSON.parseObject(sendPostEsSearch, new TypeReference<Map<String, String>>() {
                     });
-                    result.put("detail", parseObject2);
+                    String extendStringOne = parseObject2.get("extend_string_one");
+                    if (StringUtils.isBlank(extendStringOne)) {
+                        extendStringOne = "{\"imglist\":[]}";
+
+                    }
+
+                    JSONObject extendStringOneJson = JSON.parseObject(extendStringOne);
+                    JSONArray imglist = extendStringOneJson.getJSONArray("imglist");
+                    if (imglist == null) {
+                        imglist = new JSONArray();
+                    }
+                    Set<ImageUrl> imgSet = new HashSet<>(imglist.toJavaList(ImageUrl.class));
                     String text = parseObject2.get("text").toString();//详情html
+                    Document parse = Jsoup.parse(text);
+                    //获取所有图片
+                    Elements select = parse.select("img");
+                    for (Element element : select) {
+                        //获取图片地址
+                        String src = element.attr("src");
+                        if (src==null|| "".equals(src)) {
+                            src = element.attr("data-src");
+                        }
+                        if (src.contains("http")) {
+                            imgSet.add(new ImageUrl(src));
+                        }
+                    }
+                    extendStringOneJson.put("imglist", imgSet.toArray());
+                    parseObject2.put("extend_string_one", extendStringOneJson.toJSONString());
+                    result.put("detail", parseObject2);
+
                     String[] relatedwordsplit = relatedword.split("，");
                     if(!relatedword.equals("")) {
                     for (int i = 0; i < relatedwordsplit.length; i++) {
@@ -156,7 +181,7 @@ public class ArticleServiceImpl implements ArticleService {
                     
                     if(sourcewebsitename.equals("企鹅号")) {
                     	//Elements remove = Jsoup.parse(text).getElementsByClass("undefined").remove();
-                    	Document parse = Jsoup.parse(text);
+//                    	Document parse = Jsoup.parse(text);
                     	
                     	parse.select("[class=undefined]").remove();
                     	

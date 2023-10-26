@@ -28,9 +28,7 @@ public class UserUtil {
             }
         }
         HttpSession session = request.getSession();
-        System.out.println(session.getId());
         User user = (User) session.getAttribute("User");
-        System.out.println("user:"+user);
         return user;
     }
     
@@ -46,9 +44,7 @@ public class UserUtil {
             }
         }
         HttpSession session = request.getSession();
-        System.out.println(session.getId());
     	User user = (User) session.getAttribute("User");
-        System.out.println("user:"+user);
     	return user.getUser_id();
 	}
 }
