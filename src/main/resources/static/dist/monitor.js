@@ -1225,16 +1225,17 @@ function installArticle(res) {
                         strEmotion = '<span class="link f-right moodfm">负面</span>';
                     }
 
-                    //拼接机构
-                    let org = JSON.parse(ner).org;
-                    //政府机构
-                    let nto = JSON.parse(ner).nto;
-                    //上市公司
-                    let ipo = JSON.parse(ner).IPO;
-
                     let strcompanyandgov = '';
-                    if(!((Object.keys(org).length==0)&&(Object.keys(nto).length==0)&&(Object.keys(ipo).length==0))){
-                    	   strcompanyandgov = '<div class="like-comm font-13"><span class="link m-r-10">'
+                    if(ner!=""){
+                        //拼接机构
+                        let org = JSON.parse(ner).org;
+                        //政府机构
+                        let nto = JSON.parse(ner).nto;
+                        //上市公司
+                        let ipo = JSON.parse(ner).IPO;
+
+                        if(!((Object.keys(org).length==0)&&(Object.keys(nto).length==0)&&(Object.keys(ipo).length==0))){
+                            strcompanyandgov = '<div class="like-comm font-13"><span class="link m-r-10">'
                             let orgstr = "";
                             var orgflag = 1;
                             for (var key in org) {
@@ -1243,7 +1244,7 @@ function installArticle(res) {
                                 if (orgflag == 3) break;
                             }
                             strcompanyandgov = strcompanyandgov + orgstr + '</span><span class="link m-r-10">'
-                            
+
                             let ntovstr = "";
                             var netoflag = 1;
                             for (var key in nto) {
@@ -1255,7 +1256,7 @@ function installArticle(res) {
 
                             //上市公司
                             strcompanyandgov += '<span class="link m-r-10">';
-                            
+
                             let ipostr = "";
                             var ipoflag = 1;
                             for (var key in ipo) {
@@ -1263,13 +1264,8 @@ function installArticle(res) {
                                 strcompanyandgov += '<a style="" class="ipotag" href="###">' + key + '</a>'
                             }
                             strcompanyandgov += '</span></div>';
+                        }
                     }
-                    
-                    
-                    
-
-
-
 
 
 
@@ -1544,16 +1540,18 @@ function installArticle(res) {
                             } else if (emotionalIndex == 3) {
                                 strEmotion = '<span class="link f-right moodfm">负面</span>';
                             }
-                            //拼接机构
-                            let org = JSON.parse(ner).org;
-                            //政府机构
-                            let nto = JSON.parse(ner).nto;
-                            //上市公司
-                            let ipo = JSON.parse(ner).IPO;
 
                             let strcompanyandgov = '';
-                            if(!((Object.keys(org).length==0)&&(Object.keys(nto).length==0)&&(Object.keys(ipo).length==0))){
-                            	strcompanyandgov = '<div class="like-comm font-13"><span class="link m-r-10">'
+                            if(ner!=""){
+                                //拼接机构
+                                let org = JSON.parse(ner).org;
+                                //政府机构
+                                let nto = JSON.parse(ner).nto;
+                                //上市公司
+                                let ipo = JSON.parse(ner).IPO;
+
+                                if(!((Object.keys(org).length==0)&&(Object.keys(nto).length==0)&&(Object.keys(ipo).length==0))){
+                                    strcompanyandgov = '<div class="like-comm font-13"><span class="link m-r-10">'
                                     let orgstr = "";
                                     var orgflag = 1;
                                     for (var key in org) {
@@ -1563,7 +1561,7 @@ function installArticle(res) {
                                     }
                                     strcompanyandgov = strcompanyandgov + orgstr + '</span><span class="link m-r-10">'
                                     ' </span>'
-                                    
+
                                     let ntovstr = "";
                                     var netoflag = 1;
                                     for (var key in nto) {
@@ -1573,9 +1571,9 @@ function installArticle(res) {
                                     }
                                     strcompanyandgov += '</span>';
 
-                                    
+
                                     strcompanyandgov += '<span class="link m-r-10">';
-                                    
+
                                     let ipostr = "";
                                     var ipoflag = 1;
                                     for (var key in ipo) {
@@ -1585,8 +1583,8 @@ function installArticle(res) {
                                     }
 
                                     strcompanyandgov += '</span></div>';
+                                }
                             }
-                            
                             
                             
                             let strLikeEnd = '</div>';
