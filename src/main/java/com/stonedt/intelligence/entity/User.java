@@ -26,6 +26,10 @@ public class User implements java.io.Serializable{
     private String organization_id;
     private Integer isOnline;
 
+    private Integer user_type;
+
+    private Integer user_level;
+
     /**
      * nlp服务绑定id
      */
@@ -66,7 +70,7 @@ public class User implements java.io.Serializable{
      */
     private String mail_json;
 
-    private final static long serialVersionUID = 2L;
+    private final static long serialVersionUID = 3L;
 
 
     public Integer getIsOnline() {
@@ -256,17 +260,33 @@ public class User implements java.io.Serializable{
         this.mail_json = mail_json;
     }
 
+    public Integer getUser_type() {
+        return user_type;
+    }
+
+    public void setUser_type(Integer user_type) {
+        this.user_type = user_type;
+    }
+
+    public Integer getUser_level() {
+        return user_level;
+    }
+
+    public void setUser_level(Integer user_level) {
+        this.user_level = user_level;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(create_time, user.create_time) && Objects.equals(user_id, user.user_id) && Objects.equals(telephone, user.telephone) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(end_login_time, user.end_login_time) && Objects.equals(status, user.status) && Objects.equals(username, user.username) && Objects.equals(wechat_number, user.wechat_number) && Objects.equals(openid, user.openid) && Objects.equals(login_count, user.login_count) && Objects.equals(identity, user.identity) && Objects.equals(organization_id, user.organization_id) && Objects.equals(isOnline, user.isOnline) && Objects.equals(nlp_secret_id, user.nlp_secret_id) && Objects.equals(nlp_secret_key, user.nlp_secret_key) && Objects.equals(nlp_flag, user.nlp_flag) && Objects.equals(xie_secret_id, user.xie_secret_id) && Objects.equals(xie_secret_key, user.xie_secret_key) && Objects.equals(xie_flag, user.xie_flag) && Objects.equals(term_of_validity, user.term_of_validity) && Objects.equals(mail_json, user.mail_json);
+        return Objects.equals(id, user.id) && Objects.equals(create_time, user.create_time) && Objects.equals(user_id, user.user_id) && Objects.equals(telephone, user.telephone) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(end_login_time, user.end_login_time) && Objects.equals(status, user.status) && Objects.equals(username, user.username) && Objects.equals(wechat_number, user.wechat_number) && Objects.equals(openid, user.openid) && Objects.equals(login_count, user.login_count) && Objects.equals(identity, user.identity) && Objects.equals(organization_id, user.organization_id) && Objects.equals(isOnline, user.isOnline) && Objects.equals(user_type, user.user_type) && Objects.equals(user_level, user.user_level) && Objects.equals(nlp_secret_id, user.nlp_secret_id) && Objects.equals(nlp_secret_key, user.nlp_secret_key) && Objects.equals(nlp_flag, user.nlp_flag) && Objects.equals(xie_secret_id, user.xie_secret_id) && Objects.equals(xie_secret_key, user.xie_secret_key) && Objects.equals(xie_flag, user.xie_flag) && Objects.equals(term_of_validity, user.term_of_validity) && Objects.equals(mail_json, user.mail_json);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, create_time, user_id, telephone, password, email, end_login_time, status, username, wechat_number, openid, login_count, identity, organization_id, isOnline, nlp_secret_id, nlp_secret_key, nlp_flag, xie_secret_id, xie_secret_key, xie_flag, term_of_validity, mail_json);
+        return Objects.hash(id, create_time, user_id, telephone, password, email, end_login_time, status, username, wechat_number, openid, login_count, identity, organization_id, isOnline, user_type, user_level, nlp_secret_id, nlp_secret_key, nlp_flag, xie_secret_id, xie_secret_key, xie_flag, term_of_validity, mail_json);
     }
 
     @Override
@@ -287,6 +307,8 @@ public class User implements java.io.Serializable{
                 ", identity=" + identity +
                 ", organization_id='" + organization_id + '\'' +
                 ", isOnline=" + isOnline +
+                ", user_type=" + user_type +
+                ", user_level=" + user_level +
                 ", nlp_secret_id='" + nlp_secret_id + '\'' +
                 ", nlp_secret_key='" + nlp_secret_key + '\'' +
                 ", nlp_flag=" + nlp_flag +

@@ -132,18 +132,4 @@ public class UserServiceImpl implements UserService {
         return JWTUtils.createJWT(JSON.toJSONString(userDTO, SerializerFeature.WriteMapNullValue), privateKey);
 	}
 
-	/**
-	 * 创建默认用户
-	 *
-	 * @param openid 微信openid
-	 */
-	@Override
-	public void createUser(String openid) {
-		User user = new User();
-		user.setOpenid(openid);
-		user.setLogin_count(0);
-		// 2050年
-		user.setTerm_of_validity(new Date(2524608000000L));
-		userDao.saveUser(user);
-	}
 }

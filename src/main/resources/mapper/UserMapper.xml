@@ -48,11 +48,11 @@
 		insert into
 			user(
 				create_time, user_id, telephone, password, email, end_login_time, status, username, wechat_number, openid,
-				login_count, identity, organization_id
+				login_count, identity, organization_id,term_of_validity,user_level,user_type
 			)
 			values(
 				#{create_time}, #{user_id}, #{telephone}, #{password}, #{email}, #{end_login_time}, #{status}, #{username}, 
-				#{wechat_number}, #{openid}, #{login_count}, #{identity}, #{organization_id}
+				#{wechat_number}, #{openid}, #{login_count}, #{identity}, #{organization_id},#{term_of_validity},#{user_level},#{user_type}
 			)
 	</insert>
 	

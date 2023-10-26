@@ -16,6 +16,8 @@ import com.stonedt.intelligence.util.ResultUtil;
 import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import com.stonedt.intelligence.service.WechatService;
@@ -38,8 +40,6 @@ public class WechatServiceImpl implements WechatService {
 
 	private final UserWechatInfoDao userWechatInfoDao;
 
-	private final OkHttpClient okHttpClient;
-
 	private final UserDao userDao;
 
 	@Value("${wechat.qrcode.url}")
@@ -48,12 +48,10 @@ public class WechatServiceImpl implements WechatService {
 	public WechatServiceImpl(RestTemplate restTemplate,
 							 StringRedisTemplate redisTemplate,
 							 UserWechatInfoDao userWechatInfoDao,
-							 OkHttpClient okHttpClient,
 							 UserDao userDao) {
 		this.restTemplate = restTemplate;
 		this.redisTemplate = redisTemplate;
 		this.userWechatInfoDao = userWechatInfoDao;
-		this.okHttpClient = okHttpClient;
 		this.userDao = userDao;
 	}
 
@@ -70,10 +68,13 @@ public class WechatServiceImpl implements WechatService {
 		QrCodeInput qrCodeInput = new QrCodeInput();
 		qrCodeInput.setSceneStr(sceneStr);
 		qrCodeInput.setExpireSeconds(600);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json; charset=UTF-8");
+		HttpEntity<QrCodeInput> request = new HttpEntity<>(qrCodeInput, headers);
 		//生成二维码
 		String qrcodeUrl;
 		try {
-			qrcodeUrl = restTemplate.postForObject(getQrcodeUrl, JSON.toJSONString(qrCodeInput), String.class);
+			qrcodeUrl = restTemplate.postForObject(getQrcodeUrl, request, String.class);
 		} catch (RestClientException e) {
 			e.printStackTrace();
 			return ResultUtil.build(500,"生成二维码失败");
@@ -130,6 +131,11 @@ public class WechatServiceImpl implements WechatService {
 			user.setLogin_count(0);
 			user.setCreate_time(DateUtil.nowTime());
 			user.setTerm_of_validity(new Date(2524608000000L));
+			user.setNlp_flag(0);
+			user.setXie_flag(0);
+			user.setStatus(1);
+			user.setUser_type(0);
+			user.setUser_level(0);
 			userDao.saveUser(user);
 			//获取事件key
 			String eventKey = redisTemplate.opsForValue().get(openid);

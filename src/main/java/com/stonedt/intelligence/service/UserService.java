@@ -52,9 +52,4 @@ public interface UserService {
      */
     String getToken(User user) throws Exception;
 
-    /**
-     * 创建默认用户
-     * @param openid 微信openid
-     */
-    void createUser(String openid);
 }
