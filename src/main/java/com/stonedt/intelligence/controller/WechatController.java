@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 
 @RestController
-@RequestMapping(value = "/monitor")
+@RequestMapping(value = "/wechat")
 public class WechatController {
 	
 	

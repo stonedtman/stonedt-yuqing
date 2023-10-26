@@ -50,7 +50,8 @@ public class WebConfigurer implements WebMvcConfigurer {
                 .excludePathPatterns("/login", "/loginredirect", "/project/keywords", "/logout", "static/**", "/forgotpwd", "/assets/**", "/dist/**", "/common/**", "/monitor/weChatToken", "/hot/**")
                 .excludePathPatterns("/fullsearch/listFullTypeByThird", "/fullsearch/hotList", "/hot/hotpage/**", "/img/**", "/logonCode")
                 .excludePathPatterns("/swagger-ui/**", "/api-docs/**")
-                .excludePathPatterns("/api/**");
+                .excludePathPatterns("/api/**")
+                .excludePathPatterns("/wechat/**");
 
         registry.addInterceptor(apiHandlerInterceptor)
                 .addPathPatterns("/api/**")

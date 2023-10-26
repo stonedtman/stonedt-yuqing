@@ -2,16 +2,18 @@ package com.stonedt.intelligence.service.impl;
 
 
 
+import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
 import com.stonedt.intelligence.dao.UserDao;
 import com.stonedt.intelligence.dao.UserWechatInfoDao;
+import com.stonedt.intelligence.dto.QrCodeInput;
 import com.stonedt.intelligence.dto.QrcodeData;
 import com.stonedt.intelligence.dto.WechatUserInfo;
 import com.stonedt.intelligence.dto.WxMpXmlMessage;
 import com.stonedt.intelligence.entity.User;
-import com.stonedt.intelligence.service.UserService;
 import com.stonedt.intelligence.util.DateUtil;
 import com.stonedt.intelligence.util.ResultUtil;
+import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -21,7 +23,10 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.URLEncoder;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -33,6 +38,8 @@ public class WechatServiceImpl implements WechatService {
 
 	private final UserWechatInfoDao userWechatInfoDao;
 
+	private final OkHttpClient okHttpClient;
+
 	private final UserDao userDao;
 
 	@Value("${wechat.qrcode.url}")
@@ -41,10 +48,12 @@ public class WechatServiceImpl implements WechatService {
 	public WechatServiceImpl(RestTemplate restTemplate,
 							 StringRedisTemplate redisTemplate,
 							 UserWechatInfoDao userWechatInfoDao,
+							 OkHttpClient okHttpClient,
 							 UserDao userDao) {
 		this.restTemplate = restTemplate;
 		this.redisTemplate = redisTemplate;
 		this.userWechatInfoDao = userWechatInfoDao;
+		this.okHttpClient = okHttpClient;
 		this.userDao = userDao;
 	}
 
@@ -58,14 +67,18 @@ public class WechatServiceImpl implements WechatService {
 	public ResultUtil getQRCodeUrl() {
 		//生成场景值,以yuqing:开头
 		String sceneStr = "yuqing:" + System.nanoTime();
-		//二维码有效时间
-		Integer expireSeconds = 600;
+		QrCodeInput qrCodeInput = new QrCodeInput();
+		qrCodeInput.setSceneStr(sceneStr);
+		qrCodeInput.setExpireSeconds(600);
 		//生成二维码
-		String qrcodeUrl = null;
+		String qrcodeUrl;
 		try {
-			qrcodeUrl = restTemplate.getForObject(getQrcodeUrl, String.class, sceneStr, expireSeconds);
+			qrcodeUrl = restTemplate.postForObject(getQrcodeUrl, JSON.toJSONString(qrCodeInput), String.class);
 		} catch (RestClientException e) {
 			e.printStackTrace();
+			return ResultUtil.build(500,"生成二维码失败");
+		}
+		if (qrcodeUrl == null) {
 			return ResultUtil.build(500,"生成二维码失败");
 		}
 		//返回二维码地址
@@ -109,6 +122,9 @@ public class WechatServiceImpl implements WechatService {
 		if (user == null) {
 			//如果不存在,则创建用户
 			user = new User();
+			//生成分布式id
+			long nextId = IdUtil.getSnowflake(1, 1).nextId();
+			user.setUser_id(nextId);
 			user.setOpenid(openid);
 			user.setUsername(wechatUserInfo.getNickname());
 			user.setLogin_count(0);
