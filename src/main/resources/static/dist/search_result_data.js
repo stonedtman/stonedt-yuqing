@@ -797,11 +797,11 @@ function installHot(res) {
 						+ '   <div class="monitor-content-title">'
 						+ '       <a target="_blank" href="'
 						+ source.source_url
-						+ '" class="link font-bold">'
+						+ '" class="link font-bold" style="width: 65%;">'
 						+ '           <img class="content-logo" src="'
 						+ iconUrl
 						+ '" onerror="javascript:this.src=\'/assets/images/default_source.png\'">'
-						+ source.topic
+						+ '<span style="width:95%;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">'+source.topic+'</span>'
 						+ '       </a>'
 						+ '        <span class="sl-date  ">'
 						+ timeParse(publish_time)
@@ -2089,10 +2089,10 @@ function installArticle3(res) {
 							+ pub_data
 							+ '&searchWord='
 							+ encodeURIComponent($('#searchWord').val())
-							+ '" class="link font-bold"><img class="content-logo" src="'
+							+ '" class="link font-bold" style="width: 65%;"><img class="content-logo" src="'
 							+ websitelogo
 							+ '" onerror="javascript:this.src=\'/assets/images/default_source.png\'">'
-							+ title
+							+ '<span style="width:95%;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">'+title+'</span>'
 							+ '</a>';
 					let category = dealCate(article_category);
 
@@ -2174,7 +2174,7 @@ function installArticle3(res) {
 
 					//拼接机构
 					let strcompanyandgov = '<div class="like-comm font-13"><span class="link m-r-10">'
-					let org = JSON.parse(ner).org;
+					let org = ner!=""?JSON.parse(ner).org?JSON.parse(ner).org:{}:{};
 					let orgstr = "";
 					var orgflag = 1;
 					for (var key in org) {
@@ -2184,7 +2184,7 @@ function installArticle3(res) {
 					}
 					strcompanyandgov = strcompanyandgov + orgstr + '</span><span class="link m-r-10">'
 					//政府机构
-					let nto = JSON.parse(ner).nto;
+					let nto = ner!=""?JSON.parse(ner).nto?JSON.parse(ner).nto:{}:{};
 					let ntovstr = "";
 					var netoflag = 1;
 					for (var key in nto) {
@@ -2197,7 +2197,7 @@ function installArticle3(res) {
 					//上市公司
 					strcompanyandgov += '<span class="link m-r-10">';
 					debugger;
-					let ipo = JSON.parse(ner).IPO;
+					let ipo = ner!=""?JSON.parse(ner).IPO?JSON.parse(ner).IPO:{}:{};
 					let ipostr = "";
 					var ipoflag = 1;
 					for (var key in ipo) {
@@ -2245,9 +2245,9 @@ function installArticle3(res) {
 									+ pub_data
 									+ '&searchWord='
 									+ encodeURIComponent($('#searchWord').val())
-									+ '"  class="link font-bold">'
+									+ '"  class="link font-bold" style="width: 65%;">'
 									+ websitelogoStr
-									+ title
+									+ '<span style="width:95%;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">'+title+'</span>'
 									+ '</a>';
 
 
@@ -2303,7 +2303,7 @@ function installArticle3(res) {
 
 //拼接机构
 							let strcompanyandgov = '<div class="like-comm font-13"><span class="link m-r-10">'
-							let org = JSON.parse(ner).org;
+							let org = ner!=""?JSON.parse(ner).org?JSON.parse(ner).org:{}:{};
 							let orgstr = "";
 							var orgflag = 1;
 							for (var key in org) {
@@ -2313,7 +2313,7 @@ function installArticle3(res) {
 							}
 							strcompanyandgov = strcompanyandgov + orgstr + '</span><span class="link m-r-10">'
 							//政府机构
-							let nto = JSON.parse(ner).nto;
+							let nto = ner!=""?JSON.parse(ner).nto?JSON.parse(ner).nto:{}:{};
 							let ntovstr = "";
 							var netoflag = 1;
 							for (var key in nto) {
@@ -2325,7 +2325,7 @@ function installArticle3(res) {
 
 							//上市公司
 							strcompanyandgov += '<span class="link m-r-10">';
-							let ipo = JSON.parse(ner).IPO;
+							let ipo = ner!=""?JSON.parse(ner).IPO?JSON.parse(ner).IPO:{}:{};
 							debugger;
 							let ipostr = "";
 							var ipoflag = 1;
@@ -2410,9 +2410,9 @@ function installArticle3(res) {
 									+ pub_data
 									+ '&searchWord='
 									+ encodeURIComponent($('#searchWord').val())
-									+ '"  class="link font-bold">'
+									+ '"  class="link font-bold" style="width: 65%;">'
 									+ websitelogoStr
-									+ title
+									+ '<span style="width:95%;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">'+title+'</span>'
 									+ '</a>';
 							// let strTitle = '<div
 							// class="monitor-content-title"><a
@@ -2458,7 +2458,7 @@ function installArticle3(res) {
 							let strEnd = '</div><hr>';
 
 							let strcompanyandgov = '<div class="like-comm font-13"><span class="link m-r-10">'
-							let org = JSON.parse(ner).org;
+							let org = ner!=""?JSON.parse(ner).org?JSON.parse(ner).org:{}:{};
 							let orgstr = "";
 							var orgflag = 1;
 							for (var key in org) {
@@ -2468,7 +2468,7 @@ function installArticle3(res) {
 							}
 							strcompanyandgov = strcompanyandgov + orgstr + '</span><span class="link m-r-10">'
 							//政府机构
-							let nto = JSON.parse(ner).nto;
+							let nto = ner!=""?JSON.parse(ner).nto?JSON.parse(ner).nto:{}:{};
 							let ntovstr = "";
 							var netoflag = 1;
 							for (var key in nto) {
@@ -2480,7 +2480,7 @@ function installArticle3(res) {
 
 							//上市公司
 							strcompanyandgov += '<span class="link m-r-10">';
-							let ipo = JSON.parse(ner).IPO;
+							let ipo = ner!=""?JSON.parse(ner).IPO?JSON.parse(ner).IPO:{}:{};
 							let ipostr = "";
 							var ipoflag = 1;
 							debugger;
@@ -2564,9 +2564,9 @@ function installArticle3(res) {
 								+ pub_data
 								+ '&searchWord='
 								+ encodeURIComponent($('#searchWord').val())
-								+ '"  class="link font-bold">'
+								+ '"  class="link font-bold" style="width: 65%;">'
 								+ websitelogoStr
-								+ title
+								+ '<span style="width:95%;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">'+title+'</span>'
 								+ '</a>';
 
 						let category = dealCate(article_category);
@@ -2611,7 +2611,7 @@ function installArticle3(res) {
 						let strEnd = '</div><hr>';
 
 						let strcompanyandgov = '<div class="like-comm font-13"><span class="link m-r-10">'
-						let org = JSON.parse(ner).org;
+						let org = ner!=""?JSON.parse(ner).org?JSON.parse(ner).org:{}:{};
 						let orgstr = "";
 						var orgflag = 1;
 						for (var key in org) {
@@ -2621,7 +2621,7 @@ function installArticle3(res) {
 						}
 						strcompanyandgov = strcompanyandgov + orgstr + '</span><span class="link m-r-10">'
 						//政府机构
-						let nto = JSON.parse(ner).nto;
+						let nto = ner!=""?JSON.parse(ner).nto?JSON.parse(ner).nto:{}:{};
 						let ntovstr = "";
 						var netoflag = 1;
 						for (var key in nto) {
@@ -2633,7 +2633,7 @@ function installArticle3(res) {
 
 						//上市公司
 						strcompanyandgov += '<span class="link m-r-10">';
-						let ipo = JSON.parse(ner).IPO;
+						let ipo = ner!=""?JSON.parse(ner).IPO?JSON.parse(ner).IPO:{}:{};
 						let ipostr = "";
 						var ipoflag = 1;
 						debugger;
