@@ -48,11 +48,11 @@
 		insert into
 			user(
 				create_time, user_id, telephone, password, email, end_login_time, status, username, wechat_number, openid,
-				login_count, identity, organization_id,term_of_validity,user_level,user_type
+				login_count, identity, organization_id,term_of_validity,user_level,user_type,wechatflag
 			)
 			values(
 				#{create_time}, #{user_id}, #{telephone}, #{password}, #{email}, #{end_login_time}, #{status}, #{username}, 
-				#{wechat_number}, #{openid}, #{login_count}, #{identity}, #{organization_id},#{term_of_validity},#{user_level},#{user_type}
+				#{wechat_number}, #{openid}, #{login_count}, #{identity}, #{organization_id},#{term_of_validity},#{user_level},#{user_type},#{wechatflag}
 			)
 	</insert>
 	
@@ -171,6 +171,10 @@ select user_id,username from user where user_type = 2 and user_id not in (${user
 	<update id="updateUserLoginCountById">
 		UPDATE user SET login_count = login_count+1,end_login_time = now(),is_online = 1
 		WHERE id = #{id}
+	</update>
+	<update id="updateUserWechatFlagByOpenid">
+		UPDATE user SET wechatflag = #{wechatFlag}
+		WHERE openid = #{openId}
 	</update>
 
 </mapper>

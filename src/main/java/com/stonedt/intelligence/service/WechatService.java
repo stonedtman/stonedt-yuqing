@@ -22,6 +22,13 @@ public interface WechatService {
 	 */
 	Boolean handleSubscribe(WxMpXmlMessage wxMpXmlMessage);
 
+
+	/**
+	 * 取消关注事件处理
+	 * @param openId 用户的openId
+	 */
+	void handleUnsubscribe(String openId);
+
 	/**
 	 * 授权事件处理
 	 */

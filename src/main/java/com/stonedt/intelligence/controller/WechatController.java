@@ -41,6 +41,14 @@ public class WechatController {
     }
 
     /**
+     * 取消关注事件处理
+     */
+    @GetMapping("/handleUnsubscribe")
+    public void handleUnsubscribe(@RequestParam String openId) {
+        wechatService.handleUnsubscribe(openId);
+    }
+
+    /**
      * 授权事件处理
      */
     @PostMapping("/handleAuthorize")

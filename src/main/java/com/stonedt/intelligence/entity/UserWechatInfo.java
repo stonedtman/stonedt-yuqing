@@ -1,6 +1,11 @@
 package com.stonedt.intelligence.entity;
 
+import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.stonedt.intelligence.dto.WechatUserInfo;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -10,6 +15,8 @@ import java.io.Serializable;
  * @TableName user_wechat_info
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserWechatInfo implements Serializable {
     /**
      * 用户id
@@ -54,7 +61,7 @@ public class UserWechatInfo implements Serializable {
     /**
      * 用户统一标识。针对一个微信开放平台帐号下的应用，同一用户的unionid是唯一的。
      */
-    private Integer unionid;
+    private String unionid;
 
     /**
      * 用户特权信息，json数组，如微信沃卡用户为（chinaunicom）
@@ -68,5 +75,21 @@ public class UserWechatInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 构造方法
+     */
+    @JsonIgnore
+    public UserWechatInfo(WechatUserInfo wechatUserInfo) {
+        this.city = wechatUserInfo.getCity();
+        this.country = wechatUserInfo.getCountry();
+        this.head_img_url = wechatUserInfo.getHeadImgUrl();
+        this.nickname = wechatUserInfo.getNickname();
+        this.openid = wechatUserInfo.getOpenid();
+        this.privileges = JSON.toJSONString(wechatUserInfo.getPrivileges());
+        this.province = wechatUserInfo.getProvince();
+        this.sex = wechatUserInfo.getSex();
+        this.snapshot_user = wechatUserInfo.getSnapshotUser();
+        this.unionid = wechatUserInfo.getUnionId();
 
+    }
 }

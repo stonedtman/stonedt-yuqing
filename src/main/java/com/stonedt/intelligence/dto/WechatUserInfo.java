@@ -16,11 +16,6 @@ public class WechatUserInfo implements Serializable {
     private static final long serialVersionUID = 3181943506448954725L;
 
     /**
-     * 用户id
-     */
-    private Integer user_id;
-
-    /**
      * openid	普通用户的标识，对当前开发者帐号唯一
      */
     private String openid;

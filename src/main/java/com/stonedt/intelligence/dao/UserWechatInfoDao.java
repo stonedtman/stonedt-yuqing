@@ -1,6 +1,5 @@
 package com.stonedt.intelligence.dao;
 
-import com.stonedt.intelligence.dto.WechatUserInfo;
 import com.stonedt.intelligence.entity.UserWechatInfo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -17,9 +16,9 @@ public interface UserWechatInfoDao {
 
     /**
      * 保存微信用户信息
-     * @param wechatUserInfo 微信用户信息
+     * @param userWechatInfo 微信用户信息
      */
-    void saveWechatUserInfo(WechatUserInfo wechatUserInfo);
+    void saveWechatUserInfo(UserWechatInfo userWechatInfo);
 }
 
 

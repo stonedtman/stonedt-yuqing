@@ -26,10 +26,10 @@
     </sql>
     <insert id="saveWechatUserInfo">
         insert into user_wechat_info(
-            user_id, openid, nickname, sex, city, province, country, head_img_url, unionId, privileges, snapshot_user
+            user_id, openid, nickname, sex, city, province, country, head_img_url, unionid, privileges, snapshot_user
         )
         values(
-                  #{userId,jdbcType=INTEGER},#{openid},#{nickname},#{sex},#{city},#{province},#{country},#{headImgUrl},#{unionid},#{privileges},#{snapshotUser}
+                  #{user_id,jdbcType=INTEGER},#{openid},#{nickname},#{sex},#{city},#{province},#{country},#{head_img_url},#{unionid},#{privileges},#{snapshot_user}
               )
     </insert>
     <select id="selectByOpenid" resultType="com.stonedt.intelligence.entity.UserWechatInfo">

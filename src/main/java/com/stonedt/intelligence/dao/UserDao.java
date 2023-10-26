@@ -155,4 +155,10 @@ public interface UserDao {
 	 * @param id 用户id
 	 */
 	void updateUserLoginCountById(Integer id);
+
+	/**
+	 * 根据用户id更新用户登录状态
+	 * @param openId
+	 */
+	void updateUserWechatFlagByOpenid(@Param("openId") String openId,@Param("wechatFlag") Integer wechatFlag);
 }

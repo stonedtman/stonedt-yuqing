@@ -11,10 +11,10 @@ import com.stonedt.intelligence.dto.QrcodeData;
 import com.stonedt.intelligence.dto.WechatUserInfo;
 import com.stonedt.intelligence.dto.WxMpXmlMessage;
 import com.stonedt.intelligence.entity.User;
+import com.stonedt.intelligence.entity.UserWechatInfo;
 import com.stonedt.intelligence.thred.ThreadPoolConst;
 import com.stonedt.intelligence.util.DateUtil;
 import com.stonedt.intelligence.util.ResultUtil;
-import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpEntity;
@@ -26,10 +26,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.URLEncoder;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -103,12 +100,28 @@ public class WechatServiceImpl implements WechatService {
 		//查询数据库是否存在该用户
 		User user = userDao.selectUserByOpenid(openid);
 		if (user != null) {
+			if (user.getWechatflag() == 0) {
+				//则更新用户状态
+				ThreadPoolConst.IO_EXECUTOR.execute(() -> userDao.updateUserWechatFlagByOpenid(openid, 1));
+				user.setWechatflag(1);
+			}
 			redisTemplate.opsForValue().set(eventKey, JSON.toJSONString(user), 10, TimeUnit.MINUTES);
 			return true;
 		}
 		//如果不存在,则将openid存入redis,并设置过期时间为10分钟
 		redisTemplate.opsForValue().set(openid, eventKey, 10, TimeUnit.MINUTES);
 		return false;
+	}
+
+	/**
+	 * 取消关注事件处理
+	 *
+	 * @param openId 用户的openId
+	 */
+	@Override
+	public void handleUnsubscribe(String openId) {
+		//更新用户状态
+		userDao.updateUserWechatFlagByOpenid(openId,0);
 	}
 
 	/**
@@ -137,14 +150,16 @@ public class WechatServiceImpl implements WechatService {
 			user.setStatus(1);
 			user.setUser_type(0);
 			user.setUser_level(0);
+			user.setWechatflag(1);
 			userDao.saveUser(user);
 			//获取事件key
 			String eventKey = redisTemplate.opsForValue().get(openid);
 			//将用户信息存入redis
 			redisTemplate.opsForValue().set(eventKey, JSON.toJSONString(user), 10, TimeUnit.MINUTES);
 			//将用户信息存入数据库
-			wechatUserInfo.setUser_id(user.getId());
-			userWechatInfoDao.saveWechatUserInfo(wechatUserInfo);
+			UserWechatInfo userWechatUserInfo = new UserWechatInfo(wechatUserInfo);
+			userWechatUserInfo.setUser_id(user.getId());
+			userWechatInfoDao.saveWechatUserInfo(userWechatUserInfo);
 		}
 
 	}
@@ -161,6 +176,9 @@ public class WechatServiceImpl implements WechatService {
 			return ResultUtil.build(204, "未获取到用户操作");
 		}
 		User user = JSON.parseObject(result, User.class);
+		if (user.getStatus() == 2) {
+			return ResultUtil.build(500, "很抱歉，您的账号已被禁用，请联系管理员");
+		}
 		request.getSession().setAttribute("User", user);
 		ThreadPoolConst.IO_EXECUTOR.execute(() -> userDao.updateUserLoginCountById(user.getId()));
 		return ResultUtil.ok();
