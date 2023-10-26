@@ -104,7 +104,7 @@
 </select>
 
 	<update id="updateEndLoginTime" parameterType="java.lang.Long">
-	update user set end_login_time=now() where user_id=#{userId}
+	update user set end_login_time=now(),is_online=2 where user_id=#{userId}
 </update>
 
 	<select id="getUserByorganizationid" resultType="map">
@@ -167,6 +167,10 @@ select user_id,username from user where user_type = 2 and user_id not in (${user
 	</update>
     <update id="saveMailConfig">
 		update user set mail_json = #{mailJson} where id=#{id}
+	</update>
+	<update id="updateUserLoginCountById">
+		UPDATE user SET login_count = login_count+1,end_login_time = now(),is_online = 1
+		WHERE id = #{id}
 	</update>
 
 </mapper>

@@ -149,4 +149,10 @@ public interface UserDao {
 	 * @param userId
 	 */
 	String selectMailJsonByUserId(Long userId);
+
+	/**
+	 * 根据用户更新用户登录状态
+	 * @param id 用户id
+	 */
+	void updateUserLoginCountById(Integer id);
 }

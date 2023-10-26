@@ -11,6 +11,7 @@ import com.stonedt.intelligence.dto.QrcodeData;
 import com.stonedt.intelligence.dto.WechatUserInfo;
 import com.stonedt.intelligence.dto.WxMpXmlMessage;
 import com.stonedt.intelligence.entity.User;
+import com.stonedt.intelligence.thred.ThreadPoolConst;
 import com.stonedt.intelligence.util.DateUtil;
 import com.stonedt.intelligence.util.ResultUtil;
 import okhttp3.OkHttpClient;
@@ -161,6 +162,7 @@ public class WechatServiceImpl implements WechatService {
 		}
 		User user = JSON.parseObject(result, User.class);
 		request.getSession().setAttribute("User", user);
+		ThreadPoolConst.IO_EXECUTOR.execute(() -> userDao.updateUserLoginCountById(user.getId()));
 		return ResultUtil.ok();
 	}
 }
