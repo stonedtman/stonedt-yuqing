@@ -307,6 +307,10 @@
             font-weight: bold;
             text-align: center;
         }
+        .detail-content img{
+            width: auto;
+            max-width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -769,6 +773,8 @@ $("#currentyear").text((new Date()).getFullYear());
                         document.querySelector(".btns").style = ""
 
                         detail_text = res.detail.text
+                        res.text = res.text.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,"")
+                        res.text = res.text.replace(/<style\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/style>/gi,"")
 
                         var detail = res.detail;
                         let imgListAll = '';
@@ -835,8 +841,9 @@ $("#currentyear").text((new Date()).getFullYear());
                         	}else{
                         		$('#content').html(res.text + imgListAll);
                         	}
-                            
+
                         }
+
 //                        $('#content').html(detail.text + pageStrAll);
                         var classArray = ['btn-outline-primary', 'btn-outline-success', 'btn-outline-info', 'btn-outline-warning'];
                         if (detail.hasOwnProperty('key_words') && detail.key_words) {
