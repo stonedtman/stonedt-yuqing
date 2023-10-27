@@ -1609,10 +1609,10 @@ function funcLable(res){
 	for (let i = 0;i < data.length;i++){
 		if(data[i].key!='其它'&&data[i].key!='total'){
 			if(flag==0){
-				lablestr+= '<span style="font-size:12px;width:75px;min-width:75px" data-type="'+data[i].key+'" class="badge badge-pill badge-light badge-info">'+data[i].key+'</span>';
+				lablestr+= '<span style="font-size:12px;width:75px;min-width:75px;cursor: pointer;" data-type="'+data[i].key+'" class="badge badge-pill badge-light badge-info">'+data[i].key+'</span>';
 				flag++;
 			}else{
-				lablestr+= '<span style="font-size:12px;width:75px;min-width:75px" data-type="'+data[i].key+'" class="badge badge-pill badge-light">'+data[i].key+'</span>';
+				lablestr+= '<span style="font-size:12px;width:75px;min-width:75px;cursor: pointer;" data-type="'+data[i].key+'" class="badge badge-pill badge-light">'+data[i].key+'</span>';
 				flag++;
 			}
 	       }
