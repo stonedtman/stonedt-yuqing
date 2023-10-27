@@ -4,29 +4,33 @@ package com.stonedt.intelligence.service.impl;
 
 import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
+import com.stonedt.intelligence.dao.ProjectTaskDao;
 import com.stonedt.intelligence.dao.UserDao;
 import com.stonedt.intelligence.dao.UserWechatInfoDao;
 import com.stonedt.intelligence.dto.QrCodeInput;
 import com.stonedt.intelligence.dto.QrcodeData;
 import com.stonedt.intelligence.dto.WechatUserInfo;
 import com.stonedt.intelligence.dto.WxMpXmlMessage;
-import com.stonedt.intelligence.entity.User;
-import com.stonedt.intelligence.entity.UserWechatInfo;
+import com.stonedt.intelligence.entity.*;
+import com.stonedt.intelligence.service.*;
 import com.stonedt.intelligence.thred.ThreadPoolConst;
 import com.stonedt.intelligence.util.DateUtil;
 import com.stonedt.intelligence.util.ResultUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
-import com.stonedt.intelligence.service.WechatService;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -40,17 +44,40 @@ public class WechatServiceImpl implements WechatService {
 
 	private final UserDao userDao;
 
+	private final ProjectService projectService;
+
+	private final DefaultProjectService defaultProjectService;
+
+	private final SolutionGroupService solutionGroupService;
+
+	private final OpinionConditionService opinionConditionService;
+
+	private final SystemService systemService;
+
+	private final ProjectTaskDao projectTaskDao;
+
 	@Value("${wechat.qrcode.url}")
 	private String getQrcodeUrl;
 
 	public WechatServiceImpl(RestTemplate restTemplate,
 							 StringRedisTemplate redisTemplate,
 							 UserWechatInfoDao userWechatInfoDao,
-							 UserDao userDao) {
+							 UserDao userDao, ProjectService projectService,
+							 DefaultProjectService defaultProjectService,
+							 SolutionGroupService solutionGroupService,
+							 OpinionConditionService opinionConditionService,
+							 SystemService systemService,
+							 ProjectTaskDao projectTaskDao) {
 		this.restTemplate = restTemplate;
 		this.redisTemplate = redisTemplate;
 		this.userWechatInfoDao = userWechatInfoDao;
 		this.userDao = userDao;
+		this.projectService = projectService;
+		this.defaultProjectService = defaultProjectService;
+		this.solutionGroupService = solutionGroupService;
+		this.opinionConditionService = opinionConditionService;
+		this.systemService = systemService;
+		this.projectTaskDao = projectTaskDao;
 	}
 
 
@@ -62,7 +89,10 @@ public class WechatServiceImpl implements WechatService {
 	@Override
 	public ResultUtil getQRCodeUrl() {
 		//生成场景值,以yuqing:开头
-		String sceneStr = "yuqing:" + System.nanoTime();
+		long nanoedTime = System.nanoTime();
+		//转换成16进制
+		String suffix = Long.toHexString(nanoedTime);
+		String sceneStr = "yuqing:" + suffix;
 		QrCodeInput qrCodeInput = new QrCodeInput();
 		qrCodeInput.setSceneStr(sceneStr);
 		qrCodeInput.setExpireSeconds(600);
@@ -180,7 +210,106 @@ public class WechatServiceImpl implements WechatService {
 			return ResultUtil.build(500, "很抱歉，您的账号已被禁用，请联系管理员");
 		}
 		request.getSession().setAttribute("User", user);
-		ThreadPoolConst.IO_EXECUTOR.execute(() -> userDao.updateUserLoginCountById(user.getId()));
+		//单线程线程池,确保有序执行
+		ThreadPoolConst.SINGLE_EXECUTOR.execute(() ->{
+			//更新用户登录次数
+			userDao.updateUserLoginCountById(user.getId());
+			//获取默认方案组列表
+			List<DefaultSolutionGroup> defaultSolutionGroupList = defaultProjectService.getDefaultSolutionGroupList();
+			String create_time = DateUtil.getNowTime();
+			for (DefaultSolutionGroup defaultSolutionGroup : defaultSolutionGroupList) {
+				//获取默认方案列表
+				List<DefaultProject> defaultProjectList = defaultProjectService.getDefaultSolutionListByGroupId(defaultSolutionGroup.getGroup_id());
+				//插入方案组
+				SolutionGroup solutionGroup = new SolutionGroup();
+				BeanUtils.copyProperties(defaultSolutionGroup, solutionGroup);
+				long groupId = IdUtil.getSnowflake(2, 1).nextId();
+				solutionGroup.setGroupId(groupId);
+				solutionGroup.setUserId(user.getUser_id());
+				solutionGroupService.addSolutionGroup(solutionGroup);
+
+				for (DefaultProject defaultProject : defaultProjectList) {
+					//插入方案
+					long projectId = IdUtil.getSnowflake(3, 1).nextId();
+					Project project = new Project();
+					BeanUtils.copyProperties(defaultProject, project);
+					project.setProjectId(projectId);
+					project.setGroupId(groupId);
+					project.setUserId(user.getUser_id());
+					projectService.insertProject(project);
+					//插入偏好设置
+					addOpinionCondition(defaultProject.getStop_word(), projectId, create_time);
+					//插入预警设置
+					addWarningCondition(projectId, create_time);
+					//插入方案计划
+					addProjectPlan(project);
+				}
+			}
+		});
 		return ResultUtil.ok();
+	}
+
+	/**
+	 * 增加偏好设置
+	 */
+	public void addOpinionCondition(String stop_word, Long projectid, String create_time) {
+		Map<String, Object> paramOpinionMap = new HashMap<String, Object>();
+		Long opinion_condition_id = IdUtil.getSnowflake(4, 1).nextId();
+		paramOpinionMap.put("create_time", create_time);
+		paramOpinionMap.put("opinion_condition_id", opinion_condition_id);
+		paramOpinionMap.put("project_id", projectid);
+		paramOpinionMap.put("time", 4);
+		if (stop_word.equals("")) {
+			paramOpinionMap.put("precise", 0);
+		} else {
+			paramOpinionMap.put("precise", 1);
+		}
+		paramOpinionMap.put("emotion", "[1,2,3]");
+		paramOpinionMap.put("similar", 0);
+		paramOpinionMap.put("sort", 1);
+		paramOpinionMap.put("matchs", 1);
+		opinionConditionService.addOpinionConditionById(paramOpinionMap);
+
+	}
+
+	/**
+	 * 插入预警设置
+	 */
+	public void addWarningCondition(Long projectid, String create_time) {
+		Map<String, Object> warningMap = new HashMap<String, Object>();
+		Long warning_setting_id = IdUtil.getSnowflake(5, 1).nextId();
+		warningMap.put("create_time", create_time);
+		warningMap.put("project_id", projectid);
+		warningMap.put("warning_setting_id", warning_setting_id);
+		warningMap.put("warning_status", 0);
+		warningMap.put("warning_name", "预警");
+		warningMap.put("warning_word", "");
+		warningMap.put("warning_classify", "1,2,3,4,5,6,7,8,9,10,11");
+		warningMap.put("warning_content", 0);
+		warningMap.put("warning_similar", 0);
+		warningMap.put("warning_match", 2);
+		warningMap.put("warning_deduplication", 0);
+		warningMap.put("weekend_warning", 1);
+		warningMap.put("warning_interval", "{\"type\":\"1\",\"time\":\"1\"}");
+		warningMap.put("warning_source", "{\"type\":\"1\",\"email\":\"\"}");
+		warningMap.put("warning_receive_time", "{\"start\":\"00:00\",\"end\":\"23:00\"}");
+		systemService.addWarning(warningMap);
+	}
+
+	/**
+	 * 插入方案计划
+	 */
+	public void addProjectPlan(Project project) {
+		ProjectTask projectTask = new ProjectTask();
+		projectTask.setAnalysis_flag(0);
+		projectTask.setCharacter_word(project.getCharacterWord());
+		projectTask.setEvent_word(project.getEventWord());
+		projectTask.setProject_id(project.getProjectId());
+		projectTask.setProject_type(project.getProjectType());
+		projectTask.setRegional_word(project.getRegionalWord());
+		projectTask.setStop_word(project.getStopWord());
+		projectTask.setSubject_word(project.getSubjectWord());
+		projectTask.setVolume_flag(0);
+		projectTaskDao.saveProjectTask(projectTask);
 	}
 }

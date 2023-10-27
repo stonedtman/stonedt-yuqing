@@ -954,3 +954,84 @@ SET FOREIGN_KEY_CHECKS = 1;
 ALTER TABLE `stonedt_portal`.`user`
 ADD COLUMN `mail_json` text NULL COMMENT '邮件相关配置' AFTER `term_of_validity`;
 
+
+
+
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : 52测试
+ Source Server Type    : MySQL
+ Source Server Version : 50742
+
+ Target Server Type    : MySQL
+ Target Server Version : 50742
+ File Encoding         : 65001
+
+ Date: 27/10/2023 15:52:10
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for default_solution_group
+-- ----------------------------
+DROP TABLE IF EXISTS `default_solution_group`;
+CREATE TABLE `default_solution_group`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `group_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '方案组名称',
+  `del_status` int(1) NULL DEFAULT 0 COMMENT '软删除（0：否 1：是）',
+  `group_id` bigint(20) NULL DEFAULT NULL COMMENT '方案组id',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `group_name`(`group_name`, `del_status`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 576 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : 52测试
+ Source Server Type    : MySQL
+ Source Server Version : 50742
+
+ Target Server Type    : MySQL
+ Target Server Version : 50742
+ File Encoding         : 65001
+
+ Date: 27/10/2023 15:51:54
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for default_project
+-- ----------------------------
+DROP TABLE IF EXISTS `default_project`;
+CREATE TABLE `default_project`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `project_id` bigint(20) NULL DEFAULT NULL COMMENT '方案公共id',
+  `project_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '方案名',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
+  `project_type` int(1) NULL DEFAULT 1 COMMENT '方案类型（普通1，高级2）',
+  `project_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '方案描述',
+  `subject_word` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '主体词',
+  `character_word` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '人物词',
+  `event_word` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '事件词',
+  `regional_word` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '地域词',
+  `stop_word` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '屏蔽词',
+  `del_status` int(1) NULL DEFAULT 0 COMMENT '软删除（0：否 1：是）',
+  `group_id` bigint(20) NULL DEFAULT NULL COMMENT '方案组id',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1025 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+

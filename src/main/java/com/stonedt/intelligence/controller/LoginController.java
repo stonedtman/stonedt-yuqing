@@ -50,6 +50,12 @@ public class LoginController {
         return mv;
     }
 
+    @GetMapping(value = "/loginbak")
+    public ModelAndView loginbak(ModelAndView mv) {
+        mv.setViewName("user/loginbak");
+        return mv;
+    }
+
     /**
      * description: 退出 <br>
      * version: 1.0 <br>
