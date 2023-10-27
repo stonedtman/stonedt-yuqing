@@ -132,14 +132,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
+                        <div class="card" style="display: none">
                             <div class="card-body">
                                 <div class="detail-card-title">涉及关键词</div>
                                 <div class="detail-tags" id="referredList">
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
+                        <div class="card" id="bq">
                             <div class="card-body">
                                 <div class="detail-card-title">文章标签</div>
                                 <div class="detail-tags" id="keywordList">
@@ -252,7 +252,7 @@
                                 <div class="detail-tags" id="policy"></div>
                             </div>
                         </div>
-                        <div class="card" id="industrylableCard">
+                        <!--<div class="card" id="industrylableCard">
                             <div class="card-body">
                                 <div class="detail-card-title">行业标签</div>
                                 <div class="detail-tags" id="industrylable"></div>
@@ -263,19 +263,19 @@
                                 <div class="detail-card-title">事件标签</div>
                                 <div class="detail-tags" id="eventlable"></div>
                             </div>
-                        </div>
+                        </div>-->
 
 
 
 
 
-                        <div class="card m-b-0">
+                        <!--<div class="card m-b-0">
                             <div class="card-body">
                                 <div class="detail-card-title">相关文章</div>
                                 <div class="article-content" style="max-height:400px;" id="relatedArticlesList">
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
 
                     </div>
                 </div>
@@ -464,6 +464,8 @@ $("#currentyear").text((new Date()).getFullYear());
                             if (keywordArrary.length > 0) {
                                 relatedArticles(keywordArrary.join(','));
                             }
+                        }else{
+                            $('#bq').hide();
                         }
 
                         if (detail.hasOwnProperty('ner') && detail.ner) {
@@ -711,11 +713,26 @@ $("#currentyear").text((new Date()).getFullYear());
                                 })
                             }
 
+                        }else{
+                            $("#orgCard").hide();
+                            $("#ntoCard").hide();
+                            $("#bankCard").hide();
+                            $("#hospitalCard").hide();
+                            $("#schoolCard").hide();
+                            $("#ipoCard").hide();
+                            $("#xsbCard").hide();
+                            $("#hkCard").hide();
+                            $("#w500").hide();
+                            $("#c500").hide();
+                            $("#td").hide();
+                            $("#vcCard").hide();
+                            $("#locCard").hide();
                         }
+
                         if (detail.hasOwnProperty('policylable') && detail.policylable) {
                         	let policylable = JSON.parse(detail.policylable);
-                        	
-                        	
+
+
                         	if(policylable.length>0){
                         		for(let i=0;i<policylable.length;i++){
                             		var classIndex = Math.floor(Math.random() * (3));
@@ -724,9 +741,9 @@ $("#currentyear").text((new Date()).getFullYear());
                         	}else{
                         		$("#policyCard").hide();
                         	}
-                        	
-                        	
-                        	
+
+
+
                         }else{
                         	$("#policyCard").hide();
                         }
