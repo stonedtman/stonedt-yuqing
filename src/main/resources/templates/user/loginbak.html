@@ -175,8 +175,8 @@
 				success: function (res) {
 					if (res.status == 200) {
 						$(".qr-code").html(`<img class="qrcode-img" src="${res.data.qrcodeUrl}" alt="">`)
-						sceneStr = res.result.sceneStr
-						judgeLogin(res.result.sceneStr);
+						sceneStr = res.data.sceneStr
+						judgeLogin(res.data.sceneStr);
 
 						timer = setTimeout(() => {
 							$(".qr-code").html(`<div class="refresh" onclick="getQrcode()">
