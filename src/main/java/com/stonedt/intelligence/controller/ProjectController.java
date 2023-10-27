@@ -345,7 +345,7 @@ public class ProjectController {
         verifyMap.put("user_id", user_id);
         verifyMap.put("del_status", 0);
         verifyMap.put("project_name", project_name);
-        verifyMap.put("group_id", group_id);
+        verifyMap.put("group_id", String.valueOf(group_id));
         Integer existCount = projectService.getProjectCount(verifyMap);
         if (existCount <= 0) {
             Project p = new Project();
@@ -382,7 +382,7 @@ public class ProjectController {
                 Long opinion_condition_id = SnowflakeUtil.getId();
                 paramOpinionMap.put("create_time", create_time);
                 paramOpinionMap.put("opinion_condition_id", opinion_condition_id);
-                paramOpinionMap.put("project_id", projectid);
+                paramOpinionMap.put("project_id", String.valueOf(projectid));
                 paramOpinionMap.put("time", 4);
                 if (stop_word.equals("")) {
                     paramOpinionMap.put("precise", 0);

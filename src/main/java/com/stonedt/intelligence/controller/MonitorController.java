@@ -115,6 +115,12 @@ public class MonitorController {
 		return mv;
 	}
 
+	@RequestMapping("/wxGroup")
+	public ModelAndView wxGroup(ModelAndView modelAndView) {
+		modelAndView.setViewName("monitor/wxGroup");
+		return modelAndView;
+	}
+
 	/**
 	 * @param projectid     方案id
 	 * @param monitorsearch 搜索关键词

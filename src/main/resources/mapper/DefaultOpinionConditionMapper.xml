@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stonedt.intelligence.mapper.DefaultOpinionConditionMapper">
+
+    <resultMap id="BaseResultMap" type="com.stonedt.intelligence.entity.DefaultOpinionCondition">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="opinionConditionId" column="opinion_condition_id" jdbcType="BIGINT"/>
+            <result property="projectId" column="project_id" jdbcType="BIGINT"/>
+            <result property="time" column="time" jdbcType="INTEGER"/>
+            <result property="precise" column="precise" jdbcType="INTEGER"/>
+            <result property="emotion" column="emotion" jdbcType="VARCHAR"/>
+            <result property="similar" column="similar" jdbcType="INTEGER"/>
+            <result property="sort" column="sort" jdbcType="INTEGER"/>
+            <result property="matchs" column="matchs" jdbcType="INTEGER"/>
+            <result property="times" column="times" jdbcType="VARCHAR"/>
+            <result property="timee" column="timee" jdbcType="VARCHAR"/>
+            <result property="classify" column="classify" jdbcType="VARCHAR"/>
+            <result property="websitename" column="websitename" jdbcType="VARCHAR"/>
+            <result property="author" column="author" jdbcType="VARCHAR"/>
+            <result property="organization" column="organization" jdbcType="VARCHAR"/>
+            <result property="categorylable" column="categorylable" jdbcType="VARCHAR"/>
+            <result property="enterprisetype" column="enterprisetype" jdbcType="VARCHAR"/>
+            <result property="hightechtype" column="hightechtype" jdbcType="VARCHAR"/>
+            <result property="policylableflag" column="policylableflag" jdbcType="VARCHAR"/>
+            <result property="datasourceType" column="datasource_type" jdbcType="VARCHAR"/>
+            <result property="eventindex" column="eventIndex" jdbcType="VARCHAR"/>
+            <result property="industryindex" column="industryIndex" jdbcType="VARCHAR"/>
+            <result property="province" column="province" jdbcType="VARCHAR"/>
+            <result property="city" column="city" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,create_time,opinion_condition_id,
+        project_id,time,precise,
+        emotion,similar,sort,
+        matchs,times,timee,
+        classify,websitename,author,
+        organization,categorylable,enterprisetype,
+        hightechtype,policylableflag,datasource_type,
+        eventIndex,industryIndex,province,
+        city
+    </sql>
+</mapper>
