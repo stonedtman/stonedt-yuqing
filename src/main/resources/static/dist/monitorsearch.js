@@ -43,7 +43,7 @@ function sendArticleSearch(param, data, funcname) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                console.log(xhr, ajaxOptions, thrownError)
+                window.location.href = ctxPath + "login";
             } else {
                 $("#page").html("");
                 dataerror("#monitor-content");
@@ -92,7 +92,7 @@ function sendArticleIndustrySearch(param, data, funcIndustry) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                console.log(xhr, ajaxOptions, thrownError)
+                window.location.href = ctxPath + "login";
             } else {
                 $("#page").html("");
                 dataerror("#monitor-content");
@@ -141,7 +141,7 @@ function sendArticleProvinceSearch(param, data, funcProvince) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                console.log(xhr, ajaxOptions, thrownError)
+                window.location.href = ctxPath + "login";
             } else {
                 $("#page").html("");
                 dataerror("#monitor-content");
@@ -285,7 +285,7 @@ function sendArticleCitySearch(param, data, funcCity) {
         error: function (xhr, ajaxOptions, thrownError) {
 
             if (xhr.status == 403) {
-                console.log(xhr, ajaxOptions, thrownError)
+                window.location.href = ctxPath + "login";
             } else {
                 $("#page").html("");
                 dataerror("#monitor-content");
@@ -425,7 +425,7 @@ function sendArticleEventSearch(param, data, funcEvent) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                console.log(xhr, ajaxOptions, thrownError)
+                window.location.href = ctxPath + "login";
             } else {
                 $("#page").html("");
                 dataerror("#monitor-content");
@@ -2642,7 +2642,7 @@ $(document).on('click', '.datafavorite', function () {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                console.log(xhr, ajaxOptions, thrownError)
+                window.location.href = ctxPath + "login";
             }
         }
     });
@@ -2720,7 +2720,7 @@ $(document).on('click', '.sending', function () {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                console.log(xhr, ajaxOptions, thrownError)
+                window.location.href = ctxPath + "login";
             }
         }
     });
@@ -2769,7 +2769,7 @@ $(document).on('click', '.dataemtion', function () {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                console.log(xhr, ajaxOptions, thrownError)
+                window.location.href = ctxPath + "login";
             }
         }
     });
@@ -2944,7 +2944,7 @@ $(document).on('click', '.isread', function () {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                console.log(xhr, ajaxOptions, thrownError)
+                window.location.href = ctxPath + "login";
             }
         }
     });
@@ -2997,7 +2997,7 @@ $(document).on('click', '.deletedata', function () {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                console.log(xhr, ajaxOptions, thrownError)
+                window.location.href = ctxPath + "login";
             }
         }
     });
@@ -3047,7 +3047,7 @@ $(document).on('click', '.deletedata', function () {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                console.log(xhr, ajaxOptions, thrownError)
+                window.location.href = ctxPath + "login";
             }
         }
     });
@@ -3129,7 +3129,7 @@ $(document).on('click', '.copytext', function () {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                console.log(xhr, ajaxOptions, thrownError)
+                window.location.href = ctxPath + "login";
             }
         }
     });

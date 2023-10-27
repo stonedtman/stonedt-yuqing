@@ -259,7 +259,7 @@ function sendArticle(param, data, funcname) {
 		},
 		error : function(xhr, ajaxOptions, thrownError) {
 			if (xhr.status == 403) {
-				console.log(xhr, ajaxOptions, thrownError)
+				window.location.href = ctxPath + "login";
 			} else {
 				$("#page").html("");
 				dataerror("#monitor-content");

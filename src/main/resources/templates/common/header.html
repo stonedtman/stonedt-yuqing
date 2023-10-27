@@ -402,10 +402,7 @@
                         nodata("#warning-list", '暂无预警消息')
                     }
                 },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    if (xhr.status == 403) {
-                        console.log(xhr, ajaxOptions, thrownError)
-                    }
+                error: function () {
                     dataerror("#warning-list")
                 }
             });

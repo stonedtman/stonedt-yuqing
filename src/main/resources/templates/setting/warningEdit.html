@@ -560,7 +560,7 @@ $("#currentyear").text((new Date()).getFullYear());
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status == 403) {
-                    console.log(xhr, ajaxOptions, thrownError)
+                    window.location.href = ctxPath + "login";
                 }
             }
         });
@@ -817,7 +817,7 @@ function createBindingEmailDialog() {
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status === 403) {
-                    console.log(xhr, ajaxOptions, thrownError)
+                    window.location.href = ctxPath + "login";
                 }
             }
         });
@@ -852,7 +852,7 @@ function createBindingEmailDialog() {
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status === 403) {
-                    console.log(xhr, ajaxOptions, thrownError)
+                    window.location.href = ctxPath + "login";
                 }
             }
         });

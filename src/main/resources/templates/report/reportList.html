@@ -401,7 +401,7 @@
 	                    },
 	                    error: function (xhr, ajaxOptions, thrownError) {
 	                        if (xhr.status == 403) {
-	                            console.log(xhr, ajaxOptions, thrownError)
+	                            window.location.href = ctxPath + "login";
 	                        }
 	                    }
 	                });
@@ -495,7 +495,7 @@
 	                    },
 	                    error: function (xhr, ajaxOptions, thrownError) {
 	                        if (xhr.status == 403) {
-	                            console.log(xhr, ajaxOptions, thrownError)
+	                            window.location.href = ctxPath + "login";
 	                        }
 	                    }
 	                });

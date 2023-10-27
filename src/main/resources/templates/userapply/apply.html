@@ -89,7 +89,7 @@
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr);
                 if (xhr.status == 403) {
-                    console.log(xhr, ajaxOptions, thrownError)
+                    window.location.href = ctxPath + "login";
                 }
             }
         });

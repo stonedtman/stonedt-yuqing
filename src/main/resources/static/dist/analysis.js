@@ -62,7 +62,7 @@ function projectname(projectid, groupId) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                console.log(xhr, ajaxOptions, thrownError)
+                window.location.href = ctxPath + "login";
             } else {
                 console.log(xhr);
             }
@@ -134,7 +134,7 @@ function getlatestnews(analysis_projectid) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                console.log(xhr, ajaxOptions, thrownError)
+                window.location.href = ctxPath + "login";
             } else {
                 nodata("#relative_news", '大概5-10分钟之后更新完成...');
             }
@@ -404,7 +404,7 @@ function getAnalysisMonitorProjectid() {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                console.log(xhr, ajaxOptions, thrownError)
+                window.location.href = ctxPath + "login";
             } else {
                 noData();
             }
@@ -744,7 +744,7 @@ $(document).on('click','#updateanalysis', function () {
 	        },
 	        error: function (xhr, ajaxOptions, thrownError) {
 	            if (xhr.status == 403) {
-	                console.log(xhr, ajaxOptions, thrownError)
+	                window.location.href = ctxPath + "login";
 	            } else {
 	                $("#popularinformation").css({"position": "relative", "min-height": "300px"})
 	                nodata("#popularinformation", '大概5-10分钟之后更新完成...')
@@ -1413,7 +1413,7 @@ function sendIndustryAndEventArticleData(labletype,lable){
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                console.log(xhr, ajaxOptions, thrownError)
+                window.location.href = ctxPath + "login";
             } else {
                 $("#page").html("");
                 dataerror("#monitor-content");
@@ -1592,7 +1592,7 @@ function sendArticleLable(labletype) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                console.log(xhr, ajaxOptions, thrownError)
+                window.location.href = ctxPath + "login";
             } else {
                 $("#page").html("");
                 dataerror("#monitor-content");
@@ -2615,7 +2615,7 @@ function getpopularinformation(analysis_projectid, group_id) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                console.log(xhr, ajaxOptions, thrownError)
+                window.location.href = ctxPath + "login";
             } else {
                 $("#popularinformation").css({"position": "relative", "min-height": "300px"})
                 nodata("#popularinformation", '大概5-10分钟之后更新完成...')
@@ -2669,7 +2669,7 @@ function getemotioncategory_line(analysis_projectid, group_id) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                console.log(xhr, ajaxOptions, thrownError)
+                window.location.href = ctxPath + "login";
             } else {
                 $("#category-line").css({"position": "relative", "min-height": "300px"})
                 nodata("#category-line", '大概5-10分钟之后更新完成...')
@@ -2795,7 +2795,7 @@ function popularKeyword(analysis_projectid) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                console.log(xhr, ajaxOptions, thrownError)
+                window.location.href = ctxPath + "login";
             } else {
                 nodata("#hot_company", '大概5-10分钟之后更新完成...');
             }

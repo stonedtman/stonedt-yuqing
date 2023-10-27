@@ -253,7 +253,7 @@ $("#currentyear").text((new Date()).getFullYear());
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status == 403) {
-                    console.log(xhr, ajaxOptions, thrownError)
+                    window.location.href = ctxPath + "login";
                 } else {
                     $('#projectlist').html('<div class="report-list-box">暂无数据！</div>');
                 }
@@ -285,7 +285,7 @@ $("#currentyear").text((new Date()).getFullYear());
             },
             error:function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status == 403) {
-                    console.log(xhr, ajaxOptions, thrownError)
+                    window.location.href = ctxPath + "login";
                 }
             }
         });
@@ -386,7 +386,7 @@ function createUpdateEmailDialog() {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status === 403) {
-                console.log(xhr, ajaxOptions, thrownError)
+                window.location.href = ctxPath + "login";
             }
         }
     });
@@ -437,7 +437,7 @@ function createUpdateEmailDialog() {
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status === 403) {
-                    console.log(xhr, ajaxOptions, thrownError)
+                    window.location.href = ctxPath + "login";
                 }
             }
         });

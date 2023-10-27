@@ -328,7 +328,6 @@ $("#currentyear").text((new Date()).getFullYear());
         breadCrumbs();
         articleDetail();
     });
-    
     // 文章详情
     function articleDetail() {
         $.ajax({
@@ -788,7 +787,7 @@ $("#currentyear").text((new Date()).getFullYear());
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr);
                     if (xhr.status == 403) {
-                        console.log(xhr, ajaxOptions, thrownError)
+                        window.location.href = ctxPath + "login";
                     }
                 }
             }
@@ -841,7 +840,7 @@ $("#currentyear").text((new Date()).getFullYear());
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr);
                 if (xhr.status == 403) {
-                    console.log(xhr, ajaxOptions, thrownError)
+                    window.location.href = ctxPath + "login";
                 }
             }
         });
