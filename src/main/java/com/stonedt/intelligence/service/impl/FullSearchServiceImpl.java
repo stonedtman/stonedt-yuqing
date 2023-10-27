@@ -1152,8 +1152,8 @@ public class FullSearchServiceImpl implements FullSearchService{
 				timee = timeJson.getString("timee") + " 23:59:59";
 				break;
 			case 8:
-				times = param.getStartTime() + " 00:00:00";
-				timee = param.getEndTime() + " 23:59:59";
+				times = param.getTimes() + " 00:00:00";
+				timee = param.getTimee() + " 23:59:59";
 				break;
 		}
 		paramJson.put("times", times);

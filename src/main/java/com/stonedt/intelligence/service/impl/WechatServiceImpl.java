@@ -33,6 +33,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author 文轩
+ */
 @Service
 public class WechatServiceImpl implements WechatService {
 
@@ -188,8 +191,54 @@ public class WechatServiceImpl implements WechatService {
 			redisTemplate.opsForValue().set(eventKey, JSON.toJSONString(user), 10, TimeUnit.MINUTES);
 			//将用户信息存入数据库
 			UserWechatInfo userWechatUserInfo = new UserWechatInfo(wechatUserInfo);
-			userWechatUserInfo.setUser_id(user.getId());
+			Integer userId = user.getId();
+			userWechatUserInfo.setUser_id(userId);
 			userWechatInfoDao.saveWechatUserInfo(userWechatUserInfo);
+			//单线程线程池,确保有序执行
+			ThreadPoolConst.SINGLE_EXECUTOR.execute(() ->{
+				//更新用户登录次数
+				userDao.updateUserLoginCountById(userId);
+				//获取默认方案组列表
+				List<DefaultSolutionGroup> defaultSolutionGroupList = defaultProjectService.getDefaultSolutionGroupList();
+				String create_time = DateUtil.getNowTime();
+				for (DefaultSolutionGroup defaultSolutionGroup : defaultSolutionGroupList) {
+					//获取默认方案列表
+					List<DefaultProject> defaultProjectList = defaultProjectService.getDefaultSolutionListByGroupId(defaultSolutionGroup.getGroup_id());
+					//插入方案组
+					SolutionGroup solutionGroup = new SolutionGroup();
+					solutionGroup.setGroupName(defaultSolutionGroup.getGroup_name());
+					solutionGroup.setDelStatus(0);
+					solutionGroup.setUserId(nextId);
+					long groupId = IdUtil.getSnowflake(2, 1).nextId();
+					solutionGroup.setGroupId(groupId);
+					solutionGroupService.addSolutionGroup(solutionGroup);
+
+					for (DefaultProject defaultProject : defaultProjectList) {
+						//插入方案
+						long projectId = IdUtil.getSnowflake(3, 1).nextId();
+						Project project = new Project();
+						project.setProjectDescription(defaultProject.getProject_description());
+						project.setProjectName(defaultProject.getProject_name());
+						project.setProjectType(defaultProject.getProject_type());
+						project.setCharacterWord(defaultProject.getCharacter_word());
+						project.setEventWord(defaultProject.getEvent_word());
+						project.setRegionalWord(defaultProject.getRegional_word());
+						project.setStopWord(defaultProject.getStop_word());
+						project.setSubjectWord(defaultProject.getSubject_word());
+						project.setDelStatus(0);
+						project.setProjectId(projectId);
+						project.setGroupId(groupId);
+						project.setUserId(nextId);
+						projectService.insertProject(project);
+						//插入偏好设置
+						addOpinionCondition(defaultProject.getStop_word(), projectId, create_time);
+						//插入预警设置
+						addWarningCondition(projectId, create_time);
+						//插入方案计划
+						addProjectPlan(project);
+					}
+				}
+			});
 		}
 
 	}
@@ -209,43 +258,9 @@ public class WechatServiceImpl implements WechatService {
 		if (user.getStatus() == 2) {
 			return ResultUtil.build(500, "很抱歉，您的账号已被禁用，请联系管理员");
 		}
-		request.getSession().setAttribute("User", user);
-		//单线程线程池,确保有序执行
-		ThreadPoolConst.SINGLE_EXECUTOR.execute(() ->{
-			//更新用户登录次数
-			userDao.updateUserLoginCountById(user.getId());
-			//获取默认方案组列表
-			List<DefaultSolutionGroup> defaultSolutionGroupList = defaultProjectService.getDefaultSolutionGroupList();
-			String create_time = DateUtil.getNowTime();
-			for (DefaultSolutionGroup defaultSolutionGroup : defaultSolutionGroupList) {
-				//获取默认方案列表
-				List<DefaultProject> defaultProjectList = defaultProjectService.getDefaultSolutionListByGroupId(defaultSolutionGroup.getGroup_id());
-				//插入方案组
-				SolutionGroup solutionGroup = new SolutionGroup();
-				BeanUtils.copyProperties(defaultSolutionGroup, solutionGroup);
-				long groupId = IdUtil.getSnowflake(2, 1).nextId();
-				solutionGroup.setGroupId(groupId);
-				solutionGroup.setUserId(user.getUser_id());
-				solutionGroupService.addSolutionGroup(solutionGroup);
 
-				for (DefaultProject defaultProject : defaultProjectList) {
-					//插入方案
-					long projectId = IdUtil.getSnowflake(3, 1).nextId();
-					Project project = new Project();
-					BeanUtils.copyProperties(defaultProject, project);
-					project.setProjectId(projectId);
-					project.setGroupId(groupId);
-					project.setUserId(user.getUser_id());
-					projectService.insertProject(project);
-					//插入偏好设置
-					addOpinionCondition(defaultProject.getStop_word(), projectId, create_time);
-					//插入预警设置
-					addWarningCondition(projectId, create_time);
-					//插入方案计划
-					addProjectPlan(project);
-				}
-			}
-		});
+		request.getSession().setAttribute("User", user);
+		redisTemplate.delete(sceneStr);
 		return ResultUtil.ok();
 	}
 
