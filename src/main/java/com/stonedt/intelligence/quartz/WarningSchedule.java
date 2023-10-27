@@ -301,7 +301,7 @@ public class WarningSchedule {
                                 maildetail.put("econtent", econtent);
                                 maillist.add(maildetail);
                                 emailHtml += "<div class=\"content\">\r\n" +
-                                        "<p>" + publish_time + " 相似文章:" + similarvolume + " 来自:" + sourcewebsitename + "</p>\r\n" +
+                                        "<p>" + publish_time +  " 来自:" + sourcewebsitename + "</p>\r\n" +
                                         "<a href=\"" + url + "\" target=\"_blank\">" + title + "</a>\r\n" +
                                         "<div class=\"con\"> " + econtent + "\r\n" +
                                         "</div>\r\n" +

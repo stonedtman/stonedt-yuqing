@@ -217,7 +217,7 @@
 			group_id = #{groupId}
 		and
 			del_status = 0
-		order by create_time desc
+		order by update_time desc
 	</select>
 	
 	<select id="queryUserid" resultType="map">
