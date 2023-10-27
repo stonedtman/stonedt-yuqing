@@ -10,6 +10,7 @@ import com.stonedt.intelligence.dao.UserDao;
 import com.stonedt.intelligence.dto.MailConfig;
 import com.stonedt.intelligence.service.MailService;
 import com.stonedt.intelligence.thred.ThreadPoolConst;
+import com.stonedt.intelligence.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +29,6 @@ import com.stonedt.intelligence.dao.SystemDao;
 import com.stonedt.intelligence.entity.WarningSetting;
 import com.stonedt.intelligence.service.EarlyWarningService;
 import com.stonedt.intelligence.service.ProjectService;
-import com.stonedt.intelligence.util.DateUtil;
-import com.stonedt.intelligence.util.MyHttpRequestUtil;
-import com.stonedt.intelligence.util.ProjectWordUtil;
-import com.stonedt.intelligence.util.SnowFlake;
 
 
 /**
@@ -331,7 +328,6 @@ public class WarningSchedule {
                                     logger.info("预警邮件发送失败......用户未指定收件人......");
                                     return;
                                 }
-                                mailConfig.setCc(new String[]{"shengwenxuan@stonedt.com"});
                                 mailService.sendWarningMail(mailConfig, finalEmailHtml);
                                 logger.info("预警邮件发送成功......");
                             } catch (Exception e) {
@@ -343,22 +339,25 @@ public class WarningSchedule {
                     logger.info("预警查询结束...未查询到数据......");
                 }
             }else {
-            	
-            	String similarUrl = es_search_url + MonitorConstant.es_api_similarsearch_content;
+
+            	String similarUrl = es_search_url + MonitorConstant.es_api_similar_titlekeyword_search_content;
+
             	String esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
             	String article_public_idStr = "";
+                JSONArray similarArray = new JSONArray();
                 if (!esSimilarResponse.equals("")) {
                     List article_public_idList = new ArrayList();
-                    JSONArray similarArray = JSON.parseArray(esSimilarResponse);
-                    if(similarArray.isEmpty()) {
+                    JSONObject parseObject = JSONObject.parseObject(esSimilarResponse);
+                    //JSONArray similarArray = JSON.parseArray(esSimilarResponse);
+                    similarArray = parseObject.getJSONArray("data");
+                    if (similarArray.isEmpty()) {
                         logger.info("预警查询结束...未查询到数据......");
-                    	return ;
                     }
                     for (int i = 0; i < similarArray.size(); i++) {
                         JSONObject similarJson = (JSONObject) similarArray.get(i);
                         String article_public_id = similarJson.getString("article_public_id");
                         article_public_idList.add(article_public_id);
-                        if (i < 10) {
+                        if (i < 30) {
                             article_public_idStr += article_public_id + ",";
                         }
                     }
@@ -366,7 +365,7 @@ public class WarningSchedule {
                 }
                 article_public_idStr = "&article_public_idstr="+article_public_idStr;
                 String getcontenturl = es_search_url + MonitorConstant.es_api_similar_contentlist;
-                String articleResponse = MyHttpRequestUtil.sendPostEsSearch(getcontenturl, article_public_idStr);
+                String articleResponse = MyHttpRequestUtil.sendPostEsSearch(getcontenturl, params+article_public_idStr);
                 JSONObject articleResponseJson = JSON.parseObject(articleResponse);
                 logger.info("预警查询结束......共计：{}", articleResponseJson.getInteger("count"));
                 if (articleResponseJson.getInteger("code") == 200 && articleResponseJson.getInteger("count") > 0) {
@@ -393,6 +392,15 @@ public class WarningSchedule {
                             if (content.length() > 255) {
                                 content = content.substring(0, 254);
                             }
+
+                            //组装相似文章
+                            for (Object object : similarArray) {
+                                JSONObject parseObject = JSONObject.parseObject(object.toString());
+                                if(parseObject.get("article_public_id").equals(Earlywarning.getString("article_public_id"))) {
+                                    Earlywarning.put("similarvolume", Integer.parseInt(parseObject.getString("num")));
+                                }
+                            }
+
 //                            String text = title + content;
 //                            String relatedWords = TextUtil.getRelatedWords(listKeywords, yjword, text);
 //                            if (org.apache.commons.lang3.StringUtils.isNotEmpty(relatedWords)) {
@@ -482,7 +490,6 @@ public class WarningSchedule {
                                     logger.info("预警邮件发送失败......用户未指定收件人......");
                                     return;
                                 }
-                                mailConfig.setCc(new String[]{"shengwenxuan@stonedt.com"});
                                 mailService.sendWarningMail(mailConfig, finalEmailHtml);
                                 logger.info("预警邮件发送成功......");
                             } catch (Exception e) {
