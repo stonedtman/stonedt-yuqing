@@ -362,6 +362,11 @@ public class ProjectController {
             character_word = projectUtil.dealProjectWords(character_word);
             subject_word = projectUtil.dealProjectWords(subject_word);
 
+            subject_word = ProjectUtil.mergeProjectWords(subject_word);
+            character_word = ProjectUtil.mergeProjectWords(character_word);
+            event_word = ProjectUtil.mergeProjectWords(event_word);
+            regional_word = ProjectUtil.mergeProjectWords(regional_word);
+
             Long projectid = SnowflakeUtil.getId();
             p.setProjectId(projectid);
             p.setProjectName(paramJson.getString("project_name"));
@@ -592,6 +597,9 @@ public class ProjectController {
             regional_word = projectUtil.dealProjectWords(regional_word);
             event_word = projectUtil.dealProjectWords(event_word);
             character_word = projectUtil.dealProjectWords(character_word);
+            regional_word = ProjectUtil.mergeProjectWords(regional_word);
+            event_word = ProjectUtil.mergeProjectWords(event_word);
+            character_word = ProjectUtil.mergeProjectWords(character_word);
             paramJson.put("regional_word", regional_word);
             paramJson.put("event_word", event_word);
             paramJson.put("character_word", character_word);
@@ -601,6 +609,8 @@ public class ProjectController {
         String subject_word = paramJson.getString("subject_word");
         stop_word = projectUtil.dealProjectWords(stop_word);
         subject_word = projectUtil.dealProjectWords(subject_word);
+        subject_word = ProjectUtil.mergeProjectWords(subject_word);
+        stop_word = ProjectUtil.mergeProjectWords(stop_word);
         paramJson.put("stop_word", stop_word);
         paramJson.put("subject_word", subject_word);
 
