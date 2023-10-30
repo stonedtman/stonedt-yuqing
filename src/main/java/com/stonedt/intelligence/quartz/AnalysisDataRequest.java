@@ -82,7 +82,8 @@ public class AnalysisDataRequest {
         }
 
         String param = "times=" + times + "&timee=" + timee + "&keyword=" + highKeyword + "&stopword=" + stopword
-                + "&emotionalIndex="+ emotionalIndex +"&projecttype=" + projectType + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
+                + "&emotionalIndex="+ emotionalIndex +"&projecttype=" + projectType
+                + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
         try {
             String response = sendPost(es_search_url + "/yqtindutry/totalDatasearch", param);
             JSONArray resultArray = JSONObject.parseObject(response).getJSONObject("aggregations")
@@ -262,21 +263,21 @@ public class AnalysisDataRequest {
 
     // 方案命中主体词
     public String fangan(String keyword, String highKeyword, String times, String timee,
-                         String stopword, Integer projectType) {
+                         String stopword, Integer projectType, OpinionCondition opinionCondition) {
         List<Map<String, Object>> list = new ArrayList<>();
         try {
             String a[] = keyword.split(",");
             int total = 0;
             for (int i = 0; i < a.length; i++) {
                 try {
-                    total += getfanganJSon(a[i], highKeyword, times, timee, stopword, projectType);
+                    total += getfanganJSon(a[i], highKeyword, times, timee, stopword, projectType, opinionCondition);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             for (int i = 0; i < a.length; i++) {
                 try {
-                    int count = getfanganJSon(a[i], highKeyword, times, timee, stopword, projectType);
+                    int count = getfanganJSon(a[i], highKeyword, times, timee, stopword, projectType, opinionCondition);
                     String rate = MyMathUtil.calculatedRatioWithPercentSign(count, total);
                     Map<String, Object> map = new HashMap<>();
                     map.put("keyword", a[i]);
@@ -300,12 +301,22 @@ public class AnalysisDataRequest {
      * 方案词结合情感占比接口,计算出各自数据量
      */
     public int getfanganJSon(String searchkeyword, String highKeyword, String time, String timee, String stopword,
-                             Integer projectType) {
+                             Integer projectType, OpinionCondition opinionCondition) {
+        String emotion = opinionCondition.getEmotion();
+        String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
+        String author = opinionCondition.getAuthor();
+        String sourceWebsite = opinionCondition.getWebsitename();
+        Integer matchingmode = opinionCondition.getMatchs()-1;
+        Integer precise = opinionCondition.getPrecise();
+        if (precise == 0) {
+            stopword = "";
+        }
         int total = 0;
         try {
             String param = "times=" + time + "&timee=" + timee + "&keyword=" + highKeyword + "&stopword=" + stopword
-                    + "&searchkeyword=" + searchkeyword + "&origintype=0&emotionalIndex=1,2,3" + "&projecttype="
-                    + projectType;
+                    + "&searchkeyword=" + searchkeyword + "&origintype=0" + "&projecttype="
+                    + projectType + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode
+                    + "&emotionalIndex="+ emotionalIndex;
             try {
                 String result = sendPost(es_search_url + "/yqtindutry/totalDatasearch", param);
                 total = JSONObject.parseObject(result).getJSONObject("hits").getIntValue("total");
@@ -1248,6 +1259,9 @@ public class AnalysisDataRequest {
                 if (sourceWebsite!=null&&!"".equals(sourceWebsite)) {
                     if (!sourceWebsite.equals(buckets.getJSONObject(i).getString("key"))) {
                         continue;
+                    }else {
+                        total_site = 1;
+                        total = buckets.getJSONObject(i).getIntValue("doc_count");
                     }
                 }
                 try {
@@ -2845,12 +2859,12 @@ public class AnalysisDataRequest {
 //		String dataNer = dataCategory("(南京银行 OR 交通银行 OR 广发银行股份有限公司 OR 工商银行 OR 中国银行 OR 建设银行 OR 光大银行 OR 华夏银行 OR 兴业银行 OR 民生银行 OR 平安银行 OR 广发银行 OR 浦发银行 OR 中信银行 OR 北京银行 OR 中国农业银行 OR 中国邮政储蓄银行 OR 微众银行 OR 上海银行 OR 东莞农商行 OR 广州农商行 OR 重庆农商行 OR 常熟农商行 OR 武汉农商行 OR 无锡农商行 OR 宜人贷 OR 宜信 OR 钱包金服 OR 秦苍 OR 小米金融 OR 小赢普惠 OR 快钱 OR 360金融 OR 美团金融 OR 中邮消费金融 OR 钱牛牛 OR 人人贷 OR 汇中财富 OR 达飞金融 OR 吉利汽车 OR 广发信用卡 OR 度小满 OR 新心金融 OR 平安普惠 OR 京东数科 OR 资产雷达 OR 银客 OR 友信 OR 长安汽车金融 OR 招行个贷 OR 平安易贷 OR 小雨点信用贷款 OR 小雨点金融 OR 哈尔滨银行 OR 广州银行)", "", "2021-04-10 17:03:01", "2021-04-20 17:50:01",2);
 //		System.out.println("dataNer:"+dataNer);
 //	}
-	public String dataCategory(String highKeyword, String stopword, String times, String timee, Integer projectType) {
+	public String dataCategory(String highKeyword, String stopword, String times, String timee, Integer projectType,OpinionCondition opinionCondition) {
 		
 		List<Map<String, Object>> list = new ArrayList<>();
         try {
             int total = 0;
-            String articleCategoryJSon = getArticleCategoryJSon(highKeyword,stopword,times,timee,projectType);
+            String articleCategoryJSon = getArticleCategoryJSon(highKeyword,stopword,times,timee,projectType,opinionCondition);
             JSONArray jsonArray = JSONObject.parseObject(articleCategoryJSon).getJSONObject("hits").getJSONArray("hits");
             Map<String,Object> map = new HashMap<String,Object>();
             for (Object object : jsonArray) {
@@ -2902,12 +2916,21 @@ public class AnalysisDataRequest {
      * 分类接口
      */
     public String getArticleCategoryJSon(String highKeyword, String stopword,String time, String timee, 
-                             Integer projectType) {
+                             Integer projectType,OpinionCondition opinionCondition) {
+        String emotion = opinionCondition.getEmotion();
+        String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
+        String author = opinionCondition.getAuthor();
+        String sourceWebsite = opinionCondition.getWebsitename();
+        Integer matchingmode = opinionCondition.getMatchs()-1;
+        Integer precise = opinionCondition.getPrecise();
+        if (precise == 0) {
+            stopword = "";
+        }
     	String result = "";
         try {
             String param = "times=" + time + "&timee=" + timee + "&keyword=" + highKeyword + "&stopword=" + stopword
-                    + "&origintype=0&emotionalIndex=" + "&projecttype="
-                    + projectType;
+                    + "&origintype=0&emotionalIndex=" +emotionalIndex + "&projecttype="
+                    + projectType + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
             try {
             	
             	

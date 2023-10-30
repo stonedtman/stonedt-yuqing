@@ -258,6 +258,9 @@ public class WechatServiceImpl implements WechatService {
 		if (user.getStatus() == 2) {
 			return ResultUtil.build(500, "很抱歉，您的账号已被禁用，请联系管理员");
 		}
+		if (user.getTerm_of_validity().before(new Date())) {
+			return ResultUtil.build(504, "很抱歉，您的账号已过期，请联系管理员");
+		}
 
 		request.getSession().setAttribute("User", user);
 		redisTemplate.delete(sceneStr);

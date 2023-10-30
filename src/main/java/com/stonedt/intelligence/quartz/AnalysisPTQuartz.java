@@ -115,7 +115,7 @@ public class AnalysisPTQuartz {
                                 String emotional = analysisDataRequest.emotional(highKeyword, times, timee, stopword, projectType,opinionCondition);
                                 analysisQuartzDo.setEmotional_proportion(emotional);
                                 // 方案命中主体词
-                                String fangan = analysisDataRequest.fangan(keyword, highKeyword, times, timee, stopword, projectType);
+                                String fangan = analysisDataRequest.fangan(keyword, highKeyword, times, timee, stopword, projectType,opinionCondition);
                                 analysisQuartzDo.setPlan_word_hit(fangan);
                                 // 关键词情感分析数据走势
                                 String keywordsentimentFlagChart = analysisDataRequest.keywordsentimentFlagChart(keyword, highKeyword, stopword, times, timee, time_period, projectType,opinionCondition);
@@ -207,7 +207,7 @@ public class AnalysisPTQuartz {
 //								}
                                 
                                //方案命中分类统计
-                                String datacategory = analysisDataRequest.dataCategory(highKeyword, stopword, times, timee, projectType);
+                                String datacategory = analysisDataRequest.dataCategory(highKeyword, stopword, times, timee, projectType,opinionCondition);
                                 analysisQuartzDo.setCategory_rank(datacategory);
                                 Boolean updateAnalysisExceptPopularInformation = analysisQuartzDao.updateAnalysisExceptPopularInformation(analysisQuartzDo);
                                 if (updateAnalysisExceptPopularInformation) {
