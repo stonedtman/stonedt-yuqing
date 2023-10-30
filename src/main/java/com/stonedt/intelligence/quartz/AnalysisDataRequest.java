@@ -75,7 +75,7 @@ public class AnalysisDataRequest {
         String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
         String author = opinionCondition.getAuthor();
         String sourceWebsite = opinionCondition.getWebsitename();
-        Integer matchingmode = opinionCondition.getMatchs();
+        int matchingmode = opinionCondition.getMatchs()-1;
         Integer precise = opinionCondition.getPrecise();
         if (precise == 0) {
             stopword = "";
@@ -94,18 +94,19 @@ public class AnalysisDataRequest {
                 try {
                     String key = resultArray.getJSONObject(i).getString("key");
                     int doc_count = resultArray.getJSONObject(i).getIntValue("doc_count");
-                    if ("1".equals(key))
+                    if ("1".equals(key)&&emotionalIndex.contains("1"))
                         positive = doc_count;
-                    if ("2".equals(key))
+                    if ("2".equals(key)&&emotionalIndex.contains("2"))
                         neutral = doc_count;
-                    if ("3".equals(key))
+                    if ("3".equals(key)&&emotionalIndex.contains("3"))
                         negative = doc_count;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             // 总数
-            int total = JSONObject.parseObject(response).getJSONObject("hits").getIntValue("total");
+//            int total = JSONObject.parseObject(response).getJSONObject("hits").getIntValue("total");
+            int total = positive + negative + neutral;
             Map<String, Object> allMap = new HashMap<>();
             allMap.put("count", total);
             allMap.put("rate", 100);
@@ -188,7 +189,7 @@ public class AnalysisDataRequest {
         String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
         String author = opinionCondition.getAuthor();
         String sourceWebsite = opinionCondition.getWebsitename();
-        Integer matchingmode = opinionCondition.getMatchs();
+        Integer matchingmode = opinionCondition.getMatchs()-1;
         Integer precise = opinionCondition.getPrecise();
         if (precise == 0) {
             stopword = "";
@@ -206,18 +207,19 @@ public class AnalysisDataRequest {
                 try {
                     String key = resultArray.getJSONObject(i).getString("key");
                     int doc_count = resultArray.getJSONObject(i).getIntValue("doc_count");
-                    if ("1".equals(key))
+                    if ("1".equals(key)&&emotionalIndex.contains("1"))
                         positive = doc_count;
-                    if ("2".equals(key))
+                    if ("2".equals(key)&&emotionalIndex.contains("2"))
                         neutral = doc_count;
-                    if ("3".equals(key))
+                    if ("3".equals(key)&&emotionalIndex.contains("3"))
                         negative = doc_count;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             // 总数
-            int total = JSONObject.parseObject(result).getJSONObject("hits").getIntValue("total");
+//            int total = JSONObject.parseObject(result).getJSONObject("hits").getIntValue("total");
+            int total = positive + negative + neutral;
             NumberFormat numberFormat = NumberFormat.getInstance();
             // 设置精确到小数点后2位
             numberFormat.setMaximumFractionDigits(2);
@@ -324,7 +326,7 @@ public class AnalysisDataRequest {
         String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
         String author = opinionCondition.getAuthor();
         String sourceWebsite = opinionCondition.getWebsitename();
-        Integer matchingmode = opinionCondition.getMatchs();
+        Integer matchingmode = opinionCondition.getMatchs()-1;
         Integer precise = opinionCondition.getPrecise();
         if (precise == 0) {
             stopword = "";
@@ -510,7 +512,7 @@ public class AnalysisDataRequest {
         String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
         String author = opinionCondition.getAuthor();
         String sourceWebsite = opinionCondition.getWebsitename();
-        Integer matchingmode = opinionCondition.getMatchs();
+        Integer matchingmode = opinionCondition.getMatchs()-1;
         Integer precise = opinionCondition.getPrecise();
         if (precise == 0) {
             stopword = "";
@@ -530,26 +532,36 @@ public class AnalysisDataRequest {
             e.printStackTrace();
             result.put("all", new ArrayList<>());
         }
-        try {
-            // 正面
-            String params = "times=" + times + "&timee=" + timee
-                    + "&keyword=" + highKeyword + "&stopword=" + stopword + "&emotionalIndex=1" + "&projecttype=" + projectType+"&searchType=2&size=30";
-            String sendPostEsSearch = MyHttpRequestUtil.sendPostEsSearch(url, params);
-            List<Map<String, Object>> positive = hotEventRankingProcess(sendPostEsSearch);
-            result.put("positive", positive);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (emotionalIndex.contains("1")) {
+            try {
+                // 正面
+                String params = "times=" + times + "&timee=" + timee
+                        + "&keyword=" + highKeyword + "&stopword=" + stopword + "&emotionalIndex=1" + "&projecttype=" + projectType + "&searchType=2&size=30"
+                        + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
+                String sendPostEsSearch = MyHttpRequestUtil.sendPostEsSearch(url, params);
+                List<Map<String, Object>> positive = hotEventRankingProcess(sendPostEsSearch);
+                result.put("positive", positive);
+            } catch (Exception e) {
+                e.printStackTrace();
+                result.put("positive", new ArrayList<>());
+            }
+        }else {
             result.put("positive", new ArrayList<>());
         }
-        try {
-            // 负面
-            String params = "times=" + times + "&timee=" + timee
-                    + "&keyword=" + highKeyword + "&stopword=" + stopword + "&emotionalIndex=3" + "&projecttype=" + projectType+"&searchType=2&size=30";
-            String sendPostEsSearch = MyHttpRequestUtil.sendPostEsSearch(url, params);
-            List<Map<String, Object>> negative = hotEventRankingProcess(sendPostEsSearch);
-            result.put("negative", negative);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (emotionalIndex.contains("3")) {
+            try {
+                // 负面
+                String params = "times=" + times + "&timee=" + timee
+                        + "&keyword=" + highKeyword + "&stopword=" + stopword + "&emotionalIndex=3" + "&projecttype=" + projectType + "&searchType=2&size=30"
+                        + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
+                String sendPostEsSearch = MyHttpRequestUtil.sendPostEsSearch(url, params);
+                List<Map<String, Object>> negative = hotEventRankingProcess(sendPostEsSearch);
+                result.put("negative", negative);
+            } catch (Exception e) {
+                e.printStackTrace();
+                result.put("negative", new ArrayList<>());
+            }
+        }else {
             result.put("negative", new ArrayList<>());
         }
         return JSON.toJSONString(result);
@@ -794,7 +806,7 @@ public class AnalysisDataRequest {
         String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
         String author = opinionCondition.getAuthor();
         String sourceWebsite = opinionCondition.getWebsitename();
-        Integer matchingmode = opinionCondition.getMatchs();
+        Integer matchingmode = opinionCondition.getMatchs()-1;
         Integer precise = opinionCondition.getPrecise();
         if (precise == 0) {
             stopword = "";
@@ -1168,7 +1180,7 @@ public class AnalysisDataRequest {
         String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
         String author = opinionCondition.getAuthor();
         String sourceWebsite = opinionCondition.getWebsitename();
-        Integer matchingmode = opinionCondition.getMatchs();
+        Integer matchingmode = opinionCondition.getMatchs()-1;
         Integer precise = opinionCondition.getPrecise();
         if (precise == 0) {
             stopword = "";
@@ -1213,7 +1225,7 @@ public class AnalysisDataRequest {
         String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
         String author = opinionCondition.getAuthor();
         String sourceWebsite = opinionCondition.getWebsitename();
-        Integer matchingmode = opinionCondition.getMatchs();
+        Integer matchingmode = opinionCondition.getMatchs()-1;
         Integer precise = opinionCondition.getPrecise();
         if (precise == 0) {
             stopword = "";
@@ -1233,6 +1245,11 @@ public class AnalysisDataRequest {
             int total_site = buckets.size();
             List<Map<String, Object>> sites = new ArrayList<>();
             for (int i = 0; i < total_site; i++) {
+                if (sourceWebsite!=null&&!"".equals(sourceWebsite)) {
+                    if (!sourceWebsite.equals(buckets.getJSONObject(i).getString("key"))) {
+                        continue;
+                    }
+                }
                 try {
                     if (sites.size() == 10) {
                         break;
@@ -1277,7 +1294,7 @@ public class AnalysisDataRequest {
         String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
         String author = opinionCondition.getAuthor();
         String sourceWebsite = opinionCondition.getWebsitename();
-        Integer matchingmode = opinionCondition.getMatchs();
+        Integer matchingmode = opinionCondition.getMatchs()-1;
         Integer precise = opinionCondition.getPrecise();
         if (precise == 0) {
             stopword = "";
@@ -1339,7 +1356,7 @@ public class AnalysisDataRequest {
         String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
         String author = opinionCondition.getAuthor();
         String sourceWebsite = opinionCondition.getWebsitename();
-        Integer matchingmode = opinionCondition.getMatchs();
+        Integer matchingmode = opinionCondition.getMatchs()-1;
         Integer precise = opinionCondition.getPrecise();
         if (precise == 0) {
             stopword = "";
@@ -1414,7 +1431,7 @@ public class AnalysisDataRequest {
         String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
         String author = opinionCondition.getAuthor();
         String sourceWebsite = opinionCondition.getWebsitename();
-        Integer matchingmode = opinionCondition.getMatchs();
+        Integer matchingmode = opinionCondition.getMatchs()-1;
         Integer precise = opinionCondition.getPrecise();
         if (precise == 0) {
             stopword = "";
@@ -1435,13 +1452,24 @@ public class AnalysisDataRequest {
                 Map<String, String> initSourceEn = initSource("en");
                 List<Map<String, Object>> all = new ArrayList<>();
                 List<Map<String, Object>> list = new ArrayList<>();
+                if ("微信公众号".equals(sourceWebsite)) {
+                    sourceWebsite = "1";
+                }else if ("微博".equals(sourceWebsite)) {
+                    sourceWebsite = "2";
+                }else if ("视频".equals(sourceWebsite)) {
+                    sourceWebsite = "10";
+                }
+
                 for (int i = 0; i < jsonArray.size(); i++) {
                     List<Map<String, Object>> list2 = new ArrayList<>();
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     String key = jsonObject.getString("key");
-
+                    if (sourceWebsite!=null&&!"".equals(sourceWebsite)) {
+                        if (!sourceWebsite.equals(key)) {
+                            continue;
+                        }
+                    }
                     //2021.8.6修改，将视频/微博/微信信息替换
-
                     //微信替换
                     if("1".equals(key)){
                         //获取作者
@@ -1574,7 +1602,7 @@ public class AnalysisDataRequest {
         String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
         String author = opinionCondition.getAuthor();
         String sourceWebsite = opinionCondition.getWebsitename();
-        Integer matchingmode = opinionCondition.getMatchs();
+        Integer matchingmode = opinionCondition.getMatchs()-1;
         Integer precise = opinionCondition.getPrecise();
         if (precise == 0) {
             stopword = "";
@@ -1657,7 +1685,7 @@ public class AnalysisDataRequest {
         String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
         String author = opinionCondition.getAuthor();
         String sourceWebsite = opinionCondition.getWebsitename();
-        Integer matchingmode = opinionCondition.getMatchs();
+        Integer matchingmode = opinionCondition.getMatchs()-1;
         Integer precise = opinionCondition.getPrecise();
         if (precise == 0) {
             stopword = "";
@@ -1673,6 +1701,11 @@ public class AnalysisDataRequest {
             JSONArray buckets = parseObject.getJSONObject("aggregations").getJSONObject("top-terms-aggregation")
                     .getJSONArray("buckets");
             for (int i = 0; i < buckets.size(); i++) {
+                if (sourceWebsite!=null&&!"".equals(sourceWebsite)) {
+                    if (!sourceWebsite.equals(buckets.getJSONObject(i).getString("key"))) {
+                        continue;
+                    }
+                }
                 try {
                     if (result.size() == 5) break;
                     String name = buckets.getJSONObject(i).getString("key");
@@ -2898,7 +2931,7 @@ public class AnalysisDataRequest {
         String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
         String author = opinionCondition.getAuthor();
         String sourceWebsite = opinionCondition.getWebsitename();
-        Integer matchingmode = opinionCondition.getMatchs();
+        Integer matchingmode = opinionCondition.getMatchs()-1;
         Integer precise = opinionCondition.getPrecise();
         if (precise == 0) {
             stopword = "";
@@ -3001,7 +3034,7 @@ public class AnalysisDataRequest {
         String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
         String author = opinionCondition.getAuthor();
         String sourceWebsite = opinionCondition.getWebsitename();
-        Integer matchingmode = opinionCondition.getMatchs();
+        Integer matchingmode = opinionCondition.getMatchs()-1;
         Integer precise = opinionCondition.getPrecise();
         if (precise == 0) {
             stopword = "";
@@ -3068,7 +3101,7 @@ public class AnalysisDataRequest {
         String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
         String author = opinionCondition.getAuthor();
         String sourceWebsite = opinionCondition.getWebsitename();
-        Integer matchingmode = opinionCondition.getMatchs();
+        Integer matchingmode = opinionCondition.getMatchs()-1;
         Integer precise = opinionCondition.getPrecise();
         if (precise == 0) {
             stopword = "";

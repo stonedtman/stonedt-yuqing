@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.alibaba.fastjson.JSON;
 import com.stonedt.intelligence.constant.MonitorConstant;
+import com.stonedt.intelligence.util.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -143,6 +144,16 @@ public class AnalysisServiceImpl implements AnalysisService {
 //        if(precise==0) {
 //        	stopword = "";
 //        }
+
+        String opEmotion = opinionConditionByProjectId.getEmotion();
+        emotionalIndex = opEmotion.replace("[", "").replace("]","").trim();
+        String author = opinionConditionByProjectId.getAuthor();
+        String sourceWebsite = opinionConditionByProjectId.getWebsitename();
+        matchingmode = opinionConditionByProjectId.getMatchs()-1;
+        Integer precise = opinionConditionByProjectId.getPrecise();
+        if (precise == 0) {
+            stopword = "";
+        }
         // 相似文章(0:取消合并 1：合并文章)
         Integer similar = opinionConditionByProjectId.getSimilar();
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -150,14 +161,15 @@ public class AnalysisServiceImpl implements AnalysisService {
         // "times="+times+"&timee="+timee+"&keyword="+keyword+"&stopword="+stopword
         String param = "keyword=" + keyword + "&stopword=" + stopword
                 + "&page=1&size=20&searchType=1&esindex=postal&estype=infor&emotionalIndex=" + emotionalIndex
-                + "&projecttype=" + projectType + "&matchingmode=" + matchingmode +"&times="+times+"&timee="+timee;
+                + "&projecttype=" + projectType + "&matchingmode=" + matchingmode +"&times="+times+"&timee="+timee
+                +"&author="+author+"&sourceWebsite="+sourceWebsite;
 //       if(1==1) {
         // if(similar==0) {
         try {
-            String result = redisTemplate.opsForValue().get("lastnews:project:" + projectId+"timePeriod:"+timePeriod);
+            String result = redisTemplate.opsForValue().get("lastnews:" + MD5Util.MD5(param));
             if (StringUtils.isBlank(result)) {
                 result = sendPost(es_search_url + "/yqsearch/searchsimplelist", param);
-                redisTemplate.opsForValue().set("lastnews:project:" + projectId+"timePeriod:"+timePeriod, result,1, TimeUnit.HOURS);
+                redisTemplate.opsForValue().set("lastnews:" + MD5Util.MD5(param), result,1, TimeUnit.HOURS);
             }
             JSONObject json = JSONObject.parseObject(result);
             JSONArray resultArray = json.getJSONArray("data");
@@ -177,10 +189,10 @@ public class AnalysisServiceImpl implements AnalysisService {
                     source_name = source_name + "-" + title;
 
                     String params = "article_public_id=" + article_public_id + "&esindex=postal&estype=infor";
-                    String response = redisTemplate.opsForValue().get("lastnews:weibo:project:" + projectId+"timePeriod:"+timePeriod);
+                    String response = redisTemplate.opsForValue().get("lastnews:weibo:" + article_public_id);
                     if (StringUtils.isBlank(response)){
                         response = sendPost(es_search_url + MonitorConstant.es_api_article_newdetail, params);
-                        redisTemplate.opsForValue().set("lastnews:weibo:project:" + projectId+"timePeriod:"+timePeriod, response,1, TimeUnit.HOURS);
+                        redisTemplate.opsForValue().set("lastnews:weibo:" + article_public_id, response,1, TimeUnit.HOURS);
                     }
 
                     JSONObject responseJson = JSON.parseObject(response);

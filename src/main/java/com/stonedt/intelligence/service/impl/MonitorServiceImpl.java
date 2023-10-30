@@ -3341,6 +3341,7 @@ public class MonitorServiceImpl implements MonitorService {
             response.put("data", dataGroupJson);
             return response;
         }
+        OpinionCondition opinionCondition = opinionConditionService.getOpinionConditionByProjectId(projectid);
         int projectType = (int) projectInfo.get("project_type");
         String subject_word = String.valueOf(projectInfo.get("subject_word"));
         String regional_word = String.valueOf(projectInfo.get("regional_word"));
@@ -3558,11 +3559,28 @@ public class MonitorServiceImpl implements MonitorService {
         // 更新偏好设置值
         @SuppressWarnings("unused")
         //Integer opinionCount = opinionConditionService.updateOpinionConditionByMap(paramJson);
-        int precise = paramJson.getIntValue("precise");
+//        int precise = paramJson.getIntValue("precise");
+//        if (precise == 0) {
+//            // precise == 0 为精准关闭，即不传屏蔽词
+//            paramJson.put("stopword", "");
+//        }
+
+        //跟随监测分析页面设置
+
+        String emotion = opinionCondition.getEmotion();
+        emotionalIndex = emotion.replace("[", "").replace("]","").trim();
+        paramJson.put("emotionalIndex", emotionalIndex);
+        String author = opinionCondition.getAuthor();
+        paramJson.put("author", author);
+        String sourceWebsite = opinionCondition.getWebsitename();
+        paramJson.put("sourceWebsite", sourceWebsite);
+        matchingmode = opinionCondition.getMatchs() - 1;
+        paramJson.put("matchingmode", matchingmode);
+        Integer precise = opinionCondition.getPrecise();
         if (precise == 0) {
-            // precise == 0 为精准关闭，即不传屏蔽词
             paramJson.put("stopword", "");
         }
+
         paramJson.remove("projectid");
         paramJson.remove("group_id");
         paramJson.remove("precise");
@@ -3583,7 +3601,6 @@ public class MonitorServiceImpl implements MonitorService {
         paramJson.put("searchType", searchType);
         // 查询es数据
         String url = "";
-
         if (similar == 1) {  // 合并
             Integer totalCount = 0;
             Integer totalNum = 0;
