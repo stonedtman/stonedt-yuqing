@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
+<meta name="referrer" content="no-referrer" />
 <!-- Favicon icon -->
 <link rel="icon" type="image/png" sizes="16x16"
 	th:href="@{/assets/images/favicon.png}">
@@ -233,6 +234,10 @@
 							judgeLogin(sceneStr);
 						}, 1000)
 					}else if(res.status==504){
+						$(".qr-code").html(`<div class="refresh" onclick="getQrcode()">
+							<i class="iconfont icon-shuaxin"></i>
+							<div>二维码已过期，点击刷新</div>
+						</div>`)
 						expire()
 					}else{
 						showtips(res.msg);
@@ -249,7 +254,7 @@
 				'        <div class="event-box">'+
 				'            <i class="mdi mdi-close-circle-outline font-18 cursor-po" id="close"></i>'+
 				'            <div class="event-box-body">'+
-				'				<img style="width: 200px;" src="/assets/images/QRcode.jpg" alt="">'+
+				'				<img style="width: 200px;" src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg" alt="">'+
 				'				<div style="margin-top: 20px">您的账号已过期，请扫码添加产品经理微信</div>'+
 				'				<div style="margin-top: 10px">并注明添加好友备注：saas用户。</div>'+
 				'            </div>'+
