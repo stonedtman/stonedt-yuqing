@@ -343,6 +343,9 @@ $("#currentyear").text((new Date()).getFullYear());
                     if (res.emotionText) {
                         $('#emotionText').html(res.emotionText);
                     }
+                    if(res.detail==""){
+                        dataerror(".col-lg-8");
+                    }
                     if (res.detail) {
 //                    let articleIdArray = articleIds.split(",");
 //                        let currentBeforeId = '';

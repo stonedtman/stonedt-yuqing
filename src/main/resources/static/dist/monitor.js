@@ -2328,8 +2328,8 @@ function pageHelper(currentPage, totalPages) {
             if (page > 167) {
                 page = 167;
             }
-            let seturl = "monitor?" + "projectid=" + monitor_projectid + "&groupid=" + monitor_groupid + "&page=" + page;
-            setUrl(seturl);
+            // let seturl = "monitor?" + "projectid=" + monitor_projectid + "&groupid=" + monitor_groupid + "&page=" + page;
+            // setUrl(seturl);
 
             let articleParam = new Object();
             articleParam.type = "POST";
