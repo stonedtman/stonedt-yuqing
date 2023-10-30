@@ -1063,6 +1063,7 @@ function installArticle(res) {
                 /*以上为修改*/
                 let source_url = dataJson.source_url;
                 let content = dataJson.content;
+                content = content.trim().replace(/\s\s/g,"")
                 let emotionalIndex = dataJson.emotionalIndex;
                 let publish_time = dataJson.publish_time;
                 let pub_data = dataJson.publish_time;

@@ -716,10 +716,6 @@ $("#currentyear").text((new Date()).getFullYear());
                     if (res.emotionText) {
                         $('#emotionText').html(res.emotionText);
                     }
-                    if(res.detail==""){
-                        dataerror(".card-detail");
-                        $(".btns").remove()
-                    }
                     if (res.detail&&res.detail.code==200) {
 
                     	
@@ -1178,7 +1174,7 @@ $("#currentyear").text((new Date()).getFullYear());
                         
                         
                     }
-                    if(res.detail&&res.detail.code==500){
+                    if(res.detail==""||res.detail&&res.detail.code==500){
                         dataerror(".card.card-detail")
                         $(".btns").remove()
                         let list = $(".col-lg-4").find(".card")

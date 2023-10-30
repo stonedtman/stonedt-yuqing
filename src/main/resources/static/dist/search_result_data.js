@@ -2031,6 +2031,7 @@ function installArticle3(res) {
 				let sourcewebsitename = dataJson.sourcewebsitename;
 				let title = dataJson.title;
 				let content = dataJson.content;
+				content = content.trim().replace(/\s\s/g,"")
 				let emotionalIndex = dataJson.emotionalIndex;
 				let publish_time = dataJson.publish_time;
 				let pub_data = dataJson.publish_time;

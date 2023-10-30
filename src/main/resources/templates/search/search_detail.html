@@ -339,12 +339,8 @@ $("#currentyear").text((new Date()).getFullYear());
                     projectId: projectId,relatedword:relatedword,publish_time: publish_time
                 },
                 success: function (res) {
-                    console.log(res);
                     if (res.emotionText) {
                         $('#emotionText').html(res.emotionText);
-                    }
-                    if(res.detail==""){
-                        dataerror(".col-lg-8");
                     }
                     if (res.detail) {
 //                    let articleIdArray = articleIds.split(",");
@@ -782,6 +778,15 @@ $("#currentyear").text((new Date()).getFullYear());
                         
                         
                         
+                    }
+                    if(res.detail==""||res.detail&&res.detail.code==500){
+                        dataerror(".col-lg-8")
+                        let list = $(".col-lg-4").find(".card")
+                        for (var i = 0; i < list.length; i++) {
+                            if(i>1){
+                                list[i].remove()
+                            }
+                        }
                     }
                     if (res.emotionChart) {
                         emotionChart(res.emotionChart);
