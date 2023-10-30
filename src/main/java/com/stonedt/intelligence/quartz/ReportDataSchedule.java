@@ -15,6 +15,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import com.stonedt.intelligence.entity.OpinionCondition;
+import com.stonedt.intelligence.service.OpinionConditionService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -59,6 +61,8 @@ public class ReportDataSchedule {
     private ProjectDao projectDao;
     @Autowired
     private AnalysisDataRequest analysisDataRequest;
+    @Autowired
+    private OpinionConditionService opinionConditionService;
     
     
 
@@ -107,6 +111,9 @@ public class ReportDataSchedule {
                                 String times = reportCustom.getReport_starttime();
                                 String timee = reportCustom.getReport_endtime();
                                 Integer report_type = reportCustom.getReport_type();
+
+                                OpinionCondition opinionCondition = opinionConditionService.getOpinionConditionByProjectId(project_id);
+
 //                                 1数据概览逻辑处理 2、3资讯和社交数据逻辑处理
                                 String dataOverview = dataOverview(report_type, highKeyword, stopword, times, timee, projectType);
 //                                 4、情感分析
@@ -131,11 +138,11 @@ public class ReportDataSchedule {
                                 String mediaCordCloud = wordCloud(highKeyword, stopword, times, timee, "7", projectType);
                                 
                                // 13、关键词高频分布统计
-                                String wordCloud = analysisDataRequest.wordCloud(highKeyword, stopword, times, timee, projectType);
+                                String wordCloud = analysisDataRequest.wordCloud(highKeyword, stopword, times, timee, projectType, opinionCondition);
                                 
                                 // 14、高频词指数
                                 //String keyWordIndex = analysisDataRequest.keyWordIndex(time_period, keywordsentimentFlagChart, times, timee, stopword, projectType);
-                                String keyWordIndex = analysisDataRequest.keyWordReportIndex(report_type, highKeyword, times, timee, stopword, projectType,wordCloud);
+                                String keyWordIndex = analysisDataRequest.keyWordReportIndex(report_type, highKeyword, times, timee, stopword, projectType,wordCloud,opinionCondition);
                                 //15、实体
                                 String dataNer = analysisDataRequest.dataNer(highKeyword, stopword, times, timee, projectType);
                                 

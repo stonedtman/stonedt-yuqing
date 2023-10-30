@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.stonedt.intelligence.entity.OpinionCondition;
+import com.stonedt.intelligence.service.OpinionConditionService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,6 +49,9 @@ public class AnalysisPTQuartz {
     
     @Autowired
     private ProjectTaskDao projectTaskDao;
+
+    @Autowired
+    private OpinionConditionService opinionConditionService;
 
     private SnowFlake snowFlake = new SnowFlake();
 
@@ -101,52 +106,53 @@ public class AnalysisPTQuartz {
                                 analysisQuartzDo.setAnalysis_id(snowFlake.getId());
                                 analysisQuartzDo.setProject_id(projectId);
                                 analysisQuartzDo.setTime_period(time_period);
-                                
+
+                                OpinionCondition opinionCondition = opinionConditionService.getOpinionConditionByProjectId(projectId);
                                 // 数据概览
-                                String dataOverview = analysisDataRequest.dataOverview(projectId, highKeyword, times, timee, stopword, projectType);
+                                String dataOverview = analysisDataRequest.dataOverview(projectId, highKeyword, times, timee, stopword, projectType,opinionCondition);
                                 analysisQuartzDo.setData_overview(dataOverview);
                                 // 情感占比		
-                                String emotional = analysisDataRequest.emotional(highKeyword, times, timee, stopword, projectType);
+                                String emotional = analysisDataRequest.emotional(highKeyword, times, timee, stopword, projectType,opinionCondition);
                                 analysisQuartzDo.setEmotional_proportion(emotional);
                                 // 方案命中主体词
                                 String fangan = analysisDataRequest.fangan(keyword, highKeyword, times, timee, stopword, projectType);
                                 analysisQuartzDo.setPlan_word_hit(fangan);
                                 // 关键词情感分析数据走势
-                                String keywordsentimentFlagChart = analysisDataRequest.keywordsentimentFlagChart(keyword, highKeyword, stopword, times, timee, time_period, projectType);
+                                String keywordsentimentFlagChart = analysisDataRequest.keywordsentimentFlagChart(keyword, highKeyword, stopword, times, timee, time_period, projectType,opinionCondition);
                                 analysisQuartzDo.setKeyword_emotion_trend(keywordsentimentFlagChart);
                                 // 热点事件排名
-                                String hotEventRanking = analysisDataRequest.hotEventRanking(highKeyword, stopword, times, timee, projectType);
+                                String hotEventRanking = analysisDataRequest.hotEventRanking(highKeyword, stopword, times, timee, projectType,opinionCondition);
                                 analysisQuartzDo.setHot_event_ranking(hotEventRanking);
                                 // 关键词高频分布统计
-                                String wordCloud = analysisDataRequest.wordCloud(highKeyword, stopword, times, timee, projectType);
+                                String wordCloud = analysisDataRequest.wordCloud(highKeyword, stopword, times, timee, projectType,opinionCondition);
                                 analysisQuartzDo.setHighword_cloud(wordCloud);
                                 // 高频词指数
                                //String keyWordIndex = analysisDataRequest.keyWordIndex(time_period, keywordsentimentFlagChart, times, timee, stopword, projectType);
-                                String keyWordIndex = analysisDataRequest.keyWordIndex(time_period, keywordsentimentFlagChart, times, timee, stopword, projectType,wordCloud);
+                                String keyWordIndex = analysisDataRequest.keyWordIndex(time_period, keywordsentimentFlagChart, times, timee, stopword, projectType,wordCloud,opinionCondition);
                                 analysisQuartzDo.setKeyword_index(keyWordIndex);
                                 // 媒体活跃度分析
-                                String mediaActivityAnalysis = analysisDataRequest.mediaActivityAnalysis(highKeyword, stopword, times, timee, projectType);
+                                String mediaActivityAnalysis = analysisDataRequest.mediaActivityAnalysis(highKeyword, stopword, times, timee, projectType,opinionCondition);
                                 analysisQuartzDo.setMedia_activity_analysis(mediaActivityAnalysis);
                                 // 热点地区排名
-                                String hotSpotRanking = analysisDataRequest.hotSpotRanking(highKeyword, stopword, times, timee, projectType);
+                                String hotSpotRanking = analysisDataRequest.hotSpotRanking(highKeyword, stopword, times, timee, projectType,opinionCondition);
                                 analysisQuartzDo.setHot_spot_ranking(hotSpotRanking);
                                 // 数据来源分布
-                                String dataSourceDistribution = analysisDataRequest.dataSourceDistribution(highKeyword, stopword, times, timee, projectType);
+                                String dataSourceDistribution = analysisDataRequest.dataSourceDistribution(highKeyword, stopword, times, timee, projectType,opinionCondition);
                                 analysisQuartzDo.setData_source_distribution(dataSourceDistribution);
                                 // 数据来源分析
-                                String dataSourceAnalysis = analysisDataRequest.dataSourceAnalysis(highKeyword, stopword, times, timee, projectType);
+                                String dataSourceAnalysis = analysisDataRequest.dataSourceAnalysis(highKeyword, stopword, times, timee, projectType,opinionCondition);
                                 analysisQuartzDo.setData_source_analysis(dataSourceAnalysis);
                                 // 关键词曝光度环比排行
-                                String keywordExposure = analysisDataRequest.keywordExposure(keyword, highKeyword, stopword, times, timee, projectType);
+                                String keywordExposure = analysisDataRequest.keywordExposure(keyword, highKeyword, stopword, times, timee, projectType,opinionCondition);
                                 analysisQuartzDo.setKeyword_exposure_rank(keywordExposure);
                                 // 自媒体渠道声量排名
-                                String selfMediaRanking = analysisDataRequest.selfMediaRanking(highKeyword, stopword, times, timee, projectType);
+                                String selfMediaRanking = analysisDataRequest.selfMediaRanking(highKeyword, stopword, times, timee, projectType,opinionCondition);
                                 analysisQuartzDo.setSelfmedia_volume_rank(selfMediaRanking);
                                 
                                 
                                 //String dataNer = analysisDataRequest.dataNer(highKeyword, stopword, times, timee, projectType);
                                 //政策法规
-                                String dataPolicy = analysisDataRequest.dataPolicy(highKeyword, stopword, times, timee, projectType);
+                                String dataPolicy = analysisDataRequest.dataPolicy(highKeyword, stopword, times, timee, projectType,opinionCondition);
 
                                 //JSONObject nersjon = JSONObject.parseObject(dataNer);
                                 
@@ -156,12 +162,12 @@ public class AnalysisPTQuartz {
 
 
                                 //行业分布分析
-                                String industrialDistribution = analysisDataRequest.industrialDistribution(highKeyword, stopword, times, timee, projectType);
+                                String industrialDistribution = analysisDataRequest.industrialDistribution(highKeyword, stopword, times, timee, projectType,opinionCondition);
                                 analysisQuartzDo.setIndustrial_distribution(industrialDistribution);
 
 
                                 //事件统计
-                                String eventStudy = analysisDataRequest.eventStudy(highKeyword, stopword, times, timee, projectType);
+                                String eventStudy = analysisDataRequest.eventStudy(highKeyword, stopword, times, timee, projectType,opinionCondition);
                                 analysisQuartzDo.setEvent_statistics(eventStudy);
 
                                 //计算统计结果

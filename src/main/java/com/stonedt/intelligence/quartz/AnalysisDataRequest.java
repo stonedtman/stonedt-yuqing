@@ -20,10 +20,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import com.stonedt.intelligence.entity.OpinionCondition;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,7 +41,6 @@ import com.stonedt.intelligence.util.DateUtil;
 import com.stonedt.intelligence.util.MyHttpRequestUtil;
 import com.stonedt.intelligence.util.MyMathUtil;
 import com.stonedt.intelligence.util.SimhashAlgoService;
-import com.stonedt.intelligence.util.StopWordsUtil;
 import com.stonedt.intelligence.util.TextUtil;
 
 /**
@@ -71,9 +70,19 @@ public class AnalysisDataRequest {
     public static final String searchearlywarningApi = "/yqsearch/searchlist"; //预警文章获取
 
     //  数据概览
-    public String dataOverview(Long projectId, String highKeyword, String times, String timee, String stopword, Integer projectType) {
+    public String dataOverview(Long projectId, String highKeyword, String times, String timee, String stopword, Integer projectType, OpinionCondition opinionCondition) {
+        String emotion = opinionCondition.getEmotion();
+        String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
+        String author = opinionCondition.getAuthor();
+        String sourceWebsite = opinionCondition.getWebsitename();
+        Integer matchingmode = opinionCondition.getMatchs();
+        Integer precise = opinionCondition.getPrecise();
+        if (precise == 0) {
+            stopword = "";
+        }
+
         String param = "times=" + times + "&timee=" + timee + "&keyword=" + highKeyword + "&stopword=" + stopword
-                + "&emotionalIndex=1,2,3&projecttype=" + projectType;
+                + "&emotionalIndex="+ emotionalIndex +"&projecttype=" + projectType + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
         try {
             String response = sendPost(es_search_url + "/yqtindutry/totalDatasearch", param);
             JSONArray resultArray = JSONObject.parseObject(response).getJSONObject("aggregations")
@@ -174,10 +183,19 @@ public class AnalysisDataRequest {
     }
 
     // 情感占比
-    public String emotional(String keyword, String times, String timee, String stopword, Integer projectType) {
+    public String emotional(String keyword, String times, String timee, String stopword, Integer projectType, OpinionCondition opinionCondition) {
+        String emotion = opinionCondition.getEmotion();
+        String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
+        String author = opinionCondition.getAuthor();
+        String sourceWebsite = opinionCondition.getWebsitename();
+        Integer matchingmode = opinionCondition.getMatchs();
+        Integer precise = opinionCondition.getPrecise();
+        if (precise == 0) {
+            stopword = "";
+        }
         JSONObject resultJson = new JSONObject();
         String param = "times=" + times + "&timee=" + timee + "&keyword=" + keyword + "&stopword=" + stopword
-                + "&emotionalIndex=1,2,3&projecttype=" + projectType;
+                + "&emotionalIndex="+ emotionalIndex +"&projecttype=" + projectType + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
         try {
             String result = sendPost(es_search_url + "/yqtindutry/totalDatasearch", param);
             JSONArray resultArray = JSONObject.parseObject(result).getJSONObject("aggregations").getJSONObject("group_by_tags").getJSONArray("buckets");
@@ -300,14 +318,24 @@ public class AnalysisDataRequest {
 
     // 关键词情感分析数据走势
     public String keywordsentimentFlagChart(String keyword, String highKeyword, String stopword, String times,
-                                            String timee, Integer timetype, Integer projectType) {
+                                            String timee, Integer timetype, Integer projectType, OpinionCondition opinionCondition) {
+
+        String emotion = opinionCondition.getEmotion();
+        String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
+        String author = opinionCondition.getAuthor();
+        String sourceWebsite = opinionCondition.getWebsitename();
+        Integer matchingmode = opinionCondition.getMatchs();
+        Integer precise = opinionCondition.getPrecise();
+        if (precise == 0) {
+            stopword = "";
+        }
         try {
             Map<String, Object> result = new HashMap<>();
             String time_period = time_period(timetype);
             String es_api_keyword_emotion_statistical = VolumeConstant.es_api_keyword_sentimentFlagChart;
             String url = es_search_url + es_api_keyword_emotion_statistical;
             String params = "times=" + times + "&timee=" + timee + "&keyword=" + keyword + "&stopword=" + stopword
-                    + "&timetype=" + time_period + "&emotionalIndex=1,2,3&projecttype=" + projectType;
+                    + "&timetype=" + time_period + "&emotionalIndex="+ emotionalIndex +"&projecttype=" + projectType + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
             String sendPost = sendPost(url, params);
             JSONObject parseObject = JSONObject.parseObject(sendPost);
             JSONArray bucketsArray = parseObject.getJSONObject("aggregations").getJSONObject("group_by_grabTime")
@@ -477,14 +505,24 @@ public class AnalysisDataRequest {
     
 
     // 热点事件排名
-    public String hotEventRanking(String highKeyword, String stopword, String times, String timee, Integer projectType) {
+    public String hotEventRanking(String highKeyword, String stopword, String times, String timee, Integer projectType, OpinionCondition opinionCondition) {
+        String emotion = opinionCondition.getEmotion();
+        String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
+        String author = opinionCondition.getAuthor();
+        String sourceWebsite = opinionCondition.getWebsitename();
+        Integer matchingmode = opinionCondition.getMatchs();
+        Integer precise = opinionCondition.getPrecise();
+        if (precise == 0) {
+            stopword = "";
+        }
         Map<String, Object> result = new HashMap<String, Object>();
         String url = es_search_url + ReportConstant.es_api_search_list;
         //  String url = "http://192.168.71.81:8123"+ReportConstant.es_api_search_list;
         try {
             // 全部情感
             String params = "times=" + times + "&timee=" + timee
-                    + "&keyword=" + highKeyword + "&stopword=" + stopword + "&emotionalIndex=1,2,3" + "&projecttype=" + projectType+"&searchType=2&size=30";
+                    + "&keyword=" + highKeyword + "&stopword=" + stopword + "&emotionalIndex="+ emotionalIndex + "&projecttype=" + projectType+"&searchType=2&size=30"
+                    + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
             String sendPostEsSearch = MyHttpRequestUtil.sendPostEsSearch(url, params);
             List<Map<String, Object>> all = hotEventRankingProcess(sendPostEsSearch);
             result.put("all", all);
@@ -751,7 +789,16 @@ public class AnalysisDataRequest {
 	
 	
     // 关键词高频分布统计
-    public String wordCloud(String highKeyword, String stopword, String times, String timee, Integer projectType) {
+    public String wordCloud(String highKeyword, String stopword, String times, String timee, Integer projectType, OpinionCondition opinionCondition) {
+        String emotion = opinionCondition.getEmotion();
+        String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
+        String author = opinionCondition.getAuthor();
+        String sourceWebsite = opinionCondition.getWebsitename();
+        Integer matchingmode = opinionCondition.getMatchs();
+        Integer precise = opinionCondition.getPrecise();
+        if (precise == 0) {
+            stopword = "";
+        }
         List<Map<String, Object>> result = new ArrayList<>();
         try {
             String url = es_search_url + ReportConstant.es_api_keyword_list;
@@ -759,7 +806,8 @@ public class AnalysisDataRequest {
         	//String url = "http://192.168.71.81:8123" + ReportConstant.es_api_keyword_list;
         	
             String params = "times=" + times + "&timee=" + timee + "&keyword=" + highKeyword + "&stopword=" + stopword
-                    + "&searchType=1&emotionalIndex=1,2,3&projecttype=" + projectType;
+                    + "&searchType=1&emotionalIndex="+emotionalIndex+"&projecttype=" + projectType
+                    + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
             String sendPostEsSearch = MyHttpRequestUtil.sendPostEsSearch(url, params);
             if (StringUtils.isNotBlank(sendPostEsSearch)) {
                 Map<String, Integer> map = new HashMap<>();
@@ -912,14 +960,14 @@ public class AnalysisDataRequest {
 //	}   
  // 高频词指数
     public String keyWordIndex(Integer timePeriod, String keyword, String times, String timee, String stopword,
-                               Integer projectType,String wordCloud) {
+                               Integer projectType,String wordCloud, OpinionCondition opinionCondition) {
     	
     	JSONArray parseArray = JSONArray.parseArray(wordCloud);
     	List<Map<String, Object>> keyWordListB = new ArrayList<>();
     	for (int i=0;i<parseArray.size()&&i<10;i++) {
     		JSONObject parseObject = JSONObject.parseObject(parseArray.get(i).toString());
     		String x = parseObject.getString("x");
-    		Map<String, Integer> mapcurrent = keyWordAndSearchKeywordList(keyword, stopword, times, timee, projectType,x);
+    		Map<String, Integer> mapcurrent = keyWordAndSearchKeywordList(keyword, stopword, times, timee, projectType,x,opinionCondition);
     		 Map<String, Object> map2 = new HashMap<>();
              map2.put("keyword", x);
              map2.put("count", mapcurrent.get(x));
@@ -940,7 +988,7 @@ public class AnalysisDataRequest {
              }
              
              //环比数据
-             Map<String, Integer> mapA = keyWordAndSearchKeywordList(keyword, stopword, format, times, projectType,x);
+             Map<String, Integer> mapA = keyWordAndSearchKeywordList(keyword, stopword, format, times, projectType,x,opinionCondition);
              Integer value_chain = mapA.get(x);
              map2.put("value_chain", value_chain);
              keyWordListB.add(map2);
@@ -990,14 +1038,14 @@ public class AnalysisDataRequest {
     }
     // 高频词指数
     public String keyWordReportIndex(Integer timePeriod, String keyword, String times, String timee, String stopword,
-                               Integer projectType,String wordCloud) {
+                               Integer projectType,String wordCloud, OpinionCondition opinionCondition) {
     	
     	JSONArray parseArray = JSONArray.parseArray(wordCloud);
     	List<Map<String, Object>> keyWordListB = new ArrayList<>();
     	for (int i=0;i<parseArray.size()&&i<10;i++) {
     		JSONObject parseObject = JSONObject.parseObject(parseArray.get(i).toString());
     		String x = parseObject.getString("x");
-    		Map<String, Integer> mapcurrent = keyWordAndSearchKeywordList(keyword, stopword, times, timee, projectType,x);
+    		Map<String, Integer> mapcurrent = keyWordAndSearchKeywordList(keyword, stopword, times, timee, projectType,x,opinionCondition);
     		 Map<String, Object> map2 = new HashMap<>();
              map2.put("keyword", x);
              map2.put("count", mapcurrent.get(x));
@@ -1016,7 +1064,7 @@ public class AnalysisDataRequest {
              
              
              //环比数据
-             Map<String, Integer> mapA = keyWordAndSearchKeywordList(keyword, stopword, format, times, projectType,x);
+             Map<String, Integer> mapA = keyWordAndSearchKeywordList(keyword, stopword, format, times, projectType,x,opinionCondition);
              Integer value_chain = mapA.get(x);
              map2.put("value_chain", value_chain);
              keyWordListB.add(map2);
@@ -1115,13 +1163,23 @@ public class AnalysisDataRequest {
      * 关键词高频词-搜索词
      */
     public Map<String, Integer> keyWordAndSearchKeywordList(String keyword, String stopword, String times, String timee,
-                                            Integer projectType,String searchkeyword) {
+                                            Integer projectType,String searchkeyword,OpinionCondition opinionCondition) {
+        String emotion = opinionCondition.getEmotion();
+        String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
+        String author = opinionCondition.getAuthor();
+        String sourceWebsite = opinionCondition.getWebsitename();
+        Integer matchingmode = opinionCondition.getMatchs();
+        Integer precise = opinionCondition.getPrecise();
+        if (precise == 0) {
+            stopword = "";
+        }
         Map<String, Integer> map = new HashMap<>();
         map.put(searchkeyword, 0);
         try {
             String url = es_search_url + ReportConstant.es_api_media_exposure;
             String params = "times=" + times + "&timee=" + timee + "&keyword=" + keyword + "&stopword=" + stopword
-                    + "&searchType=1&emotionalIndex=1,2,3" + "&projecttype=" + projectType+"&origintype=0&searchkeyword="+searchkeyword;
+                    + "&searchType=1&emotionalIndex=" +emotionalIndex+ "&projecttype=" + projectType+"&origintype=0&searchkeyword="+searchkeyword
+                    + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
             String sendPostEsSearch = MyHttpRequestUtil.sendPostEsSearch(url, params);
             if (StringUtils.isNotBlank(sendPostEsSearch)) {
                 JSONObject parseObject = JSON.parseObject(sendPostEsSearch);
@@ -1140,8 +1198,8 @@ public class AnalysisDataRequest {
 
     public static void main(String[] args) {
         AnalysisDataRequest analysisDataRequest = new AnalysisDataRequest();
-        String nj = analysisDataRequest.mediaActivityAnalysis("南京", "", "2020-07-07 16:15:00", "2021-08-05 16:16:00", 2);
-        System.out.println(nj);
+//        String nj = analysisDataRequest.mediaActivityAnalysis("南京", "", "2020-07-07 16:15:00", "2021-08-05 16:16:00", 2, opinionCondition);
+//        System.out.println(nj);
 
 
     }
@@ -1150,12 +1208,23 @@ public class AnalysisDataRequest {
     
 
     // 媒体活跃度分析
-    public String mediaActivityAnalysis(String highKeyword, String stopword, String times, String timee, Integer projectType) {
+    public String mediaActivityAnalysis(String highKeyword, String stopword, String times, String timee, Integer projectType, OpinionCondition opinionCondition) {
+        String emotion = opinionCondition.getEmotion();
+        String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
+        String author = opinionCondition.getAuthor();
+        String sourceWebsite = opinionCondition.getWebsitename();
+        Integer matchingmode = opinionCondition.getMatchs();
+        Integer precise = opinionCondition.getPrecise();
+        if (precise == 0) {
+            stopword = "";
+        }
+
         try {
             Map<String, Object> result = new HashMap<>();
             String url = es_search_url + ReportConstant.es_api_media_active;
             String param = "times=" + times + "&timee=" + timee + "&keyword=" + highKeyword
-                    + "&stopword=" + stopword + "&emotionalIndex=1,2,3" + "&projecttype=" + projectType;
+                    + "&stopword=" + stopword + "&emotionalIndex=" +emotionalIndex+ "&projecttype=" + projectType
+                    + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
             String sendPostEsSearch = MyHttpRequestUtil.sendPostEsSearch(url, param);
             JSONObject parseObject = JSONObject.parseObject(sendPostEsSearch);
             int total = parseObject.getJSONObject("hits").getIntValue("total");
@@ -1203,14 +1272,23 @@ public class AnalysisDataRequest {
     }
 
     // 热点地区排名
-    public String hotSpotRanking(String highKeyword, String stopword, String times, String timee, Integer projectType) {
+    public String hotSpotRanking(String highKeyword, String stopword, String times, String timee, Integer projectType, OpinionCondition opinionCondition) {
+        String emotion = opinionCondition.getEmotion();
+        String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
+        String author = opinionCondition.getAuthor();
+        String sourceWebsite = opinionCondition.getWebsitename();
+        Integer matchingmode = opinionCondition.getMatchs();
+        Integer precise = opinionCondition.getPrecise();
+        if (precise == 0) {
+            stopword = "";
+        }
         try {
             Map<String, Object> result = new HashMap<>();
             List<Map<String, Object>> chart = new ArrayList<>();
             List<Map<String, Object>> list = new ArrayList<>();
             String url = es_search_url + ReportConstant.es_api_hot_spot_ranking;
-            String param = "times=" + times + "&timee=" + timee + "&keyword=" + highKeyword + "&stopword=" + stopword + "&emotionalIndex=1,2,3"
-                    + "&projecttype=" + projectType;
+            String param = "times=" + times + "&timee=" + timee + "&keyword=" + highKeyword + "&stopword=" + stopword + "&emotionalIndex=" + emotionalIndex
+                    + "&projecttype=" + projectType + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
             String esOpinion = MyHttpRequestUtil.sendPostEsSearch(url, param);
             JSONObject parseObject = JSONObject.parseObject(esOpinion);
             int total = parseObject.getJSONObject("hits").getIntValue("total");
@@ -1256,10 +1334,20 @@ public class AnalysisDataRequest {
     }
 
     // 数据来源分布
-    public String dataSourceDistribution(String highKeyword, String stopword, String times, String timee, Integer projectType) {
+    public String dataSourceDistribution(String highKeyword, String stopword, String times, String timee, Integer projectType, OpinionCondition opinionCondition) {
+        String emotion = opinionCondition.getEmotion();
+        String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
+        String author = opinionCondition.getAuthor();
+        String sourceWebsite = opinionCondition.getWebsitename();
+        Integer matchingmode = opinionCondition.getMatchs();
+        Integer precise = opinionCondition.getPrecise();
+        if (precise == 0) {
+            stopword = "";
+        }
         String url = es_search_url + "/yqsearch/sourcewebsitesearch";
         String param = "times=" + times + "&timee=" + timee + "&keyword=" + highKeyword + "&stopword="
-                + stopword + "&emotionalIndex=1,2,3" + "&projecttype=" + projectType;
+                + stopword + "&emotionalIndex=" +emotionalIndex+ "&projecttype=" + projectType
+                + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
         try {
             String sendPostEsSearch = MyHttpRequestUtil.sendPostEsSearch(url, param);
             List<Map<String, Object>> list = new ArrayList<>();
@@ -1321,11 +1409,20 @@ public class AnalysisDataRequest {
 
 
     // 数据来源分析
-    public String dataSourceAnalysis(String highKeyword, String stopword, String times, String timee, Integer projectType) {
-
+    public String dataSourceAnalysis(String highKeyword, String stopword, String times, String timee, Integer projectType, OpinionCondition opinionCondition) {
+        String emotion = opinionCondition.getEmotion();
+        String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
+        String author = opinionCondition.getAuthor();
+        String sourceWebsite = opinionCondition.getWebsitename();
+        Integer matchingmode = opinionCondition.getMatchs();
+        Integer precise = opinionCondition.getPrecise();
+        if (precise == 0) {
+            stopword = "";
+        }
         String url = es_search_url + "/yqsearch/datasourceanalysis";
         String param = "classify=1,2,3,4,5,6,7,8,9,10,11&times=" + times + "&timee=" + timee + "&keyword=" + highKeyword + "&stopword="
-                + stopword + "&emotionalIndex=1,2,3" + "&projecttype=" + projectType;
+                + stopword + "&emotionalIndex=" +emotionalIndex+ "&projecttype=" + projectType
+                + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
         try {
             String sendPostEsSearch = MyHttpRequestUtil.sendPostEsSearch(url, param);
             Map<String, Object> result = new HashMap<>();
@@ -1472,7 +1569,16 @@ public class AnalysisDataRequest {
     }
 
     // 关键词曝光度环比排行
-    public String keywordExposure(String keyword, String highKeyword, String stopword, String times, String timee, Integer projectType) {
+    public String keywordExposure(String keyword, String highKeyword, String stopword, String times, String timee, Integer projectType, OpinionCondition opinionCondition) {
+        String emotion = opinionCondition.getEmotion();
+        String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
+        String author = opinionCondition.getAuthor();
+        String sourceWebsite = opinionCondition.getWebsitename();
+        Integer matchingmode = opinionCondition.getMatchs();
+        Integer precise = opinionCondition.getPrecise();
+        if (precise == 0) {
+            stopword = "";
+        }
         try {
             String es_api_keyword_emotion_statistical = VolumeConstant.es_api_keyword_emotion_statistical;
             String url = es_search_url + es_api_keyword_emotion_statistical;
@@ -1483,7 +1589,8 @@ public class AnalysisDataRequest {
             for (int i = 0; i < keywords.length; i++) {
                 try {
                     String params = "times=" + times + "&timee=" + timee + "&keyword=" + highKeyword + "&stopword=" + stopword
-                            + "&searchkeyword=" + keywords[i] + "&origintype=0&emotionalIndex=1,2,3&projecttype=" + projectType;
+                            + "&searchkeyword=" + keywords[i] + "&origintype=0&emotionalIndex="+emotionalIndex+"&projecttype=" + projectType
+                            + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
                     String sendPost = sendPost(url, params);
                     Map<String, Object> map = new HashMap<String, Object>();
                     JSONObject parseObject = JSONObject.parseObject(sendPost);
@@ -1545,12 +1652,22 @@ public class AnalysisDataRequest {
     }
 
     // 自媒体渠道声量排行
-    public String selfMediaRanking(String highKeyword, String stopword, String times, String timee, Integer projectType) {
+    public String selfMediaRanking(String highKeyword, String stopword, String times, String timee, Integer projectType, OpinionCondition opinionCondition) {
+        String emotion = opinionCondition.getEmotion();
+        String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
+        String author = opinionCondition.getAuthor();
+        String sourceWebsite = opinionCondition.getWebsitename();
+        Integer matchingmode = opinionCondition.getMatchs();
+        Integer precise = opinionCondition.getPrecise();
+        if (precise == 0) {
+            stopword = "";
+        }
         List<Map<String, Object>> result = new ArrayList<>();
         try {
             String url = es_search_url + ReportConstant.es_api_media_list;
             String param = "classify=7&times=" + times + "&timee=" + timee + "&keyword=" + highKeyword + "&stopword=" + stopword
-                    + "&emotionalIndex=1,2,3&projecttype=" + projectType;
+                    + "&emotionalIndex="+emotionalIndex+"&projecttype=" + projectType
+                    + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
             String sendPostEsSearch = MyHttpRequestUtil.sendPostEsSearch(url, param);
             JSONObject parseObject = JSONObject.parseObject(sendPostEsSearch);
             JSONArray buckets = parseObject.getJSONObject("aggregations").getJSONObject("top-terms-aggregation")
@@ -1580,7 +1697,7 @@ public class AnalysisDataRequest {
                                     sendPostEsSearch = MyHttpRequestUtil.sendPostEsSearch(url, param);
                                     parseObject = JSONObject.parseObject(sendPostEsSearch);
                                     JSONArray jsonArray2 = parseObject.getJSONArray("data");
-                                    if (!jsonArray2.isEmpty()) {
+                                    if (jsonArray2!=null && !jsonArray2.isEmpty()) {
                                         JSONObject jsonObject = jsonArray2.getJSONObject(0).getJSONObject("_source");
                                         logo = jsonObject.getString("logo");
                                     }
@@ -2776,13 +2893,23 @@ public class AnalysisDataRequest {
     }
 
     //政策法规
-	public String dataPolicy(String keyword, String stopword, String times, String timee, Integer projectType) {
+	public String dataPolicy(String keyword, String stopword, String times, String timee, Integer projectType, OpinionCondition opinionCondition) {
+        String emotion = opinionCondition.getEmotion();
+        String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
+        String author = opinionCondition.getAuthor();
+        String sourceWebsite = opinionCondition.getWebsitename();
+        Integer matchingmode = opinionCondition.getMatchs();
+        Integer precise = opinionCondition.getPrecise();
+        if (precise == 0) {
+            stopword = "";
+        }
 
 		  String url = es_search_url + ReportConstant.es_api_policy;
 		//String url = "http://192.168.71.81:8123" + ReportConstant.es_api_policy;
 		  
 		  String params = "times=" + times + "&timee=" + timee + "&keyword=" + keyword + "&stopword=" + stopword
-                  + "&searchType=1&classify=&emotionalIndex=1,2,3" + "&projecttype=" + projectType+"&policylableflag=1";
+                  + "&searchType=1&classify=&emotionalIndex=" +emotionalIndex+ "&projecttype=" + projectType+"&policylableflag=1"
+                    + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
           String sendPostEsSearch = MyHttpRequestUtil.sendPostEsSearch(url, params);
           
           JSONObject policyjson = new JSONObject();
@@ -2869,13 +2996,22 @@ public class AnalysisDataRequest {
 
 
     //行业分布统计
-    public String industrialDistribution(String keyword, String stopword, String times, String timee, Integer projectType) {
-
+    public String industrialDistribution(String keyword, String stopword, String times, String timee, Integer projectType, OpinionCondition opinionCondition) {
+        String emotion = opinionCondition.getEmotion();
+        String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
+        String author = opinionCondition.getAuthor();
+        String sourceWebsite = opinionCondition.getWebsitename();
+        Integer matchingmode = opinionCondition.getMatchs();
+        Integer precise = opinionCondition.getPrecise();
+        if (precise == 0) {
+            stopword = "";
+        }
         String url = es_search_url + ReportConstant.es_api_search_industry_list;
         //String url = "http://192.168.71.81:8123" + ReportConstant.es_api_policy;
 
         String params = "times=" + times + "&timee=" + timee + "&keyword=" + keyword + "&stopword=" + stopword
-                + "&searchType=1&classify=&emotionalIndex=1,2,3" + "&projecttype=" + projectType;
+                + "&searchType=1&classify=&emotionalIndex=" +emotionalIndex+ "&projecttype=" + projectType
+                + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
         String sendPostEsSearch = MyHttpRequestUtil.sendPostEsSearch(url, params);
 
 
@@ -2927,13 +3063,22 @@ public class AnalysisDataRequest {
 
 
     //事件统计
-    public String eventStudy(String keyword, String stopword, String times, String timee, Integer projectType) {
-
+    public String eventStudy(String keyword, String stopword, String times, String timee, Integer projectType, OpinionCondition opinionCondition) {
+        String emotion = opinionCondition.getEmotion();
+        String emotionalIndex = emotion.replace("[", "").replace("]","").trim();
+        String author = opinionCondition.getAuthor();
+        String sourceWebsite = opinionCondition.getWebsitename();
+        Integer matchingmode = opinionCondition.getMatchs();
+        Integer precise = opinionCondition.getPrecise();
+        if (precise == 0) {
+            stopword = "";
+        }
         String url = es_search_url + ReportConstant.es_api_search_event_list;
         //String url = "http://192.168.71.81:8123" + ReportConstant.es_api_policy;
 
         String params = "times=" + times + "&timee=" + timee + "&keyword=" + keyword + "&stopword=" + stopword
-                + "&searchType=1&classify=&emotionalIndex=1,2,3" + "&projecttype=" + projectType;
+                + "&searchType=1&classify=&emotionalIndex=" +emotionalIndex+ "&projecttype=" + projectType
+                + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
         String sendPostEsSearch = MyHttpRequestUtil.sendPostEsSearch(url, params);
 
         String eventStudy = "";
