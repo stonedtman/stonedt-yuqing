@@ -227,16 +227,15 @@ public class ProjectUtil {
      */
     public static String mergeProjectWords(String keyword) {
         //判断是高级方案还是普通方案
-        String response = "";
         if (keyword.contains(",")) {
             //普通方案
             String[] keywords = keyword.split(",");
             Set<String> keywordSet = new HashSet<String>(Arrays.asList(keywords));
-            response = StringUtils.join(keywordSet, ",");
-        } else if (keyword.contains("|") && !keyword.contains("+")) {
+            return StringUtils.join(keywordSet, ",");
+        } else if (keyword.contains("|") && !keyword.contains("+")&& !keyword.contains("(")&& !keyword.contains(")")) {
             String[] keywords = keyword.split("\\|");
             Set<String> keywordSet = new HashSet<String>(Arrays.asList(keywords));
-            response = StringUtils.join(keywordSet, "\\|");
+            return StringUtils.join(keywordSet, "\\|");
         }
 //        else {
 //            //高级方案，高级方案使用|表示或，使用+表示与，使用()表示组合,合并相同的关键词/组合
@@ -276,8 +275,7 @@ public class ProjectUtil {
 //
 //
 //        }
-        return response;
-
+        return keyword;
     }
 
     private static void mergeProjectWordsByTreeNode(TreeNode now) {
