@@ -107,7 +107,26 @@
 	.qr-code .qr_loading .iconfont {
 		animation: rotateImg 3s linear infinite;
 	}
-
+	#close {
+		position: absolute;
+		top: 8px;
+		right: 12px;
+		z-index: 1;
+	}
+	.showCreateEvent{
+		height: 100%;
+	}
+	#loginExpired .event-box {
+		width: 400px;
+		min-height: auto;
+		text-align: center;
+		margin: 0;
+		top: 50%;
+		transform: translate(-50%,-50%);
+	}
+	#loginExpired .event-box-body {
+		padding: 32px;
+	}
 </style>
 
 </head>
@@ -213,6 +232,8 @@
 							}
 							judgeLogin(sceneStr);
 						}, 1000)
+					}else if(res.status==504){
+						expire()
 					}else{
 						showtips(res.msg);
 						clearTimeout(timer);
@@ -221,7 +242,26 @@
 				},
 			});
 		}
+		function expire(){
+			var eventHtml =
+				'<div class="shadebox" id="loginExpired">'+
+				'    <div class="showCreateEvent"> '+
+				'        <div class="event-box">'+
+				'            <i class="mdi mdi-close-circle-outline font-18 cursor-po" id="close"></i>'+
+				'            <div class="event-box-body">'+
+				'				<img style="width: 200px;" src="/assets/images/QRcode.jpg" alt="">'+
+				'				<div style="margin-top: 20px">您的账号已过期，请扫码添加产品经理微信</div>'+
+				'				<div style="margin-top: 10px">并注明添加好友备注：saas用户。</div>'+
+				'            </div>'+
+				'        </div>'+
+				'    </div>'+
+				'</div>'
 
+			$("body").append(eventHtml)
+			$("#close").click(function (param) {
+				$("#loginExpired").remove()
+			})
+		}
 
 	</script>
 </body>
