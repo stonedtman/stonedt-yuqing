@@ -716,6 +716,10 @@ $("#currentyear").text((new Date()).getFullYear());
                     if (res.emotionText) {
                         $('#emotionText').html(res.emotionText);
                     }
+                    if(res.detail==""){
+                        dataerror(".card-detail");
+                        $(".btns").remove()
+                    }
                     if (res.detail&&res.detail.code==200) {
 
                     	
