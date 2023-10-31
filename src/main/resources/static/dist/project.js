@@ -838,7 +838,8 @@ function confirmDelete(id) {
             },
             success: function (res) {
                 console.log(res);
-                installProjectList(res);
+                // installProjectList(res);
+                searchProject()
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status == 403) {
