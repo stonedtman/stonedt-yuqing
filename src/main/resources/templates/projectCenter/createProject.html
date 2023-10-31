@@ -413,7 +413,7 @@ $("#currentyear").text((new Date()).getFullYear());
     /**
      * @author huajiancheng
      * @date 2020/04/15
-     * @description 快速新增方案数据
+     * @description 高级创建
      * @param message 提示的信息
      */
     $("#gosubmit1").click(function (param) {
@@ -422,8 +422,8 @@ $("#currentyear").text((new Date()).getFullYear());
         var proshield = $("#proshield1").val().trim(); // 屏蔽词
         if (proname == '') {
             $("#proname1").addClass("text-error");
-            showtips("请填写完整！");
-
+            showtips("请填写方案名称！");
+            return;
         } else {
             $("#proname1").removeClass("text-error");
         }
@@ -433,7 +433,8 @@ $("#currentyear").text((new Date()).getFullYear());
         }
         if (prokeywords == '') {
             $("#prokeywords1").addClass("text-error");
-            showtips("请填写完整！")
+            showtips("请填写方案主体关键词！")
+            return;
         } else {
             $("#prokeywords1").removeClass("text-error");
         }
@@ -443,16 +444,34 @@ $("#currentyear").text((new Date()).getFullYear());
         }
 
         var flag = new RegExp("[`~!@#$^&*=\\-{}':;,'\\[\\].<>《》/?~！@#￥……&*（）——{}【】‘；：”“'。，、？ ]")
+        let characterList = "`~!@#$^&*=\-{}':;,'\[\].<>《》/?~！@#￥……&*（）——{}【】‘；：”“'。，、？ ".split("")
+        let tiptext = "其他特殊符号"
 
         if (flag.test(prokeywords)) {
             $("#prokeywords1").addClass("text-error");
-            showtips("关键词内容只能使用+|()这三种符号，不能使用其他特殊符号");
+            for (let i = 0; i < characterList.length; i++) {
+                if(prokeywords.indexOf(characterList[i])>-1){
+                    tiptext = characterList[i]
+                    if(characterList[i]==" "){
+                        tiptext = "空格"
+                    }
+                }
+            }
+            showtips("关键词内容只能使用+|()这三种符号，不能使用"+tiptext);
             return;
         }
 
         if (flag.test(proshield)) {
             $("#proshield1").addClass("text-error");
-            showtips("屏蔽词内容只能使用+|()这三种符号，不能使用其他特殊符号");
+            for (let i = 0; i < characterList.length; i++) {
+                if(proshield.indexOf(characterList[i])>-1){
+                    tiptext = characterList[i]
+                    if(characterList[i]==" "){
+                        tiptext = "空格"
+                    }
+                }
+            }
+            showtips("屏蔽词内容只能使用+|()这三种符号，不能使用"+tiptext);
             return;
         }
 
@@ -514,7 +533,7 @@ $("#currentyear").text((new Date()).getFullYear());
     });
 
 
-    // 高级方案确认
+    // 快速创建
     $("#gosubmit").click(function () {
         var proname = $("#proname").val();
         var prokeywords = $("#prokeywords").val();
@@ -547,43 +566,61 @@ $("#currentyear").text((new Date()).getFullYear());
         }
 
         var flag = new RegExp("[`~!@#$^&*()=+\\-|{}':;'\\[\\].<>《》/?~！@#￥……&*（）——{}【】‘；：”“'。，、？ ]")
+        let characterList = "`~!@#$^&*()=+\-|{}':;'\[\].<>《》/?~！@#￥……&*（）——{}【】‘；：”“'。，、？ ".split("")
+        let tiptext = "其他特殊符号"
 
         if (flag.test(prokeywords)) {
             $("#prokeywords1").addClass("text-error");
-            showtips("关键词内容只能使用英文逗号，不能使用其他特殊符号");
+            for (let i = 0; i < characterList.length; i++) {
+                if(prokeywords.indexOf(characterList[i])>-1){
+                    tiptext = characterList[i]
+                    if(characterList[i]==" "){
+                        tiptext = "空格"
+                    }
+                }
+            }
+            showtips("关键词内容只能使用英文逗号，不能使用"+tiptext);
             return;
         }
 
         if (flag.test(proshield)) {
             $("#proshield1").addClass("text-error");
-            showtips("屏蔽词内容只能使用英文逗号，不能使用其他特殊符号");
+            for (let i = 0; i < characterList.length; i++) {
+                if(proshield.indexOf(characterList[i])>-1){
+                    tiptext = characterList[i]
+                    if(characterList[i]==" "){
+                        tiptext = "空格"
+                    }
+                }
+            }
+            showtips("屏蔽词内容只能使用英文逗号，不能使用"+tiptext);
             return;
         }
 
 
 
-        prokeywords = prokeywords.toString().replace(/(\s|;|-|"|‘|；|、|‘’|'|’|“”|》|《|<|>|\.|。)/g, ",");
+        prokeywords = prokeywords.toString().replace(/(\s|;|-|"|‘|；|、|‘’|'|’|“”|》|《|<|>|\.|。)/g, "|");
         prokeywords = prokeywords.toString().replace(/,{1,}/, ",");
         if (prokeywords.indexOf("，") != -1) {
-            prokeywords = prokeywords.toString().replace(new RegExp("，", 'gm'), ",");
+            prokeywords = prokeywords.toString().replace(new RegExp("，", 'gm'), "|");
         }
 
         if (properson.indexOf("，") != -1) {
-            properson = properson.toString().replace(new RegExp("，", 'gm'), ",");
+            properson = properson.toString().replace(new RegExp("，", 'gm'), "|");
         }
 
         if (proarea.indexOf("，") != -1) {
-            proarea = proarea.toString().replace(new RegExp("，", 'gm'), ",");
+            proarea = proarea.toString().replace(new RegExp("，", 'gm'), "|");
         }
 
         if (proaccident.indexOf("，") != -1) {
-            proaccident = proaccident.toString().replace(new RegExp("，", 'gm'), ",");
+            proaccident = proaccident.toString().replace(new RegExp("，", 'gm'), "|");
         }
 
-        proshield = proshield.toString().replace(/(\s|;|-|"|‘|；|、|‘’|'|’|“”|》|《|<|>|\.|。)/g, ",");
-        proshield = proshield.toString().replace(/,{1,}/, ",");
+        proshield = proshield.toString().replace(/(\s|;|-|"|‘|；|、|‘’|'|’|“”|》|《|<|>|\.|。)/g, "|");
+        proshield = proshield.toString().replace(/,{1,}/, "|");
         if (proshield.indexOf("，") != -1) {
-            proshield = proshield.toString().replace(new RegExp("，", 'gm'), ",");
+            proshield = proshield.toString().replace(new RegExp("，", 'gm'), "|");
         }
 
 
