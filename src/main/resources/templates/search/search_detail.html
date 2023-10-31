@@ -379,6 +379,9 @@ $("#currentyear").text((new Date()).getFullYear());
 //
 //                        pageStrAll = pageStrStart + currentBefore + currentAfter + pageStrEnd;
 
+                        res.text = res.text.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,"")
+                        res.text = res.text.replace(/<style\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/style>/gi,"")
+
                         var detail = res.detail;
                         let imgListAll = '';
                         let imgListStr1 = '<div>';
