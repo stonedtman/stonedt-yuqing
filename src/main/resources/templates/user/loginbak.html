@@ -126,7 +126,12 @@
 		transform: translate(-50%,-50%);
 	}
 	#loginExpired .event-box-body {
-		padding: 32px;
+		padding: 0px 20px 20px;
+	}
+	.modal-title{
+		height: 60px;
+		line-height: 64px;
+		font-size: 20px;
 	}
 </style>
 
@@ -197,7 +202,7 @@
 						$(".qr-code").html(`<img class="qrcode-img" src="${res.data.qrcodeUrl}" alt="">`)
 						sceneStr = res.data.sceneStr
 						judgeLogin(res.data.sceneStr);
-
+						clearTimeout(timer);
 						timer = setTimeout(() => {
 							$(".qr-code").html(`<div class="refresh" onclick="getQrcode()">
 								<i class="iconfont icon-shuaxin"></i>
@@ -234,6 +239,7 @@
 							judgeLogin(sceneStr);
 						}, 1000)
 					}else if(res.status==504){
+						clearTimeout(timer);
 						$(".qr-code").html(`<div class="refresh" onclick="getQrcode()">
 							<i class="iconfont icon-shuaxin"></i>
 							<div>二维码已过期，点击刷新</div>
@@ -247,16 +253,19 @@
 				},
 			});
 		}
+
 		function expire(){
 			var eventHtml =
 				'<div class="shadebox" id="loginExpired">'+
 				'    <div class="showCreateEvent"> '+
 				'        <div class="event-box">'+
+				'			 <div class="modal-title">体验账号已过期</div>'+
 				'            <i class="mdi mdi-close-circle-outline font-18 cursor-po" id="close"></i>'+
 				'            <div class="event-box-body">'+
-				'				<img style="width: 200px;" src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg" alt="">'+
-				'				<div style="margin-top: 20px">您的账号已过期，请扫码添加产品经理微信</div>'+
-				'				<div style="margin-top: 10px">并注明添加好友备注：saas用户。</div>'+
+				'				<div>请扫码添加产品经理获取体验资格</div>'+
+				'				<img style="width: 200px;margin-top: 10px;" src="/assets/images/expireCode.jpg" alt="">'+
+				'				<div style="margin-top: 20px">添加微信时请备注: sass用户</div>'+
+				'				<div style="margin-top: 10px">联系方式: 13913953100</div>'+
 				'            </div>'+
 				'        </div>'+
 				'    </div>'+
