@@ -235,7 +235,7 @@ public class ProjectUtil {
         } else if (keyword.contains("|") && !keyword.contains("+")&& !keyword.contains("(")&& !keyword.contains(")")) {
             String[] keywords = keyword.split("\\|");
             Set<String> keywordSet = new HashSet<String>(Arrays.asList(keywords));
-            return StringUtils.join(keywordSet, "\\|");
+            return StringUtils.join(keywordSet, "|");
         }
 //        else {
 //            //高级方案，高级方案使用|表示或，使用+表示与，使用()表示组合,合并相同的关键词/组合
@@ -309,7 +309,7 @@ public class ProjectUtil {
         if (value.equals("")) {
             response += "(";
         }else {
-            response += "(" + value + ")";
+            response += value;
         }
         for (TreeNode child : head.children) {
             response = getProjectWordsByTreeNode(child,response);
@@ -326,5 +326,9 @@ public class ProjectUtil {
 
     }
 
-
+    public static void main(String[] args) {
+        String keyword = "a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p";
+        String mergeProjectWords = mergeProjectWords(keyword);
+        System.out.println(mergeProjectWords);
+    }
 }

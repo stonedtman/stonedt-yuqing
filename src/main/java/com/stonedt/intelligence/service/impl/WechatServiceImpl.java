@@ -266,7 +266,10 @@ public class WechatServiceImpl implements WechatService {
 		}
 
 		request.getSession().setAttribute("User", user);
-		redisTemplate.delete(sceneStr);
+		ThreadPoolConst.IO_EXECUTOR.execute(() -> {
+			redisTemplate.delete(sceneStr);
+			userDao.updateUserLoginCountById(user.getId());
+		});
 		return ResultUtil.ok();
 	}
 
