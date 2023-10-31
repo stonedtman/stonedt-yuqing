@@ -980,7 +980,7 @@ public class publicoptionQuartz {
     	String params = "times=" + eventstarttime + "&timee=" + eventendtime + "&keyword=" + eventkeywords + "&stopword=" + eventstopwords
                 + "&searchkeyword=" + searchwords + "&origintype=0&emotionalIndex="+emotionalIndex+"&projecttype=2";
     	String sendPost = getEsRequset(url, params,null,null);
-    	System.err.println(sendPost);
+//    	System.err.println(sendPost);
     	return sendPost;
 	}
 

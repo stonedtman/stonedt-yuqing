@@ -80,6 +80,9 @@ public class PlatformServiceImpl implements PlatformService {
     @Value("${platform.synthesize.url}")
     private String synthesizeUrl;
 
+    @Value("${platform.nlp.check-url}")
+    private String nlpCheckUrl;
+
     public PlatformServiceImpl(UserDao userDao,
                                RestTemplate restTemplate,
                                OkHttpClient okHttpClient,
@@ -106,7 +109,27 @@ public class PlatformServiceImpl implements PlatformService {
         // 获取用户id
         User user = userUtil.getuser(request);
         bindParamsVo.setUserId(user.getId());
-
+        SecretDTO secretDTO = new SecretDTO();
+        BeanUtils.copyProperties(bindParamsVo, secretDTO);
+        //校验secretId和secretKey
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        String jsonString = JSON.toJSONString(secretDTO);
+        HttpEntity<String> requestEntity = new HttpEntity<>(jsonString, headers);
+        try {
+            String result = restTemplate.postForObject(nlpCheckUrl, requestEntity, String.class);
+            if (result == null) {
+                return ResultUtil.build(500, "nlp服务调用失败");
+            }
+            JSONObject jsonObject = JSON.parseObject(result);
+            Boolean exist = jsonObject.getBoolean("result");
+            if (!exist) {
+                return ResultUtil.build(500, "该nlp账号不存在");
+            }
+        } catch (RestClientException e) {
+            log.error("nlp服务调用失败",e);
+            return ResultUtil.build(500, "nlp校验服务调用失败");
+        }
         try {
             userDao.bindNlp(bindParamsVo);
             User newUser = userDao.selectById(user.getId());

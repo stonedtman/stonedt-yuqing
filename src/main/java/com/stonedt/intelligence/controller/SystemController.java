@@ -256,6 +256,17 @@ public class SystemController {
         return mv;
     }
 
+
+    /**
+     * 预警配置详情
+     */
+    @GetMapping("/warningSettingDetail")
+    public @ResponseBody
+    ResultUtil warningSettingDetail(@RequestParam Long projectId) {
+        WarningSetting warningSetting = systemService.getWarningByProjectId(projectId);
+        return ResultUtil.ok(warningSetting);
+    }
+
     /**
      * 编辑预警信息
      *
