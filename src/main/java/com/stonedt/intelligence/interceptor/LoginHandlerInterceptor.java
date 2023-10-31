@@ -41,7 +41,6 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
 //        }
 
         Object attribute = request.getSession().getAttribute("User");
-        System.out.println(attribute);
         if (attribute == null) {
             if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))){
 //                //告诉ajax我是重定向

@@ -326,9 +326,4 @@ public class ProjectUtil {
 
     }
 
-    public static void main(String[] args) {
-        String keyword = "a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p";
-        String mergeProjectWords = mergeProjectWords(keyword);
-        System.out.println(mergeProjectWords);
-    }
 }

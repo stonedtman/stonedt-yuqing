@@ -354,7 +354,7 @@ public class DatafavoriteContoller {
 			 map.put("result", "err");
 			 result = JSON.toJSONString(map);
 		}
-		System.err.println(result);
+//		System.err.println(result);
 		return result;
 
 	}

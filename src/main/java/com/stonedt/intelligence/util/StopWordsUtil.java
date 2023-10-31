@@ -116,10 +116,10 @@ public class StopWordsUtil {
 			map.put("value", value);
 			list.add(map);
 		}
-		list = list.stream().sorted(
-				(i, j) -> Integer.parseInt(j.get("value").toString()) - Integer.parseInt(i.get("value").toString()))
-				.limit(500).collect(Collectors.toList());
-		System.out.println(list);
+//		list = list.stream().sorted(
+//				(i, j) -> Integer.parseInt(j.get("value").toString()) - Integer.parseInt(i.get("value").toString()))
+//				.limit(500).collect(Collectors.toList());
+//		System.out.println(list);
 
 	}
 

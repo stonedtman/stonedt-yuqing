@@ -148,11 +148,12 @@ public class publicoptionQuartz {
         			} catch (Exception e) {
         				e.printStackTrace();
         			}
-        			System.out.println("===============================");
-        			System.err.println(map);
-        			System.out.println("--------------------------------");
-        			System.err.println(JSON.toJSONString(map));
-        			System.out.println("===============================");
+//        			System.out.println("===============================");
+//        			System.err.println(map);
+//        			System.out.println("--------------------------------");
+//        			System.err.println(JSON.toJSONString(map));
+//        			System.out.println("===============================");
+					System.out.println("舆情研判结束,开始保存舆情研判结果");
         			PublicOptionDao.savepublicoptionDetail(map);
         			PublicOptionDao.updateStatusbyid(publicoptionEntity.getId(),3);
 				} catch (Exception e) {
@@ -366,7 +367,7 @@ public class publicoptionQuartz {
 		for (int i = 0; i < size; i++) {
 			result1.add(result.get(i));
 		}
-		System.out.println(result1);
+//		System.out.println(result1);
 		return result1;
 	}
 	
@@ -920,7 +921,7 @@ public class publicoptionQuartz {
 			ob = analysisFOS(jsonArray2,ob);
 			reault.add(ob);
 		}
-    	System.err.println(reault);
+//    	System.err.println(reault);
     	return reault;
 	}
 	

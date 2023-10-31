@@ -372,8 +372,8 @@ public class TimelySearchController {
 			 JSONObject jsonObject = new JSONObject();
 			for (int j = 0; j < parseArray2.size(); j++) {
 				String string = parseArray2.get(j).toString();
-				System.out.println("json数据:"+parseArray2);
-				System.out.println("json数据2:"+valuesArray);
+//				System.out.println("json数据:"+parseArray2);
+//				System.out.println("json数据2:"+valuesArray);
 				String values = "";
 				if(valuesArray.get(j)!=null) {
 					values = valuesArray.get(j).toString();

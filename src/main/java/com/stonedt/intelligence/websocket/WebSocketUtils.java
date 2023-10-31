@@ -16,7 +16,7 @@ public class WebSocketUtils {
 		String xml = "";
 		
 	String data = data("疫情",xml,"1");
-	System.out.println(data);
+//	System.out.println(data);
 	}
 	
     public static String data(String keyword,String xml,String pageNoData){

@@ -205,7 +205,7 @@ public class VolumeMonitorServiceImpl implements VolumeMonitorService {
 		JSONArray parseArray = JSONObject.parseArray(media_user_volume_rank);
 		hashMap.put("media_user_volume_rank", parseArray);
 		
-		System.err.println(hashMap);
+//		System.err.println(hashMap);
 		return hashMap;
 	}
 
