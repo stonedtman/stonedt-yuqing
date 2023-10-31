@@ -113,7 +113,34 @@
             position: relative;
             color: #fff !important;
         }
-
+        .create-tab>li:nth-child(3) {
+            cursor: pointer;
+        }
+        .create-tab>li:nth-child(3)::after {
+            content: '';
+            width: 0%;
+            height: 2px;
+            background: #065bc9;
+            position: absolute;
+            bottom: 0px;
+            left: 0;
+            transition: all 0.3s ease-in;
+        }
+        #statusSwitch .bootstrap-switch{
+            width: 50px !important;
+            border: none;
+            padding: 0;
+        }
+        #statusSwitch .bootstrap-switch-handle-on,#statusSwitch .bootstrap-switch-handle-off{
+            width: 50px !important;
+            margin: 0;
+            border: 0;
+            padding: 0 !important;
+            font-size: 12px;
+        }
+        #statusSwitch .bootstrap-switch .bootstrap-switch-label{
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -176,6 +203,7 @@
                         <ul class="create-tab" id="search-tab">
                             <li class="create-tab-act" data-type="2">快速修改</li>
                             <li class="" data-type="1">高级修改</li>
+                            <li class="" data-type="4">预警推送</li>
                             <li id="tips" data-type="3">当前是快速修改，可设置100字</li>
                         </ul>
                         <!-- tab1 start -->
@@ -350,6 +378,196 @@
                             </div>
                         </div>
                         <!-- tab2 end -->
+                        <!-- tab3 start -->
+                        <div id="tab3" class="card m-b-0" style="display: none;">
+                            <div class="card-body p-b-0">
+                                <div class="warning-edit-line">
+                                    <span style="margin-right: 15px;">预警开关</span>
+                                    <div id="statusSwitch" class="bt-switch-early-warning">
+                                        <input id="status" type="checkbox" data-on-color="success" data-off-color="warning">
+                                    </div>
+                                </div>
+                                <div class="alertSettings" style="display:none;">
+                                    <div class="warning-edit-line">
+                                        <div>方案名称</div>
+                                        <div>日常出行</div>
+                                    </div>
+                                    <div class="warning-edit-line">
+                                        <div>预警名称</div>
+                                        <div>
+                                            <input class="form-control" type="text" name="warning-name" id="warning-name"
+                                                   value="预警" placeholder="请输入预警名称">
+                                        </div>
+                                    </div>
+                                    <div class="warning-edit-line">
+                                        <div>设置预警词</div>
+                                        <div>
+                                <textarea class="form-control" name="warning-word" id="warning-word" cols="30" rows="3"
+                                           placeholder="请输入预警词，用英文逗号隔开"></textarea>
+                                        </div>
+                                        <div class="warning-tips">
+                                            <a tabindex="0" class="" role="button" data-toggle="popover" data-trigger="focus"
+                                               title="方案主体关键词提示"
+                                               data-content="1、地域、人物、事件 三类都可输入多个关键词，关键词之间用空格分开。三个类型都可以为空。2、每一类的多个关键词之间默认为或(或者)”的关系。3、地域、人物、事件三个类型之间是“与(并且)”的关系。例如：地域配置了“上海”，人物配置了“周某”，事件配置了“撞车”，只有同时满足这3个条件的文章才会被监测到。">
+                                                <i class="fa fa-question-circle"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="warning-edit-line">
+                                        <div>来源类型</div>
+                                        <div id="warning-classify">
+
+                                        </div>
+                                    </div>
+
+                                    <!-- double line  start-->
+                                    <div class="warning-edit-double">
+                                        <div class="warning-left waring_double">
+                                            <div>预警内容</div>
+                                            <div id="warning-content">
+                                                <span class="badge badge-pill badge-info" data-id="0"
+                                                      onclick="badgeClick(this)">全部</span>
+                                                <span class="badge badge-pill badge-light" data-id="1"
+                                                      onclick="badgeClick(this)">敏感</span>
+                                            </div>
+                                        </div>
+                                        <div class="warning-right">
+                                            <div>相似文章合并</div>
+                                            <div>
+                                                <span class="badge badge-pill badge-info" data-id="1" onclick="badgeClick(this)">合并</span>
+                                                <span class="badge badge-pill badge-light" data-id="0" onclick="badgeClick(this)">不合并</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- double line end-->
+                                    <div class="warning-edit-double">
+                                        <div class="warning-left waring_double">
+                                            <div>匹配方式</div>
+                                            <div id="warning-match">
+                                                <span class="badge badge-pill badge-info" data-id="1" onclick="badgeClick(this)">按全文</span>
+                                                <span class="badge badge-pill badge-light" data-id="2" onclick="badgeClick(this)">按标题</span>
+                                                <span class="badge badge-pill badge-light" data-id="3" onclick="badgeClick(this)">按正文</span>
+                                            </div>
+                                        </div>
+                                        <div class="warning-right">
+                                            <div>预警去重</div>
+                                            <div id="warning-deduplication">
+                                                <span class="badge badge-pill badge-light" data-id="1"
+                                                      onclick="badgeClick(this)">开启</span>
+                                                <span class="badge badge-pill badge-info" data-id="0"
+                                                      onclick="badgeClick(this)">关闭</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="warning-edit-double">
+                                        <div class="warning-left waring_double">
+                                            <div>预警来源</div>
+                                            <div id="warning-source">
+                                                <span class="badge badge-pill badge-info" data-id="1" onclick="badgeClick(this)">系统推送</span>
+                                                <span class="badge badge-pill badge-light" data-id="2" onclick="badgeClick(this)">邮箱推送</span>
+                                                <input type="text" class="form-control" placeholder="请输入邮箱地址"/>
+                                            </div>
+                                        </div>
+                                        <div class="warning-right">
+                                            <div>接收时间</div>
+                                            <div>
+                                                <select name="" id="warning-receive-time-start" class="custom-select form-control">
+                                                    <option value="00:00">00:00</option>
+                                                    <option value="01:00">01:00</option>
+                                                    <option value="02:00">02:00</option>
+                                                    <option value="03:00">03:00</option>
+                                                    <option value="04:00">04:00</option>
+                                                    <option value="05:00">05:00</option>
+                                                    <option value="06:00">06:00</option>
+                                                    <option value="07:00">07:00</option>
+                                                    <option value="08:00">08:00</option>
+                                                    <option value="09:00">09:00</option>
+                                                    <option value="10:00">10:00</option>
+                                                    <option value="11:00">11:00</option>
+                                                    <option value="12:00">12:00</option>
+                                                    <option value="13:00">13:00</option>
+                                                    <option value="14:00">14:00</option>
+                                                    <option value="15:00">15:00</option>
+                                                    <option value="16:00">16:00</option>
+                                                    <option value="17:00">17:00</option>
+                                                    <option value="18:00">18:00</option>
+                                                    <option value="19:00">19:00</option>
+                                                    <option value="20:00">20:00</option>
+                                                    <option value="21:00">21:00</option>
+                                                    <option value="22:00">22:00</option>
+                                                    <option value="23:00">23:00</option>
+                                                </select>
+                                                -
+                                                <select name="" id="warning-receive-time-end" class="custom-select form-control">
+                                                    <option value="00:00">00:00</option>
+                                                    <option value="01:00">01:00</option>
+                                                    <option value="02:00">02:00</option>
+                                                    <option value="03:00">03:00</option>
+                                                    <option value="04:00">04:00</option>
+                                                    <option value="05:00">05:00</option>
+                                                    <option value="06:00">06:00</option>
+                                                    <option value="07:00">07:00</option>
+                                                    <option value="08:00">08:00</option>
+                                                    <option value="09:00">09:00</option>
+                                                    <option value="10:00">10:00</option>
+                                                    <option value="11:00">11:00</option>
+                                                    <option value="12:00">12:00</option>
+                                                    <option value="13:00">13:00</option>
+                                                    <option value="14:00">14:00</option>
+                                                    <option value="15:00">15:00</option>
+                                                    <option value="16:00">16:00</option>
+                                                    <option value="17:00">17:00</option>
+                                                    <option value="18:00">18:00</option>
+                                                    <option value="19:00">19:00</option>
+                                                    <option value="20:00">20:00</option>
+                                                    <option value="21:00">21:00</option>
+                                                    <option value="22:00">22:00</option>
+                                                    <option value="23:00">23:00</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="warning-edit-double m-b-0">
+                                        <div class="warning-left waring_double">
+                                            <div>周末预警</div>
+                                            <div id="weekend-warning">
+                                                <span class="badge badge-pill badge-light" data-id="1"
+                                                      onclick="badgeClick(this)">开启</span>
+                                                <span class="badge badge-pill badge-info" data-id="0"
+                                                      onclick="badgeClick(this)">关闭</span>
+                                            </div>
+                                        </div>
+                                        <div class="warning-right">
+                                            <div>预警间隔</div>
+                                            <div id="warning-interval">
+                                                <!--  <span class="badge badge-pill badge-light" onclick="badgeClick(this)">实时预警</span>
+                                                 <span class="badge badge-pill badge-info" onclick="badgeClick(this)">定时预警</span> -->
+                                                <select name="" id="warning-interval-time" class="custom-select form-control">
+                                                    <option value="1">1小时</option>
+                                                    <option value="2">2小时</option>
+                                                    <option value="3">3小时</option>
+                                                    <option value="4">4小时</option>
+                                                    <option value="5">5小时</option>
+                                                    <option value="6">6小时</option>
+                                                    <option value="7">7小时</option>
+                                                    <option value="8">8小时</option>
+                                                </select>
+                                                <!-- <div class="form-group">
+                                                    <div id="pips-steps-filter"></div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div style="width: 140px; display: flex; justify-content: space-between;margin: 0 auto;">
+                                    <button onclick="checkEmail()" class="btn btn-info">保存</button>
+                                    <button onclick="backPage()" class="btn btn-secondary">取消保存</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- tab3 end -->
                     </div>
                 </div>
             </div>
@@ -734,6 +952,7 @@ $("#currentyear").text((new Date()).getFullYear());
                 $("#tips").html("当前是快速修改，可设置100字");
                 $("#tab2").hide();
                 $("#tab1").show();
+                $("#tab3").hide();
                 break;
             case "1":
                 $(this).siblings().removeClass("create-tab-act");
@@ -741,6 +960,15 @@ $("#currentyear").text((new Date()).getFullYear());
                 $("#tips").html("当前是高级修改，可设置550字");
                 $("#tab1").hide();
                 $("#tab2").show();
+                $("#tab3").hide();
+                break;
+            case "4":
+                $(this).siblings().removeClass("create-tab-act");
+                $(this).addClass("create-tab-act");
+                $("#tips").html("当前是预警推送，可设置您的预警方案");
+                $("#tab1").hide();
+                $("#tab2").hide();
+                $("#tab3").show();
                 break;
             case "3":
                 break;
@@ -885,6 +1113,495 @@ $("#currentyear").text((new Date()).getFullYear());
         window.location.href = "/project?page=1&groupid=" + edit_groupid + "&projectsearch=";
     });
 
+
+
+
+
+// var page = [[${page}]];
+var warning = {
+    "id":961,
+    "create_time":"2023-10-2017:38:11",
+    "warning_setting_id":1715301377976176640,
+    "project_id":1715301377913262080,
+    "warning_status":1,
+    "warning_name":"预警",
+    "warning_word":"家电",
+    "warning_classify":"1,2,3,4,5,6,7,8,9,10,11",
+    "warning_content":0,
+    "warning_similar":1,
+    "warning_match":1,
+    "warning_deduplication":0,
+    "warning_source":"{\"type\":\"2\",\"email\":\"huangyi@stonedt.com\"}",
+    "warning_receive_time":"{\"start\":\"00:00\",\"end\":\"23:00\"}",
+    "weekend_warning":1,
+    "warning_interval":"{\"type\":\"1\",\"time\":\"1\"}",
+    "project_name":"小熊电器",
+    "group_name":"未分方案组",
+    "user_id":null
+}
+alertpush()
+function alertpush(){
+    //来源类型
+    var warning_classify = warning.warning_classify
+    var classifyArr = warning_classify.split(",");
+    var classifyArrs = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']
+    var classifyHtml = ''
+    if (classifyArrs.sort().toString() == classifyArr.sort().toString()) {
+        classifyHtml += '<span class="badge badge-pill badge-info" data-id="0" onclick="badgeClassifyClick(this)" >全部</span>'
+    } else {
+        classifyHtml += '<span class="badge badge-pill badge-light" data-id="0" onclick="badgeClassifyClick(this)">全部</span>'
+    }
+    if (classifyArr.includes('1')) {
+        classifyHtml += '<span class="badge badge-pill badge-info" data-id="1" onclick="badgeClassifyClick(this)">微信</span>'
+    } else {
+        classifyHtml += '<span class="badge badge-pill badge-light" data-id="1" onclick="badgeClassifyClick(this)">微信</span>'
+    }
+    if (classifyArr.includes('2')) {
+        classifyHtml += '<span class="badge badge-pill badge-info" data-id="2" onclick="badgeClassifyClick(this)">微博</span>'
+    } else {
+        classifyHtml += '<span class="badge badge-pill badge-light" data-id="2" onclick="badgeClassifyClick(this)">微博</span>'
+    }
+    if (classifyArr.includes('3')) {
+        classifyHtml += '<span class="badge badge-pill badge-info" data-id="3" onclick="badgeClassifyClick(this)">政务</span>'
+    } else {
+        classifyHtml += '<span class="badge badge-pill badge-light" data-id="3" onclick="badgeClassifyClick(this)">政务</span>'
+    }
+    if (classifyArr.includes('4')) {
+        classifyHtml += '<span class="badge badge-pill badge-info" data-id="4" onclick="badgeClassifyClick(this)">论坛</span>'
+    } else {
+        classifyHtml += '<span class="badge badge-pill badge-light" data-id="4" onclick="badgeClassifyClick(this)">论坛</span>'
+    }
+    if (classifyArr.includes('5')) {
+        classifyHtml += '<span class="badge badge-pill badge-info" data-id="5" onclick="badgeClassifyClick(this)">新闻</span>'
+    } else {
+        classifyHtml += '<span class="badge badge-pill badge-light" data-id="5" onclick="badgeClassifyClick(this)">新闻</span>'
+    }
+    if (classifyArr.includes('6')) {
+        classifyHtml += '<span class="badge badge-pill badge-info" data-id="6" onclick="badgeClassifyClick(this)">报刊</span>'
+    } else {
+        classifyHtml += '<span class="badge badge-pill badge-light" data-id="6" onclick="badgeClassifyClick(this)">报刊</span>'
+    }
+    if (classifyArr.includes('7')) {
+        classifyHtml += '<span class="badge badge-pill badge-info" data-id="7" onclick="badgeClassifyClick(this)">客户端</span>'
+    } else {
+        classifyHtml += '<span class="badge badge-pill badge-light" data-id="7" onclick="badgeClassifyClick(this)">客户端</span>'
+    }
+    if (classifyArr.includes('8')) {
+        classifyHtml += '<span class="badge badge-pill badge-info" data-id="8" onclick="badgeClassifyClick(this)">网站</span>'
+    } else {
+        classifyHtml += '<span class="badge badge-pill badge-light" data-id="8" onclick="badgeClassifyClick(this)">网站</span>'
+    }
+    if (classifyArr.includes('9')) {
+        classifyHtml += '<span class="badge badge-pill badge-info" data-id="9" onclick="badgeClassifyClick(this)">外媒</span>'
+    } else {
+        classifyHtml += '<span class="badge badge-pill badge-light" data-id="9" onclick="badgeClassifyClick(this)">外媒</span>'
+    }
+    if (classifyArr.includes('10')) {
+        classifyHtml += '<span class="badge badge-pill badge-info" data-id="10" onclick="badgeClassifyClick(this)">视频</span>'
+    } else {
+        classifyHtml += '<span class="badge badge-pill badge-light" data-id="10" onclick="badgeClassifyClick(this)">视频</span>'
+    }
+    if (classifyArr.includes('11')) {
+        classifyHtml += '<span class="badge badge-pill badge-info" data-id="11" onclick="badgeClassifyClick(this)">博客</span>'
+    } else {
+        classifyHtml += '<span class="badge badge-pill badge-light" data-id="11" onclick="badgeClassifyClick(this)">博客</span>'
+    }
+    $('#warning-classify').html(classifyHtml)
+//预警来源
+    var warning_source = JSON.parse(warning.warning_source)
+    var sourceHtml = ''
+    if (warning_source.type == 1) {
+        sourceHtml = '<span class="badge badge-pill badge-info" data-id="1" onclick="badgeClick(this)">系统推送</span>' +
+            '<span class="badge badge-pill badge-light" data-id="2" onclick="badgeClick(this)">邮箱推送</span>' +
+            '<input style="display:none;" id="email-input" type="text" class="form-control" value="' + warning_source.email + '" placeholder="请输入邮箱地址">'
+    } else {
+        sourceHtml = '<span class="badge badge-pill badge-light" data-id="1" onclick="badgeClick(this)">系统推送</span>' +
+            '<span class="badge badge-pill badge-info" data-id="2" onclick="badgeClick(this)">邮箱推送</span>' +
+            '<input id="email-input" type="text" class="form-control" value="' + warning_source.email + '" placeholder="请输入邮箱地址">'
+    }
+    $('#warning-source').html(sourceHtml)
+//接收时间
+    var warning_receive_time = JSON.parse(warning.warning_receive_time)
+    $('#warning-receive-time-start').val(warning_receive_time.start)
+    $('#warning-receive-time-end').val(warning_receive_time.end)
+
+//预警间隔
+    var warning_interval = JSON.parse(warning.warning_interval)
+    var intervalHtml = '<span class="badge badge-pill badge-info" data-id="1" onclick="badgeClick(this)">实时预警</span>' +
+        '<span class="badge badge-pill badge-light" data-id="2" onclick="badgeClick(this)">定时预警</span>'
+    if (warning_interval.type == 2) {
+        intervalHtml = '<span class="badge badge-pill badge-light" data-id="1" onclick="badgeClick(this)">实时预警</span>' +
+            '<span class="badge badge-pill badge-info" data-id="2" onclick="badgeClick(this)">定时预警</span>'
+    }
+    $('#warning-interval').prepend(intervalHtml)
+    $('#warning-interval-time').val(warning_interval.time)
+    $("#loading1").css({"display": "none"});
+}
+
+
+//保存
+function save() {
+    var data = getData();
+    var warning_status = 0;
+    if ($('#status').is(':checked')) {
+        warning_status = 1;
+    }
+
+    let warning_word = data.warning_word;
+    if (warning_word == "" && warning_status == 1) {
+        showtips("预警词为空，请关闭预警开关！");
+        return;
+    }
+
+    if (warning_status == 0 && warning_word != "") {  // 未开 有词
+        swal({
+            title: "预警创建完成",
+            text: "是否开启预警设置",
+            type: "success",
+            showCancelButton: true,
+            confirmButtonColor: "#36bea6",
+            confirmButtonText: "开启预警",
+            cancelButtonColor: "#6c757d",
+            cancelButtonText: "直接创建",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }).then(function (that) {
+            if (that.value) {
+                $("#checkmonitor").addClass("line-active");  // 是
+                warning_status = 1;
+            } else {
+                $("#checkmonitor").addClass("line-active");  // 否
+                warning_status = 0;
+            }
+            updateData(warning_status,data);
+        });
+    } else if (warning_status == 0 && warning_word == "") {  // 未开   无词
+        updateData(warning_status,data);
+    } else { // 开了 有词
+        updateData(warning_status,data);
+    }
+}
+
+
+// 修改数据
+function updateData(warning_status, data) {
+//        var data = getData()
+    data.warning_status = warning_status;
+    var warning_source = JSON.parse(data.warning_source)
+    if (warning_source.type == 2) {
+        if ($('#warning-source > input').val() == '') {
+            showtips("由于您没有填写收件人邮箱,将使用发件人邮箱作为收件人")
+            // return
+        }
+    }
+
+    $.ajax({
+        url: ctxPath + 'system/updateWarning',
+        type: 'post',
+        dataType: 'json',
+        data: data,
+        success: function (res) {
+            if (res.status == 200) {
+                showtips("修改成功！")
+                // window.location.href = '/system/warning?groupid=' + groupId + '&page=' + page
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            if (xhr.status == 403) {
+                window.location.href = ctxPath + "login";
+            }
+        }
+    });
+}
+
+
+//返回
+function backPage() {
+    window.location.href = ctxPath + "project";
+}
+
+function badgeClick(that) {
+    if ($(that).hasClass('badge-info')) {
+//       		$(that).removeClass('badge-info')
+//       		$(that).addClass('badge-light')
+//       		$(that).siblings().removeClass('badge-light')
+//       		$(that).siblings().addClass('badge-info')
+    } else {
+        $(that).removeClass('badge-light')
+        $(that).addClass('badge-info')
+        $(that).siblings().removeClass('badge-info')
+        $(that).siblings().addClass('badge-light')
+    }
+}
+
+//来源点击事件
+function badgeClassifyClick(that) {
+    if ($(that).text() == '全部') {
+        if ($(that).hasClass('badge-info')) {
+            $(that).removeClass('badge-info')
+            $(that).addClass('badge-light')
+            $(that).siblings().removeClass('badge-info')
+            $(that).siblings().addClass('badge-light')
+        } else {
+            $(that).removeClass('badge-light')
+            $(that).addClass('badge-info')
+            $(that).siblings().removeClass('badge-light')
+            $(that).siblings().addClass('badge-info')
+        }
+        return
+    }
+    if ($(that).hasClass('badge-info')) {
+        $(that).removeClass('badge-info')
+        $(that).addClass('badge-light')
+    } else {
+        $(that).removeClass('badge-light')
+        $(that).addClass('badge-info')
+    }
+}
+
+function getData() {
+    var warning_name_str = $('#warning-name').val() //预警名称
+    var warning_word_str = $('#warning-word').val()//设置预警词
+    var warning_classify_str = ''//来源类型
+    $('#warning-classify > .badge').each(function () {
+        if ($(this).hasClass('badge-info')) {
+            var data_id = $(this).attr('data-id');
+            if (data_id != 0) {
+                warning_classify_str += $(this).attr('data-id') + ','
+            }
+        }
+    });
+    warning_classify_str = warning_classify_str.substring(0, warning_classify_str.length - 1)
+
+    var warning_content_str = ''//预警内容
+    $('#warning-content > .badge').each(function () {
+        if ($(this).hasClass('badge-info')) {
+            warning_content_str = $(this).attr('data-id')
+        }
+    });
+
+    var warning_similar_str = ''//相似文章合并
+    $('#warning-similar > .badge').each(function () {
+        if ($(this).hasClass('badge-info')) {
+            warning_similar_str = $(this).attr('data-id')
+        }
+    });
+    var warning_match_str = ''//匹配方式
+    $('#warning-match > .badge').each(function () {
+        if ($(this).hasClass('badge-info')) {
+            warning_match_str = $(this).attr('data-id')
+        }
+    });
+    var warning_deduplication_str = ''//预警去重
+    $('#warning-deduplication > .badge').each(function () {
+        if ($(this).hasClass('badge-info')) {
+            warning_deduplication_str = $(this).attr('data-id')
+        }
+    });
+    var warning_source_str = new Object();//预警来源
+    $('#warning-source > .badge').each(function () {
+        if ($(this).hasClass('badge-info')) {
+            warning_source_str.type = $(this).attr('data-id')
+        }
+    });
+    warning_source_str.email = ''
+    if ($('#warning-source > input').val() != null) {
+        warning_source_str.email = $('#warning-source > input').val()
+    }
+
+    var warning_receive_time_str = new Object();//接收时间
+    warning_receive_time_str.start = $('#warning-receive-time-start').val()
+    warning_receive_time_str.end = $('#warning-receive-time-end').val()
+
+    var weekend_warning_str = ''//周末预警
+    $('#weekend-warning > .badge').each(function () {
+        if ($(this).hasClass('badge-info')) {
+            weekend_warning_str = $(this).attr('data-id')
+        }
+    });
+    var warning_interval_str = new Object();//预警间隔
+    $('#warning-interval > .badge').each(function () {
+        if ($(this).hasClass('badge-info')) {
+            warning_interval_str.type = $(this).attr('data-id')
+        }
+    });
+    warning_interval_str.time = ''
+    if ($('#warning-interval-time').val() != null) {
+        warning_interval_str.time = $('#warning-interval-time').val()
+    }
+
+    var data = new Object();
+    data.project_id = project_id
+    data.warning_word = warning_word_str
+    data.warning_name = warning_name_str
+    data.warning_classify = warning_classify_str
+    data.warning_name = warning_name_str
+    data.warning_content = warning_content_str
+    data.warning_similar = warning_similar_str
+    data.warning_match = warning_match_str
+    data.warning_deduplication = warning_deduplication_str.toString()
+    data.warning_source = JSON.stringify(warning_source_str)
+    data.warning_receive_time = JSON.stringify(warning_receive_time_str)
+    data.weekend_warning = weekend_warning_str
+    data.warning_interval = JSON.stringify(warning_interval_str)
+    return data
+}
+
+$('body').on('click', '#warning-source span', function () {
+    var id = $(this).data('id');
+    if (id == 1) {
+        $('#email-input').hide();
+    } else {
+        $('#email-input').show();
+    }
+})
+
+$(".bt-switch-early-warning input[type='checkbox']").bootstrapSwitch({
+    onText: "ON",
+    offText: "OFF",
+    onColor: "success",
+    offColor: "warning",
+    size: "normal",
+    handleWidth: "10",
+    onSwitchChange: function (event, state) {
+        window.parent.Warn_Start = state;
+        var $el = $(event.el)
+            , value = event.value;
+        var step = this.value;
+        if (state == true) {
+//                 alert(1)
+            $(".alertSettings").css({"display":"block"})
+        } else {
+//             	alert(2)
+            $(".alertSettings").css({"display":"none"})
+        }
+    }
+
+})
+function createBindingEmailDialog() {
+
+    const create =
+        '<div class="shadebox" id="createmodel">' +
+        '    <div class="modal-dialog" role="document">' +
+        '        <div class="modal-content">' +
+        '            <div class="modal-header align-flexend" style="border:none">' +
+        '                <h5 class="modal-title"><i class="ti-marker-alt m-r-10"></i>绑定发件邮箱</h5>' +
+        '                <i class="mdi mdi-close-circle-outline font-18 cursor-po" id="closethis"></i>' +
+        '            </div>' +
+        '            <div class="modal-body">' +
+        '                <div class="input-group mb-3" style="align-items: center">' +
+        '                    <div style="min-width: 120px">发件人邮箱:</div>' +
+        '                    <input type="text" class="form-control" id="username" placeholder="请输入发件人邮箱，例如:warring@stonedt.com" maxlength="100">' +
+        '                </div>' +
+        '                <div class="input-group mb-3" style="align-items: center">' +
+        '                    <div style="min-width: 120px">SMTP服务器地址:</div>' +
+        '                    <input type="text" class="form-control" id="host" placeholder="请输入SMTP服务器地址,例如:smtp.exmail.qq.com" maxlength="100">' +
+        '                </div>' +
+        '                <div class="input-group mb-3" style="align-items: center">' +
+        '                    <div style="min-width: 120px">发件人授权码:</div>' +
+        '                    <input type="text" class="form-control" id="password" placeholder="请输入发件人授权码,例如:3fakOUExbvsr3JVo" maxlength="100">' +
+        '                </div>' +
+        '                <div class="input-group mb-3" style="align-items: center">' +
+        '                    <div style="min-width: 120px">SMTP服务器端口:</div>' +
+        '                    <input type="text" class="form-control" id="port" placeholder="请输入SMTP服务器端口，例如:465" maxlength="100">' +
+        '                </div>' +
+        '            </div>' +
+        '            <div class="modal-footer" style="border:none">' +
+        '                <button type="button" class="btn btn-info" id="confirm"> 确定</button>' +
+        '                <button type="button" class="btn btn-secondary" id="cancel">取消</button>' +
+        '             </div>' +
+        '        </div>' +
+        '    </div>' +
+        '</div>'
+
+    $("body").append(create)
+    $("#closethis").click(function (param) {
+        $("#createmodel").remove()
+    })
+    $("#cancel").click(function (param) {
+        $("#createmodel").remove()
+    })
+    $("#confirm").click(function () {
+        // 获取所有变量
+        let host = $("#host").val();
+        let username = $("#username").val();
+        let password = $("#password").val();
+        let port = $("#port").val();
+        if (host == '' || host == null) {
+            showtips("SMTP服务器地址不能为空！")
+        }
+        if (username == '' || username == null) {
+            showtips("发件人邮箱不能为空！")
+        }
+        if (password == '' || password == null) {
+            showtips("发件人授权码不能为空！")
+        }
+        if (port == '' || port == null) {
+            showtips("SMTP服务器端口不能为空！")
+        }
+        let requestBody = new Object();
+        requestBody.host = host;
+        requestBody.username = username;
+        requestBody.password = password;
+        requestBody.port = port;
+        showtips("正在绑定发件邮箱...,会有一定延迟，请耐心等待")
+        $.ajax({
+            url: window.location.origin + '/mail/saveMailConfig',
+            type: 'post',
+            contentType:"application/json; charset=utf-8",
+            dataType: 'json',
+            data: JSON.stringify(requestBody),
+            success: function (res) {
+                if (res.status == 200) {
+                    showtips("绑定成功！")
+                    $("#createmodel").remove()
+                    save()
+                } else {
+                    showtips(res.msg)
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                if (xhr.status === 403) {
+                    window.location.href = ctxPath + "login";
+                }
+            }
+        });
+    })
+}
+
+function checkEmail(){
+    let warning_source_str;
+    $('#warning-source > .badge').each(function () {
+        if ($(this).hasClass('badge-info')) {
+            warning_source_str = $(this).attr('data-id')
+        }
+    });
+    console.log(warning_source_str);
+    if (warning_source_str=='1'){
+        save();
+        return;
+    }
+
+    $.ajax({
+        url: window.location.origin + '/mail/checkMailConfig',
+        type: 'post',
+        dataType: 'json',
+        data: {},
+        success: function (res) {
+            if (res.status === 200) {
+                save()
+            } else {
+                showtips("请先绑定发件邮箱！")
+                createBindingEmailDialog()
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            if (xhr.status === 403) {
+                window.location.href = ctxPath + "login";
+            }
+        }
+    });
+}
 </script>
 </body>
 
