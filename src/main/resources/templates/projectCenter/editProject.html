@@ -653,10 +653,15 @@ $("#currentyear").text((new Date()).getFullYear());
                     let character_word = '';
                     let event_word = '';
                     let regional_word = '';
-                    
-                    
-                    
+
                     let precise = data.precise;
+
+                    var tabindex = 2
+                    $('#search-tab > li').each(function () {
+                        if ($(this).hasClass('create-tab-act')) {
+                            tabindex = $(this).attr('data-type')
+                        }
+                    });
 
                     if (project_type == 1) { // 高级方案
                         $("#search-tab").find("li").eq(0).removeClass("create-tab-act");
@@ -713,6 +718,15 @@ $("#currentyear").text((new Date()).getFullYear());
                         if (regional_word) $("#proarea").val(regional_word);
                         if (character_word) $("#properson").val(character_word);
                         if (event_word) $("#proaccident").val(event_word);
+                    }
+
+                    if(tabindex==4){
+                        $("#tab1").css("display", "none")
+                        $("#tab2").css("display", "none");
+                        $("#tab3").css("display", "block");
+                        $("#search-tab").find("li").eq(0).removeClass("create-tab-act");
+                        $("#search-tab").find("li").eq(1).removeClass("create-tab-act");
+                        $("#search-tab").find("li").eq(2).addClass("create-tab-act");
                     }
                     $("#groupname").html(group_name);
                     $("#projectname").html(project_name);
@@ -1335,6 +1349,8 @@ function save() {
             if (that.value) {
                 $("#checkmonitor").addClass("line-active");  // 是
                 warning_status = 1;
+                $("#status").bootstrapSwitch('state', true, true);
+                $(".alertSettings").css({"display":"block"})
             } else {
                 $("#checkmonitor").addClass("line-active");  // 否
                 warning_status = 0;
