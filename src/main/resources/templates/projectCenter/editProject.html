@@ -382,7 +382,7 @@
                         <div id="tab3" class="card m-b-0" style="display: none;">
                             <div class="card-body p-b-0">
                                 <div class="warning-edit-line">
-                                    <span style="margin-right: 15px;">预警开关</span>
+                                    <div>预警开关</div>
                                     <div id="statusSwitch" class="bt-switch-early-warning">
                                         <input id="status" type="checkbox" data-on-color="success" data-off-color="warning">
                                     </div>
@@ -390,13 +390,13 @@
                                 <div class="alertSettings" style="display:none;">
                                     <div class="warning-edit-line">
                                         <div>方案名称</div>
-                                        <div>日常出行</div>
+                                        <div class="schemeName">日常出行</div>
                                     </div>
                                     <div class="warning-edit-line">
                                         <div>预警名称</div>
                                         <div>
                                             <input class="form-control" type="text" name="warning-name" id="warning-name"
-                                                   value="预警" placeholder="请输入预警名称">
+                                                   placeholder="请输入预警名称">
                                         </div>
                                     </div>
                                     <div class="warning-edit-line">
@@ -433,7 +433,7 @@
                                         </div>
                                         <div class="warning-right">
                                             <div>相似文章合并</div>
-                                            <div>
+                                            <div class="similar_articles">
                                                 <span class="badge badge-pill badge-info" data-id="1" onclick="badgeClick(this)">合并</span>
                                                 <span class="badge badge-pill badge-light" data-id="0" onclick="badgeClick(this)">不合并</span>
                                             </div>
@@ -605,7 +605,8 @@ $("#currentyear").text((new Date()).getFullYear());
     var groupId = [[${groupId}]];
 
     $(document).ready(function () {
-        getEditInfo(edit_projectid);
+        getEditInfo(edit_projectid)
+        warningSettingDetail(edit_projectid)
     });
 
     // 左侧方案切换
@@ -617,6 +618,7 @@ $("#currentyear").text((new Date()).getFullYear());
         edit_groupid = groupId;
         setBrowserUrl();
         getEditInfo(edit_projectid);
+        warningSettingDetail(edit_projectid)
     }
 
     // 设置浏览器地址变换
@@ -659,8 +661,10 @@ $("#currentyear").text((new Date()).getFullYear());
                     if (project_type == 1) { // 高级方案
                         $("#search-tab").find("li").eq(0).removeClass("create-tab-act");
                         $("#search-tab").find("li").eq(1).addClass("create-tab-act");
+                        $("#search-tab").find("li").eq(2).removeClass("create-tab-act");
                         $("#tab1").css("display", "none");
                         $("#tab2").css("display", "block");
+                        $("#tab3").css("display", "none");
                         $("#proname").val(project_name);
                         $("#prokeywords").val(subject_word);
                         $("#proshield").val(stop_word);
@@ -687,8 +691,10 @@ $("#currentyear").text((new Date()).getFullYear());
                     } else if (project_type == 2) { // 普通方案
                         $("#tab2").css("display", "none");
                         $("#tab1").css("display", "block");
+                        $("#tab3").css("display", "none");
                         $("#search-tab").find("li").eq(1).removeClass("create-tab-act");
                         $("#search-tab").find("li").eq(0).addClass("create-tab-act");
+                        $("#search-tab").find("li").eq(2).removeClass("create-tab-act");
                         $("#proname1").val(project_name);
                         $("#prokeywords1").val(subject_word);
                         $("#proshield1").val(stop_word);
@@ -1117,34 +1123,45 @@ $("#currentyear").text((new Date()).getFullYear());
         window.location.href = "/project?page=1&groupid=" + edit_groupid + "&projectsearch=";
     });
 
+var warning = {}
 
-
-
-
-// var page = [[${page}]];
-var warning = {
-    "id":961,
-    "create_time":"2023-10-2017:38:11",
-    "warning_setting_id":1715301377976176640,
-    "project_id":1715301377913262080,
-    "warning_status":1,
-    "warning_name":"预警",
-    "warning_word":"家电",
-    "warning_classify":"1,2,3,4,5,6,7,8,9,10,11",
-    "warning_content":0,
-    "warning_similar":1,
-    "warning_match":1,
-    "warning_deduplication":0,
-    "warning_source":"{\"type\":\"2\",\"email\":\"huangyi@stonedt.com\"}",
-    "warning_receive_time":"{\"start\":\"00:00\",\"end\":\"23:00\"}",
-    "weekend_warning":1,
-    "warning_interval":"{\"type\":\"1\",\"time\":\"1\"}",
-    "project_name":"小熊电器",
-    "group_name":"未分方案组",
-    "user_id":null
+function warningSettingDetail(edit_projectid) {
+    $.ajax({
+        url: ctxPath + "system/warningSettingDetail",
+        type: "get",
+        data: {
+            projectId: edit_projectid
+        },
+        success: function (res) {
+            if(res.status==200){
+                warning = res.data
+                alertpush()
+            }else{
+                dataerror("#tab3")
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            if (xhr.status == 403) {
+                window.location.href = ctxPath + "login";
+            }
+        }
+    })
 }
-alertpush()
+
 function alertpush(){
+    // 预警开关
+    if(warning.warning_status==0){
+        $("#status").bootstrapSwitch('state', false, true);
+    }else{
+        $("#status").bootstrapSwitch('state', true, true);
+        $(".alertSettings").css({"display":"block"})
+    }
+    // 方案名称
+    $(".schemeName").val(warning.project_name)
+    // 预警名称
+    $("#warning-name").val(warning.warning_name)
+    // 预警词
+    $("#warning-word").val(warning.warning_word)
     //来源类型
     var warning_classify = warning.warning_classify
     var classifyArr = warning_classify.split(",");
@@ -1211,7 +1228,45 @@ function alertpush(){
         classifyHtml += '<span class="badge badge-pill badge-light" data-id="11" onclick="badgeClassifyClick(this)">博客</span>'
     }
     $('#warning-classify').html(classifyHtml)
-//预警来源
+    //预警内容
+    if(warning.warning_content==0){
+        $("#warning-content span").eq(0).attr("class","badge badge-pill badge-info")
+        $("#warning-content span").eq(1).attr("class","badge badge-pill badge-light")
+    }else if(warning.warning_content==1){
+        $("#warning-content span").eq(0).attr("class","badge badge-pill badge-light")
+        $("#warning-content span").eq(1).attr("class","badge badge-pill badge-info")
+    }
+    //相似文章合并
+    if(warning.warning_similar==1){
+        $(".similar_articles span").eq(0).attr("class","badge badge-pill badge-info")
+        $(".similar_articles span").eq(1).attr("class","badge badge-pill badge-light")
+    }else if(warning.warning_similar==0){
+        $(".similar_articles span").eq(0).attr("class","badge badge-pill badge-light")
+        $(".similar_articles span").eq(1).attr("class","badge badge-pill badge-info")
+    }
+    //匹配方式
+    if(warning.warning_match==1){
+        $("#warning-match span").eq(0).attr("class","badge badge-pill badge-info")
+        $("#warning-match span").eq(1).attr("class","badge badge-pill badge-light")
+        $("#warning-match span").eq(2).attr("class","badge badge-pill badge-light")
+    }else if(warning.warning_match==2){
+        $("#warning-match span").eq(0).attr("class","badge badge-pill badge-light")
+        $("#warning-match span").eq(1).attr("class","badge badge-pill badge-info")
+        $("#warning-match span").eq(2).attr("class","badge badge-pill badge-light")
+    }else if(warning.warning_match==3){
+        $("#warning-match span").eq(0).attr("class","badge badge-pill badge-light")
+        $("#warning-match span").eq(1).attr("class","badge badge-pill badge-light")
+        $("#warning-match span").eq(2).attr("class","badge badge-pill badge-info")
+    }
+    //预警去重
+    if(warning.warning_deduplication==1){
+        $("#warning-deduplication span").eq(0).attr("class","badge badge-pill badge-info")
+        $("#warning-deduplication span").eq(1).attr("class","badge badge-pill badge-light")
+    }else if(warning.warning_deduplication==0){
+        $("#warning-deduplication span").eq(0).attr("class","badge badge-pill badge-light")
+        $("#warning-deduplication span").eq(1).attr("class","badge badge-pill badge-info")
+    }
+    //预警来源
     var warning_source = JSON.parse(warning.warning_source)
     var sourceHtml = ''
     if (warning_source.type == 1) {
@@ -1224,12 +1279,19 @@ function alertpush(){
             '<input id="email-input" type="text" class="form-control" value="' + warning_source.email + '" placeholder="请输入邮箱地址">'
     }
     $('#warning-source').html(sourceHtml)
-//接收时间
+    //接收时间
     var warning_receive_time = JSON.parse(warning.warning_receive_time)
     $('#warning-receive-time-start').val(warning_receive_time.start)
     $('#warning-receive-time-end').val(warning_receive_time.end)
-
-//预警间隔
+    //周末预警
+    if(warning.weekend_warning==1){
+        $("#weekend-warning span").eq(0).attr("class","badge badge-pill badge-info")
+        $("#weekend-warning span").eq(1).attr("class","badge badge-pill badge-light")
+    }else if(warning.weekend_warning==0){
+        $("#weekend-warning span").eq(0).attr("class","badge badge-pill badge-light")
+        $("#weekend-warning span").eq(1).attr("class","badge badge-pill badge-info")
+    }
+    //预警间隔
     var warning_interval = JSON.parse(warning.warning_interval)
     var intervalHtml = '<span class="badge badge-pill badge-info" data-id="1" onclick="badgeClick(this)">实时预警</span>' +
         '<span class="badge badge-pill badge-light" data-id="2" onclick="badgeClick(this)">定时预警</span>'
@@ -1321,7 +1383,7 @@ function updateData(warning_status, data) {
 
 //返回
 function backPage() {
-    window.location.href = ctxPath + "project";
+    window.location.href = "/project?page=1&groupid=" + edit_groupid + "&projectsearch=";
 }
 
 function badgeClick(that) {
@@ -1580,7 +1642,6 @@ function checkEmail(){
             warning_source_str = $(this).attr('data-id')
         }
     });
-    console.log(warning_source_str);
     if (warning_source_str=='1'){
         save();
         return;
