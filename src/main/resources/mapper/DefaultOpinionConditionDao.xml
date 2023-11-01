@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.stonedt.intelligence.mapper.DefaultOpinionConditionMapper">
+<mapper namespace="com.stonedt.intelligence.dao.DefaultOpinionConditionDao">
 
     <resultMap id="BaseResultMap" type="com.stonedt.intelligence.entity.DefaultOpinionCondition">
             <id property="id" column="id" jdbcType="INTEGER"/>
@@ -43,4 +43,7 @@
         eventIndex,industryIndex,province,
         city
     </sql>
+    <select id="getByProjectId" resultType="com.stonedt.intelligence.entity.DefaultOpinionCondition">
+        select * from default_opinion_condition where project_id = #{projectId}
+    </select>
 </mapper>

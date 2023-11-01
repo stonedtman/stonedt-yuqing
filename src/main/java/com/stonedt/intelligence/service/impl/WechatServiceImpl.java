@@ -12,6 +12,7 @@ import com.stonedt.intelligence.dto.QrcodeData;
 import com.stonedt.intelligence.dto.WechatUserInfo;
 import com.stonedt.intelligence.dto.WxMpXmlMessage;
 import com.stonedt.intelligence.entity.*;
+import com.stonedt.intelligence.dao.DefaultOpinionConditionDao;
 import com.stonedt.intelligence.service.*;
 import com.stonedt.intelligence.thred.ThreadPoolConst;
 import com.stonedt.intelligence.util.DateUtil;
@@ -59,6 +60,8 @@ public class WechatServiceImpl implements WechatService {
 
 	private final ProjectTaskDao projectTaskDao;
 
+	private final DefaultOpinionConditionDao defaultOpinionConditionDao;
+
 	@Value("${wechat.qrcode.url}")
 	private String getQrcodeUrl;
 
@@ -73,7 +76,8 @@ public class WechatServiceImpl implements WechatService {
 							 SolutionGroupService solutionGroupService,
 							 OpinionConditionService opinionConditionService,
 							 SystemService systemService,
-							 ProjectTaskDao projectTaskDao) {
+							 ProjectTaskDao projectTaskDao,
+							 DefaultOpinionConditionDao defaultOpinionConditionDao) {
 		this.restTemplate = restTemplate;
 		this.redisTemplate = redisTemplate;
 		this.userWechatInfoDao = userWechatInfoDao;
@@ -84,6 +88,7 @@ public class WechatServiceImpl implements WechatService {
 		this.opinionConditionService = opinionConditionService;
 		this.systemService = systemService;
 		this.projectTaskDao = projectTaskDao;
+		this.defaultOpinionConditionDao = defaultOpinionConditionDao;
 	}
 
 
@@ -199,8 +204,6 @@ public class WechatServiceImpl implements WechatService {
 			userWechatInfoDao.saveWechatUserInfo(userWechatUserInfo);
 			//单线程线程池,确保有序执行
 			ThreadPoolConst.SINGLE_EXECUTOR.execute(() ->{
-				//更新用户登录次数
-				userDao.updateUserLoginCountById(userId);
 				//获取默认方案组列表
 				List<DefaultSolutionGroup> defaultSolutionGroupList = defaultProjectService.getDefaultSolutionGroupList();
 				String create_time = DateUtil.getNowTime();
@@ -217,6 +220,8 @@ public class WechatServiceImpl implements WechatService {
 					solutionGroupService.addSolutionGroup(solutionGroup);
 
 					for (DefaultProject defaultProject : defaultProjectList) {
+						//查询默认方案的偏好设置
+						DefaultOpinionCondition defaultOpinionCondition = defaultOpinionConditionDao.getByProjectId(defaultProject.getProject_id());
 						//插入方案
 						long projectId = IdUtil.getSnowflake(3, 1).nextId();
 						Project project = new Project();
@@ -234,7 +239,10 @@ public class WechatServiceImpl implements WechatService {
 						project.setUserId(nextId);
 						projectService.insertProject(project);
 						//插入偏好设置
-						addOpinionCondition(defaultProject.getStop_word(), projectId, create_time);
+						OpinionCondition opinionCondition = new OpinionCondition();
+						BeanUtils.copyProperties(defaultOpinionCondition, opinionCondition);
+						opinionCondition.setProject_id(projectId);
+						addOpinionCondition(opinionCondition, create_time);
 						//插入预警设置
 						addWarningCondition(projectId, create_time);
 						//插入方案计划
@@ -276,22 +284,18 @@ public class WechatServiceImpl implements WechatService {
 	/**
 	 * 增加偏好设置
 	 */
-	public void addOpinionCondition(String stop_word, Long projectid, String create_time) {
+	public void addOpinionCondition(OpinionCondition opinionCondition, String create_time) {
 		Map<String, Object> paramOpinionMap = new HashMap<String, Object>();
 		Long opinion_condition_id = IdUtil.getSnowflake(4, 1).nextId();
 		paramOpinionMap.put("create_time", create_time);
 		paramOpinionMap.put("opinion_condition_id", opinion_condition_id);
-		paramOpinionMap.put("project_id", projectid);
-		paramOpinionMap.put("time", 4);
-		if (stop_word.equals("")) {
-			paramOpinionMap.put("precise", 0);
-		} else {
-			paramOpinionMap.put("precise", 1);
-		}
-		paramOpinionMap.put("emotion", "[1,2,3]");
-		paramOpinionMap.put("similar", 0);
-		paramOpinionMap.put("sort", 1);
-		paramOpinionMap.put("matchs", 1);
+		paramOpinionMap.put("project_id", opinionCondition.getProject_id());
+		paramOpinionMap.put("time", opinionCondition.getTime());
+		paramOpinionMap.put("precise", opinionCondition.getPrecise());
+		paramOpinionMap.put("emotion", opinionCondition.getEmotion());
+		paramOpinionMap.put("similar", opinionCondition.getSimilar());
+		paramOpinionMap.put("sort", opinionCondition.getSort());
+		paramOpinionMap.put("matchs", opinionCondition.getMatchs());
 		opinionConditionService.addOpinionConditionById(paramOpinionMap);
 
 	}
