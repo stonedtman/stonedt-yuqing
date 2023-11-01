@@ -540,8 +540,8 @@
                                         <div class="warning-right">
                                             <div>预警间隔</div>
                                             <div id="warning-interval">
-                                                <!--  <span class="badge badge-pill badge-light" onclick="badgeClick(this)">实时预警</span>
-                                                 <span class="badge badge-pill badge-info" onclick="badgeClick(this)">定时预警</span> -->
+                                                <span class="badge badge-pill badge-info" data-id="1" onclick="badgeClick(this)">实时预警</span>
+                                                <span class="badge badge-pill badge-light" data-id="2" onclick="badgeClick(this)">定时预警</span>
                                                 <select name="" id="warning-interval-time" class="custom-select form-control">
                                                     <option value="1">1小时</option>
                                                     <option value="2">2小时</option>
@@ -1152,12 +1152,13 @@ function alertpush(){
     // 预警开关
     if(warning.warning_status==0){
         $("#status").bootstrapSwitch('state', false, true);
+        $(".alertSettings").css({"display":"none"})
     }else{
         $("#status").bootstrapSwitch('state', true, true);
         $(".alertSettings").css({"display":"block"})
     }
     // 方案名称
-    $(".schemeName").val(warning.project_name)
+    $(".schemeName").html(warning.project_name)
     // 预警名称
     $("#warning-name").val(warning.warning_name)
     // 预警词
@@ -1293,15 +1294,14 @@ function alertpush(){
     }
     //预警间隔
     var warning_interval = JSON.parse(warning.warning_interval)
-    var intervalHtml = '<span class="badge badge-pill badge-info" data-id="1" onclick="badgeClick(this)">实时预警</span>' +
-        '<span class="badge badge-pill badge-light" data-id="2" onclick="badgeClick(this)">定时预警</span>'
-    if (warning_interval.type == 2) {
-        intervalHtml = '<span class="badge badge-pill badge-light" data-id="1" onclick="badgeClick(this)">实时预警</span>' +
-            '<span class="badge badge-pill badge-info" data-id="2" onclick="badgeClick(this)">定时预警</span>'
+    if(warning_interval.type == 1){
+        $("#warning-interval span").eq(0).attr("class","badge badge-pill badge-info")
+        $("#warning-interval span").eq(1).attr("class","badge badge-pill badge-light")
+    }else if(warning_interval.type == 2){
+        $("#warning-interval span").eq(0).attr("class","badge badge-pill badge-light")
+        $("#warning-interval span").eq(1).attr("class","badge badge-pill badge-info")
     }
-    $('#warning-interval').prepend(intervalHtml)
     $('#warning-interval-time').val(warning_interval.time)
-    $("#loading1").css({"display": "none"});
 }
 
 
@@ -1497,7 +1497,7 @@ function getData() {
     }
 
     var data = new Object();
-    data.project_id = project_id
+    data.project_id = edit_projectid
     data.warning_word = warning_word_str
     data.warning_name = warning_name_str
     data.warning_classify = warning_classify_str
