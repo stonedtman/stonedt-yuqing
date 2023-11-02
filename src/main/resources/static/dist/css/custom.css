@@ -4257,5 +4257,21 @@ a {
 }
 
 
-    	
-    	
+
+.dropdown_list{
+    display: none;
+    position: absolute;
+    left: 15px;
+    top: 55px;
+    width: 160px;
+    background: #fff;
+}
+.dropdown_list_item{
+    padding: 0px 12px;
+    height: 40px;
+    color: #111;
+    cursor: pointer;
+}
+.dropdown_list_item:hover{
+    background-color: #f8f9fa;
+}
