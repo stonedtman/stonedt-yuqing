@@ -79,6 +79,38 @@ public class AnalysisController {
 	}
 
 	/**
+	 * 获取监测分析数据
+	 */
+	/*@SystemControllerLog(module = "监测分析", submodule = "监测分析", type = "数据获取", operation = "")*/
+	@SystemControllerLog(module = "监测大屏", submodule = "监测分析", type = "数据获取", operation = "")
+	@PostMapping(value = "/opinionScreen/getAanlysisByProjectidAndTimeperiod")
+	@ResponseBody
+	public String getOpinionScreenAanlysisByProjectidAndTimeperiod(Long projectId, Integer timePeriod) {
+		Boolean isNeedRefresh = projectTaskDao.getProjectTaskIsAnalysis(projectId);
+		Analysis anlysisByProjectidAndTimeperiod = analysisService.getAanlysisByProjectidAndTimeperiod(projectId, timePeriod);
+		String planWordHit = anlysisByProjectidAndTimeperiod.getPlan_word_hit();
+		if (StringUtils.isNotBlank(planWordHit)) {
+			JSONArray parseArray = JSONArray.parseArray(planWordHit);
+			if (!parseArray.isEmpty()) {
+				// 合并keyword相同的数据
+				Map<String, JSONObject> map = new HashMap<>();
+				for (int i = 0; i < parseArray.size(); i++) {
+					JSONObject jsonObject = parseArray.getJSONObject(i);
+					String keyword = jsonObject.getString("keyword");
+					map.put(keyword, jsonObject);
+				}
+				JSONArray jsonArray = new JSONArray();
+				for (Map.Entry<String, JSONObject> entry : map.entrySet()) {
+					jsonArray.add(entry.getValue());
+				}
+				anlysisByProjectidAndTimeperiod.setPlan_word_hit(jsonArray.toJSONString());
+			}
+		}
+		anlysisByProjectidAndTimeperiod.setIsNeedRefresh(isNeedRefresh);
+		return JSON.toJSONString(anlysisByProjectidAndTimeperiod);
+	}
+
+	/**
 	 * 跳转监测分析页面
 	 */
 	@SystemControllerLog(module = "监测分析", submodule = "监测分析页面", type = "查询", operation = "")
