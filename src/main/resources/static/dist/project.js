@@ -136,7 +136,7 @@ function createNewSchemaGroup() {
 }
 function createNewProgramme() {
     $(".dropdown_list").css({"display":"none"})
-    window.location.href = ctxPath + "project/addproject?groupid="+group_Id
+    addProject()
 }
 
 
