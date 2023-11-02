@@ -4264,14 +4264,16 @@ a {
     left: 15px;
     top: 55px;
     width: 160px;
-    background: #fff;
+    color: #fff;
+    background: #888;
 }
 .dropdown_list_item{
     padding: 0px 12px;
     height: 40px;
-    color: #111;
+    opacity: 0.6;
     cursor: pointer;
 }
 .dropdown_list_item:hover{
-    background-color: #f8f9fa;
+    opacity: 1;
+    background-color: #666;
 }
