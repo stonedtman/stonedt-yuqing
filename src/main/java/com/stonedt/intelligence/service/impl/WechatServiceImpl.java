@@ -240,8 +240,20 @@ public class WechatServiceImpl implements WechatService {
 						projectService.insertProject(project);
 						//插入偏好设置
 						OpinionCondition opinionCondition = new OpinionCondition();
-						BeanUtils.copyProperties(defaultOpinionCondition, opinionCondition);
 						opinionCondition.setProject_id(projectId);
+						opinionCondition.setOpinion_condition_id(IdUtil.getSnowflake(4, 1).nextId());
+						if (defaultOpinionCondition == null) {
+							opinionCondition.setMatchs(1);
+							opinionCondition.setPrecise(0);
+							opinionCondition.setEmotion("[1,2,3]");
+							opinionCondition.setSimilar(0);
+							opinionCondition.setSort(1);
+							opinionCondition.setTime(1);
+						}else {
+							BeanUtils.copyProperties(defaultOpinionCondition, opinionCondition);
+
+						}
+
 						addOpinionCondition(opinionCondition, create_time);
 						//插入预警设置
 						addWarningCondition(projectId, create_time);
@@ -296,6 +308,9 @@ public class WechatServiceImpl implements WechatService {
 		paramOpinionMap.put("similar", opinionCondition.getSimilar());
 		paramOpinionMap.put("sort", opinionCondition.getSort());
 		paramOpinionMap.put("matchs", opinionCondition.getMatchs());
+
+		paramOpinionMap.put("websitename", opinionCondition.getWebsitename());
+		paramOpinionMap.put("author", opinionCondition.getAuthor());
 		opinionConditionService.addOpinionConditionById(paramOpinionMap);
 
 	}

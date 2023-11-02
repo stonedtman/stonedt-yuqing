@@ -37,8 +37,8 @@
 
     <!--新建方案后新增一个偏好设置-->
     <insert id="addOpinionConditionById" parameterType="map">
-	INSERT INTO opinion_condition(create_time, opinion_condition_id, project_id, time, precise, emotion, similar, sort, matchs)
-	VALUES (#{map.create_time}, #{map.opinion_condition_id}, #{map.project_id},#{map.time},#{map.precise},#{map.emotion},#{map.similar},#{map.sort},#{map.matchs})
+	INSERT INTO opinion_condition(create_time, opinion_condition_id, project_id, time, precise, emotion, similar, sort, matchs,websitename,author)
+	VALUES (#{map.create_time}, #{map.opinion_condition_id}, #{map.project_id},#{map.time},#{map.precise},#{map.emotion},#{map.similar},#{map.sort},#{map.matchs},#{map.websitename},#{map.author})
     </insert>
 
 

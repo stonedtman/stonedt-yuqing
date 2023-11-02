@@ -2,8 +2,11 @@ package com.stonedt.intelligence;
 
 import com.alibaba.fastjson.JSONObject;
 import com.stonedt.intelligence.dao.AnalysisQuartzDao;
+import com.stonedt.intelligence.dao.DefaultOpinionConditionDao;
 import com.stonedt.intelligence.dao.ProjectTaskDao;
 import com.stonedt.intelligence.entity.AnalysisQuartzDo;
+import com.stonedt.intelligence.entity.DefaultOpinionCondition;
+import com.stonedt.intelligence.entity.OpinionCondition;
 import com.stonedt.intelligence.entity.ProjectTask;
 import com.stonedt.intelligence.quartz.AnalysisDataRequest;
 import com.stonedt.intelligence.quartz.WarningSchedule;
@@ -14,6 +17,7 @@ import com.stonedt.intelligence.util.SnowFlake;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -62,15 +66,24 @@ public class StonedtPortalApplicationTests {
 //	@Autowired
 //	PlatformService platformService;
 
-	@Autowired
-	WarningSchedule warningSchedule;
+//	@Autowired
+//	WarningSchedule warningSchedule;
+
+//	@Autowired
+//	DefaultOpinionConditionDao defaultOpinionConditionDao;
 	@Test
 	public void contextLoads() throws IOException, ParseException {
 //		String policyData = SynthesizeSchedule.getPolicyData();
 //		System.out.println(policyData);
 //		synthesizeSchedule.popularInformation();
 //		name();
-		warningSchedule.start();
+//		warningSchedule.start();
+
+//		DefaultOpinionCondition defaultOpinionCondition = defaultOpinionConditionDao.getByProjectId(1719656877824020480L);
+//		OpinionCondition opinionCondition = new OpinionCondition();
+//		BeanUtils.copyProperties(defaultOpinionCondition, opinionCondition);
+//
+//		System.out.println(opinionCondition);
 
 
 	}

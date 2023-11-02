@@ -262,4 +262,35 @@ public class OpinionCondition implements Serializable{
 	public void setCity(String city) {
 		this.city = city;
 	}
+
+	@Override
+	public String toString() {
+		return "OpinionCondition{" +
+				"id=" + id +
+				", create_time='" + create_time + '\'' +
+				", opinion_condition_id=" + opinion_condition_id +
+				", project_id=" + project_id +
+				", time=" + time +
+				", precise=" + precise +
+				", emotion='" + emotion + '\'' +
+				", similar=" + similar +
+				", sort=" + sort +
+				", matchs=" + matchs +
+				", times='" + times + '\'' +
+				", timee='" + timee + '\'' +
+				", classify='" + classify + '\'' +
+				", websitename='" + websitename + '\'' +
+				", author='" + author + '\'' +
+				", organization='" + organization + '\'' +
+				", categorylable='" + categorylable + '\'' +
+				", enterprisetype='" + enterprisetype + '\'' +
+				", hightechtype='" + hightechtype + '\'' +
+				", policylableflag='" + policylableflag + '\'' +
+				", datasource_type='" + datasource_type + '\'' +
+				", eventIndex='" + eventIndex + '\'' +
+				", industryIndex='" + industryIndex + '\'' +
+				", province='" + province + '\'' +
+				", city='" + city + '\'' +
+				'}';
+	}
 }
