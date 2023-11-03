@@ -65,8 +65,8 @@ public class WechatServiceImpl implements WechatService {
 	@Value("${wechat.qrcode.url}")
 	private String getQrcodeUrl;
 
-	@Value("account.effective-days")
-	private String effectiveDays;
+	@Value("${account.effective-days}")
+	private Integer effectiveDays;
 
 	public WechatServiceImpl(RestTemplate restTemplate,
 							 StringRedisTemplate redisTemplate,
@@ -185,7 +185,7 @@ public class WechatServiceImpl implements WechatService {
 			user.setUsername(wechatUserInfo.getNickname());
 			user.setLogin_count(0);
 			user.setCreate_time(DateUtil.nowTime());
-			user.setTerm_of_validity(new Date(System.currentTimeMillis()+Integer.valueOf(effectiveDays)*24*60*60*1000));
+			user.setTerm_of_validity(new Date(System.currentTimeMillis()+effectiveDays*24L*60*60*1000));
 			user.setNlp_flag(0);
 			user.setXie_flag(0);
 			user.setStatus(1);

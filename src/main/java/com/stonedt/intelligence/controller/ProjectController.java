@@ -617,11 +617,10 @@ public class ProjectController {
         User user = userUtil.getuser(request);
         Long user_id = user.getUser_id();
         Map<String, Object> editParam = paramJson;
-        JSONObject kafukaJson = new JSONObject();
-        BeanUtils.copyProperties(paramJson,kafukaJson);
+        JSONObject kafukaJson = (JSONObject) paramJson.clone();
 
-        JSONObject CommonJson = new JSONObject();
-        BeanUtils.copyProperties(paramJson,CommonJson);
+        JSONObject CommonJson = (JSONObject) paramJson.clone();
+
 
         String update_time = DateUtil.nowTime();
         editParam.put("user_id", user_id);
