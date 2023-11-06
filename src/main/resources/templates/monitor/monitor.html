@@ -239,11 +239,11 @@
       <div th:replace="common/monitor_left::monitor_left"></div>
       <div class="page-wrapper">
         <div class="right-part right-content left-filtrate" id="left-filtrates">
-          <div class="recommend">
+          <div class="recommend" style="display: none">
             <div class="recommend-content">
               <div style="overflow: hidden;">
                 <div class="recommend-content-list">
-                  <div class="text">最新人工智能AIGC产品发布: https://www.xiezuobao.net 微信扫码即可体验</div>
+
                 </div>
               </div>
               <i class="close fa fa-times"></i>
@@ -2000,9 +2000,12 @@
           recommendList = res.data
           let html = ""
           if(recommendList.length>0){
+            $(".recommend").css({"display":"block"})
             html=`
               <div class="text">${recommendList[0].content}</div>
             `
+          }else{
+            $(".recommend").remove()
           }
           if(recommendList.length>1){
             html+=`
