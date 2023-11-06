@@ -203,7 +203,6 @@
                         <ul class="create-tab" id="search-tab">
                             <li class="create-tab-act" data-type="2">快速修改</li>
                             <li class="" data-type="1">高级修改</li>
-                            <li class="" data-type="4">预警推送</li>
                             <li id="tips" data-type="3">当前是快速修改，可设置100字</li>
                         </ul>
                         <!-- tab1 start -->
@@ -280,10 +279,10 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="create-btn-group">
-                                    <button class="btn btn-info m-r-10" type="button" id="gosubmit1">确定</button>
-                                    <button class="btn btn-secondary" type="button" id="goback1">取消</button>
-                                </div>
+<!--                                <div class="create-btn-group">-->
+<!--                                    <button class="btn btn-info m-r-10" type="button" id="gosubmit1">确定</button>-->
+<!--                                    <button class="btn btn-secondary" type="button" id="goback1">取消</button>-->
+<!--                                </div>-->
                             </div>
                         </div>
                         <!-- tab1 end -->
@@ -371,15 +370,15 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="create-btn-group">
-                                    <button class="btn btn-info m-r-10" type="button" id="gosubmit">确定</button>
-                                    <button class="btn btn-secondary" type="button" id="goback">取消</button>
-                                </div>
+<!--                                <div class="create-btn-group">-->
+<!--                                    <button class="btn btn-info m-r-10" type="button" id="gosubmit">确定</button>-->
+<!--                                    <button class="btn btn-secondary" type="button" id="goback">取消</button>-->
+<!--                                </div>-->
                             </div>
                         </div>
                         <!-- tab2 end -->
                         <!-- tab3 start -->
-                        <div id="tab3" class="card m-b-0" style="display: none;">
+                        <div id="tab3" class="card m-b-0">
                             <div class="card-body p-b-0">
                                 <div class="warning-edit-line">
                                     <div>预警开关</div>
@@ -388,10 +387,10 @@
                                     </div>
                                 </div>
                                 <div class="alertSettings" style="display:none;">
-                                    <div class="warning-edit-line">
+                                    <!--<div class="warning-edit-line">
                                         <div>方案名称</div>
                                         <div class="schemeName">日常出行</div>
-                                    </div>
+                                    </div>-->
                                     <div class="warning-edit-line">
                                         <div>预警名称</div>
                                         <div>
@@ -433,7 +432,7 @@
                                         </div>
                                         <div class="warning-right">
                                             <div>相似文章合并</div>
-                                            <div class="similar_articles">
+                                            <div id="warning-similar">
                                                 <span class="badge badge-pill badge-info" data-id="1" onclick="badgeClick(this)">合并</span>
                                                 <span class="badge badge-pill badge-light" data-id="0" onclick="badgeClick(this)">不合并</span>
                                             </div>
@@ -562,8 +561,8 @@
                             </div>
                             <div class="card-body">
                                 <div style="width: 140px; display: flex; justify-content: space-between;margin: 0 auto;">
-                                    <button onclick="checkEmail()" class="btn btn-info">保存</button>
-                                    <button onclick="backPage()" class="btn btn-secondary">取消保存</button>
+                                    <button onclick="savefunctin()" class="btn btn-info">保存</button>
+                                    <button onclick="backPage()" class="btn btn-secondary">取消</button>
                                 </div>
                             </div>
                         </div>
@@ -656,20 +655,11 @@ $("#currentyear").text((new Date()).getFullYear());
 
                     let precise = data.precise;
 
-                    var tabindex = 2
-                    $('#search-tab > li').each(function () {
-                        if ($(this).hasClass('create-tab-act')) {
-                            tabindex = $(this).attr('data-type')
-                        }
-                    });
-
                     if (project_type == 1) { // 高级方案
                         $("#search-tab").find("li").eq(0).removeClass("create-tab-act");
                         $("#search-tab").find("li").eq(1).addClass("create-tab-act");
-                        $("#search-tab").find("li").eq(2).removeClass("create-tab-act");
                         $("#tab1").css("display", "none");
                         $("#tab2").css("display", "block");
-                        $("#tab3").css("display", "none");
                         $("#proname").val(project_name);
                         $("#prokeywords").val(subject_word);
                         $("#proshield").val(stop_word);
@@ -696,10 +686,8 @@ $("#currentyear").text((new Date()).getFullYear());
                     } else if (project_type == 2) { // 普通方案
                         $("#tab2").css("display", "none");
                         $("#tab1").css("display", "block");
-                        $("#tab3").css("display", "none");
                         $("#search-tab").find("li").eq(1).removeClass("create-tab-act");
                         $("#search-tab").find("li").eq(0).addClass("create-tab-act");
-                        $("#search-tab").find("li").eq(2).removeClass("create-tab-act");
                         $("#proname1").val(project_name);
                         $("#prokeywords1").val(subject_word);
                         $("#proshield1").val(stop_word);
@@ -718,15 +706,6 @@ $("#currentyear").text((new Date()).getFullYear());
                         if (regional_word) $("#proarea").val(regional_word);
                         if (character_word) $("#properson").val(character_word);
                         if (event_word) $("#proaccident").val(event_word);
-                    }
-
-                    if(tabindex==4){
-                        $("#tab1").css("display", "none")
-                        $("#tab2").css("display", "none");
-                        $("#tab3").css("display", "block");
-                        $("#search-tab").find("li").eq(0).removeClass("create-tab-act");
-                        $("#search-tab").find("li").eq(1).removeClass("create-tab-act");
-                        $("#search-tab").find("li").eq(2).addClass("create-tab-act");
                     }
                     $("#groupname").html(group_name);
                     $("#projectname").html(project_name);
@@ -779,6 +758,8 @@ $("#currentyear").text((new Date()).getFullYear());
         });
     }
 
+    let g_id = "";
+    let p_id = "";
     // 发送修改方案的信息
     function sendEditProjectInfo(data) {
         $.ajax({
@@ -790,10 +771,9 @@ $("#currentyear").text((new Date()).getFullYear());
                 console.log(res)
                 let code = res.code;
                 if (code == 200) {
-                    let g_id = data.group_id;
-                    let p_id = data.project_id;
-                    $("#createcomplete").addClass("line-active");
-                    showInfoResult("方案修改完成", "稍后可以到数据监测中查看该方案的数据监测", g_id, p_id);
+                    g_id = data.group_id;
+                    p_id = data.project_id;
+                    checkEmail()
                 } else {
                     showInfo("修改方案失败!");
                 }
@@ -834,7 +814,7 @@ $("#currentyear").text((new Date()).getFullYear());
     });
 
     // 快速修改
-    $("#gosubmit").click(function () {
+    function gosubmit() {
         var proname = $("#proname").val();
         var prokeywords = $("#prokeywords").val();
         /* var properson = $("#properson").val();
@@ -962,7 +942,7 @@ $("#currentyear").text((new Date()).getFullYear());
             dataJson.character_word = properson;  // 人物关键词
             sendEditProjectInfo(dataJson);
         }
-    });
+    };
 
     // 切换快速创建和高级方案
     $("#search-tab li").on("click", function () {
@@ -974,7 +954,6 @@ $("#currentyear").text((new Date()).getFullYear());
                 $("#tips").html("当前是快速修改，可设置100字");
                 $("#tab2").hide();
                 $("#tab1").show();
-                $("#tab3").hide();
                 break;
             case "1":
                 $(this).siblings().removeClass("create-tab-act");
@@ -982,15 +961,6 @@ $("#currentyear").text((new Date()).getFullYear());
                 $("#tips").html("当前是高级修改，可设置550字");
                 $("#tab1").hide();
                 $("#tab2").show();
-                $("#tab3").hide();
-                break;
-            case "4":
-                $(this).siblings().removeClass("create-tab-act");
-                $(this).addClass("create-tab-act");
-                $("#tips").html("当前是预警推送，可设置您的预警方案");
-                $("#tab1").hide();
-                $("#tab2").hide();
-                $("#tab3").show();
                 break;
             case "3":
                 break;
@@ -1002,7 +972,7 @@ $("#currentyear").text((new Date()).getFullYear());
     /**
      * @description 高级修改
      */
-    $("#gosubmit1").click(function (param) {
+    function gosubmit1() {
         var proname = $("#proname1").val();  // 方案名称
         var prokeywords = $("#prokeywords1").val();  // 关键词
         var proshield = $("#proshield1").val(); // 屏蔽词
@@ -1024,9 +994,9 @@ $("#currentyear").text((new Date()).getFullYear());
         } else {
             $("#prokeywords1").removeClass("text-error");
         }
-        
+
         if (prokeywords == proshield) {
-        	showtips("关键词与屏蔽词不能相同");
+            showtips("关键词与屏蔽词不能相同");
             return;
         }
 
@@ -1062,8 +1032,8 @@ $("#currentyear").text((new Date()).getFullYear());
             showtips("屏蔽词内容只能使用+|()这三种符号，不能使用"+tiptext);
             return;
         }
-        
-        
+
+
         $("#createcomplete").addClass("line-active");
 
         prokeywords = prokeywords.toString().replace(/(\s|;|-|"|‘|；|、|‘’|'|’|“”|》|《|<|>|\.|。)/g, ",");
@@ -1103,7 +1073,7 @@ $("#currentyear").text((new Date()).getFullYear());
             dataJson.project_type = 1;
             sendEditProjectInfo(dataJson);
         }
-    });
+    }
 
     $('.navLi').click(function () {
         jumpNavLocation($(this).data('type'), edit_groupid, edit_projectid);
@@ -1137,6 +1107,23 @@ $("#currentyear").text((new Date()).getFullYear());
         window.location.href = "/project?page=1&groupid=" + edit_groupid + "&projectsearch=";
     });
 
+
+function savefunctin() {
+    var tabindex = 1
+    $('#search-tab > li').each(function () {
+        if ($(this).hasClass('create-tab-act')) {
+            tabindex = $(this).attr('data-type')
+        }
+    });
+    if(tabindex==1){
+        gosubmit1()
+    }else if(tabindex==2){
+        gosubmit()
+    }
+}
+    
+    
+    
 var warning = {}
 
 function warningSettingDetail(edit_projectid) {
@@ -1172,7 +1159,7 @@ function alertpush(){
         $(".alertSettings").css({"display":"block"})
     }
     // 方案名称
-    $(".schemeName").html(warning.project_name)
+    // $(".schemeName").html(warning.project_name)
     // 预警名称
     $("#warning-name").val(warning.warning_name)
     // 预警词
@@ -1253,11 +1240,11 @@ function alertpush(){
     }
     //相似文章合并
     if(warning.warning_similar==1){
-        $(".similar_articles span").eq(0).attr("class","badge badge-pill badge-info")
-        $(".similar_articles span").eq(1).attr("class","badge badge-pill badge-light")
+        $("#warning-similar span").eq(0).attr("class","badge badge-pill badge-info")
+        $("#warning-similar span").eq(1).attr("class","badge badge-pill badge-light")
     }else if(warning.warning_similar==0){
-        $(".similar_articles span").eq(0).attr("class","badge badge-pill badge-light")
-        $(".similar_articles span").eq(1).attr("class","badge badge-pill badge-info")
+        $("#warning-similar span").eq(0).attr("class","badge badge-pill badge-light")
+        $("#warning-similar span").eq(1).attr("class","badge badge-pill badge-info")
     }
     //匹配方式
     if(warning.warning_match==1){
@@ -1384,8 +1371,10 @@ function updateData(warning_status, data) {
         data: data,
         success: function (res) {
             if (res.status == 200) {
-                showtips("修改成功！")
-                // window.location.href = '/system/warning?groupid=' + groupId + '&page=' + page
+                $("#createcomplete").addClass("line-active");
+                showInfoResult("方案修改完成", "稍后可以到数据监测中查看该方案的数据监测", g_id, p_id);
+            } else {
+                showInfo("修改预警失败!");
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
