@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.stonedt.intelligence.dao.AnalysisQuartzDao;
 import com.stonedt.intelligence.dao.DefaultOpinionConditionDao;
 import com.stonedt.intelligence.dao.ProjectTaskDao;
+import com.stonedt.intelligence.dto.WechatUserInfo;
+import com.stonedt.intelligence.dto.WxMpXmlMessage;
 import com.stonedt.intelligence.entity.AnalysisQuartzDo;
 import com.stonedt.intelligence.entity.DefaultOpinionCondition;
 import com.stonedt.intelligence.entity.OpinionCondition;
@@ -11,6 +13,7 @@ import com.stonedt.intelligence.entity.ProjectTask;
 import com.stonedt.intelligence.quartz.AnalysisDataRequest;
 import com.stonedt.intelligence.quartz.WarningSchedule;
 import com.stonedt.intelligence.service.PlatformService;
+import com.stonedt.intelligence.service.WechatService;
 import com.stonedt.intelligence.util.DateUtil;
 import com.stonedt.intelligence.util.ProjectWordUtil;
 import com.stonedt.intelligence.util.SnowFlake;
@@ -71,8 +74,30 @@ public class StonedtPortalApplicationTests {
 
 //	@Autowired
 //	DefaultOpinionConditionDao defaultOpinionConditionDao;
+
+	@Autowired
+	WechatService wechatService;
 	@Test
 	public void contextLoads() throws IOException, ParseException {
+
+		WxMpXmlMessage wxMpXmlMessage = new WxMpXmlMessage();
+		wxMpXmlMessage.setFromUser("oZ1ZM5Y5Q1Q1Q1Q1Q1Q1Q1Q1Q1Q4");
+		wxMpXmlMessage.setEvent("subscribe");
+		wxMpXmlMessage.setEventKey("qrscene_568778240204");
+		wechatService.handleSubscribe(wxMpXmlMessage);
+
+		WechatUserInfo wechatUserInfo = new WechatUserInfo();
+		wechatUserInfo.setOpenid("oZ1ZM5Y5Q1Q1Q1Q1Q1Q1Q1Q1Q1Q4");
+		wechatUserInfo.setUnionId("oZ1ZM5Y5Q1Q1Q1Q1Q1Q1Q1Q1Q1Q1");
+		wechatUserInfo.setNickname("测试");
+		wechatUserInfo.setCity("北京");
+		wechatUserInfo.setCountry("中国");
+		wechatUserInfo.setProvince("北京");
+		wechatUserInfo.setHeadImgUrl("http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ1YibicicZ3Z.jpg");
+		wechatUserInfo.setSex(1);
+
+
+		wechatService.handleAuthorize(wechatUserInfo);
 //		String policyData = SynthesizeSchedule.getPolicyData();
 //		System.out.println(policyData);
 //		synthesizeSchedule.popularInformation();

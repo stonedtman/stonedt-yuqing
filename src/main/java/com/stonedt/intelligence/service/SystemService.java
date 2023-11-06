@@ -32,4 +32,6 @@ public interface SystemService {
 	Integer addWarning(Map<String,Object> map);
 	
 	ResponseEntity<InputStreamResource> uploadProductManual();
+
+    Boolean isOpenWarning(Long projectid);
 }

@@ -305,6 +305,8 @@ public class ProjectController {
         mv.addObject("projectDetail", map);
         mv.addObject("menu", "project");
         mv.addObject("detail_projectid", projectid);
+        Boolean isOpenWarning = systemService.isOpenWarning(projectid);
+        mv.addObject("isOpenWarning", isOpenWarning);
         return mv;
     }
 

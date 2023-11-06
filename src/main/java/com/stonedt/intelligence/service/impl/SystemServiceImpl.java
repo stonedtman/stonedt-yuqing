@@ -122,4 +122,13 @@ public class SystemServiceImpl implements SystemService {
         return response;
     }
 
+    @Override
+    public Boolean isOpenWarning(Long projectid) {
+        WarningSetting warningSetting = systemDao.getWarningByProjectId(projectid);
+        if (warningSetting == null) {
+            return false;
+        }
+        return warningSetting.getWarning_status() == 1;
+    }
+
 }
