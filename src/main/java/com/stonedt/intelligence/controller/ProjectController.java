@@ -315,6 +315,8 @@ public class ProjectController {
     @ResponseBody
     public String detail(Long projectid) {
         Map<String, Object> map = projectService.getProjectByProId(projectid);
+        Boolean isOpenWarning = systemService.isOpenWarning(projectid);
+        map.put("isOpenWarning", isOpenWarning);
         return JSON.toJSONString(map);
     }
 
