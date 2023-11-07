@@ -10,19 +10,105 @@
     <link rel="icon" type="image/png" sizes="16x16" th:href="@{/assets/images/favicon.png}">
     <title>方案详情·网络情报分析系统</title>
 
-    <link th:href="@{/dist/css/style.min.css}" rel="stylesheet">
+    <!--<link th:href="@{/dist/css/style.min.css}" rel="stylesheet">
     <link th:href="@{/dist/css/custom.css}" rel="stylesheet">
     <link th:href="@{/assets/libs/sweetalert2/dist/sweetalert2.min.css}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css}">
-    <script th:src="@{/common/analyze-cloud.js}"></script>
+    <link th:href="@{/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css}" rel="stylesheet" type="text/css">-->
+    <link href=" ../dist/css/style.min.css" rel="stylesheet">
+    <link href=" ../dist/css/custom.css" rel="stylesheet">
+    <link href="../assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"
+          type="text/css">
+    <link href="../assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="../assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet"
+          type="text/css">
     <!--<script src="//at.alicdn.com/t/font_1709263_w16payhc3l.js"></script>-->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
+    <script th:src="@{/common/analyze-cloud.js}"></script>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
     <![endif]-->
+    <style>
+        input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+            color: #b6b7b7 !important;
+        }
+        input:-moz-placeholder, textarea:-moz-placeholder {
+            color: #b6b7b7 !important;
+        }
+        input::-moz-placeholder, textarea::-moz-placeholder {
+            color: #b6b7b7 !important;
+        }
+        input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+            color: #b6b7b7 !important;
+        }
+
+
+        .switch {
+            display: inline-block;
+        }
+
+        .bootstrap-switch {
+            border-radius: 22px;
+            width: 35px !important;
+            height: 19px !important;
+        }
+
+        .bootstrap-switch .bootstrap-switch-handle-off, .bootstrap-switch .bootstrap-switch-handle-on, .bootstrap-switch .bootstrap-switch-label {
+            padding: 0px;
+            font-size: 10px;
+            display: inline-block;
+        }
+
+        .bootstrap-switch .bootstrap-switch-handle-on {
+            width: 35px !important;
+            margin-right: 0px;
+            padding-right: 22px;
+        }
+
+        .bootstrap-switch .bootstrap-switch-handle-off {
+            width: 35px !important;
+            border-radius: 11px;
+            margin-left: -16px;
+            /*padding-right: -30px;*/
+            position: relative;
+            color: #fff !important;
+        }
+        .create-tab>li:nth-child(3) {
+            cursor: pointer;
+        }
+        .create-tab>li:nth-child(3)::after {
+            content: '';
+            width: 0%;
+            height: 2px;
+            background: #065bc9;
+            position: absolute;
+            bottom: 0px;
+            left: 0;
+            transition: all 0.3s ease-in;
+        }
+        #statusSwitch div{
+            width: 50px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-top: 5px;
+            padding: 0;
+            font-size: 12px;
+            opacity: 0.6;
+        }
+        .openSwitch{
+            color: #fff;
+            background: #6184e6;
+        }
+        .closeSwitch{
+            color: #fff;
+            background: #747f88;
+        }
+    </style>
 </head>
 <body>
 <div id="main-wrapper">
@@ -112,6 +198,15 @@
 	                                    <td>监测屏蔽歧义词</td>
 	                                    <td th:text="${projectDetail.stop_word}">计算机病毒、杀毒软件</td>
 	                                </tr>
+                                    <tr>
+                                        <td>预警设置</td>
+                                        <td>
+                                            <div id="statusSwitch" class="bt-switch-early-warning">
+                                                <div class="openSwitch" th:if="${isOpenWarning == true}">ON</div>
+                                                <div class="closeSwitch" th:if="${isOpenWarning == false}">OFF</div>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -143,6 +238,7 @@
 <script th:inline="javascript" type="text/javascript">
 $("#currentyear").text((new Date()).getFullYear());
 
+    var isOpenWarning = [[${isOpenWarning}]];
     let detail_projectid = '[[${detail_projectid}]]';
     var groupiddetail = [[${groupid}]];
     var projectiddetail = [[${projectid}]];
