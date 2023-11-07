@@ -9,6 +9,7 @@ import com.stonedt.intelligence.util.Base64;
 import com.stonedt.intelligence.util.DateUtil;
 import com.stonedt.intelligence.util.MD5Util;
 
+import com.stonedt.intelligence.util.ShaUtil;
 import com.stonedt.intelligence.vo.LoginVO;
 import com.stonedt.intelligence.vo.ResultVO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -206,6 +207,41 @@ public class LoginController {
         }
         return "redirect:/monitor";
     }
+
+    /**
+     * 微信跳转登录
+     * @param args
+     */
+    @GetMapping(value = "/wechatJumpLogin")
+    public String wechatJumpLogin(String openid,String userId, HttpSession session) {
+        if (userId==null||"".equals(userId)||openid==null|| "".equals(openid)){
+            return "user/login";
+        }
+        User user = userService.selectUserByUserId(Long.valueOf(userId));
+        if (null == user) {
+            return "user/login";
+        }
+        if(user.getOpenid()==null|| "".equals(user.getOpenid())) {
+            return "user/login";
+        }
+        //加密openid与传入的openid进行比较
+        String decode = ShaUtil.getSHA256(user.getOpenid(),false);
+        if(!decode.equals(openid)) {
+            return "user/login";
+        }
+        if (user.getStatus() == 0) {
+            return "user/login";
+        }
+        if (user.getStatus() == 2) {
+            return "user/login";
+        }
+
+        session.setAttribute("User", user);
+        userService.updateEndLoginTime(user.getUser_id());
+
+        return "redirect:/monitor";
+    }
+
 
     public static void main(String[] args) {
         System.err.println(Base64.encode("$$$#13813866138===1553241639885#$$$"));

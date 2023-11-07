@@ -149,7 +149,10 @@ select user_id,username from user where user_type = 2 and user_id not in (${user
 	<select id="selectMailJsonByUserId" resultType="java.lang.String">
 		select mail_json from user where user_id = #{userId}
 	</select>
-	<update id="updateLoginFailCountAndTime" parameterType="java.util.Map">
+    <select id="selectUserByUserId" resultType="com.stonedt.intelligence.entity.User">
+		select * from user where user_id = #{userId}
+	</select>
+    <update id="updateLoginFailCountAndTime" parameterType="java.util.Map">
 		update user set login_fail_count=#{loginFailCount}
 		<if test="loginFailTime != null">
 			,end_login_fail_time=now()

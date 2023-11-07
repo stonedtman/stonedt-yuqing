@@ -161,4 +161,6 @@ public interface UserDao {
 	 * @param openId
 	 */
 	void updateUserWechatFlagByOpenid(@Param("openId") String openId,@Param("wechatFlag") Integer wechatFlag);
+
+    User selectUserByUserId(Long userId);
 }

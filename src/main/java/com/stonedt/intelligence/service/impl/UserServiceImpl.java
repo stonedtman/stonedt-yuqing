@@ -132,4 +132,9 @@ public class UserServiceImpl implements UserService {
         return JWTUtils.createJWT(JSON.toJSONString(userDTO, SerializerFeature.WriteMapNullValue), privateKey);
 	}
 
+	@Override
+	public User selectUserByUserId(Long userId) {
+		return userDao.selectUserByUserId(userId);
+	}
+
 }
