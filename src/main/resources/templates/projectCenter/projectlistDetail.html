@@ -10,18 +10,11 @@
     <link rel="icon" type="image/png" sizes="16x16" th:href="@{/assets/images/favicon.png}">
     <title>方案详情·网络情报分析系统</title>
 
-    <!--<link th:href="@{/dist/css/style.min.css}" rel="stylesheet">
+    <link th:href="@{/dist/css/style.min.css}" rel="stylesheet">
     <link th:href="@{/dist/css/custom.css}" rel="stylesheet">
     <link th:href="@{/assets/libs/sweetalert2/dist/sweetalert2.min.css}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css}">
-    <link th:href="@{/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css}" rel="stylesheet" type="text/css">-->
-    <link href=" ../dist/css/style.min.css" rel="stylesheet">
-    <link href=" ../dist/css/custom.css" rel="stylesheet">
-    <link href="../assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"
-          type="text/css">
-    <link href="../assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
-    <link href="../assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet"
-          type="text/css">
+
     <!--<script src="//at.alicdn.com/t/font_1709263_w16payhc3l.js"></script>-->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -369,7 +362,28 @@ $("#currentyear").text((new Date()).getFullYear());
 						                '<td>'+res.stop_word+'</td>'+
 						            '</tr>';
 				$('#projectDetail').append(stopwordHtml);
-	   			
+
+                var warningSwitch = ""
+                if(res.isOpenWarning){
+                    warningSwitch = '<tr>'+
+                        '<td>预警设置</td>'+
+                        `<td>
+                            <div id="statusSwitch" class="bt-switch-early-warning">
+                                <div class="openSwitch">ON</div>
+                            </div>
+                        </td>`+
+                    '</tr>';
+                }else{
+                    warningSwitch = '<tr>'+
+                        '<td>预警设置</td>'+
+                        `<td>
+                            <div id="statusSwitch" class="bt-switch-early-warning">
+                                <div class="closeSwitch">OFF</div>
+                            </div>
+                        </td>`+
+                    '</tr>';
+                }
+                $('#projectDetail').append(warningSwitch);
 	   		},
 	   		error: function(res){
 	   			console.log(res);
