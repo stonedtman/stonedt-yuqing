@@ -801,13 +801,14 @@ $("#currentyear").text((new Date()).getFullYear());
                                     let imgurlstr = ' <div class="img-box" style="  background: url(' + imgurl + ') no-repeat; background-size: cover;display: inline-block !important;width: 160px;background-position: center;"></div>'
                                     imgListStr2 += imgurlstr;
                                 }
+                                imggroup = '<div class="img-group">' + imgListStr2 + '</div>'
                                 let veviostr = '';
                                 if(extend_string_oneJson.hasOwnProperty('videoUrl')&&extend_string_oneJson.videoUrl!=""){
+                                    imggroup = "" // 如果抖音有视频，不显示图片
                                 	veviostr+='<div style="text-align: center"><video src="'+extend_string_oneJson.videoUrl+'" controls="controls"></video></div>';
                                 }
                                 
-                                
-                                imggroup = '<div class="img-group">' + imgListStr2 + '</div>'
+
                                 imggroup = imggroup+veviostr;
                                 
                             }
@@ -840,6 +841,9 @@ $("#currentyear").text((new Date()).getFullYear());
 
                         if ((detail.sourcewebsitename == "微博"||detail.sourcewebsitename == "抖音"||detail.sourcewebsitename == "小红书"||detail.sourcewebsitename == "快手") && detail.extend_string_one != "") {
                             $('#content').html(res.text + imgListAll);
+                            if(detail.sourcewebsitename == "抖音"){
+                                $('#content').html(imgListAll);
+                            }
                         } else {
                         	if(detail.sourcewebsitename.includes("微信")){
                         		let datahtml = res.text;
