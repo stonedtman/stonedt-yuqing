@@ -114,9 +114,7 @@
 
 <img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/jiance.png" />
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/WechatIMG12912.png" />
-
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/WechatIMG12910.png" />
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/1699429619250.jpg" />
 
 
 ## 系统架构
