@@ -106,7 +106,7 @@
 
 <img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/report.png" />
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/shijian.png" />
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/jinriredian.png" />
 
 <img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/xiangqing.png" />
  
