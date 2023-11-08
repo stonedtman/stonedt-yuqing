@@ -96,6 +96,8 @@
 ## UI 展示
 ![登录页面](https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/login.png)
 
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/jinriredian.png" />
+
 <img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/main2.png" />
 
 <img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/main.png" />
@@ -105,8 +107,6 @@
 <img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/main4.png" />
 
 <img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/report.png" />
-
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/jinriredian.png" />
 
 <img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/xiangqing.png" />
  
