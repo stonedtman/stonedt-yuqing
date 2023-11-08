@@ -317,7 +317,7 @@
             white-space: nowrap;
         }
         video{
-            max-width: 100%;
+            max-height: 420px;
         }
     </style>
 </head>
@@ -803,7 +803,7 @@ $("#currentyear").text((new Date()).getFullYear());
                                 }
                                 let veviostr = '';
                                 if(extend_string_oneJson.hasOwnProperty('videoUrl')&&extend_string_oneJson.videoUrl!=""){
-                                	veviostr+='<video src="'+extend_string_oneJson.videoUrl+'" controls="controls"></video>';
+                                	veviostr+='<div style="text-align: center"><video src="'+extend_string_oneJson.videoUrl+'" controls="controls"></video></div>';
                                 }
                                 
                                 
