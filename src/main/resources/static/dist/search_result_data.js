@@ -2279,7 +2279,7 @@ function installArticle3(res) {
 							// ">' + publish_time + ' </span></div>';
 							let strContent = '<div class="wb-content-imgbox"><div class="wb-right-content"><div class="monitor-content-con font-13">'
 									+ content + '</div></div></div>';
-							if(sourcewebsitename=="抖音"){
+							if(sourcewebsitename=="抖音"||sourcewebsitename=="快手"||sourcewebsitename=="bilibili"){
 								strContent = ""
 							}
 							let strLikeStrat = '<div class="like-comm m-t-10 font-13">';
@@ -2444,7 +2444,7 @@ function installArticle3(res) {
 
 							let strContent = '<div class="monitor-content-con font-13">'
 									+ content + '</div>';
-							if(sourcewebsitename=="抖音"){
+							if(sourcewebsitename=="抖音"||sourcewebsitename=="快手"||sourcewebsitename=="bilibili"){
 								strContent = ""
 							}
 							let strLikeStart = '<div class="like-comm m-t-10 font-13">';
@@ -2600,7 +2600,7 @@ function installArticle3(res) {
 						// + publish_time + '</span></div>';
 						let strContent = '<div class="monitor-content-con font-13">'
 								+ content + '</div>';
-						if(sourcewebsitename=="抖音"){
+						if(sourcewebsitename=="抖音"||sourcewebsitename=="快手"||sourcewebsitename=="bilibili"){
 							strContent = ""
 						}
 						let strLikeStart = '<div class="like-comm m-t-10 font-13">';

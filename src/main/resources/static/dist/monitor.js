@@ -1313,7 +1313,7 @@ function installArticle(res) {
                             let strContent = '<div class="wb-content-imgbox">' +
                                 // '<div class="wb-left-imgbox"><img src="' + imglist[0].imgurl + '" class="img-cover" alt=""></div>' +
                                 '<div class="wb-right-content"><div class="monitor-content-con font-13">' + content + '</div></div></div>';
-                            if(sourcewebsitename=="抖音"){
+                            if(sourcewebsitename=="抖音"||sourcewebsitename=="快手"||sourcewebsitename=="bilibili"){
                                 strContent = ""
                             }
                             let strLikeStrat = '<div class="like-comm m-t-10 font-13">';
@@ -1473,7 +1473,7 @@ function installArticle(res) {
 
                             // let strTitle = '<div class="monitor-content-title"><a onclick="toDetail(&apos;' + article_public_id + '&apos;,&apos;' + monitor_groupid + '&apos;,&apos;' + monitor_projectid + '&apos;)"  class="link font-bold">' + title + '</a><span class="sl-date  ">' + publish_time + '</span></div>';
                             let strContent = '<div class="monitor-content-con font-13">' + content + '</div>';
-                            if(sourcewebsitename=="抖音"){
+                            if(sourcewebsitename=="抖音"||sourcewebsitename=="快手"||sourcewebsitename=="bilibili"){
                                 strContent = ""
                             }
                             let strLikeStart = '<div class="like-comm m-t-10 font-13">';
@@ -1629,7 +1629,7 @@ function installArticle(res) {
 
                         // let strTitle = '<div class="monitor-content-title"><a onclick="toDetail(&apos;' + article_public_id + '&apos;,&apos;' + monitor_groupid + '&apos;,&apos;' + monitor_projectid + '&apos;)" class="link font-bold">' + title + '</a><span class="sl-date  ">' + publish_time + '</span></div>';
                         let strContent = '<div class="monitor-content-con font-13">' + content + '</div>';
-                        if(sourcewebsitename=="抖音"){
+                        if(sourcewebsitename=="抖音"||sourcewebsitename=="快手"||sourcewebsitename=="bilibili"){
                             strContent = ""
                         }
                         let strLikeStart = '<div class="like-comm m-t-10 font-13">';
