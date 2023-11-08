@@ -67,6 +67,9 @@
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+        video{
+            max-width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -393,7 +396,7 @@ $("#currentyear").text((new Date()).getFullYear());
                         let imgListStr2 = '';
                         let imgListStr3 = '</div>';
                         var imggroup = '';
-                        if (detail.sourcewebsitename == "微博") {
+                        if (detail.sourcewebsitename == "微博"||detail.sourcewebsitename == "抖音"||detail.sourcewebsitename == "小红书"||detail.sourcewebsitename == "快手") {
                             let extend_string_one = detail.extend_string_one;
                             if (extend_string_one != "") {
                                 let extend_string_oneJson = JSON.parse(extend_string_one);
@@ -441,7 +444,7 @@ $("#currentyear").text((new Date()).getFullYear());
                         $('#eventlable').html('<i class="mdi fa-map-marker"></i> ' + detail.eventlable)
                         
                         $('#yuanwen').html('<a href="' + detail.source_url + '" target="_blank">查看原文</a>');
-                        if (detail.sourcewebsitename == "微博" && detail.extend_string_one != "") {
+                        if ((detail.sourcewebsitename == "微博"||detail.sourcewebsitename == "抖音"||detail.sourcewebsitename == "小红书"||detail.sourcewebsitename == "快手") && detail.extend_string_one != "") {
                             $('#content').html(res.text + imgListAll);
                         } else {
                         	if(detail.sourcewebsitename == "微信"){
