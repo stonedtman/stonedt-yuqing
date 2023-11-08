@@ -332,7 +332,7 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 
 ## License & Copyright
 
-Copyright (c) 2014-2022 思通数科 StoneDT, All rights reserved.
+Copyright (c) 2014-2023 思通数科 StoneDT, All rights reserved.
 
 Licensed under The GNU General Public License version 3 (GPLv3)  (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
