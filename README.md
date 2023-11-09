@@ -149,6 +149,8 @@
     [【数据采集】技术架构说明文档](https://gitee.com/stonedtx/yuqing/blob/master/dataCollection.md)
 
     [数据采集](https://gitee.com/stonedtx/open-spider) 系统已经开源，预计2022年6月完成开源计划。
+    
+    【数据采集】已经在2023年9月份，重新架构，预计在2024年打算重新开源。
 
 
 ### 舆情数据处理 
@@ -157,10 +159,12 @@
 
     [【数据处理】技术架构说明文档](https://gitee.com/stonedtx/yuqing/blob/master/dataProcessing.md)
 
+     【数据处理】 中的核心部分已经开源，请查阅 [nlp.stonedt.com](https://nlp.stonedt.com)  和 [https://gitee.com/stonedtx/free-nlp-api](https://gitee.com/stonedtx/free-nlp-api)
+
 
 ### 舆情数据大屏 
 
--   有开源计划，但是具体时间尚未明确，预计在2022年8-10月份
+-   基础版舆情大屏，目前已于2023年10月份开源。
 
 
 ### 自然语言处理
