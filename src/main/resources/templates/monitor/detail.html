@@ -790,7 +790,7 @@ $("#currentyear").text((new Date()).getFullYear());
                         let imgListStr2 = '';
                         let imgListStr3 = '</div>';
                         var imggroup = '';
-                         if (detail.sourcewebsitename == "微博"||detail.sourcewebsitename == "抖音"||detail.sourcewebsitename == "小红书"||detail.sourcewebsitename == "快手"||detail.sourcewebsitename == "bilibili") {
+                         if (detail.sourcewebsitename == "微博"||detail.sourcewebsitename == "抖音"||detail.sourcewebsitename == "小红书"||detail.sourcewebsitename == "快手"||detail.sourcewebsitename == "bilibili"||detail.sourcewebsitename == "今日头条") {
                             let extend_string_one = detail.extend_string_one;
                             if (extend_string_one != "") {
                                 let extend_string_oneJson = JSON.parse(extend_string_one);
@@ -842,9 +842,9 @@ $("#currentyear").text((new Date()).getFullYear());
                         /*2021.6.29修改*/
                         $("#post_statement").html('<p> 特别声明：本文新闻来源“'+detail.sourcewebsitename+'”，版权归原作者所有，内容仅代表作者本人观点，不代表思通数据的立场。如有任何疑问或需要删除，请联系kf@stonedt.com</p>')
 
-                        if ((detail.sourcewebsitename == "微博"||detail.sourcewebsitename == "抖音"||detail.sourcewebsitename == "小红书"||detail.sourcewebsitename == "快手"||detail.sourcewebsitename == "bilibili") && detail.extend_string_one != "") {
+                        if ((detail.sourcewebsitename == "微博"||detail.sourcewebsitename == "抖音"||detail.sourcewebsitename == "小红书"||detail.sourcewebsitename == "快手"||detail.sourcewebsitename == "bilibili"||detail.sourcewebsitename == "今日头条") && detail.extend_string_one != "") {
                             $('#content').html(res.text + imgListAll);
-                            if(detail.sourcewebsitename == "抖音"||detail.sourcewebsitename == "快手"||detail.sourcewebsitename == "bilibili"){
+                            if(detail.sourcewebsitename == "抖音"||detail.sourcewebsitename == "快手"||detail.sourcewebsitename == "bilibili"||detail.sourcewebsitename == "今日头条"){
                                 if(imggroup==""){
                                     $('#content').html(res.text + imgListAll);
                                 }else{
