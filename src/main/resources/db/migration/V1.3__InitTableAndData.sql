@@ -1,1 +1,0 @@
-update user set term_of_validity = '2025-01-19 00:00:00';

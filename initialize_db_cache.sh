@@ -88,12 +88,7 @@ CREATE TABLE `flyway_schema_history`  (
 -- ----------------------------
 -- Records of flyway_schema_history
 -- ----------------------------
-INSERT INTO `flyway_schema_history` VALUES (1, '1', '<< Flyway Baseline >>', 'BASELINE', '<< Flyway Baseline >>', NULL, 'root', '2023-10-16 19:43:24', 0, 1);
-INSERT INTO `flyway_schema_history` VALUES (2, '1.1', 'InitTableAndData', 'SQL', 'V1.1__InitTableAndData.sql', 1477440974, 'root', '2023-10-16 19:43:24', 140, 1);
-INSERT INTO `flyway_schema_history` VALUES (3, '1.2', 'InitTableAndData', 'SQL', 'V1.2__InitTableAndData.sql', 1177090637, 'root', '2023-10-16 19:43:24', 14, 1);
-INSERT INTO `flyway_schema_history` VALUES (4, '1.3', 'InitTableAndData', 'SQL', 'V1.3__InitTableAndData.sql', 1117735008, 'root', '2023-10-16 19:43:24', 2, 1);
-INSERT INTO `flyway_schema_history` VALUES (5, '1.4', 'InitTableAndData', 'SQL', 'V1.4__InitTableAndData.sql', -383198443, 'root', '2023-10-16 19:47:20', 2, 1);
-INSERT INTO `flyway_schema_history` VALUES (6, '1.5',	'InitTableAndData',	'SQL',	'V1.5__InitTableAndData.sql',	1847882235,	'root',	'2023-10-20 15:12:27',	317,	1);
+INSERT INTO `stonedt_portal`.`flyway_schema_history` (`installed_rank`, `version`, `description`, `type`, `script`, `checksum`, `installed_by`, `installed_on`, `execution_time`, `success`) VALUES (1, '1.0', 'InitTableAndData', 'SQL', 'V1.0__InitTableAndData.sql', 287869821, 'root', '2023-11-20 17:02:55', 1517, 1);
 
 -- ----------------------------
 -- Table structure for full_menu
