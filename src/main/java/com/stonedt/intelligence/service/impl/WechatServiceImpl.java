@@ -4,6 +4,7 @@ package com.stonedt.intelligence.service.impl;
 
 import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
+import com.stonedt.intelligence.aop.SystemLogAspect;
 import com.stonedt.intelligence.dao.ProjectTaskDao;
 import com.stonedt.intelligence.dao.UserDao;
 import com.stonedt.intelligence.dao.UserWechatInfoDao;
@@ -17,6 +18,7 @@ import com.stonedt.intelligence.service.*;
 import com.stonedt.intelligence.thred.ThreadPoolConst;
 import com.stonedt.intelligence.util.DateUtil;
 import com.stonedt.intelligence.util.ResultUtil;
+import eu.bitwalker.useragentutils.UserAgent;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -62,6 +64,8 @@ public class WechatServiceImpl implements WechatService {
 
 	private final DefaultOpinionConditionDao defaultOpinionConditionDao;
 
+	private final SystemLogService systemLogService;
+
 	@Value("${wechat.qrcode.url}")
 	private String getQrcodeUrl;
 
@@ -77,7 +81,8 @@ public class WechatServiceImpl implements WechatService {
 							 OpinionConditionService opinionConditionService,
 							 SystemService systemService,
 							 ProjectTaskDao projectTaskDao,
-							 DefaultOpinionConditionDao defaultOpinionConditionDao) {
+							 DefaultOpinionConditionDao defaultOpinionConditionDao,
+							 SystemLogService systemLogService) {
 		this.restTemplate = restTemplate;
 		this.redisTemplate = redisTemplate;
 		this.userWechatInfoDao = userWechatInfoDao;
@@ -89,6 +94,7 @@ public class WechatServiceImpl implements WechatService {
 		this.systemService = systemService;
 		this.projectTaskDao = projectTaskDao;
 		this.defaultOpinionConditionDao = defaultOpinionConditionDao;
+		this.systemLogService = systemLogService;
 	}
 
 
@@ -289,6 +295,19 @@ public class WechatServiceImpl implements WechatService {
 		ThreadPoolConst.IO_EXECUTOR.execute(() -> {
 			redisTemplate.delete(sceneStr);
 			userDao.updateUserLoginCountById(user.getId());
+			//插入日志
+			SystemLogEntity systemLog = new SystemLogEntity();
+			UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
+			systemLog.setUser_browser(userAgent.getBrowser().toString());
+			systemLog.setUser_browser_version(userAgent.getBrowserVersion().getVersion());
+			systemLog.setOperatingSystem(userAgent.getOperatingSystem().toString());
+			systemLog.setUser_id(user.getId());
+			systemLog.setUsername(user.getUsername());
+			systemLog.setLoginip(SystemLogAspect.getIpAddr(request));
+			systemLog.setModule("微信公众号");
+			systemLog.setSubmodule("扫码登录");
+			systemLog.setType("登录");
+			systemLogService.addData(systemLog);
 		});
 		return ResultUtil.ok();
 	}
