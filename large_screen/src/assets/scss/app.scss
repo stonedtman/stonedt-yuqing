@@ -1,0 +1,40 @@
+html {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-corner {
+  background: #f6f6f6;
+}
+::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-track {
+  background: #f6f6f6;
+  border-radius: 2px;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+}
+div{
+  box-sizing: border-box;
+}
+
+
+.card_title{
+  width: 424px;
+  height: 68px;
+  line-height: 86px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+  text-align: center;
+  margin-top: -20px;
+  background-image: url("@/assets/images/bt_title.png");
+  background-size: cover;
+}
