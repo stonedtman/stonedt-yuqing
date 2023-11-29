@@ -2028,10 +2028,12 @@
     })
     function recommendsettimeout() {
       let s = 52/(500/10)
+      clearInterval(timer)
       timer = setInterval(function(){
         if(recommendListIndex>recommendList.length-1){
           recommendListIndex=0
         }
+        clearInterval(timermove)
         timermove = setInterval(function () {
           let mt = document.querySelector(".recommend-content-list").style.marginTop
           let nowmt = mt.split("px")[0]-s

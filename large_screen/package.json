@@ -1,0 +1,34 @@
+{
+  "name": "yqsjjc",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "amfe-flexible": "^2.2.1",
+    "axios": "^1.2.2",
+    "core-js": "^3.8.3",
+    "echarts": "^5.4.1",
+    "element-ui": "^2.15.12",
+    "px2rem-loader": "^0.1.9",
+    "vue": "^2.6.14",
+    "vue-router": "^3.5.1",
+    "vue-seamless-scroll": "^1.1.23",
+    "vue-sweetalert2": "^5.0.5"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "sass": "^1.32.7",
+    "sass-loader": "^12.0.0",
+    "vue-template-compiler": "^2.6.14"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
