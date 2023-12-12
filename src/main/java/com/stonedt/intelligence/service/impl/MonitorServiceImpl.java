@@ -381,7 +381,14 @@ public class MonitorServiceImpl implements MonitorService {
             }
             /*String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+timeType+matchingmode+searchType+emotionalIndex+searchkeyword;*/
             /*2021.6.25修改*/                                                                                                                                                                                                                                                                                                                                                                                                                                    /*数据品类*/
-            String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getString("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+paramJson.getString("classify")+paramJson.getString("datasource_type")+paramJson.getString("sourceWebsite")+"author"+paramJson.getString("author")+"timeType"+timeType+matchingmode+"searchtype"+searchType+"emotion"+emotionalIndex+searchkeyword;
+            String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+
+                    paramJson.getString("eventlable")+paramJson.getString("industrylable")+
+                    paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+
+                    paramJson.getString("orgtypelist")+paramJson.getString("categorylable")+
+                    paramJson.getString("searchkeyword")+paramJson.getString("classify")+
+                    paramJson.getString("datasource_type")+paramJson.getString("sourceWebsite")+
+                    "author"+paramJson.getString("author")+"timeType"+timeType+matchingmode+
+                    "searchtype"+searchType+"emotion"+emotionalIndex+searchkeyword + "precise" + precise + "similar" + similar;
 
             /*2021.6.25修改*/
             if (currentPage == 1) {
@@ -412,7 +419,7 @@ public class MonitorServiceImpl implements MonitorService {
                     totalNum = parseObject.getInteger("totalnum");
                     dataGroupJson.put("article_public_idList", article_public_idList);
                     /*2021.7.2*/
-                    dataGroupJson.put("totalNum", totalNum);
+                    dataGroupJson.put("totalNum", totalCount);
                     /*2021.7.2*/
                 }
             }
@@ -430,7 +437,7 @@ public class MonitorServiceImpl implements MonitorService {
                     Integer page = articleResponseJson.getInteger("page");
                     if (currentPage == 1) {
                         dataGroupJson.put("totalCount", totalCount);
-                        dataGroupJson.put("totalNum", JSONObject.parseObject(redisUtil.getKey(key)).getString("totalnum"));
+                        dataGroupJson.put("totalNum", count);
                         if (totalCount % 30 == 0) {
                             page_count = totalCount / 30;
                         } else {
@@ -442,7 +449,7 @@ public class MonitorServiceImpl implements MonitorService {
                         totalCount = paramJson.getInteger("totalCount");
                         dataGroupJson.put("totalPage", totalPage);
                         dataGroupJson.put("totalCount", totalCount);
-                        dataGroupJson.put("totalNum", JSONObject.parseObject(redisUtil.getKey(key)).getString("totalnum"));
+                        dataGroupJson.put("totalNum", count);
                     }
                     dataGroupJson.put("currentPage", page);
                     JSONArray esDataArray = articleResponseJson.getJSONArray("data");
@@ -2150,6 +2157,7 @@ public class MonitorServiceImpl implements MonitorService {
             // precise == 0 为精准关闭，即不传屏蔽词
             paramJson.put("stopword", "");
         }
+        similar = paramJson.getInteger("similar");
         paramJson.remove("projectid");
         paramJson.remove("group_id");
         paramJson.remove("precise");
@@ -2170,7 +2178,7 @@ public class MonitorServiceImpl implements MonitorService {
         paramJson.put("searchType", searchType);
         // 查询es数据
         String url = "";
-        similar = 0;
+
         if (similar == 1) {  // 合并
             Integer totalCount = 0;
             Integer currentPage = paramJson.getInteger("page");
@@ -2204,7 +2212,8 @@ public class MonitorServiceImpl implements MonitorService {
 
                 if (!esSimilarResponse.equals("")) {
                     List article_public_idList = new ArrayList();
-                    JSONArray similarArray = JSON.parseArray(esSimilarResponse);
+
+                    JSONArray similarArray = JSON.parseObject(esSimilarResponse).getJSONArray("data");
                     for (int i = 0; i < similarArray.size(); i++) {
                         JSONObject similarJson = (JSONObject) similarArray.get(i);
                         String article_public_id = similarJson.getString("article_public_id");
@@ -2522,7 +2531,7 @@ public class MonitorServiceImpl implements MonitorService {
         paramJson.put("searchType", searchType);
         // 查询es数据
         String url = "";
-        similar = 0;
+
         if (similar == 1) {  // 合并
             Integer totalCount = 0;
             Integer currentPage = paramJson.getInteger("page");
@@ -2555,7 +2564,7 @@ public class MonitorServiceImpl implements MonitorService {
 
             if (!esSimilarResponse.equals("")) {
                     List article_public_idList = new ArrayList();
-                    JSONArray similarArray = JSON.parseArray(esSimilarResponse);
+                    JSONArray similarArray = JSON.parseObject(esSimilarResponse).getJSONArray("data");
                     for (int i = 0; i < similarArray.size(); i++) {
                         JSONObject similarJson = (JSONObject) similarArray.get(i);
                         String article_public_id = similarJson.getString("article_public_id");
