@@ -419,7 +419,7 @@ public class MonitorServiceImpl implements MonitorService {
                     totalNum = parseObject.getInteger("totalnum");
                     dataGroupJson.put("article_public_idList", article_public_idList);
                     /*2021.7.2*/
-                    dataGroupJson.put("totalNum", totalCount);
+                    dataGroupJson.put("totalNum", totalNum);
                     /*2021.7.2*/
                 }
             }
@@ -437,7 +437,7 @@ public class MonitorServiceImpl implements MonitorService {
                     Integer page = articleResponseJson.getInteger("page");
                     if (currentPage == 1) {
                         dataGroupJson.put("totalCount", totalCount);
-                        dataGroupJson.put("totalNum", count);
+                        dataGroupJson.put("totalNum", totalCount);
                         if (totalCount % 30 == 0) {
                             page_count = totalCount / 30;
                         } else {
@@ -449,7 +449,7 @@ public class MonitorServiceImpl implements MonitorService {
                         totalCount = paramJson.getInteger("totalCount");
                         dataGroupJson.put("totalPage", totalPage);
                         dataGroupJson.put("totalCount", totalCount);
-                        dataGroupJson.put("totalNum", count);
+                        dataGroupJson.put("totalNum", totalCount);
                     }
                     dataGroupJson.put("currentPage", page);
                     JSONArray esDataArray = articleResponseJson.getJSONArray("data");
@@ -2199,7 +2199,12 @@ public class MonitorServiceImpl implements MonitorService {
 //                }else {
 //                	esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
 //                }                                                                                                                                                                                                                                                                                                                                                                                                                               /*数据品类*/
-                String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+paramJson.getString("datasource_type")+timeType+matchingmode+searchType+emotionalIndex;
+                String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+
+                        paramJson.getString("eventlable")+paramJson.getString("industrylable")+
+                        paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+
+                        paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+
+                        paramJson.getString("searchkeyword")+paramJson.getString("datasource_type")+
+                        "timeType"+timeType + "matchingmode" + matchingmode + "searchType" + searchType + "emotionalIndex" + emotionalIndex;
                 //String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword");
                 if(redisUtil.existsKey(key)) {
                     esSimilarResponse = redisUtil.getKey(key);

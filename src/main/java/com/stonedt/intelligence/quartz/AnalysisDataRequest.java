@@ -347,8 +347,9 @@ public class AnalysisDataRequest {
             String time_period = time_period(timetype);
             String es_api_keyword_emotion_statistical = VolumeConstant.es_api_keyword_sentimentFlagChart;
             String url = es_search_url + es_api_keyword_emotion_statistical;
-            String params = "times=" + times + "&timee=" + timee + "&keyword=" + keyword + "&stopword=" + stopword
-                    + "&timetype=" + time_period + "&emotionalIndex="+ emotionalIndex +"&projecttype=" + projectType + "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
+            String params = "times=" + times + "&timee=" + timee + "&keyword=" + highKeyword + "&stopword=" + stopword
+                    + "&timetype=" + time_period + "&emotionalIndex="+ emotionalIndex +"&projecttype=" + projectType +
+                    "&author=" + author + "&sourceWebsite=" + sourceWebsite + "&matchingmode=" + matchingmode;
             String sendPost = sendPost(url, params);
             JSONObject parseObject = JSONObject.parseObject(sendPost);
             JSONArray bucketsArray = parseObject.getJSONObject("aggregations").getJSONObject("group_by_grabTime")
