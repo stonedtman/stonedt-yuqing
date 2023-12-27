@@ -8,6 +8,7 @@ import com.stonedt.intelligence.util.ResultUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 
 
@@ -60,8 +61,8 @@ public class WechatController {
      * 登录检查
      */
     @GetMapping("/checkLogin")
-    public ResultUtil checkLogin(@RequestParam String sceneStr, HttpServletRequest request) {
-        return wechatService.checkLogin(sceneStr,request);
+    public ResultUtil checkLogin(@RequestParam String sceneStr, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return wechatService.checkLogin(sceneStr,request,response);
     }
 
 }

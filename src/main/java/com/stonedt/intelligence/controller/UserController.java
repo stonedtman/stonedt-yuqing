@@ -3,9 +3,11 @@ package com.stonedt.intelligence.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.stonedt.intelligence.aop.SystemControllerLog;
+import com.stonedt.intelligence.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.service.UserService;
-import com.stonedt.intelligence.util.DateUtil;
-import com.stonedt.intelligence.util.MD5Util;
-import com.stonedt.intelligence.util.ResultUtil;
-import com.stonedt.intelligence.util.SnowFlake;
 
 import cn.hutool.core.lang.Snowflake;
 
@@ -33,6 +31,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserUtil userUtil;
 
     private SnowFlake snowFlake = new SnowFlake();
 
@@ -64,8 +65,8 @@ public class UserController {
    /* @SystemControllerLog(module = "系统设置", submodule = "系统设置-账号管理", type = "查询", operation = "detail")*/
     @PostMapping(value = "/detail")
     public @ResponseBody
-    ResultUtil detail(HttpSession session) {
-        User user = (User) session.getAttribute("User");
+    ResultUtil detail(HttpServletRequest request) {
+        User user = userUtil.getuser(request);
         Map<String, String> userObj = userService.getUserById(user.getUser_id());
         return ResultUtil.build(200, "", userObj);
     }
@@ -83,8 +84,8 @@ public class UserController {
     @PostMapping(value = "/edit")
     public @ResponseBody
     ResultUtil editUserInfo(@RequestParam("oldPassword") String oldPassword,
-                            @RequestParam("newPassword") String newPassword, HttpSession session) {
-        User user = (User) session.getAttribute("User");
+                            @RequestParam("newPassword") String newPassword, HttpServletRequest request) {
+        User user = userUtil.getuser(request);
         if (MD5Util.getMD5(oldPassword).equals(user.getPassword())) {
             //开源版本暂时不支持修改密码
             //boolean updateUserPwdById = userService.updateUserPwdById(user.getUser_id(), MD5Util.getMD5(newPassword));
@@ -129,8 +130,8 @@ public class UserController {
     @SystemControllerLog(module = "获取微信二维码", submodule = "", type = "查询", operation = "")
     @GetMapping(value = "/getwechatqrcode")
     public @ResponseBody
-    ResultUtil wechatqrcode(HttpSession session) {
-        User user = (User) session.getAttribute("User");
+    ResultUtil wechatqrcode(HttpServletRequest request) {
+        User user = userUtil.getuser(request);
         Map<String, String> userObj = userService.getqrcode(user.getTelephone());
         return ResultUtil.build(200, "", userObj);
     }

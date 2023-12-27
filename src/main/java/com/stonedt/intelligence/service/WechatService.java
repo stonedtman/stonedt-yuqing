@@ -5,6 +5,7 @@ import com.stonedt.intelligence.dto.WxMpXmlMessage;
 import com.stonedt.intelligence.util.ResultUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 public interface WechatService {
@@ -34,5 +35,5 @@ public interface WechatService {
 	 */
 	void handleAuthorize(WechatUserInfo wechatUserInfo);
 
-	ResultUtil checkLogin(String sceneStr, HttpServletRequest request);
+	ResultUtil checkLogin(String sceneStr, HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

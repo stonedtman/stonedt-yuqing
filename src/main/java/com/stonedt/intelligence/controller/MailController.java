@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * description: 邮件控制层 <br>
@@ -29,8 +30,8 @@ public class MailController {
      * 保存邮件配置
      */
     @PostMapping("/saveMailConfig")
-    public ResultUtil saveMailConfig(@RequestBody MailConfig mailConfig, HttpServletRequest request) {
-        return mailService.saveMailConfig(mailConfig, request);
+    public ResultUtil saveMailConfig(@RequestBody MailConfig mailConfig, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return mailService.saveMailConfig(mailConfig, request, response);
     }
 
     /**

@@ -5,11 +5,8 @@ import com.google.code.kaptcha.Constants;
 import com.stonedt.intelligence.aop.SystemControllerLog;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.service.UserService;
-import com.stonedt.intelligence.util.Base64;
-import com.stonedt.intelligence.util.DateUtil;
-import com.stonedt.intelligence.util.MD5Util;
+import com.stonedt.intelligence.util.*;
 
-import com.stonedt.intelligence.util.ShaUtil;
 import com.stonedt.intelligence.vo.LoginVO;
 import com.stonedt.intelligence.vo.ResultVO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,6 +35,9 @@ public class LoginController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserUtil userUtil;
 
     /**
      * 登录页面跳转
@@ -70,7 +70,7 @@ public class LoginController {
     public void logout(HttpServletResponse response, HttpServletRequest request) {
         try {
             try {
-                User user = (User)request.getSession().getAttribute("User");
+                User user = userUtil.getuser(request);
                 try {
                     //如果Vector中有用户==》移除==》记录==>这样如果切换到别的浏览器同一账号登录且之前账号没有退出就不准确了
                     //如果Vector中没用户==》不记录
@@ -84,8 +84,6 @@ public class LoginController {
                 e.printStackTrace();
             }
 
-
-            request.getSession().removeAttribute("User");
             response.sendRedirect(request.getContextPath() + "user/login");
         } catch (Exception e) {
             e.printStackTrace();
@@ -189,7 +187,7 @@ public class LoginController {
 
     @SystemControllerLog(module = "用户登录", submodule = "用户登录", type = "查询", operation = "jumpLogin")
     @GetMapping(value = "/jumpLogin")
-    public String login(String b64, HttpSession session) {
+    public String login(String b64, HttpServletResponse response) throws Exception {
         System.err.println("=====b64-encode:" + b64 + "====================================================");
         b64 = Base64.decode(b64);
         System.err.println("=====b64-decode:" + b64 + "====================================================");
@@ -204,7 +202,8 @@ public class LoginController {
                 if (status == 2) {
                     return "user/login";
                 } else {
-                    session.setAttribute("User", user);
+                    String token = userService.getToken(user);
+                    response.setHeader("token",token);
                     Integer login_count = user.getLogin_count() + 1;
                     String end_login_time = DateUtil.getNowTime();
                     Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -225,7 +224,7 @@ public class LoginController {
      * @param args
      */
     @GetMapping(value = "/wechatJumpLogin")
-    public String wechatJumpLogin(String openid,String userId, HttpSession session) {
+    public String wechatJumpLogin(String openid,String userId, HttpServletRequest request,HttpServletResponse response) throws Exception {
         if (userId==null||"".equals(userId)||openid==null|| "".equals(openid)){
             return "user/login";
         }
@@ -248,7 +247,7 @@ public class LoginController {
             return "user/login";
         }
 
-        session.setAttribute("User", user);
+        userUtil.setUser(request,response,user);
         userService.updateEndLoginTime(user.getUser_id());
 
         return "redirect:/monitor";
@@ -271,10 +270,10 @@ public class LoginController {
 //    @SystemControllerLog(module = "统计用户在线数量", submodule = "用户在线数量统计", type = "查询", operation = "onlinestatistical")
     @PostMapping(value = "/onlinestatistical")
     @ResponseBody
-    public JSONObject onlinestatistical( HttpSession session) {
+    public JSONObject onlinestatistical(HttpServletRequest request) {
         JSONObject response = new JSONObject();
         try {
-            User user = (User)session.getAttribute("User");
+            User user = userUtil.getuser(request);
             Map<String, Object>result = userService.onlinestatistical(user);
             response.put("onlinedata", result);
             response.put("code",1);

@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.stonedt.intelligence.util.UserUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,6 +49,9 @@ import com.stonedt.intelligence.aop.SystemControllerLog;
 public class PublicOptionContoller {
 	@Autowired
 	private PublicOptionService publicOptionService;
+
+	@Autowired
+	private UserUtil userUtil;
 	 
 	
 	@Value("${kafuka.url}")
@@ -96,7 +100,7 @@ public class PublicOptionContoller {
 			@RequestParam(value = "pagenum", required = false, defaultValue = "1") Integer pagenum,
 			@RequestParam(value = "searchkeyword", required = false, defaultValue = "") String searchkeyword) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		User user = (User) session.getAttribute("User");
+		User user = userUtil.getuser(request);
 		PageHelper.startPage(pagenum, 10);
 		List<PublicoptionEntity> datalist = publicOptionService.getlist(user.getUser_id(), searchkeyword);
 		PageInfo<PublicoptionEntity> pageInfo = new PageInfo<>(datalist);
@@ -157,7 +161,7 @@ public class PublicOptionContoller {
 	public ModelAndView reportdetail(HttpServletRequest request,ModelAndView mv,
 			@PathVariable(required = false) Integer id,HttpSession session) {
 		Map<String, Object> mapParam=new HashMap<String, Object>();
-		User user=(User)session.getAttribute("User");
+		User user=userUtil.getuser(request);
 		mapParam.put("userId", user.getUser_id());
 		mapParam.put("id", id);
 		PublicoptionDetailEntity dcd= publicOptionService.getdetail(mapParam);
@@ -231,7 +235,7 @@ public class PublicOptionContoller {
 			@RequestParam(value = "eventendtime", required = false, defaultValue = "") String eventendtime,
 			@RequestParam(value = "eventstopwords", required = false, defaultValue = "") String eventstopwords
 			) {
-		User user = (User) session.getAttribute("User");
+		User user = userUtil.getuser(request);
 		
 		
 		
@@ -264,7 +268,7 @@ public class PublicOptionContoller {
 	public String deletepublicoptioninfo(HttpServletRequest request, ModelAndView mv, HttpSession session,
 			@RequestParam(value = "Ids", required = false, defaultValue = "") String Ids
 			) {
-		User user = (User) session.getAttribute("User");
+		User user = userUtil.getuser(request);
 		Long user_id = user.getUser_id();
 		String result = publicOptionService.DeleteupinfoByIds(Ids,request);
 		return result;
@@ -285,7 +289,7 @@ public class PublicOptionContoller {
 			@RequestParam(value = "pagenum", required = false, defaultValue = "1") Integer pagenum,
 			@RequestParam(value = "searchkeyword", required = false, defaultValue = "") String searchkeyword) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		User user = (User) session.getAttribute("User");
+		User user = userUtil.getuser(request);
 		PageHelper.startPage(pagenum, 10);
 		List<PublicoptionEntity> datalist = publicOptionService.getpublicoptionreportlist(user.getUser_id(), searchkeyword);
 		PageInfo<PublicoptionEntity> pageInfo = new PageInfo<>(datalist);
@@ -303,9 +307,9 @@ public class PublicOptionContoller {
 	 * @return
 	 */
 	@GetMapping(value = "/backanalysis")
-	public ModelAndView backanalysis(HttpSession session, ModelAndView mv) {
+	public ModelAndView backanalysis(HttpServletRequest request, ModelAndView mv) {
 		JSONArray data=new JSONArray();
-		User user=(User)session.getAttribute("User");
+		User user=userUtil.getuser(request);
 		List<PublicoptionEntity> list = publicOptionService.getpublicoptionreportlist(user.getUser_id(), "");
 		for (PublicoptionEntity publicoption : list) {
 			String jsonString = JSON.toJSONString(publicoption);
@@ -344,9 +348,9 @@ public class PublicOptionContoller {
 	 * @return
 	 */
 	@GetMapping(value = "/eventContext")
-	public ModelAndView eventContext(HttpSession session, ModelAndView mv) {
+	public ModelAndView eventContext(HttpServletRequest request, ModelAndView mv) {
 		JSONArray data=new JSONArray();
-		User user=(User)session.getAttribute("User");
+		User user=userUtil.getuser(request);
 		List<PublicoptionEntity> list = publicOptionService.getpublicoptionreportlist(user.getUser_id(), "");
 		for (PublicoptionEntity publicoption : list) {
 			String jsonString = JSON.toJSONString(publicoption);
@@ -373,9 +377,9 @@ public class PublicOptionContoller {
 	  * @return
 	  */
 	 @GetMapping(value = "/eventTrace")
-	 public ModelAndView eventTrace(HttpSession session, ModelAndView mv) {
+	 public ModelAndView eventTrace(HttpServletRequest request, ModelAndView mv) {
 	  JSONArray data=new JSONArray();
-	  User user=(User)session.getAttribute("User");
+	  User user=userUtil.getuser(request);
 	  List<PublicoptionEntity> list = publicOptionService.getpublicoptionreportlist(user.getUser_id(), "");
 	  for (PublicoptionEntity publicoption : list) {
 	   String jsonString = JSON.toJSONString(publicoption);
@@ -415,9 +419,9 @@ public class PublicOptionContoller {
 	 * @return
 	 */
 	@GetMapping(value = "/hotAnalysis")
-	public ModelAndView hotAnalysis(HttpSession session, ModelAndView mv) {
+	public ModelAndView hotAnalysis(HttpServletRequest request, ModelAndView mv) {
 		JSONArray data=new JSONArray();
-		User user=(User)session.getAttribute("User");
+		User user=userUtil.getuser(request);
 		List<PublicoptionEntity> list = publicOptionService.getpublicoptionreportlist(user.getUser_id(), "");
 		for (PublicoptionEntity publicoption : list) {
 			String jsonString = JSON.toJSONString(publicoption);
@@ -444,9 +448,9 @@ public class PublicOptionContoller {
 	 * @return
 	 */
 	@GetMapping(value = "/netizensAnalysis")
-	public ModelAndView netizensAnalysis(HttpSession session, ModelAndView mv) {
+	public ModelAndView netizensAnalysis(HttpServletRequest request, ModelAndView mv) {
 		JSONArray data=new JSONArray();
-		User user=(User)session.getAttribute("User");
+		User user=userUtil.getuser(request);
 		List<PublicoptionEntity> list = publicOptionService.getpublicoptionreportlist(user.getUser_id(), "");
 		for (PublicoptionEntity publicoption : list) {
 			String jsonString = JSON.toJSONString(publicoption);
@@ -473,9 +477,9 @@ public class PublicOptionContoller {
 	 * @return
 	 */
 	@GetMapping(value = "/statistics")
-	public ModelAndView statistics(HttpSession session, ModelAndView mv) {
+	public ModelAndView statistics(HttpServletRequest request, ModelAndView mv) {
 		JSONArray data=new JSONArray();
-		User user=(User)session.getAttribute("User");
+		User user=userUtil.getuser(request);
 		List<PublicoptionEntity> list = publicOptionService.getpublicoptionreportlist(user.getUser_id(), "");
 		for (PublicoptionEntity publicoption : list) {
 			String jsonString = JSON.toJSONString(publicoption);
@@ -502,9 +506,9 @@ public class PublicOptionContoller {
 	 * @return
 	 */
 	@GetMapping(value = "/propagationAnalysis")
-	public ModelAndView propagationAnalysis(HttpSession session, ModelAndView mv) {
+	public ModelAndView propagationAnalysis(HttpServletRequest request, ModelAndView mv) {
 		JSONArray data=new JSONArray();
-		User user=(User)session.getAttribute("User");
+		User user=userUtil.getuser(request);
 		List<PublicoptionEntity> list = publicOptionService.getpublicoptionreportlist(user.getUser_id(), "");
 		for (PublicoptionEntity publicoption : list) {
 			String jsonString = JSON.toJSONString(publicoption);
@@ -531,9 +535,9 @@ public class PublicOptionContoller {
 	 * @return
 	 */
 	@GetMapping(value = "/thematicAnalysis")
-	public ModelAndView thematicAnalysis(HttpSession session, ModelAndView mv) {
+	public ModelAndView thematicAnalysis(HttpServletRequest request, ModelAndView mv) {
 		JSONArray data=new JSONArray();
-		User user=(User)session.getAttribute("User");
+		User user=userUtil.getuser(request);
 		List<PublicoptionEntity> list = publicOptionService.getpublicoptionreportlist(user.getUser_id(), "");
 		for (PublicoptionEntity publicoption : list) {
 			String jsonString = JSON.toJSONString(publicoption);
@@ -560,9 +564,9 @@ public class PublicOptionContoller {
 	 * @return
 	 */
 	@GetMapping(value = "/unscrambleContent")
-	public ModelAndView unscrambleContent(HttpSession session, ModelAndView mv) {
+	public ModelAndView unscrambleContent(HttpServletRequest request, ModelAndView mv) {
 		JSONArray data=new JSONArray();
-		User user=(User)session.getAttribute("User");
+		User user=userUtil.getuser(request);
 		List<PublicoptionEntity> list = publicOptionService.getpublicoptionreportlist(user.getUser_id(), "");
 		for (PublicoptionEntity publicoption : list) {
 			String jsonString = JSON.toJSONString(publicoption);
@@ -589,9 +593,9 @@ public class PublicOptionContoller {
 	 * @return
 	 */
 	@GetMapping(value = "/popular_feelings_analys")
-	public ModelAndView popular_feelings_analys(HttpSession session, ModelAndView mv) {
+	public ModelAndView popular_feelings_analys(HttpServletRequest request, ModelAndView mv) {
 		JSONArray data=new JSONArray();
-		User user=(User)session.getAttribute("User");
+		User user=userUtil.getuser(request);
 		List<PublicoptionEntity> list = publicOptionService.getpublicoptionreportlist(user.getUser_id(), "");
 		for (PublicoptionEntity publicoption : list) {
 			String jsonString = JSON.toJSONString(publicoption);

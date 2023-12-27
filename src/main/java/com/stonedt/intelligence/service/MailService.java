@@ -6,6 +6,7 @@ import com.stonedt.intelligence.util.ResultUtil;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 
@@ -44,7 +45,7 @@ public interface MailService {
      *
      * @return
      */
-    ResultUtil saveMailConfig(MailConfig mailConfig, HttpServletRequest request);
+    ResultUtil saveMailConfig(MailConfig mailConfig, HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 
     /**

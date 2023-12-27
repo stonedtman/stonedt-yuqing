@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.stonedt.intelligence.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,12 +28,15 @@ import com.stonedt.intelligence.util.WechatUtil;
 public class UserAuthController {
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private UserUtil userUtil;
 	
 	
 	@RequestMapping("/getdata")
-    public ModelAndView weChat(HttpServletRequest request,HttpSession session,
-    		@RequestParam(value = "code", required = false, defaultValue = "") String code,
-    		@RequestParam(value = "state", required = false, defaultValue = "") String state) throws IOException {
+    public ModelAndView weChat(HttpServletRequest request, HttpServletResponse response,
+							   @RequestParam(value = "code", required = false, defaultValue = "") String code,
+							   @RequestParam(value = "state", required = false, defaultValue = "") String state) throws Exception {
 		/*System.out.println("code:"+code);*/
 		
 		ModelAndView mv = new ModelAndView();
@@ -48,7 +53,7 @@ public class UserAuthController {
 		JSONObject parseObject2 = JSONObject.parseObject(userInfo);
 		//用户关注了微信公众号且绑定了账号
 		if(parseObject2.containsKey("nickname")&&user!=null) {
-			session.setAttribute("User", user);
+			userUtil.setUser(request,response,user);
 			//4.开设了账号，绑定系统的二维码,跳转到数据监测页面
 			mv =new ModelAndView(new RedirectView("yqmontitor"));
 			return mv;

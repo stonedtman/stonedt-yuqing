@@ -15,6 +15,7 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.util.Properties;
@@ -148,10 +149,11 @@ public class MailServiceImpl implements MailService {
      *
      * @param mailConfig
      * @param request
+     * @param response
      * @return
      */
     @Override
-    public ResultUtil saveMailConfig(MailConfig mailConfig, HttpServletRequest request) {
+    public ResultUtil saveMailConfig(MailConfig mailConfig, HttpServletRequest request, HttpServletResponse response) throws Exception {
         User user = userUtil.getuser(request);
 
         if (mailConfig.getTo()==null|| mailConfig.getTo().isEmpty()){
@@ -169,7 +171,7 @@ public class MailServiceImpl implements MailService {
         String mailJson = JSON.toJSONString(mailConfig);
         userDao.saveMailConfig(user.getId(),mailJson);
         User newUser = userDao.selectById(user.getId());
-        request.getSession().setAttribute("User",newUser);
+        userUtil.setUser(request,response,newUser);
         return ResultUtil.ok();
     }
 

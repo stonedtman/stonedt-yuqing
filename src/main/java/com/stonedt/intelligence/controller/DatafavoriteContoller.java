@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.stonedt.intelligence.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -49,6 +50,9 @@ public class DatafavoriteContoller {
 	@Autowired
     private EarlyWarningService earlyWarningService;
 
+	@Autowired
+	private UserUtil userUtil;
+
 	// es搜索地址
     @Value("${es.search.url}")
     private String es_search_url;
@@ -71,7 +75,7 @@ public class DatafavoriteContoller {
 			@RequestParam(value = "flag", required = false, defaultValue = "") int flag) {
 		
         datafavoriteService.updateemtion(id,flag,es_search_url,publish_time);
-		User user = (User) session.getAttribute("User");
+		User user = userUtil.getuser(request);
 		 Map<String,Object> map =new HashMap<String,Object>();
 		 map.put("status", 200);
 		 map.put("result", "success");
@@ -96,7 +100,7 @@ public class DatafavoriteContoller {
 			@RequestParam(value = "id", required = false, defaultValue = "") String id,
 			@RequestParam(value = "projectid", required = false, defaultValue = "") Long projectid,
 			@RequestParam(value = "groupid", required = false, defaultValue = "") Long groupid) {
-		 User user = (User) session.getAttribute("User");
+		 User user = userUtil.getuser(request);
 		 String url = es_search_url + MonitorConstant.es_api_article_newdetail;
          String params = "article_public_id=" + id + "&esindex=postal&estype=infor";
          String sendPostEsSearch = MyHttpRequestUtil.sendPostEsSearch(url, params);
@@ -133,7 +137,7 @@ public class DatafavoriteContoller {
 			@RequestParam(value = "flag", required = false, defaultValue = "") int flag) {
 		
 		String result = "";
-		 User user = (User) session.getAttribute("User");
+		 User user = userUtil.getuser(request);
 		 Map<String, Object> readsign = new HashMap<>();
 			 readsign.put("create_time", DateUtil.nowTime());
 			 readsign.put("user_id", user.getUser_id());
@@ -200,7 +204,7 @@ public class DatafavoriteContoller {
 			@RequestParam(value = "flag", required = false, defaultValue = "")int flag,
 			@RequestParam(value = "publish_time", required = false, defaultValue = "")String publish_time ) {
 		datafavoriteService.deletedata(id,flag,es_search_url,publish_time);
-		User user = (User) session.getAttribute("User");
+		User user = userUtil.getuser(request);
 		 Map<String,Object> map =new HashMap<String,Object>();
 		 map.put("status", 200);
 		 map.put("result", "success");
@@ -265,7 +269,7 @@ public class DatafavoriteContoller {
 			@RequestParam(value = "projectid", required = false, defaultValue = "") Long projectid,
 			@RequestParam(value = "groupid", required = false, defaultValue = "") Long groupid) {
 		String result = "";
-		User user = (User) session.getAttribute("User");
+		User user = userUtil.getuser(request);
 		String url = es_search_url + MonitorConstant.es_api_article_newdetail;
         String params = "article_public_id=" + id + "&esindex=postal&estype=infor";
         String sendPostEsSearch = MyHttpRequestUtil.sendPostEsSearch(url, params);
@@ -337,7 +341,7 @@ public class DatafavoriteContoller {
 	public String selectreadsign(HttpServletRequest request, ModelAndView mv, HttpSession session,
 			@RequestParam(value = "id", required = false, defaultValue = "") String id) {
 		String result = "";
-		User user = (User) session.getAttribute("User");
+		User user = userUtil.getuser(request);
 		Map<String, Object> selectreadsign = new HashMap<>();
 		selectreadsign.put("article_id", id);
 		selectreadsign.put("user_id", user.getUser_id());

@@ -18,6 +18,7 @@ import com.stonedt.intelligence.service.*;
 import com.stonedt.intelligence.thred.ThreadPoolConst;
 import com.stonedt.intelligence.util.DateUtil;
 import com.stonedt.intelligence.util.ResultUtil;
+import com.stonedt.intelligence.util.UserUtil;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +31,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -66,6 +68,8 @@ public class WechatServiceImpl implements WechatService {
 
 	private final SystemLogService systemLogService;
 
+	private final UserUtil userUtil;
+
 	@Value("${wechat.qrcode.url}")
 	private String getQrcodeUrl;
 
@@ -82,7 +86,8 @@ public class WechatServiceImpl implements WechatService {
 							 SystemService systemService,
 							 ProjectTaskDao projectTaskDao,
 							 DefaultOpinionConditionDao defaultOpinionConditionDao,
-							 SystemLogService systemLogService) {
+							 SystemLogService systemLogService,
+							 UserUtil userUtil) {
 		this.restTemplate = restTemplate;
 		this.redisTemplate = redisTemplate;
 		this.userWechatInfoDao = userWechatInfoDao;
@@ -95,6 +100,7 @@ public class WechatServiceImpl implements WechatService {
 		this.projectTaskDao = projectTaskDao;
 		this.defaultOpinionConditionDao = defaultOpinionConditionDao;
 		this.systemLogService = systemLogService;
+		this.userUtil = userUtil;
 	}
 
 
@@ -273,7 +279,7 @@ public class WechatServiceImpl implements WechatService {
 	}
 
 	@Override
-	public ResultUtil checkLogin(String sceneStr, HttpServletRequest request) {
+	public ResultUtil checkLogin(String sceneStr, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		if (sceneStr == null || "".equals(sceneStr)) {
 			return ResultUtil.build(500, "场景值不能为空");
 		}
@@ -291,7 +297,7 @@ public class WechatServiceImpl implements WechatService {
 			return ResultUtil.build(504, "很抱歉，您的账号已过期，请联系管理员");
 		}
 
-		request.getSession().setAttribute("User", user);
+		userUtil.setUser(request,response,user);
 		ThreadPoolConst.IO_EXECUTOR.execute(() -> {
 			redisTemplate.delete(sceneStr);
 			userDao.updateUserLoginCountById(user.getId());

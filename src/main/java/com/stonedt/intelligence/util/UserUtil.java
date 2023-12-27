@@ -7,6 +7,7 @@ import com.stonedt.intelligence.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,9 +29,13 @@ public class UserUtil {
 
     public User getuser(HttpServletRequest request) {
         // 从 http 请求头中取出 token
-        String token = request.getHeader("token");
-        if (token == null || token.isEmpty()) {
-            token = request.getParameter("token");
+        Cookie[] cookies = request.getCookies();
+        String token = null;
+        //匹配名为token的cookie
+        for (Cookie cookie : cookies) {
+            if ("token".equals(cookie.getName())) {
+                token = cookie.getValue();
+            }
         }
 
         // 如果存在,则从token中获取，否则从session中获取
@@ -41,16 +46,19 @@ public class UserUtil {
                 e.printStackTrace();
             }
         }
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("User");
-        return user;
+        //抛出异常
+        throw new RuntimeException("token不存在！");
     }
     
     public long getUserId(HttpServletRequest request) {
         // 从 http 请求头中取出 token
-        String token = request.getHeader("token");
-        if (token == null || token.isEmpty()) {
-            token = request.getParameter("token");
+        Cookie[] cookies = request.getCookies();
+        String token = null;
+        //匹配名为token的cookie
+        for (Cookie cookie : cookies) {
+            if ("token".equals(cookie.getName())) {
+                token = cookie.getValue();
+            }
         }
         // 如果存在,则从token中获取，否则从session中获取
         if (token != null && !token.isEmpty()) {
@@ -60,9 +68,8 @@ public class UserUtil {
                 e.printStackTrace();
             }
         }
-        HttpSession session = request.getSession();
-    	User user = (User) session.getAttribute("User");
-    	return user.getUser_id();
+        //抛出异常
+        throw new RuntimeException("token不存在！");
 	}
 
 
@@ -70,9 +77,14 @@ public class UserUtil {
                         HttpServletResponse response,
                         User user) throws Exception {
         // 从 http 请求头中取出 token
-        String token = request.getHeader("token");
-        if (token == null || token.isEmpty()) {
-            token = request.getParameter("token");
+        // 从 http 请求头中取出 token
+        Cookie[] cookies = request.getCookies();
+        String token = null;
+        //匹配名为token的cookie
+        for (Cookie cookie : cookies) {
+            if ("token".equals(cookie.getName())) {
+                token = cookie.getValue();
+            }
         }
 
         UserDTO userDTO = JWTUtils.getEntity(token, UserDTO.class);
