@@ -419,10 +419,9 @@ public class SystemController {
      */
     @PostMapping("/getSystemTitle")
     public @ResponseBody
-    ResultUtil getSystemTitle(HttpServletRequest request,HttpSession session) {
-    	
-    	 User user = (User) session.getAttribute("User");
-         Map<String, String> userObj = userService.getUserById(user.getUser_id());
+    ResultUtil getSystemTitle(HttpServletRequest request) {
+
+        User userObj = userUtil.getuser(request);
         return ResultUtil.build(200, "", userObj);
     }
     

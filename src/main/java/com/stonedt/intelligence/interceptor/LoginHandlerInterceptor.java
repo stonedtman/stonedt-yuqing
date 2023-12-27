@@ -40,8 +40,9 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
 //            return true;
 //        }
 
-        Object attribute = request.getSession().getAttribute("User");
-        if (attribute == null) {
+        // 从 http 请求头中取出 token
+        String token = request.getHeader("token");
+        if (token == null || token.isEmpty()) {
             if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))){
 //                //告诉ajax我是重定向
                 response.setHeader("REDIRECT", "REDIRECT");

@@ -107,7 +107,8 @@ public class LoginController {
     public JSONObject login(@RequestParam(value = "telephone") String telephone,
                             @RequestParam(value = "password") String password,
                             @RequestParam(value = "graph_code") String graph_code,
-                            HttpSession session) {
+                            HttpSession session,
+                            HttpServletResponse httpServletResponse) {
         JSONObject response = new JSONObject();
         String string = null;//图形验证码
         if(null!=session.getAttribute(Constants.KAPTCHA_SESSION_KEY)) {
@@ -138,9 +139,7 @@ public class LoginController {
                         return response;
                     }
                     else {
-                        session.setAttribute("User", user);
-                        response.put("code", 1);
-                        response.put("msg", "用户登录成功");
+
                         Integer login_count = user.getLogin_count() + 1;
                         String end_login_time = DateUtil.getNowTime();
                         Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -148,6 +147,17 @@ public class LoginController {
                         paramMap.put("end_login_time", end_login_time);
                         paramMap.put("login_count", login_count);
                         userService.updateUserLoginCountByPhone(paramMap);
+                        try {
+                            String token = userService.getToken(user);
+                            response.put("code", 1);
+                            response.put("msg", "用户登录成功");
+                            httpServletResponse.setHeader("token", token);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            response.put("code", -1);
+                            response.put("msg", "用户登录失败");
+                        }
+
                     }
                 } else {
                     response.put("code", 2);

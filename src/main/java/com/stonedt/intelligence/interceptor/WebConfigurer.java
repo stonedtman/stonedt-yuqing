@@ -46,8 +46,8 @@ public class WebConfigurer implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor).
                 addPathPatterns("/**")
-                .excludePathPatterns("/jumpLogin", "/user/save","/wechatJumpLogin")
-                .excludePathPatterns("/login", "/loginredirect", "/project/keywords", "/logout", "static/**", "/forgotpwd", "/assets/**", "/dist/**", "/common/**", "/monitor/weChatToken", "/hot/**","/loginbak")
+                .excludePathPatterns("/jumpLogin", "/user/save", "/wechatJumpLogin")
+                .excludePathPatterns("/login", "/loginredirect", "/project/keywords", "/logout", "static/**", "/forgotpwd", "/assets/**", "/dist/**", "/common/**", "/monitor/weChatToken", "/hot/**", "/loginbak")
                 .excludePathPatterns("/fullsearch/listFullTypeByThird", "/fullsearch/hotList", "/hot/hotpage/**", "/img/**", "/logonCode")
                 .excludePathPatterns("/swagger-ui/**", "/api-docs/**")
                 .excludePathPatterns("/api/**")
