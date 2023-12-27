@@ -3,6 +3,7 @@ package com.stonedt.intelligence.dto;
 import com.stonedt.intelligence.entity.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.Date;
 
@@ -12,6 +13,7 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class UserDTO extends User {
 
     /**

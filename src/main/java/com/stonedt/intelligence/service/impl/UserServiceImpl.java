@@ -129,7 +129,7 @@ public class UserServiceImpl implements UserService {
 		BeanUtils.copyProperties(user, userDTO);
 		// 设置token签发时间
 		userDTO.setTokenIssueTime(System.currentTimeMillis());
-        return JWTUtils.createJWT(JSON.toJSONString(userDTO, SerializerFeature.WriteMapNullValue), privateKey);
+        return JWTUtils.createJWT(JSON.toJSONString(userDTO), privateKey);
 	}
 
 	@Override

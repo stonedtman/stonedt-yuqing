@@ -6,6 +6,7 @@ import com.stonedt.intelligence.constant.XieConstant;
 import com.stonedt.intelligence.constant.RedisPrefixConstant;
 import com.stonedt.intelligence.dao.UserDao;
 import com.stonedt.intelligence.dto.SecretDTO;
+import com.stonedt.intelligence.dto.UserDTO;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.service.ArticleService;
 import com.stonedt.intelligence.service.PlatformService;
@@ -41,6 +42,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -103,9 +105,10 @@ public class PlatformServiceImpl implements PlatformService {
      *
      * @param bindParamsVo 绑定参数
      * @param request
+     * @param response
      */
     @Override
-    public ResultUtil nlpBind(BindParamsVo bindParamsVo, HttpServletRequest request) {
+    public ResultUtil nlpBind(BindParamsVo bindParamsVo, HttpServletRequest request, HttpServletResponse response) {
         // 获取用户id
         User user = userUtil.getuser(request);
         bindParamsVo.setUserId(user.getId());
@@ -133,7 +136,7 @@ public class PlatformServiceImpl implements PlatformService {
         try {
             userDao.bindNlp(bindParamsVo);
             User newUser = userDao.selectById(user.getId());
-            request.getSession().setAttribute("User", newUser);
+            userUtil.setUser(request,response,newUser);
         } catch (Exception e) {
             e.printStackTrace();
             return ResultUtil.build(500, "绑定失败");
@@ -318,7 +321,7 @@ public class PlatformServiceImpl implements PlatformService {
      * @return 绑定结果
      */
     @Override
-    public ResultUtil xieBind(BindParamsVo bindParamsVo, HttpServletRequest request) {
+    public ResultUtil xieBind(BindParamsVo bindParamsVo, HttpServletRequest request, HttpServletResponse response) {
         // 获取用户id
         User user = userUtil.getuser(request);
         bindParamsVo.setUserId(user.getId());
@@ -351,7 +354,7 @@ public class PlatformServiceImpl implements PlatformService {
         try {
             userDao.bindXie(bindParamsVo);
             User newUser = userDao.selectById(user.getId());
-            request.getSession().setAttribute("User", newUser);
+            userUtil.setUser(request,response,newUser);
         } catch (Exception e) {
             e.printStackTrace();
             return ResultUtil.build(500, "绑定失败");

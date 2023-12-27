@@ -97,8 +97,10 @@ public class JWTUtils {
      * 通过jwt字符串获取载荷实体
      */
     public static<T> T getEntity(String jwt,Class<T> clazz) throws Exception {
-        Map<String, Object> payLoad = getPayLoad(jwt);
-        return JSON.parseObject(JSON.toJSONString(payLoad), clazz);
+        //获取载荷原始信息
+        String string = JWSObject.parse(jwt).getPayload().toString();
+        //将载荷信息转换为实体对象
+        return JSON.parseObject(string, clazz);
     }
 
 

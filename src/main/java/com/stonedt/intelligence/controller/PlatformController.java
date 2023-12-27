@@ -36,9 +36,11 @@ public class PlatformController {
      * nlp服务绑定
      */
     @PostMapping(value = "/nlp/bind")
-    public ResultUtil nlpBind(@RequestBody BindParamsVo bindParamsVo, HttpServletRequest request) {
+    public ResultUtil nlpBind(@RequestBody BindParamsVo bindParamsVo,
+                              HttpServletRequest request,
+                              HttpServletResponse response) {
                 // 绑定
-        return platformService.nlpBind(bindParamsVo,request);
+        return platformService.nlpBind(bindParamsVo,request,response);
     }
 
     /**
@@ -87,10 +89,10 @@ public class PlatformController {
      * 写作宝绑定
      */
     @PostMapping(value = "/xie/bind")
-    public ResultUtil xieBind(@RequestBody BindParamsVo bindParamsVo, HttpServletRequest request) {
+    public ResultUtil xieBind(@RequestBody BindParamsVo bindParamsVo, HttpServletRequest request, HttpServletResponse response) {
 
         // 绑定
-        return platformService.xieBind(bindParamsVo,request);
+        return platformService.xieBind(bindParamsVo,request,response);
     }
 
     /**

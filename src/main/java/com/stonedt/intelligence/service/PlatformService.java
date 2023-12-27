@@ -5,12 +5,11 @@ import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.util.ResultUtil;
 import com.stonedt.intelligence.vo.BindParamsVo;
 import com.stonedt.intelligence.vo.CopyWriting;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * @author 文轩
@@ -23,8 +22,9 @@ public interface PlatformService {
      *
      * @param bindParamsVo 绑定参数
      * @param request
+     * @param response
      */
-    ResultUtil nlpBind(BindParamsVo bindParamsVo, HttpServletRequest request);
+    ResultUtil nlpBind(BindParamsVo bindParamsVo,HttpServletRequest request, HttpServletResponse response);
 
     /**
      * nlp光学字符识别
@@ -50,7 +50,7 @@ public interface PlatformService {
      * @param request
      * @return 绑定结果
      */
-    ResultUtil xieBind(BindParamsVo bindParamsVo, HttpServletRequest request);
+    ResultUtil xieBind(BindParamsVo bindParamsVo, HttpServletRequest request, HttpServletResponse response);
 
     /**
      * 写作宝服务调用

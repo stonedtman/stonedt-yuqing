@@ -6,6 +6,7 @@ import com.stonedt.intelligence.util.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,6 +23,12 @@ import javax.servlet.http.HttpSession;
  */
 @Component
 public class LoginHandlerInterceptor implements HandlerInterceptor {
+
+    @Value("${token.expire-time}")
+    private Long expireTime;
+
+    @Value("${token.private-key}")
+    private String privateKey;
 
     // 目标方法执行之前
     @Override
@@ -43,21 +50,53 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
         // 从 http 请求头中取出 token
         String token = request.getHeader("token");
         if (token == null || token.isEmpty()) {
-            if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))){
-//                //告诉ajax我是重定向
-                response.setHeader("REDIRECT", "REDIRECT");
-//                //告诉ajax我重定向的路径
-                response.setHeader("CONTENTPATH", "/login");
-                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            }else{
-                response.sendRedirect(request.getContextPath() + "/login");
-            }
+            token = request.getParameter("token");
+        }
+
+        if (!JWTUtils.decode(token, privateKey)) {
+            sendRedirect(request, response);
             return false;
-        } else {
-            return true;
+        }
+
+        UserDTO userDTO = JWTUtils.getEntity(token, UserDTO.class);
+
+        if (userDTO == null || userDTO.getTokenIssueTime() + expireTime * 1000L < System.currentTimeMillis()) {
+            sendRedirect(request, response);
+            return false;
+        }
+
+
+        return true;
+
+    }
+
+    /**
+     * 重定向方法
+     */
+    public void sendRedirect(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))){
+//                //告诉ajax我是重定向
+            response.setHeader("REDIRECT", "REDIRECT");
+//                //告诉ajax我重定向的路径
+            response.setHeader("CONTENTPATH", "/login");
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        }else{
+            response.sendRedirect(request.getContextPath() + "/login");
         }
     }
 
+
+
+    /**
+     *
+     * @param request current HTTP request
+     * @param response current HTTP response
+     * @param handler handler (or {@link HandlerMethod}) that started asynchronous
+     * execution, for type and/or instance examination
+     * @param modelAndView the {@code ModelAndView} that the handler returned
+     * (can also be {@code null})
+     * @throws Exception
+     */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) throws Exception {
