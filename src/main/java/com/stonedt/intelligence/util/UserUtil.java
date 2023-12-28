@@ -89,6 +89,7 @@ public class UserUtil {
 
         UserDTO userDTO = JWTUtils.getEntity(token, UserDTO.class);
         BeanUtils.copyProperties(user,userDTO);
+        userDTO.setPassword(null);
         // 生成token
         String newToken = userService.getToken(userDTO);
         // 将token放在响应头中
