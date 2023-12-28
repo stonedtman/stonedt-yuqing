@@ -20,6 +20,7 @@ import com.stonedt.intelligence.util.DateUtil;
 import com.stonedt.intelligence.util.ResultUtil;
 import com.stonedt.intelligence.util.UserUtil;
 import eu.bitwalker.useragentutils.UserAgent;
+import eu.bitwalker.useragentutils.Version;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -305,7 +306,10 @@ public class WechatServiceImpl implements WechatService {
 			SystemLogEntity systemLog = new SystemLogEntity();
 			UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
 			systemLog.setUser_browser(userAgent.getBrowser().toString());
-			systemLog.setUser_browser_version(userAgent.getBrowserVersion().getVersion());
+			Version browserVersion = userAgent.getBrowserVersion();
+			if (browserVersion != null) {
+				systemLog.setUser_browser_version(browserVersion.getVersion());
+			}
 			systemLog.setOperatingSystem(userAgent.getOperatingSystem().toString());
 			systemLog.setUser_id(user.getId());
 			systemLog.setUsername(user.getUsername());

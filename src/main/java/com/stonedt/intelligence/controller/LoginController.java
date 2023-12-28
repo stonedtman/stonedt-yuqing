@@ -75,6 +75,7 @@ public class LoginController {
                     //如果Vector中有用户==》移除==》记录==>这样如果切换到别的浏览器同一账号登录且之前账号没有退出就不准确了
                     //如果Vector中没用户==》不记录
                         userService.updateEndLoginTime(user.getUser_id());
+                        userUtil.removeUser(request, response);
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -84,7 +85,7 @@ public class LoginController {
                 e.printStackTrace();
             }
 
-            response.sendRedirect(request.getContextPath() + "user/login");
+            response.sendRedirect(request.getContextPath() + "login");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -106,6 +107,7 @@ public class LoginController {
                             @RequestParam(value = "password") String password,
                             @RequestParam(value = "graph_code") String graph_code,
                             HttpSession session,
+                            HttpServletRequest request,
                             HttpServletResponse httpServletResponse) {
         JSONObject response = new JSONObject();
         String string = null;//图形验证码
@@ -146,10 +148,9 @@ public class LoginController {
                         paramMap.put("login_count", login_count);
                         userService.updateUserLoginCountByPhone(paramMap);
                         try {
-                            String token = userService.getToken(user);
+                            userUtil.setUser(request, httpServletResponse, user);
                             response.put("code", 1);
                             response.put("msg", "用户登录成功");
-                            httpServletResponse.setHeader("token", token);
                         } catch (Exception e) {
                             e.printStackTrace();
                             response.put("code", -1);

@@ -1041,7 +1041,7 @@ function installArticle(res) {
             for (let i = 0; i < data.length; i++) {
                 let dataJson = data[i];
                 let datasource = dataJson.datasource; // 媒体分类
-                let websitelogo = dataJson.websitelogo;
+                let websitelogo = dataJson.websitelogo?dataJson.websitelogo:"/assets/images/default_source.png";
                 let article_public_id = dataJson.article_public_id;
 
                 /*2021.6.28修改*/

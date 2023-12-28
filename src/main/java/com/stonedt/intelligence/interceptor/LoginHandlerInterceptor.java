@@ -53,11 +53,14 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
         Cookie[] cookies = request.getCookies();
         String token = null;
         //匹配名为token的cookie
-        for (Cookie cookie : cookies) {
-            if ("token".equals(cookie.getName())) {
-                token = cookie.getValue();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("token".equals(cookie.getName())) {
+                    token = cookie.getValue();
+                }
             }
         }
+
 
         if (token == null || token.isEmpty()) {
             sendRedirect(request, response);

@@ -38,7 +38,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a th:classappend="${settingLeft == 'user' ? 'active' : ''}" class="sidebar-link  waves-effect waves-dark" th:href="@{/user/{userid}(userid=${session.User.user_id})}" aria-expanded="false">
+                    <a th:classappend="${settingLeft == 'user' ? 'active' : ''}" class="sidebar-link  waves-effect waves-dark" th:href="@{/user/{userid}(userid=${@userUtil.getUserId(#httpServletRequest)})}" aria-expanded="false">
                         <i class="mdi mdi-account-convert"></i>
                         <span class="hide-menu">账号管理</span>
                     </a>

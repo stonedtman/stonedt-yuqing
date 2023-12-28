@@ -76,23 +76,32 @@ public class UserUtil {
     public void setUser(HttpServletRequest request,
                         HttpServletResponse response,
                         User user) throws Exception {
-        // 从 http 请求头中取出 token
-        // 从 http 请求头中取出 token
+        // 生成token
+        String newToken = userService.getToken(user);
+
+        Cookie cookie = new Cookie("token", newToken);
+        // 将token放在响应头中
+        //配置域名，如果不配置，那么只能在当前项目下访问
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        response.setHeader("token", newToken);
+    }
+
+    /**
+     * 移除对象
+     */
+    public void removeUser(HttpServletRequest request,
+                           HttpServletResponse response) {
         Cookie[] cookies = request.getCookies();
-        String token = null;
-        //匹配名为token的cookie
+        if (cookies == null) {
+            return;
+        }
         for (Cookie cookie : cookies) {
             if ("token".equals(cookie.getName())) {
-                token = cookie.getValue();
+                cookie.setMaxAge(0);
+                cookie.setPath("/");
+                response.addCookie(cookie);
             }
         }
-
-        UserDTO userDTO = JWTUtils.getEntity(token, UserDTO.class);
-        BeanUtils.copyProperties(user,userDTO);
-        userDTO.setPassword(null);
-        // 生成token
-        String newToken = userService.getToken(userDTO);
-        // 将token放在响应头中
-        response.setHeader("token", newToken);
     }
 }
