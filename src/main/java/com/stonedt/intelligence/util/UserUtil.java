@@ -5,6 +5,7 @@ import com.stonedt.intelligence.dto.UserDTO;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.service.UserService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.Cookie;
@@ -20,6 +21,9 @@ import javax.servlet.http.HttpSession;
  */
 @Component
 public class UserUtil {
+
+    @Value("${token.expire-time}")
+    private Integer expireTime;
 
     private final UserService userService;
 
@@ -83,6 +87,7 @@ public class UserUtil {
         // 将token放在响应头中
         //配置域名，如果不配置，那么只能在当前项目下访问
         cookie.setPath("/");
+        cookie.setMaxAge(expireTime * 1000);
         response.addCookie(cookie);
         response.setHeader("token", newToken);
     }

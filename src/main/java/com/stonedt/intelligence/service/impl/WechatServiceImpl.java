@@ -151,6 +151,8 @@ public class WechatServiceImpl implements WechatService {
 		String openid = wxMpXmlMessage.getFromUser();
 		//获取场景值
 		String eventKey = wxMpXmlMessage.getEventKey();
+		//删除qrscene_前缀
+		eventKey = eventKey.replace("qrscene_", "");
 		//查询数据库是否存在该用户
 		User user = userDao.selectUserByOpenid(openid);
 		if (user != null) {
@@ -208,6 +210,8 @@ public class WechatServiceImpl implements WechatService {
 			userDao.saveUser(user);
 			//获取事件key
 			String eventKey = redisTemplate.opsForValue().get(openid);
+			//删除qrscene_前缀
+			eventKey = eventKey.replace("qrscene_", "");
 			//将用户信息存入redis
 			redisTemplate.opsForValue().set(eventKey, JSON.toJSONString(user), 10, TimeUnit.MINUTES);
 			//将用户信息存入数据库
