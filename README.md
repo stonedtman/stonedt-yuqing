@@ -224,19 +224,19 @@ docker logs 容器ID -f
 -  2.下载 [stonedt-yuqing.zip](https://gitee.com/stonedtx/yuqing/attach_files/1629685/download)，解压zip包，执行  _java -jar stonedt-yuqing.jar_，启动舆情系统。 
 -  3.进入apache-tomcat-8.5.46/bin文件夹.执行 ./startup.sh
 -  4.配置nginx,在http块中增加如下内容:
-```text
-server {
-        listen       任意端口;
-        server_name  域名或者ip;
-
-        location / {
-            proxy_pass http://127.0.0.1:8084;
-        }
-        location /opinion_screen {
-            proxy_pass http://127.0.0.1:8080;
-        }
-}
-```
+    ```text
+    server {
+            listen       任意端口;
+            server_name  域名或者ip;
+    
+            location / {
+                proxy_pass http://127.0.0.1:8084;
+            }
+            location /opinion_screen {
+                proxy_pass http://127.0.0.1:8080;
+            }
+    }
+    ```
 
 -  5.本地访问：http://127.0.0.1:8084/ 请将端口号8084替换为您上一步配置的端口
  用户名：13900000000，  密码：stonedt 

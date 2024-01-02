@@ -203,9 +203,17 @@ $("#currentyear").text((new Date()).getFullYear());
                     }
                     var warning_source = JSON.parse(list[i].warning_source);
                     var sourceType = warning_source.type;
-                    var sourceStr = '系统推送'
-                    if (sourceType == 2) {
-                        sourceStr = '邮箱推送'
+                    let sourceStr;
+                    switch (sourceType) {
+                        case '1':
+                            sourceStr = '系统推送';
+                            break;
+                        case '2':
+                            sourceStr = '邮箱推送';
+                            break;
+                        case '3':
+                            sourceStr = '公众号推送';
+                            break;
                     }
                     var statusStr = '   <input type="checkbox" class="change_status" data-on-color="success" data-off-color="warning" value="' + list[i].project_id + '"> '
                     if (list[i].warning_status == 1) {

@@ -5,13 +5,11 @@ package com.stonedt.intelligence.service.impl;
 import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
 import com.stonedt.intelligence.aop.SystemLogAspect;
+import com.stonedt.intelligence.constant.WechatConstant;
 import com.stonedt.intelligence.dao.ProjectTaskDao;
 import com.stonedt.intelligence.dao.UserDao;
 import com.stonedt.intelligence.dao.UserWechatInfoDao;
-import com.stonedt.intelligence.dto.QrCodeInput;
-import com.stonedt.intelligence.dto.QrcodeData;
-import com.stonedt.intelligence.dto.WechatUserInfo;
-import com.stonedt.intelligence.dto.WxMpXmlMessage;
+import com.stonedt.intelligence.dto.*;
 import com.stonedt.intelligence.entity.*;
 import com.stonedt.intelligence.dao.DefaultOpinionConditionDao;
 import com.stonedt.intelligence.service.*;
@@ -21,6 +19,7 @@ import com.stonedt.intelligence.util.ResultUtil;
 import com.stonedt.intelligence.util.UserUtil;
 import eu.bitwalker.useragentutils.UserAgent;
 import eu.bitwalker.useragentutils.Version;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -43,6 +42,7 @@ import java.util.concurrent.TimeUnit;
  * @author 文轩
  */
 @Service
+@Slf4j
 public class WechatServiceImpl implements WechatService {
 
 	private final RestTemplate restTemplate;
@@ -71,8 +71,9 @@ public class WechatServiceImpl implements WechatService {
 
 	private final UserUtil userUtil;
 
-	@Value("${wechat.qrcode.url}")
-	private String getQrcodeUrl;
+	@Value("${wechat.url}")
+	private String wechatUrl;
+
 
 	@Value("${account.effective-days}")
 	private Integer effectiveDays;
@@ -126,7 +127,7 @@ public class WechatServiceImpl implements WechatService {
 		//生成二维码
 		String qrcodeUrl;
 		try {
-			qrcodeUrl = restTemplate.postForObject(getQrcodeUrl, request, String.class);
+			qrcodeUrl = restTemplate.postForObject(wechatUrl + WechatConstant.GET_QRCODE, request, String.class);
 		} catch (RestClientException e) {
 			e.printStackTrace();
 			return ResultUtil.build(500,"生成二维码失败");
@@ -324,6 +325,16 @@ public class WechatServiceImpl implements WechatService {
 			systemLogService.addData(systemLog);
 		});
 		return ResultUtil.ok();
+	}
+
+	@Override
+	public void send(WxMpTemplateMessage wxMpTemplateMessage) {
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json; charset=UTF-8");
+		HttpEntity<WxMpTemplateMessage> request = new HttpEntity<>(wxMpTemplateMessage, headers);
+		String string = restTemplate.postForObject(wechatUrl + WechatConstant.SEND, request, String.class);
+		log.info("微信消息发送完毕,返回内容为:{}",string);
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package com.stonedt.intelligence.service;
 
 import com.stonedt.intelligence.dto.WechatUserInfo;
+import com.stonedt.intelligence.dto.WxMpTemplateMessage;
 import com.stonedt.intelligence.dto.WxMpXmlMessage;
 import com.stonedt.intelligence.util.ResultUtil;
 
@@ -36,4 +37,6 @@ public interface WechatService {
 	void handleAuthorize(WechatUserInfo wechatUserInfo);
 
 	ResultUtil checkLogin(String sceneStr, HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	void send(WxMpTemplateMessage wxMpTemplateMessage);
 }

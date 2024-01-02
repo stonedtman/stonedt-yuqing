@@ -5,7 +5,21 @@ package com.stonedt.intelligence.constant;
  *
  */
 public class WechatConstant {
-	
+
+
+	/**
+	 * 获取二维码
+	 */
+	public final static String GET_QRCODE = "/getQrCode";
+
+
+	/**
+	 * 发送消息
+	 */
+	public final static String SEND = "/send";
+
+
+
 	// appid
 	public final static String AppID = "*************";
 	

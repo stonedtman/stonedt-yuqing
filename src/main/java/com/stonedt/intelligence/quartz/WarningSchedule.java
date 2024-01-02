@@ -8,7 +8,9 @@ import java.util.concurrent.TimeUnit;
 
 import com.stonedt.intelligence.dao.UserDao;
 import com.stonedt.intelligence.dto.MailConfig;
+import com.stonedt.intelligence.dto.WxMpTemplateMessage;
 import com.stonedt.intelligence.service.MailService;
+import com.stonedt.intelligence.service.WechatService;
 import com.stonedt.intelligence.thred.ThreadPoolConst;
 import com.stonedt.intelligence.util.*;
 import org.slf4j.Logger;
@@ -70,6 +72,17 @@ public class WarningSchedule {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
+
+    @Autowired
+    private WechatService wechatService;
+
+    @Value("${wechat.warning.template-id}")
+    private String templateId;
+
+    @Value("${system.url}")
+    private String systemUrl;
+
+
 
     //	@Scheduled(fixedRate = 10000000)
     @Scheduled(cron = "0 0/20 * * * ?")
@@ -148,6 +161,7 @@ public class WarningSchedule {
             String regional_word = String.valueOf(projectByProId.get("regional_word"));
             String stop_word = String.valueOf(projectByProId.get("stop_word"));
             Integer projectType = Integer.parseInt(String.valueOf(projectByProId.get("project_type")));
+            Long userId = Long.parseLong(String.valueOf(projectByProId.get("user_id")));
 //            String listKeywords = "";
 //            if (subject_word.length() > 0 && !subject_word.equals("null")) {
 //                listKeywords = listKeywords + subject_word + ",";
@@ -179,7 +193,7 @@ public class WarningSchedule {
             //分类
             String classify = warningSetting.getWarning_classify();
             //匹配方式  0全文 1标题 2正文
-            String matchingMode = String.valueOf(warningSetting.getWarning_match());
+            String matchingMode = String.valueOf(warningSetting.getWarning_match() - 1);
             //预警内容 0 全部 1敏感
             String jycon = String.valueOf(warningSetting.getWarning_content());
             String emotionalIndex = "1";
@@ -222,14 +236,24 @@ public class WarningSchedule {
                     JSONObject warning_source = JSONObject.parseObject(warningSetting.getWarning_source());
                     int email_type = warning_source.getIntValue("type");
 
-                    Boolean emailpushboolean = false;//是否是邮箱预警
-                    Boolean systempush = false;//是否是系统预警
+                    boolean emailpushboolean = false;//是否是邮箱预警
+                    boolean systempush = false;//是否是系统预警
+                    boolean wxPush = false; //是否是微信预警
                     if (email_type == 2) {
                         emailpushboolean = true;
-                    } else {
+                    } else if (email_type == 1){
                         systempush = true;
+                    }else if (email_type == 3){
+                        wxPush = true;
                     }
                     String emailHtml = emailHtml(nowtime, warningSetting, jsonArray.size());
+                    final String openId;
+                    if (wxPush) {
+                        openId = userDao.selectOpenidByUserId(userId);
+                    }else {
+                        openId = null;
+                    }
+
                     for (int i = 0; i < jsonArray.size(); i++) {
 
                         try {
@@ -304,6 +328,43 @@ public class WarningSchedule {
                                         "</div>\r\n" +
                                         "</div>";
                             }
+                            if (wxPush) {
+                                logger.info("开始公众号预警");
+                                List<WxMpTemplateMessage.WxMpTemplateData> wxMpTemplateDataList =
+                                        new ArrayList<>();
+                                //创建
+                                WxMpTemplateMessage.WxMpTemplateData first =
+                                        new WxMpTemplateMessage.WxMpTemplateData("first", "您有一条重大预警舆情");
+                                wxMpTemplateDataList.add(first);
+
+                                WxMpTemplateMessage.WxMpTemplateData keyword1 =
+                                        new WxMpTemplateMessage.WxMpTemplateData("keyword1",  projectByProId.get("project_name") + "(方案名)");
+                                wxMpTemplateDataList.add(keyword1);
+
+                                WxMpTemplateMessage.WxMpTemplateData keyword2 =
+                                        new WxMpTemplateMessage.WxMpTemplateData("keyword2", title);
+                                wxMpTemplateDataList.add(keyword2);
+
+                                WxMpTemplateMessage.WxMpTemplateData keyword3 =
+                                        new WxMpTemplateMessage.WxMpTemplateData("keyword3", publish_time);
+                                wxMpTemplateDataList.add(keyword3);
+
+                                WxMpTemplateMessage.WxMpTemplateData remark =
+                                        new WxMpTemplateMessage.WxMpTemplateData("remark", "请登录舆情系统-预警信息模块查看详情。");
+                                wxMpTemplateDataList.add(remark);
+
+                                WxMpTemplateMessage wxMpTemplateMessage = WxMpTemplateMessage
+                                        .builder()
+                                        .templateId(templateId)
+                                        .toUser(openId)
+                                        .data(wxMpTemplateDataList)
+                                        .url(systemUrl+"/monitor/detail/"+article_public_id)
+                                        .build();
+                                wechatService.send(wxMpTemplateMessage);
+                                logger.info("公众号预警结束");
+
+                            }
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -313,7 +374,6 @@ public class WarningSchedule {
                         String finalEmailHtml = emailHtml;
                         ThreadPoolConst.IO_EXECUTOR.execute(()->{
                             try {
-                                Long userId = warningSetting.getUser_id();
                                 String mailJson = userDao.selectMailJsonByUserId(userId);
                                 if (mailJson == null || mailJson.isEmpty()) {
                                     logger.info("预警邮件发送失败......用户未设置邮箱......");
@@ -375,14 +435,23 @@ public class WarningSchedule {
                     JSONObject warning_source = JSONObject.parseObject(warningSetting.getWarning_source());
                     int email_type = warning_source.getIntValue("type");
 
-                    Boolean emailpushboolean = false;//是否是邮箱预警
-                    Boolean systempush = false;//是否是系统预警
+                    boolean emailpushboolean = false;//是否是邮箱预警
+                    boolean systempush = false;//是否是系统预警
+                    boolean wxPush = false; //是否是微信预警
                     if (email_type == 2) {
                         emailpushboolean = true;
-                    } else {
+                    } else if (email_type == 1){
                         systempush = true;
+                    }else if (email_type == 3){
+                        wxPush = true;
                     }
                     String emailHtml = emailHtml(nowtime, warningSetting, jsonArray.size());
+                    final String openId;
+                    if (wxPush) {
+                        openId = userDao.selectOpenidByUserId(userId);
+                    }else {
+                        openId = null;
+                    }
 
                     for (int i = 0; i < jsonArray.size(); i++) {
                         try {
@@ -466,6 +535,42 @@ public class WarningSchedule {
                                         "</div>\r\n" +
                                         "</div>";
                             }
+                            if (wxPush) {
+                                logger.info("开始公众号预警");
+                                List<WxMpTemplateMessage.WxMpTemplateData> wxMpTemplateDataList =
+                                        new ArrayList<>();
+                                //创建
+                                WxMpTemplateMessage.WxMpTemplateData first =
+                                        new WxMpTemplateMessage.WxMpTemplateData("first", "您有一条重大预警舆情");
+                                wxMpTemplateDataList.add(first);
+
+                                WxMpTemplateMessage.WxMpTemplateData keyword1 =
+                                        new WxMpTemplateMessage.WxMpTemplateData("keyword1",  projectByProId.get("project_name") + "(方案名)");
+                                wxMpTemplateDataList.add(keyword1);
+
+                                WxMpTemplateMessage.WxMpTemplateData keyword2 =
+                                        new WxMpTemplateMessage.WxMpTemplateData("keyword2", title);
+                                wxMpTemplateDataList.add(keyword2);
+
+                                WxMpTemplateMessage.WxMpTemplateData keyword3 =
+                                        new WxMpTemplateMessage.WxMpTemplateData("keyword3", publish_time);
+                                wxMpTemplateDataList.add(keyword3);
+
+                                WxMpTemplateMessage.WxMpTemplateData remark =
+                                        new WxMpTemplateMessage.WxMpTemplateData("remark", "请登录舆情系统-预警信息模块查看详情。");
+                                wxMpTemplateDataList.add(remark);
+
+                                WxMpTemplateMessage wxMpTemplateMessage = WxMpTemplateMessage
+                                        .builder()
+                                        .templateId(templateId)
+                                        .toUser(openId)
+                                        .data(wxMpTemplateDataList)
+                                        .url(systemUrl+"/monitor/detail/"+article_public_id)
+                                        .build();
+                                wechatService.send(wxMpTemplateMessage);
+                                logger.info("公众号预警结束");
+
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -475,7 +580,7 @@ public class WarningSchedule {
                         String finalEmailHtml = emailHtml;
                         ThreadPoolConst.IO_EXECUTOR.execute(()->{
                             try {
-                                Long userId = warningSetting.getUser_id();
+//                                Long userId = warningSetting.getUser_id();
                                 String mailJson = userDao.selectMailJsonByUserId(userId);
                                 if (mailJson == null || mailJson.isEmpty()) {
                                     logger.info("预警邮件发送失败......用户未设置邮箱......");
