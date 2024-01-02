@@ -229,7 +229,8 @@ docker logs 容器ID -f
 详见思通舆情安装部署手册：https://gitee.com/stonedtx/yuqing/blob/master/install_guide.md
 
 _备注：修改配置文件[[application.yml](https://gitee.com/stonedtx/yuqing/blob/master/config/application.yml)]，设定 MySQL、Redis 用户和密码等。
-      修改配置文件[[application.properties](https://gitee.com/stonedtx/yuqing/blob/master/config/application.properties)]，修改xmlFilePath文件路径，并且拷贝config文件下的xml文件到指定路径等。_ 
+      修改配置文件[[application.properties](https://gitee.com/stonedtx/yuqing/blob/master/config/application.properties)]，修改xmlFilePath文件路径，并且拷贝config文件下的xml文件到指定路径等。
+      舆情大屏下载地址[opinion_screen.zip](https://gitee.com/stonedtx/yuqing/attach_files/1633832/download)_ 
 
 
 ## 安装手册
