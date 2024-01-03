@@ -1,0 +1,123 @@
+.warningmsg{
+    min-height: 100vh;
+    padding-bottom: 3rem;
+    background-color: #FFFFFF;
+}
+.monitor-search{
+    box-sizing: content-box;
+    padding: 0.75rem 0.75rem 0 0.75rem;
+}
+.search{
+    flex: 1;
+    margin-right: 0.75rem;
+    position: relative;
+}
+.search input{
+    padding-right: 2.5rem;
+    border-radius: 0.25rem !important;
+}
+.search i{
+    font-size: 0.875rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 2.25rem;
+    height: 2.25rem;
+    line-height: 2.25rem;
+    text-align: center;
+}
+.schema_group{
+    width: 6.25rem;
+}
+.schema_group button{
+    width: 100%;
+    text-align: left;
+    border: 1px solid #e9ecef;
+}
+.projectList{
+    width: 100%;
+    height: 2.75rem;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.projectList .item {
+    position: relative;
+    display: inline-block;
+    height: 2.75rem;
+    line-height: 2.75rem;
+    font-size: .875rem;
+    font-weight: 400;
+    color: rgba(0,0,0,.5);
+    padding: 0 0.9375rem;
+    word-break: keep-all;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.projectList .item.active {
+    color: rgba(0,0,0,.9);
+    font-weight: 700;
+}
+.projectList .item.active span:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 0.1875rem;
+    border-radius: 0.09375rem;
+    background-color: #0085ff;
+    bottom: 0;
+    left: 0;
+}
+.projectList .item span{
+    position: relative;
+    display: inline-block;
+    height: 100%;
+}
+.projectList::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+.allNum{
+    height: 2.5rem;
+    line-height: 2.5rem;
+    padding-left: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #1a61f7;
+}
+.dataList .item{
+    padding: 0.75rem 0.5rem 0.75rem 0.75rem;
+    border-bottom: 1px solid #cccccc;
+}
+.dataList .item .title{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 600;
+}
+.dataList .item .like-comm {
+    font-size: 0.8125rem;
+    margin-top: 0.5rem;
+}
+.dataList .item .like-comm span{
+    margin-right: 10px;
+}
+.dataList .item .like-comm span:last-child{
+    float: right;
+    margin-right: 0;
+}
+
+.dropdown-toggle::after{
+    position: absolute;
+    right: 0.75rem;
+    top: 0.875rem;
+}
+.dropdown-menu li.active{
+    color: #fff;
+    background-color: #0085ff;
+}

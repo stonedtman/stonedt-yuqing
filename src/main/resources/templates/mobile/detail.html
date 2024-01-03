@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="referrer" content="never">
+    <!--<meta name="referrer" content="no-referrer"/>-->
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/assets/images/favicon.png}">
+    <title>文章详情</title>
+    <!-- Custom CSS -->
+    <link th:href="@{/dist/css/style.min.css}" rel="stylesheet">
+    <link th:href="@{/dist/css/custom.css}" rel="stylesheet">
+    <link th:href="@{/assets/libs/sweetalert2/dist/sweetalert2.min.css}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css}">
+    <!--<script src="//at.alicdn.com/t/font_1709263_w16payhc3l.js"></script>-->
+    <link th:href="@{/assets/extra-libs/c3/c3.min.css}" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script th:src="@{/common/analyze-cloud.js}"></script>
+    <script th:src="@{/common/ajax-config.js}"></script>
+    <![endif]-->
+    <style>
+        .zx {
+            color: #ffbc34;
+        }
+        .zm{
+            color: #36bea6;
+        }
+        .fm{
+            color: #f62d51;
+        }
+        .detail{
+            min-height: 100vh;
+            padding: 12px 16px;
+            background-color: #FFFFFF;
+        }
+        #title{
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            /*overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;*/
+        }
+        .warning_words{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .warning_words .words{
+            color: #0085ff;
+        }
+        .detail-tips{
+            font-size: 0.75rem;
+            color: #999999;
+            margin-bottom: 10px;
+        }
+        .detail-tips>span:last-child{
+            margin-right: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="main-wrapper">
+    <div class="detail">
+        <div id="title"></div>
+        <div class="warning_words">
+            <div class="words"></div>
+            <div class="emotion"></div>
+        </div>
+        <div class="detail-tips">
+            <span id="author"></span>
+            <span id="source"></span>
+            <text id="publish_time"></text>
+        </div>
+        <div class="detail-content"></div>
+    </div>
+</div>
+
+<script th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
+<script th:src="@{/assets/libs/popper.js/dist/umd/popper.min.js}"></script>
+<script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.min.js}"></script>
+<script th:src="@{/dist/js/app.min.js}"></script>
+<script th:src="@{/dist/js/app.init.light-sidebar.js}"></script>
+<script th:src="@{/dist/js/app-style-switcher.js}"></script>
+<script th:src="@{/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js}"></script>
+<script th:src="@{/assets/extra-libs/sparkline/sparkline.js}"></script>
+<script th:src="@{/dist/js/waves.js}"></script>
+<script th:src="@{/dist/js/sidebarmenu.js}"></script>
+<script th:src="@{/dist/js/custom.min.js}"></script>
+<script th:src="@{/assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js}"></script>
+<script th:src="@{/assets/libs/sweetalert2/dist/sweetalert2.all.min.js}"></script>
+<script th:src="@{/dist/js/pages.js}"></script>
+<script th:src="@{/assets/extra-libs/c3/d3.min.js}"></script>
+<script th:src="@{/assets/extra-libs/c3/c3.min.js}"></script>
+<script th:src="@{/common/iconfont.js}"></script>
+<script th:src="@{/common/tools.js}"></script>
+<script th:src="@{/assets/libs/block-ui/jquery.blockUI.js}"></script>
+<script th:src="@{/dist/baidu/baidu_statistics.js}"></script>
+
+<script type="text/javascript" th:inline="javascript">
+    const params = new URLSearchParams(window.location.search);
+    var projectId = params.get('projectid');
+    var articleId = params.get('id');
+    var relatedword = params.get('relatedword');
+    var publish_time = params.get('publish_time');
+    var ctxPath = /*[[@{/}]]*/'';
+
+    articleDetail();
+    function articleDetail() {
+        $.ajax({
+            url: ctxPath + 'monitor/articleDetail',
+            type: 'post',
+            dataType: 'json',
+            data: {
+                articleId: articleId,
+                projectId: projectId,
+                relatedword: relatedword,
+                publish_time: publish_time,
+                isNeedWarnWord: true,
+            },
+            beforeSend: function() {
+                loading(".detail-content")
+            },
+            success: function (res) {
+                if (res.detail&&res.detail.code==200) {
+                    let detail = res.detail
+                    $('#title').html(res.title);
+                    $(".words").html("涉及预警词: "+res.warnWordList.join(" | "))
+                    if(detail.emotionalIndex==1){
+                        $(".emotion").html("正面")
+                        $(".emotion").addClass("zm")
+                    }else if(detail.emotionalIndex==2){
+                        $(".emotion").html("中性")
+                        $(".emotion").addClass("zx")
+                    }else if(detail.emotionalIndex==3){
+                        $(".emotion").html("负面")
+                        $(".emotion").addClass("fm")
+                    }
+
+                    $('#author').html('作者: ' + isNull(detail.author));
+                    $('#source').html('来源: ' + detail.sourcewebsitename);
+                    $('#publish_time').html('发布时间: ' + detail.publish_time);
+                    res.text = res.text.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,"")
+                    res.text = res.text.replace(/<style\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/style>/gi,"")
+                    $('.detail-content').html(res.text);
+                    let imgListAll = '';
+                    let imgListStr1 = '<div>';
+                    let imgListStr2 = '';
+                    let imgListStr3 = '</div>';
+                    var imggroup = '';
+                    if (detail.sourcewebsitename == "微博"||detail.sourcewebsitename == "抖音"||detail.sourcewebsitename == "小红书"||detail.sourcewebsitename == "快手"||detail.sourcewebsitename == "bilibili"||detail.sourcewebsitename == "今日头条") {
+                        let extend_string_one = detail.extend_string_one;
+                        if (extend_string_one != "") {
+                            let extend_string_oneJson = JSON.parse(extend_string_one);
+                            let imglist = extend_string_oneJson.imglist;
+                            for (let i = 0; i < imglist.length; i++) {
+                                let imgurl = imglist[i].imgurl;
+                                // console.info("img:" + imgurl);
+                                let imgurlstr = ' <div class="img-box" style="  background: url(' + imgurl + ') no-repeat; background-size: cover;display: inline-block !important;width: 160px;background-position: center;"></div>'
+                                imgListStr2 += imgurlstr;
+                            }
+                            imggroup = '<div class="img-group">' + imgListStr2 + '</div>'
+                            if(imglist.length==0){
+                                imggroup = ""
+                            }
+                            let veviostr = '';
+                            if(extend_string_oneJson.hasOwnProperty('videoUrl')&&extend_string_oneJson.videoUrl!=""){
+                                imggroup = "" // 如果抖音有视频，不显示图片
+                                veviostr+='<div style="text-align: center"><video src="'+extend_string_oneJson.videoUrl+'" controls="controls"></video></div>';
+                            }
+
+
+                            imggroup = imggroup+veviostr;
+
+                        }
+                    }else{
+                        let veviostr = '';
+                        let extend_string_one = detail.extend_string_one;
+                        if (extend_string_one != "") {
+                            let extend_string_oneJson = JSON.parse(extend_string_one);
+                            if(extend_string_oneJson.hasOwnProperty('videoUrl')){
+                                if(extend_string_oneJson.videoUrl!=''){
+                                    veviostr+='<div align="center"><video src="'+extend_string_oneJson.videoUrl+'" controls="controls" style="width:100%;height:40vh;text-align: center"></video></div>';
+                                }
+
+                            }
+                        }
+                        imggroup = imggroup+veviostr;
+                    }
+                    imgListAll = imgListStr1 + imggroup + imgListStr3;
+                    $(".detail").append(imgListAll)
+                }
+                if(res.detail==""||res.detail&&res.detail.code==500){
+                    dataerror(".detail")
+                }
+            }
+        })
+    }
+
+
+
+    function isNull(arg) {
+        if (arg) {
+            return arg;
+        } else {
+            return '-';
+        }
+    }
+</script>
+</body>
+</html>
