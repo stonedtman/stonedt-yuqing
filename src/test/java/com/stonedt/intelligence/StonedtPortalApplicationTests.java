@@ -1,10 +1,12 @@
 package com.stonedt.intelligence;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.stonedt.intelligence.dao.AnalysisQuartzDao;
 import com.stonedt.intelligence.dao.DefaultOpinionConditionDao;
 import com.stonedt.intelligence.dao.ProjectTaskDao;
 import com.stonedt.intelligence.dto.WechatUserInfo;
+import com.stonedt.intelligence.dto.WxMpTemplateMessage;
 import com.stonedt.intelligence.dto.WxMpXmlMessage;
 import com.stonedt.intelligence.entity.AnalysisQuartzDo;
 import com.stonedt.intelligence.entity.DefaultOpinionCondition;
@@ -29,10 +31,12 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -76,28 +80,11 @@ public class StonedtPortalApplicationTests {
 //	DefaultOpinionConditionDao defaultOpinionConditionDao;
 
 	@Autowired
-	WechatService wechatService;
+	WarningSchedule warningSchedule;
 	@Test
 	public void contextLoads() throws IOException, ParseException {
 
-		WxMpXmlMessage wxMpXmlMessage = new WxMpXmlMessage();
-		wxMpXmlMessage.setFromUser("oZ1ZM5Y5Q1Q1Q1Q1Q1Q1Q1Q1Q1Q4");
-		wxMpXmlMessage.setEvent("subscribe");
-		wxMpXmlMessage.setEventKey("qrscene_568778240204");
-		wechatService.handleSubscribe(wxMpXmlMessage);
-
-		WechatUserInfo wechatUserInfo = new WechatUserInfo();
-		wechatUserInfo.setOpenid("oZ1ZM5Y5Q1Q1Q1Q1Q1Q1Q1Q1Q1Q4");
-		wechatUserInfo.setUnionId("oZ1ZM5Y5Q1Q1Q1Q1Q1Q1Q1Q1Q1Q1");
-		wechatUserInfo.setNickname("测试");
-		wechatUserInfo.setCity("北京");
-		wechatUserInfo.setCountry("中国");
-		wechatUserInfo.setProvince("北京");
-		wechatUserInfo.setHeadImgUrl("http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ1YibicicZ3Z.jpg");
-		wechatUserInfo.setSex(1);
-
-
-		wechatService.handleAuthorize(wechatUserInfo);
+		warningSchedule.start();
 //		String policyData = SynthesizeSchedule.getPolicyData();
 //		System.out.println(policyData);
 //		synthesizeSchedule.popularInformation();

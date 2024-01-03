@@ -6,7 +6,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import com.stonedt.intelligence.dao.SystemDao;
 import com.stonedt.intelligence.dto.ImageUrl;
+import com.stonedt.intelligence.entity.WarningSetting;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -40,6 +42,8 @@ public class ArticleServiceImpl implements ArticleService {
     private OpinionConditionService opinionConditionService;
     @Autowired
     private ProjectDao projectDao;
+    @Autowired
+    private SystemDao systemDao;
 
     @Override
 //    public Map<String, Object> articleDetail(String articleId, Long projectId, String page, String searchkeyword) {
@@ -298,6 +302,39 @@ public class ArticleServiceImpl implements ArticleService {
             e.printStackTrace();
         }
         return list;
+    }
+
+    @Override
+    public List<String> getHaveWarnWord(String title, String text, Long projectId) {
+        WarningSetting warningSetting = systemDao.getWarningByProjectId(projectId);
+        String warningWord = warningSetting.getWarning_word();
+        String[] warningWordArray = warningWord.split(",");
+        List<String> hasWarnWordList = new ArrayList<>();
+
+
+
+        for (int i = 0; i < warningWordArray.length; i++) {
+            String word = warningWordArray[i];
+            switch (warningSetting.getWarning_match()){
+                case 1:
+                    if (title.contains(word) || text.contains(word)) {
+                        hasWarnWordList.add(word);
+                    }
+                    break;
+                case 2:
+                    if (title.contains(word)) {
+                        hasWarnWordList.add(word);
+                    }
+                    break;
+                case 3:
+                    if(text.contains(word)) {
+                        hasWarnWordList.add(word);
+                    }
+                    break;
+            }
+        }
+
+        return hasWarnWordList;
     }
 
     /*

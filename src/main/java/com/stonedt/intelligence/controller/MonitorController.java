@@ -224,7 +224,11 @@ public class MonitorController {
 	/*@SystemControllerLog(module = "数据监测", submodule = "数据监测-详情", type = "查询", operation = "articleDetail")*/
 	@PostMapping(value = "/articleDetail")
 	@ResponseBody
-	public String articleDetail(String articleId, Long projectId,  String relatedword,String publish_time,
+	public String articleDetail(String articleId,
+								Long projectId,
+								String relatedword,
+								String publish_time,
+								@RequestParam(required = false,defaultValue = "false") Boolean isNeedWarnWord,
 			HttpServletRequest resRequest) {
 		long startTime = System.currentTimeMillis();
 		long userId = userUtil.getUserId(resRequest);
@@ -234,6 +238,11 @@ public class MonitorController {
 			e.printStackTrace();
 		}
 		Map<String, Object> articleDetail = articleService.articleDetail(articleId, projectId, relatedword,publish_time);
+		if (Boolean.TRUE.equals(isNeedWarnWord)) {
+			List<String> warnWordList = articleService.getHaveWarnWord((String) articleDetail.get("title"), (String) articleDetail.get("text"), projectId);
+			articleDetail.put("warnWordList", warnWordList);
+		}
+
 		System.err.println("请求详情获取时间：" + (System.currentTimeMillis() - startTime) / 1000d + "s");
 		return JSONObject.toJSONString(articleDetail);
 	}

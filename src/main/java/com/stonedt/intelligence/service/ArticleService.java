@@ -13,4 +13,5 @@ public interface ArticleService {
 
 	List<Map<String, Object>> relatedArticles(String keywords);
 
+	List<String> getHaveWarnWord(String title, String text, Long projectId);
 }
