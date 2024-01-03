@@ -289,7 +289,7 @@ public class SystemController {
     public @ResponseBody
     ResultUtil getWarningArticle(@RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                                  @RequestParam Integer openFlag,
-                                 @RequestParam(required = false) String keyword,
+                                 @RequestParam(required = false,defaultValue = "") String keyword,
                                  HttpServletRequest request) {
         String project_id = request.getParameter("project_id");
         long userId = userUtil.getUserId(request);
