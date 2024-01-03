@@ -286,9 +286,9 @@ function sendArticle(t) {
                         <div class="item">
                             <div class="title-box">
                                 <div class="title-left">
-                                    <span class="industrylable">${data[i].industrylable}</span>
-                                    <span class="eventlable">${data[i].eventlable}</span>
-                                    <span class="categorylable">${data[i].categorylable}</span>
+                                    ${data[i].industrylable?('<span class="industrylable">'+data[i].industrylable+'</span>'):''}
+                                    ${data[i].eventlable?('<span class="eventlable">'+data[i].eventlable+'</span>'):''}
+                                    ${data[i].categorylable?('<span class="categorylable">'+data[i].categorylable+'</span>'):''}
                                     <span class="title">${data[i].title}</span>
                                 </div>
                                 <span class="emotion ${data[i].emotionalIndex==1?"zm":data[i].emotionalIndex==2?"zx":"fm"}">${data[i].emotionalIndex==1?"正面":data[i].emotionalIndex==2?"中性":"负面"}</span>
