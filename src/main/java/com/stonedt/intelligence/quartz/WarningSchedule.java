@@ -153,7 +153,8 @@ public class WarningSchedule {
      */
     public void search(WarningSetting warningSetting, String nowtime, Integer time) {
         try {
-            Map<String, Object> projectByProId = projectService.getProjectByProId(warningSetting.getProject_id());
+            Long projectId = warningSetting.getProject_id();
+            Map<String, Object> projectByProId = projectService.getProjectByProId(projectId);
             projectByProId.get("subject_word");
             String subject_word = String.valueOf(projectByProId.get("subject_word"));
             String character_word = String.valueOf(projectByProId.get("character_word"));
@@ -287,7 +288,7 @@ public class WarningSchedule {
                                 warning_popup.put("article_title", title);
                                 warning_popup.put("article_emotion", emotionalIndex1);
                                 warning_popup.put("status", 0);
-                                warning_popup.put("project_id", warningSetting.getProject_id());
+                                warning_popup.put("project_id", projectId);
                                 warning_popup.put("read_status", 0);
                                 Map<String, Object> article_detail = new HashMap<>();
                                 article_detail.put("sourcewebsitename", sourcewebsitename);
@@ -358,7 +359,7 @@ public class WarningSchedule {
                                         .templateId(templateId)
                                         .toUser(openId)
                                         .data(wxMpTemplateDataList)
-                                        .url(systemUrl+"/monitor/detail/"+article_public_id)
+                                        .url(systemUrl + "/mobile/monitor/detail?id=" + article_public_id + "&projectid=" + projectId)
                                         .build();
                                 wechatService.send(wxMpTemplateMessage);
                                 logger.info("公众号预警结束");
@@ -494,7 +495,7 @@ public class WarningSchedule {
                                 warning_popup.put("article_title", title);
                                 warning_popup.put("article_emotion", emotionalIndex1);
                                 warning_popup.put("status", 0);
-                                warning_popup.put("project_id", warningSetting.getProject_id());
+                                warning_popup.put("project_id", projectId);
                                 warning_popup.put("read_status", 0);
                                 Map<String, Object> article_detail = new HashMap<>();
                                 article_detail.put("sourcewebsitename", sourcewebsitename);
@@ -565,7 +566,7 @@ public class WarningSchedule {
                                         .templateId(templateId)
                                         .toUser(openId)
                                         .data(wxMpTemplateDataList)
-                                        .url(systemUrl+"/monitor/detail/"+article_public_id)
+                                        .url(systemUrl + "/mobile/monitor/detail?id=" + article_public_id + "&projectid=" + projectId)
                                         .build();
                                 wechatService.send(wxMpTemplateMessage);
                                 logger.info("公众号预警结束");
