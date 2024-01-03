@@ -238,7 +238,7 @@ public class MonitorController {
 			e.printStackTrace();
 		}
 		Map<String, Object> articleDetail = articleService.articleDetail(articleId, projectId, relatedword,publish_time);
-		if (Boolean.TRUE.equals(isNeedWarnWord)) {
+		if (Boolean.TRUE.equals(isNeedWarnWord) && projectId != null) {
 			List<String> warnWordList = articleService.getHaveWarnWord((String) articleDetail.get("title"), (String) articleDetail.get("text"), projectId);
 			articleDetail.put("warnWordList", warnWordList);
 		}
