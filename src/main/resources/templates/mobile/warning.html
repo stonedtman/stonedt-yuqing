@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <meta name="referrer" content="no-referrer" />
+
+  <link rel="icon" type="image/png" sizes="16x16" th:href="@{/assets/images/favicon.png}"/>
+
+  <link th:href="@{/dist/css/style.min.css}" rel="stylesheet" />
+  <link th:href="@{/dist/css/custom.css}" rel="stylesheet" />
+  <link th:href="@{/dist/css/site.min.css}" rel="stylesheet" />
+  <link th:href="@{/assets/libs/sweetalert2/dist/sweetalert2.min.css}" rel="stylesheet"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css}"/>
+  <link rel="stylesheet" href="../dist/css/main.css" />
+  <link rel="stylesheet" href="../dist/css/mobile/mobile.css" />
+  <link rel="stylesheet" href="../dist/css/mobile/warning.css" />
+  <title>舆情预警</title>
+  <style>
+
+  </style>
+</head>
+<body>
+<div class="warningmsg">
+  <div class="monitor-search">
+    <div class="search">
+      <input type="text" class="form-control">
+      <i class="fa fa-search"></i>
+    </div>
+    <div class="dropdown schema_group">
+      <button class="btn dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        方案组
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+        <li data-value="1" onclick="changegroup(1)"><a>方案组</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="projectList"></div>
+  <div class="allNum"></div>
+  <div class="dataList"></div>
+  <div class="nav-bar">
+    <div class="bar" onclick="monitor()">
+      <i class="fa fa-list"></i>
+      <div>舆情监测</div>
+    </div>
+    <div class="bar">
+      <i class="fa fa-search"></i>
+      <div>内容检索</div>
+    </div>
+    <div class="bar">
+      <i class="fa fa-th-large"></i>
+      <div>数据总览</div>
+    </div>
+    <div class="bar active">
+      <i class="fa fa-bell"></i>
+      <div>舆情预警</div>
+    </div>
+    <div class="bar">
+      <i class="fa fa-user"></i>
+      <div>我的</div>
+    </div>
+  </div>
+</div>
+<script th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script th:src="@{/assets/libs/popper.js/dist/umd/popper.min.js}"></script>
+<script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.min.js}"></script>
+<!-- apps -->
+<script th:src="@{/dist/js/app.min.js}"></script>
+<script th:src="@{/dist/js/app.init.light-sidebar.js}"></script>
+<script th:src="@{/dist/js/app-style-switcher.js}"></script>
+<!-- slimscrollbar scrollbar JavaScript -->
+<script th:src="@{/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js}"></script>
+<script th:src="@{/assets/extra-libs/sparkline/sparkline.js}"></script>
+<!--Menu sidebar -->
+<script th:src="@{/dist/js/sidebarmenu.js}"></script>
+<script th:src="@{/assets/libs/block-ui/jquery.blockUI.js}"></script>
+<script th:src="@{/common/iconfont.js}"></script>
+<script th:src="@{/dist/baidu/baidu_statistics.js}"></script>
+</body>
+<script th:inline="javascript" type="text/javascript">
+  var ctxPath = /*[[@{/}]]*/'';
+  function monitor() {
+    window.location.replace("/mobile/monitor")
+  }
+</script>
+<script th:src="@{/dist/js/mobile/warning.js}"></script>
+</html>

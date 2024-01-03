@@ -1,0 +1,53 @@
+input, input:focus,
+textarea, textarea:focus,
+select, select:focus {
+    font-size: 1rem !important;
+}
+
+.nav-bar{
+    width: 100%;
+    height: 3rem;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    box-sizing: content-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #ffffff;
+}
+.nav-bar .bar{
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    font-size: 0.75rem;
+    color: #787878;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.nav-bar .bar i{
+    font-size: 1rem;
+}
+.nav-bar .bar.active{
+    color: #0085ff;
+}
+
+.dropdown-menu{
+    min-width: auto;
+}
+
+.dropdown-toggle{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.spinner-border{
+    width: 1.5rem;
+    height: 1.5rem;
+    border-width: 0.1875rem;
+}
+.loading{
+    padding: 0.25rem;
+}

@@ -1,0 +1,223 @@
+.eventlable {
+    color: #85621b;
+    border-color: #ffecc6;
+    background: #fff2d6;
+    height: 1.375rem;
+    width: 4rem;
+    font-weight: normal;
+    display: inline-block;
+    line-height: 0.875rem;
+    font-size: 0.75rem;
+    margin-right: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    text-align: center;
+    border-radius: 0.125rem;
+}
+
+.industrylable {
+    color: #1c6356;
+    border-color: #d7f2ed;
+    background: #d7f2ed;
+    height: 1.375rem;
+    width: 4rem;
+    font-weight: normal;
+    display: inline-block;
+    line-height: 0.875rem;
+    font-size: 0.75rem;
+    margin-right: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    text-align: center;
+    border-radius: 0.125rem;
+}
+.categorylable {
+    color: #153385;
+    border-color: #c3d3ff;
+    background: #d4e0ff;
+    height: 1.375rem;
+    width: 4rem;
+    font-weight: normal;
+    display: inline-block;
+    line-height: 0.875rem;
+    font-size: 0.75rem;
+    margin-right: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    text-align: center;
+    border-radius: 0.125rem;
+}
+.zx {
+    color: #ffbc34;
+}
+.zm{
+    color: #36bea6;
+}
+.fm{
+    color: #f62d51;
+}
+.mointor{
+    min-height: 100vh;
+    padding-bottom: 3rem;
+    background-color: #FFFFFF;
+}
+.monitor-search{
+    box-sizing: content-box;
+    padding: 0.75rem 0.75rem 0 0.75rem;
+}
+.search{
+    flex: 1;
+    margin-right: 0.75rem;
+    position: relative;
+}
+.search input{
+    padding-right: 2.5rem;
+    border-radius: 0.25rem !important;
+}
+.search i{
+    font-size: 0.875rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 2.25rem;
+    height: 2.25rem;
+    line-height: 2.25rem;
+    text-align: center;
+}
+.schema_group{
+    width: 6.25rem;
+}
+.schema_group button{
+    width: 100%;
+    text-align: left;
+    border: 1px solid #e9ecef;
+}
+.projectList{
+    width: 100%;
+    height: 2.75rem;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.projectList .item {
+    position: relative;
+    display: inline-block;
+    height: 2.75rem;
+    line-height: 2.75rem;
+    font-size: .875rem;
+    font-weight: 400;
+    color: rgba(0,0,0,.5);
+    padding: 0 0.9375rem;
+    word-break: keep-all;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.projectList .item.active {
+    color: rgba(0,0,0,.9);
+    font-weight: 700;
+}
+.projectList .item.active span:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 0.1875rem;
+    border-radius: 0.09375rem;
+    background-color: #0085ff;
+    bottom: 0;
+    left: 0;
+}
+.projectList .item span{
+    position: relative;
+    display: inline-block;
+    height: 100%;
+}
+.projectList::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+.filter-box{
+    padding: 0.75rem;
+    background-color: #f2f2f2;
+}
+.filter{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.filter i{
+    font-size: 1.125rem;
+}
+.filter .custom-select{
+    width: 5rem;
+    padding-left: 0.75rem;
+}
+.date{
+    font-size: 0.75rem;
+}
+.dataList{
+    padding: 0.75rem 0.375rem;
+}
+.dataList .item{
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #cccccc;
+    border-radius: 0.25rem;
+}
+.dataList .item .title-box{
+    margin-bottom: 0.625rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.dataList .item .title-box .title-left{
+    flex: 1;
+    width: calc(100% - 3.125rem);
+    margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+.dataList .item .title-box .title-left .title{
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 600;
+}
+.dataList .item .content-con{
+    width: 100%;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-height: 1.5rem;
+}
+.dataList .item .like-comm{
+    margin-top: 0.625rem;
+    font-size: 0.8125rem;
+}
+.dataList .item .like-comm img{
+    margin-top: -0.25rem;
+    margin-right: 0.25rem;
+}
+
+
+
+.filter .dropdown{
+    width: 5rem;
+}
+.filter .dropdown button{
+    width: 100%;
+    padding-left: 0.75rem;
+    text-align: left;
+    background-color: #ffffff;
+}
+.dropdown-toggle::after{
+    position: absolute;
+    right: 0.75rem;
+    top: 0.875rem;
+}
+.dropdown-menu li.active{
+    color: #fff;
+    background-color: #0085ff;
+}
