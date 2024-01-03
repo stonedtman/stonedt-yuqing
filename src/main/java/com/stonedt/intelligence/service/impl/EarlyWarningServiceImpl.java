@@ -9,7 +9,6 @@ import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.stonedt.intelligence.dao.SolutionGroupDao;
@@ -42,10 +41,10 @@ public class EarlyWarningServiceImpl implements EarlyWarningService{
 	}
 
 	@Override
-	public Map<String, Object> getWarningArticle(Integer pageNum, Long user_id,Long project_id, Integer openFlag) {
+	public Map<String, Object> getWarningArticle(Integer pageNum, Long user_id, Long project_id, Integer openFlag, String keyword) {
 		Map<String, Object> resMap = new HashedMap<String, Object>();
 		PageHelper.startPage(pageNum, 10);
-		List<Map<String, Object>> warningArticle = systemDao.getWarningArticle(user_id,project_id,openFlag);
+		List<Map<String, Object>> warningArticle = systemDao.getWarningArticle(user_id,project_id,openFlag,keyword);
 		for (int i = 0; i < warningArticle.size(); i++) {
 			Long group_id = Long.valueOf(String.valueOf(warningArticle.get(i).get("group_id")));
 			String groupName = solutionGroupDao.getGroupName(group_id);

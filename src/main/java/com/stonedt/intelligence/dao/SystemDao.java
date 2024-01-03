@@ -36,8 +36,10 @@ public interface SystemDao {
 	
 	boolean saveWarningPopup(Map<String, Object> warning_popup);
 	
-	List<Map<String, Object>> getWarningArticle(@Param("user_id")Long user_id, @Param("project_id")Long project_id,
-			@Param("openFlag")Integer openFlag);
+	List<Map<String, Object>> getWarningArticle(@Param("user_id")Long user_id,
+												@Param("project_id")Long project_id,
+                                                @Param("openFlag")Integer openFlag,
+												@Param("keyword") String keyword);
 	
 	boolean updateWarningArticle(@Param("article_id")String article_id,@Param("user_id")Long user_id);
 

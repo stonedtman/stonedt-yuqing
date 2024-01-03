@@ -122,6 +122,9 @@
 		<if test="openFlag == 1">
 			AND b.warning_status = 1
 		</if>
+		<if test="keyword != null and keyword != ''">
+			and w.article_title = #{keyword}
+		</if>
 		AND w.status =0
 		AND w.user_id = #{user_id}
 		<if test="project_id!=null and project_id!=''">  

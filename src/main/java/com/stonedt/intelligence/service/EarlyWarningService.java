@@ -10,7 +10,7 @@ public interface EarlyWarningService {
 
 	boolean saveWarningPopup(Map<String, Object> warning_popup);
 	
-	Map<String, Object> getWarningArticle(Integer pageNum, Long user_id,Long project_id, Integer openFlag);
+	Map<String, Object> getWarningArticle(Integer pageNum, Long user_id, Long project_id, Integer openFlag, String keyword);
 	
 	boolean updateWarningArticle(String article_id,Long user_id);
 	

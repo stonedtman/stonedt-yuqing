@@ -288,15 +288,17 @@ public class SystemController {
     @PostMapping("/getWarningArticle")
     public @ResponseBody
     ResultUtil getWarningArticle(@RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
-                                 Integer openFlag, HttpServletRequest request) {
+                                 @RequestParam Integer openFlag,
+                                 @RequestParam(required = false) String keyword,
+                                 HttpServletRequest request) {
         String project_id = request.getParameter("project_id");
         long userId = userUtil.getUserId(request);
         Map<String, Object> warningArticle = null;
         if (project_id != null && !project_id.equals("")) {
             Long valueOf = Long.valueOf(project_id);
-            warningArticle = earlyWarningService.getWarningArticle(pageNum, userId, valueOf, openFlag);
+            warningArticle = earlyWarningService.getWarningArticle(pageNum, userId, valueOf, openFlag,keyword);
         } else {
-            warningArticle = earlyWarningService.getWarningArticle(pageNum, userId, null, openFlag);
+            warningArticle = earlyWarningService.getWarningArticle(pageNum, userId, null, openFlag,keyword);
         }
         return ResultUtil.build(200, "", warningArticle);
     }
