@@ -53,6 +53,9 @@ public class EarlyWarningServiceImpl implements EarlyWarningService{
 			warningArticle.get(i).put("project_id", String.valueOf(projectId));
 			Long groupId = (Long)warningArticle.get(i).get("group_id");
 			warningArticle.get(i).put("group_id", String.valueOf(groupId));
+			String articleTitle = (String) warningArticle.get(i).get("article_title");
+			articleTitle = articleTitle.replaceAll(keyword, "<b style=\"color:red\">" + keyword + "</b>");
+			warningArticle.get(i).put("article_title", articleTitle);
 		}
 		PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String,Object>>(warningArticle);
 		resMap.put("warningArticle", warningArticle);
