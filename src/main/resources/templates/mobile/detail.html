@@ -137,7 +137,12 @@
                 if (res.detail&&res.detail.code==200) {
                     let detail = res.detail
                     $('#title').html(res.title);
-                    $(".words").html("涉及预警词: "+res.warnWordList.join(" | "))
+                    if(res.warnWordList){
+                        $(".words").html("涉及预警词: "+res.warnWordList.join(" | "))
+                    }else{
+                        $(".words").html("涉及预警词: -")
+                    }
+
                     if(detail.emotionalIndex==1){
                         $(".emotion").html("正面")
                         $(".emotion").addClass("zm")
