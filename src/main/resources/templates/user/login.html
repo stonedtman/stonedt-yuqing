@@ -124,7 +124,7 @@
 <!-- ============================================================== -->
 <!-- This page plugin js -->
 <!-- ============================================================== -->
-<script type="application/javascript">
+<script th:inline="javascript" type="application/javascript">
 $("#currentyear").text((new Date()).getFullYear());
     $('[data-toggle="tooltip"]').tooltip();
     $(".preloader").fadeOut();
@@ -132,6 +132,8 @@ $("#currentyear").text((new Date()).getFullYear());
     // Login and Recover Password 
     // ==============================================================
     var ctxPath = /*[[@{/}]]*/'';
+    var reference = [[${reference}]];
+    console.log(reference)
     function login() {
         var telephone = $("input[name='telephone']").val();
         var password = $("input[name='password']").val();
@@ -157,6 +159,10 @@ $("#currentyear").text((new Date()).getFullYear());
                 let msg = res.msg;
                 if (code == 1) {
                     /*window.location.href = "/displayboard";*/
+                    if(reference){
+                        window.location.href = reference
+                        return
+                    }
                     //2021.7.26，跳转修改为数据监测页面
                     window.location.href = "/monitor"
                 } else if (code == 4) {

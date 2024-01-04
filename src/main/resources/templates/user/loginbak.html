@@ -183,7 +183,8 @@
 
 	<script th:inline="javascript">
 		var ctx = [[@{/}]];
-
+		var reference = [[${reference}]];
+		console.log(reference)
 	</script>
 	<script type="application/javascript">
 		$("#currentyear").text((new Date()).getFullYear());
