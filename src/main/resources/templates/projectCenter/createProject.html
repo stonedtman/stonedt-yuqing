@@ -416,6 +416,7 @@
                                             <div id="warning-source">
                                                 <span class="badge badge-pill badge-info" data-id="1" onclick="badgeClick(this)">系统推送</span>
                                                 <span class="badge badge-pill badge-light" data-id="2" onclick="badgeClick(this)">邮箱推送</span>
+                                                <span class="badge badge-pill badge-light" data-id="3" onclick="badgeClick(this)">公众号推送</span>
                                                 <input type="text" class="form-control" placeholder="请输入邮箱地址"/>
                                             </div>
                                         </div>
@@ -1174,10 +1175,10 @@ function getData() {
 
 $('body').on('click', '#warning-source span', function () {
     var id = $(this).data('id');
-    if (id == 1) {
-        $('#email-input').hide();
-    } else {
+    if (id == 2) {
         $('#email-input').show();
+    } else {
+        $('#email-input').hide();
     }
 })
 
@@ -1301,7 +1302,7 @@ function checkEmail(){
             warning_source_str = $(this).attr('data-id')
         }
     });
-    if (warning_source_str=='1'){
+    if (warning_source_str!='2'){
         save();
         return;
     }

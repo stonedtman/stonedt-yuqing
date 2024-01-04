@@ -464,6 +464,7 @@
                                             <div id="warning-source">
                                                 <span class="badge badge-pill badge-info" data-id="1" onclick="badgeClick(this)">系统推送</span>
                                                 <span class="badge badge-pill badge-light" data-id="2" onclick="badgeClick(this)">邮箱推送</span>
+                                                <span class="badge badge-pill badge-light" data-id="3" onclick="badgeClick(this)">公众号推送</span>
                                                 <input type="text" class="form-control" placeholder="请输入邮箱地址"/>
                                             </div>
                                         </div>
@@ -1275,11 +1276,18 @@ function alertpush(){
     if (warning_source.type == 1) {
         sourceHtml = '<span class="badge badge-pill badge-info" data-id="1" onclick="badgeClick(this)">系统推送</span>' +
             '<span class="badge badge-pill badge-light" data-id="2" onclick="badgeClick(this)">邮箱推送</span>' +
+            '<span class="badge badge-pill badge-light" data-id="3" onclick="badgeClick(this)">公众号推送</span>' +
             '<input style="display:none;" id="email-input" type="text" class="form-control" value="' + warning_source.email + '" placeholder="请输入邮箱地址">'
-    } else {
+    } else if(warning_source.type == 2) {
         sourceHtml = '<span class="badge badge-pill badge-light" data-id="1" onclick="badgeClick(this)">系统推送</span>' +
             '<span class="badge badge-pill badge-info" data-id="2" onclick="badgeClick(this)">邮箱推送</span>' +
+            '<span class="badge badge-pill badge-light" data-id="3" onclick="badgeClick(this)">公众号推送</span>' +
             '<input id="email-input" type="text" class="form-control" value="' + warning_source.email + '" placeholder="请输入邮箱地址">'
+    }else if(warning_source.type == 3){
+        sourceHtml = '<span class="badge badge-pill badge-light" data-id="1" onclick="badgeClick(this)">系统推送</span>' +
+            '<span class="badge badge-pill badge-light" data-id="2" onclick="badgeClick(this)">邮箱推送</span>' +
+            '<span class="badge badge-pill badge-info" data-id="3" onclick="badgeClick(this)">公众号推送</span>' +
+            '<input style="display:none;" id="email-input" type="text" class="form-control" value="' + warning_source.email + '" placeholder="请输入邮箱地址">'
     }
     $('#warning-source').html(sourceHtml)
     //接收时间
@@ -1521,10 +1529,10 @@ function getData() {
 
 $('body').on('click', '#warning-source span', function () {
     var id = $(this).data('id');
-    if (id == 1) {
-        $('#email-input').hide();
-    } else {
+    if (id == 2) {
         $('#email-input').show();
+    } else {
+        $('#email-input').hide();
     }
 })
 
@@ -1648,7 +1656,7 @@ function checkEmail(){
             warning_source_str = $(this).attr('data-id')
         }
     });
-    if (warning_source_str=='1'){
+    if (warning_source_str!='2'){
         save();
         return;
     }
