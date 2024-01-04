@@ -184,7 +184,6 @@
 	<script th:inline="javascript">
 		var ctx = [[@{/}]];
 		var reference = [[${reference}]];
-		console.log(reference)
 	</script>
 	<script type="application/javascript">
 		$("#currentyear").text((new Date()).getFullYear());
@@ -232,6 +231,10 @@
 				success: function (res) {
 					if (res.status == 200) {
 						clearTimeout(timer);
+						if(reference){
+							window.location.href = reference
+							return
+						}
 						window.location.href = "/monitor"
 					}else if(res.status==204){
 						setTimeout(() => {
