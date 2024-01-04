@@ -10,19 +10,19 @@ public class MobileController {
 
     @RequestMapping("/monitor")
     public ModelAndView monitor(ModelAndView modelAndView) {
-        modelAndView.setViewName("/mobile/monitor");
+        modelAndView.setViewName("mobile/monitor");
         return modelAndView;
     }
 
     @RequestMapping("/monitor/detail")
     public ModelAndView monitorDetail(ModelAndView modelAndView) {
-        modelAndView.setViewName("/mobile/detail");
+        modelAndView.setViewName("mobile/detail");
         return modelAndView;
     }
 
     @RequestMapping("/warning")
     public ModelAndView monitorWarning(ModelAndView modelAndView) {
-        modelAndView.setViewName("/mobile/warning");
+        modelAndView.setViewName("mobile/warning");
         return modelAndView;
     }
 }
