@@ -17,7 +17,8 @@ select, select:focus {
     background-color: #ffffff;
 }
 .nav-bar .bar{
-    width: 20%;
+    /*width: 20%;*/
+    width: 50%;
     height: 100%;
     text-align: center;
     font-size: 0.75rem;
