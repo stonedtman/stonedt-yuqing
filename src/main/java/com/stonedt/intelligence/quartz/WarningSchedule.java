@@ -275,7 +275,7 @@ public class WarningSchedule {
                             Integer similarvolume = Earlywarning.getInteger("similarvolume");
                             String emotionalIndex1 = Earlywarning.getString("emotionalIndex");
                             String url = Earlywarning.getString("source_url");
-                            if (systempush) {//系统预警
+                            if (systempush || wxPush) {//系统预警
                                 Map<String, Object> warning_popup = new HashMap<>();
                                 warning_popup.put("create_time", DateUtil.nowTime());
                                 warning_popup.put("warning_article_id", snowFlake.getId());
@@ -482,7 +482,7 @@ public class WarningSchedule {
                             Integer similarvolume = Earlywarning.getInteger("similarvolume");
                             String emotionalIndex1 = Earlywarning.getString("emotionalIndex");
                             String url = Earlywarning.getString("source_url");
-                            if (systempush) {//系统预警
+                            if (systempush || wxPush) {//系统预警
                                 Map<String, Object> warning_popup = new HashMap<>();
                                 warning_popup.put("create_time", DateUtil.nowTime());
                                 warning_popup.put("warning_article_id", snowFlake.getId());

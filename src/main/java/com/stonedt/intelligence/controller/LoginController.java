@@ -49,7 +49,11 @@ public class LoginController {
   //  @SystemControllerLog(module = "用户登录",submodule="用户登录", type = "查询",operation = "login")
     @GetMapping(value = "/login")
     public ModelAndView login(ModelAndView mv,@RequestParam(required = false) String reference) throws UnsupportedEncodingException {
-        mv.addObject("reference", URLDecoder.decode(reference, "UTF-8"));
+        if (reference == null || "".equals(reference)) {
+            mv.addObject("reference", "");
+        }else {
+            mv.addObject("reference", URLDecoder.decode(reference, "UTF-8"));
+        }
         mv.setViewName("user/login");
         return mv;
     }
