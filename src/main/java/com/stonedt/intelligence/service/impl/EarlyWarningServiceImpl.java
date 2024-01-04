@@ -37,6 +37,10 @@ public class EarlyWarningServiceImpl implements EarlyWarningService{
 			log.info("预警信息已存在，不再重复预警");
 			return false;
 		}
+		String title = (String) warning_popup.get("article_title");
+		if (title.length() > 255) {
+			warning_popup.put("article_title",title.substring(0, 255));
+		}
 		return systemDao.saveWarningPopup(warning_popup);
 	}
 
