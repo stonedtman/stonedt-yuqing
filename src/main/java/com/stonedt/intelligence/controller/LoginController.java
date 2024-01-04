@@ -20,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,8 +48,8 @@ public class LoginController {
      */
   //  @SystemControllerLog(module = "用户登录",submodule="用户登录", type = "查询",operation = "login")
     @GetMapping(value = "/login")
-    public ModelAndView login(ModelAndView mv,@RequestParam(required = false) String reference) {
-        mv.addObject("reference",reference);
+    public ModelAndView login(ModelAndView mv,@RequestParam(required = false) String reference) throws UnsupportedEncodingException {
+        mv.addObject("reference", URLDecoder.decode(reference, "UTF-8"));
         mv.setViewName("user/login");
         return mv;
     }
