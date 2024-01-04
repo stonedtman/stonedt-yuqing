@@ -96,7 +96,7 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
 //                //告诉ajax我是重定向
             response.setHeader("REDIRECT", "REDIRECT");
 //                //告诉ajax我重定向的路径
-            response.setHeader("CONTENTPATH", "/login");
+            response.setHeader("CONTENTPATH", "/login?reference="+java.net.URLEncoder.encode(reference, "UTF-8"));
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }else{
             //referer是请求的来源地址,需要进行url编码
