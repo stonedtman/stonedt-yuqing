@@ -62,8 +62,11 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
         }
 
         //取出请求的url
-        String url = request.getRequestURI() + "?" + request.getQueryString();
-
+        String url = request.getRequestURI();
+        String queryString = request.getQueryString();
+        if (queryString != null) {
+            url += "?" + queryString;
+        }
 
 
         if (token == null || token.isEmpty()) {
