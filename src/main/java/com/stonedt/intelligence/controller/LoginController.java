@@ -46,7 +46,8 @@ public class LoginController {
      */
   //  @SystemControllerLog(module = "用户登录",submodule="用户登录", type = "查询",operation = "login")
     @GetMapping(value = "/login")
-    public ModelAndView login(ModelAndView mv) {
+    public ModelAndView login(ModelAndView mv,@RequestParam(required = false) String reference) {
+        mv.addObject("reference",reference);
         mv.setViewName("user/login");
         return mv;
     }

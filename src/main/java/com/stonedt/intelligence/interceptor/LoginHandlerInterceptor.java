@@ -61,21 +61,25 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
             }
         }
 
+        //取出请求的url
+        String url = request.getRequestURI() + "?" + request.getQueryString();
+
+
 
         if (token == null || token.isEmpty()) {
-            sendRedirect(request, response);
+            sendRedirect(request, response,url);
             return false;
         }
 
         if (!JWTUtils.decode(token, privateKey)) {
-            sendRedirect(request, response);
+            sendRedirect(request, response,url);
             return false;
         }
 
         UserDTO userDTO = JWTUtils.getEntity(token, UserDTO.class);
 
         if (userDTO == null || userDTO.getTokenIssueTime() + expireTime * 1000L < System.currentTimeMillis()) {
-            sendRedirect(request, response);
+            sendRedirect(request, response,url);
             return false;
         }
 
@@ -87,7 +91,7 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
     /**
      * 重定向方法
      */
-    public void sendRedirect(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void sendRedirect(HttpServletRequest request, HttpServletResponse response,String reference) throws Exception {
         if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))){
 //                //告诉ajax我是重定向
             response.setHeader("REDIRECT", "REDIRECT");
@@ -95,7 +99,8 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
             response.setHeader("CONTENTPATH", "/login");
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }else{
-            response.sendRedirect(request.getContextPath() + "/login");
+            //referer是请求的来源地址,需要进行url编码
+            response.sendRedirect(request.getContextPath() + "/login?reference="+java.net.URLEncoder.encode(reference, "UTF-8"));
         }
     }
 
