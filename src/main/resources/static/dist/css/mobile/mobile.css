@@ -18,7 +18,7 @@ select, select:focus {
 }
 .nav-bar .bar{
     /*width: 20%;*/
-    width: 50%;
+    flex: 1;
     height: 100%;
     text-align: center;
     font-size: 0.75rem;
