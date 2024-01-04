@@ -197,6 +197,9 @@
                     $('#publish_time').html('发布时间: ' + detail.publish_time);
                     res.text = res.text.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,"")
                     res.text = res.text.replace(/<style\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/style>/gi,"")
+                    if(detail.sourcewebsitename.includes("微信")){
+                        res.text = res.text.replace(/data-src/g, "src");
+                    }
                     $('.detail-content').html(res.text);
                     let imgListAll = '';
                     let imgListStr1 = '<div>';
