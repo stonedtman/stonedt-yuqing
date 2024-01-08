@@ -222,7 +222,7 @@ docker logs 容器ID -f
 -  1.安装 MySQL 5.5+、redis 4.0+
 
 -  2.下载 [stonedt-yuqing.zip](https://gitee.com/stonedtx/yuqing/attach_files/1629685/download)，解压zip包，执行  _java -jar stonedt-yuqing.jar_，启动舆情系统。 
--  3.进入apache-tomcat-8.5.46/bin文件夹.执行 ./startup.sh
+-  3.下载 [opinion_screen.zip](https://gitee.com/stonedtx/yuqing/attach_files/1640495/download)，解压zip包，进入apache-tomcat-8.5.46/bin文件夹.执行 ./startup.sh
 -  4.配置nginx,在http块中增加如下内容:
     ```text
     server {
