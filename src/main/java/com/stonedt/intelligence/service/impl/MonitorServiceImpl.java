@@ -2204,7 +2204,8 @@ public class MonitorServiceImpl implements MonitorService {
                         paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+
                         paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+
                         paramJson.getString("searchkeyword")+paramJson.getString("datasource_type")+
-                        "timeType"+timeType + "matchingmode" + matchingmode + "searchType" + searchType + "emotionalIndex" + emotionalIndex;
+                        "timeType"+timeType + "matchingmode" + matchingmode + "searchType" + searchType + "emotionalIndex" + emotionalIndex
+                        + "sourceWebsite" + paramJson.getString("sourceWebsite");
                 //String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword");
                 if(redisUtil.existsKey(key)) {
                     esSimilarResponse = redisUtil.getKey(key);
@@ -2232,6 +2233,7 @@ public class MonitorServiceImpl implements MonitorService {
                 paramJson.put("article_public_idstr", article_public_idStr);
                 paramJson.remove("keyword");
                 paramJson.remove("stopword");
+                paramJson.remove("sourceWebsite");
                 String params1 = MapUtil.getUrlParamsByMap(paramJson);
                 url = es_search_url + MonitorConstant.es_api_similar_industry_list;
                 String esResponse = MyHttpRequestUtil.sendPostEsSearch(url, params1);
@@ -2557,7 +2559,7 @@ public class MonitorServiceImpl implements MonitorService {
 //                }else {
 //                	esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
 //                }
-            String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+paramJson.getString("datasource_type")+timeType+matchingmode+searchType+emotionalIndex;
+            String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+paramJson.getString("datasource_type")+timeType+matchingmode+searchType+emotionalIndex+"sourceWebsite"+paramJson.getString("sourceWebsite");
                 //String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword");
                 if(redisUtil.existsKey(key)) {
                     esSimilarResponse = redisUtil.getKey(key);
@@ -2583,6 +2585,7 @@ public class MonitorServiceImpl implements MonitorService {
                 paramJson.put("article_public_idstr", article_public_idStr);
                 paramJson.remove("keyword");
                 paramJson.remove("stopword");
+                paramJson.remove("sourceWebsite");
                 String params1 = MapUtil.getUrlParamsByMap(paramJson);
                 url = es_search_url + MonitorConstant.es_api_similar_event_list;
                 String esResponse = MyHttpRequestUtil.sendPostEsSearch(url, params1);
