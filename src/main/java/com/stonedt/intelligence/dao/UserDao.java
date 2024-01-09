@@ -167,4 +167,6 @@ public interface UserDao {
     String selectOpenidByUserId(Long userId);
 
     int updatePassword(@Param("userId") Long userId, @Param("password") String password);
+
+    User getUserByUserId(@Param("userId") Long userId);
 }

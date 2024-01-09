@@ -2,6 +2,7 @@ package com.stonedt.intelligence.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.nimbusds.jose.JOSEException;
 import com.stonedt.intelligence.dao.UserDao;
 import com.stonedt.intelligence.dto.UserDTO;
 import com.stonedt.intelligence.entity.User;
@@ -123,7 +124,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String getToken(User user) throws Exception {
+	public String getToken(User user) throws JOSEException {
 		user.setPassword(null);
 		UserDTO userDTO = new UserDTO();
 		BeanUtils.copyProperties(user, userDTO);
@@ -140,6 +141,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int updatePassword(Long userId, String password) {
 		return userDao.updatePassword(userId, password);
+	}
+
+	@Override
+	public User getUserByUserId(Long userId) {
+		return userDao.getUserByUserId(userId);
 	}
 
 }

@@ -1,6 +1,8 @@
 package com.stonedt.intelligence.service;
 
+import com.nimbusds.jose.JOSEException;
 import com.stonedt.intelligence.entity.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -50,9 +52,11 @@ public interface UserService {
      * @param user 用户信息
      * @return token
      */
-    String getToken(User user) throws Exception;
+    String getToken(User user) throws JOSEException;
 
     User selectUserByUserId(Long userId);
 
-    int updatePassword(Long userId, String password);
+    int updatePassword( Long userId, String password);
+
+    User getUserByUserId(Long userId);
 }

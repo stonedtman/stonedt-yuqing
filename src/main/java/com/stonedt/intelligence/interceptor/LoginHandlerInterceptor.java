@@ -61,6 +61,31 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
             }
         }
 
+        if (token == null || token.isEmpty()) {
+            //从查询参数中获取token
+            token = request.getParameter("token");
+            if (token != null && !token.isEmpty() && JWTUtils.decode(token, privateKey)) {
+                //并且将token放入cookie中
+                Cookie cookie = new Cookie("token", token);
+                // 将token放在响应头中
+                //配置域名，如果不配置，那么只能在当前项目下访问
+                cookie.setPath("/");
+                cookie.setMaxAge(expireTime.intValue());
+                response.addCookie(cookie);
+                response.setHeader("token", token);
+                return true;
+            }
+            //取出请求的url
+            String url = request.getRequestURI();
+            String queryString = request.getQueryString();
+            if (queryString != null) {
+                //删去token参数
+                queryString = queryString.replaceAll("token=[^&]*&?", "");
+                url += "?" + queryString;
+            }
+            sendRedirect(request, response,url);
+        }
+
         //取出请求的url
         String url = request.getRequestURI();
         String queryString = request.getQueryString();

@@ -36,7 +36,7 @@ public class JWTUtils {
     /**
      *  创建jwt
      */
-    public static String createJWT(String jsonString,String privateKey) throws Exception {
+    public static String createJWT(String jsonString,String privateKey) throws JOSEException {
         //头部
         JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.HS256).type(JOSEObjectType.JWT).build();
         //载荷部分

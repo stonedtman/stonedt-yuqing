@@ -6,11 +6,12 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import com.nimbusds.jose.JOSEException;
 import com.stonedt.intelligence.dao.UserDao;
 import com.stonedt.intelligence.dto.MailConfig;
 import com.stonedt.intelligence.dto.WxMpTemplateMessage;
-import com.stonedt.intelligence.service.MailService;
-import com.stonedt.intelligence.service.WechatService;
+import com.stonedt.intelligence.entity.User;
+import com.stonedt.intelligence.service.*;
 import com.stonedt.intelligence.thred.ThreadPoolConst;
 import com.stonedt.intelligence.util.*;
 import org.slf4j.Logger;
@@ -29,8 +30,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.stonedt.intelligence.constant.MonitorConstant;
 import com.stonedt.intelligence.dao.SystemDao;
 import com.stonedt.intelligence.entity.WarningSetting;
-import com.stonedt.intelligence.service.EarlyWarningService;
-import com.stonedt.intelligence.service.ProjectService;
 
 
 /**
@@ -47,6 +46,8 @@ public class WarningSchedule {
     public static final Logger logger = LoggerFactory.getLogger(WarningSchedule.class);
 
     public static final String searchearlywarningApi = "/yqsearch/searchlist"; //预警文章获取
+
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public SnowFlake snowFlake = new SnowFlake();
 
@@ -75,6 +76,9 @@ public class WarningSchedule {
 
     @Autowired
     private WechatService wechatService;
+
+    @Autowired
+    private UserService userService;
 
     @Value("${wechat.warning.template-id}")
     private String templateId;
@@ -329,43 +333,6 @@ public class WarningSchedule {
                                         "</div>\r\n" +
                                         "</div>";
                             }
-                            if (wxPush) {
-                                logger.info("开始公众号预警");
-                                List<WxMpTemplateMessage.WxMpTemplateData> wxMpTemplateDataList =
-                                        new ArrayList<>();
-                                //创建
-                                WxMpTemplateMessage.WxMpTemplateData first =
-                                        new WxMpTemplateMessage.WxMpTemplateData("first", "您有一条重大预警舆情");
-                                wxMpTemplateDataList.add(first);
-
-                                WxMpTemplateMessage.WxMpTemplateData keyword1 =
-                                        new WxMpTemplateMessage.WxMpTemplateData("keyword1",  projectByProId.get("project_name") + "(方案名)");
-                                wxMpTemplateDataList.add(keyword1);
-
-                                WxMpTemplateMessage.WxMpTemplateData keyword2 =
-                                        new WxMpTemplateMessage.WxMpTemplateData("keyword2", title);
-                                wxMpTemplateDataList.add(keyword2);
-
-                                WxMpTemplateMessage.WxMpTemplateData keyword3 =
-                                        new WxMpTemplateMessage.WxMpTemplateData("keyword3", publish_time);
-                                wxMpTemplateDataList.add(keyword3);
-
-                                WxMpTemplateMessage.WxMpTemplateData remark =
-                                        new WxMpTemplateMessage.WxMpTemplateData("remark", "请登录舆情系统-预警信息模块查看详情。");
-                                wxMpTemplateDataList.add(remark);
-
-                                WxMpTemplateMessage wxMpTemplateMessage = WxMpTemplateMessage
-                                        .builder()
-                                        .templateId(templateId)
-                                        .toUser(openId)
-                                        .data(wxMpTemplateDataList)
-                                        .url(systemUrl + "/mobile/monitor/detail?id=" + article_public_id + "&projectid=" + projectId)
-                                        .build();
-                                logger.info("发送公众号预警给用户：{}", openId);
-                                wechatService.send(wxMpTemplateMessage);
-                                logger.info("公众号预警结束");
-
-                            }
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -396,6 +363,9 @@ public class WarningSchedule {
                                 logger.info("预警邮件发送失败......{}", e.getMessage());
                             }
                         });
+                    }
+                    if (wxPush) {
+                        wxPush(openId, projectByProId, jsonArray.size(), userService.getUserByUserId(userId));
                     }
                 } else {
                     logger.info("预警查询结束...未查询到数据......");
@@ -537,42 +507,7 @@ public class WarningSchedule {
                                         "</div>\r\n" +
                                         "</div>";
                             }
-                            if (wxPush) {
-                                logger.info("开始公众号预警");
-                                List<WxMpTemplateMessage.WxMpTemplateData> wxMpTemplateDataList =
-                                        new ArrayList<>();
-                                //创建
-                                WxMpTemplateMessage.WxMpTemplateData first =
-                                        new WxMpTemplateMessage.WxMpTemplateData("first", "您有一条重大预警舆情");
-                                wxMpTemplateDataList.add(first);
 
-                                WxMpTemplateMessage.WxMpTemplateData keyword1 =
-                                        new WxMpTemplateMessage.WxMpTemplateData("keyword1",  projectByProId.get("project_name") + "(方案名)");
-                                wxMpTemplateDataList.add(keyword1);
-
-                                WxMpTemplateMessage.WxMpTemplateData keyword2 =
-                                        new WxMpTemplateMessage.WxMpTemplateData("keyword2", title);
-                                wxMpTemplateDataList.add(keyword2);
-
-                                WxMpTemplateMessage.WxMpTemplateData keyword3 =
-                                        new WxMpTemplateMessage.WxMpTemplateData("keyword3", publish_time);
-                                wxMpTemplateDataList.add(keyword3);
-
-                                WxMpTemplateMessage.WxMpTemplateData remark =
-                                        new WxMpTemplateMessage.WxMpTemplateData("remark", "请登录舆情系统-预警信息模块查看详情。");
-                                wxMpTemplateDataList.add(remark);
-
-                                WxMpTemplateMessage wxMpTemplateMessage = WxMpTemplateMessage
-                                        .builder()
-                                        .templateId(templateId)
-                                        .toUser(openId)
-                                        .data(wxMpTemplateDataList)
-                                        .url(systemUrl + "/mobile/monitor/detail?id=" + article_public_id + "&projectid=" + projectId)
-                                        .build();
-                                wechatService.send(wxMpTemplateMessage);
-                                logger.info("公众号预警结束");
-
-                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -604,6 +539,10 @@ public class WarningSchedule {
                             }
                         });
                     }
+
+                    if (wxPush) {
+                        wxPush(openId, projectByProId, jsonArray.size(), userService.getUserByUserId(userId));
+                    }
                 } else {
                     logger.info("预警查询结束...未查询到数据......");
                 }
@@ -620,6 +559,47 @@ public class WarningSchedule {
             e.printStackTrace();
         }
     }
+
+
+    /**
+     * 公众号预警
+     */
+    public void wxPush(String openId, Map<String, Object> projectByProId, Integer size, User user) throws JOSEException {
+        logger.info("开始公众号预警");
+        List<WxMpTemplateMessage.WxMpTemplateData> wxMpTemplateDataList =
+                new ArrayList<>();
+        //创建
+        WxMpTemplateMessage.WxMpTemplateData first =
+                new WxMpTemplateMessage.WxMpTemplateData("first", "舆情方案监测");
+        wxMpTemplateDataList.add(first);
+
+        WxMpTemplateMessage.WxMpTemplateData keyword1 =
+                new WxMpTemplateMessage.WxMpTemplateData("keyword1",  sdf.format(new Date()));
+        wxMpTemplateDataList.add(keyword1);
+
+        WxMpTemplateMessage.WxMpTemplateData keyword2 =
+                new WxMpTemplateMessage.WxMpTemplateData("keyword2", projectByProId.get("project_name") + "(方案名)");
+        wxMpTemplateDataList.add(keyword2);
+
+        WxMpTemplateMessage.WxMpTemplateData keyword3 =
+                new WxMpTemplateMessage.WxMpTemplateData("keyword3", "共发现" + size + "条预警信息");
+        wxMpTemplateDataList.add(keyword3);
+
+        WxMpTemplateMessage.WxMpTemplateData remark =
+                new WxMpTemplateMessage.WxMpTemplateData("remark", "请及时查看预警信息。");
+        wxMpTemplateDataList.add(remark);
+
+        WxMpTemplateMessage wxMpTemplateMessage = WxMpTemplateMessage
+                .builder()
+                .templateId(templateId)
+                .toUser(openId)
+                .data(wxMpTemplateDataList)
+                .url(systemUrl + "/mobile/monitor?token=" + userService.getToken(user))
+                .build();
+        wechatService.send(wxMpTemplateMessage);
+        logger.info("公众号预警结束");
+    }
+
 
     /**
      * @param nowtime

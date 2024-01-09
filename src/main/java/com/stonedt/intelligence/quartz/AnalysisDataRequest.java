@@ -1485,12 +1485,12 @@ public class AnalysisDataRequest {
 //                        }
 //                    }
                     //2021.8.6修改，将视频/微博/微信信息替换
-                    //微信替换
-                    if("1".equals(key)){
+                    //替换 1:微信 2:微博 10:视频 7:客户端
+                    if("1".equals(key) || "2".equals(key) || "10".equals(key) || "7".equals(key)){
                         //获取作者
                         String authorUrl = es_search_url + "/yqsearch/statisticsauthor";
-                        String aParam = "classify=1&times=" + times + "&timee=" + timee + "&keyword=" + highKeyword + "&stopword="
-                                + stopword + "&emotionalIndex=1,2,3" + "&projecttype=" + projectType;
+                        String aParam = "classify=" + key + "&times=" + times + "&timee=" + timee + "&keyword=" + highKeyword + "&stopword="
+                                + stopword + "&emotionalIndex=1,2,3" + "&projecttype=" + projectType + "&sourceWebsite=" + sourceWebsite;
 
 
                         String authorParam = MyHttpRequestUtil.sendPostEsSearch(authorUrl, aParam);
@@ -1502,43 +1502,6 @@ public class AnalysisDataRequest {
                         //替换数组中的group_by_tags
                         jsonObject.put("group_by_tags" , authorJson);
 
-
-                    //微博
-                    }else if("2".equals(key)){
-
-                        //获取作者
-                        String authorUrl = es_search_url + "/yqsearch/statisticsauthor";
-                        String aParam = "classify=2&times=" + times + "&timee=" + timee + "&keyword=" + highKeyword + "&stopword="
-                                + stopword + "&emotionalIndex=1,2,3" + "&projecttype=" + projectType;
-
-
-                        String authorParam = MyHttpRequestUtil.sendPostEsSearch(authorUrl, aParam);
-
-                        JSONObject authorObject = JSON.parseObject(authorParam);
-                        JSONObject authorJson = authorObject.getJSONObject("aggregations")
-                                .getJSONObject("group_by_tags");
-
-                        //替换数组中的group_by_tags
-                        jsonObject.put("group_by_tags" , authorJson);
-
-
-                    //视频
-                    }else if("10".equals(key)){
-
-                        //获取作者
-                        String authorUrl = es_search_url + "/yqsearch/statisticsauthor";
-                        String aParam = "classify=10&times=" + times + "&timee=" + timee + "&keyword=" + highKeyword + "&stopword="
-                                + stopword + "&emotionalIndex=1,2,3" + "&projecttype=" + projectType;
-
-
-                        String authorParam = MyHttpRequestUtil.sendPostEsSearch(authorUrl, aParam);
-
-                        JSONObject authorObject = JSON.parseObject(authorParam);
-                        JSONObject authorJson = authorObject.getJSONObject("aggregations")
-                                .getJSONObject("group_by_tags");
-
-                        //替换数组中的group_by_tags
-                        jsonObject.put("group_by_tags" , authorJson);
                     }
                     //2021.8.6
 
