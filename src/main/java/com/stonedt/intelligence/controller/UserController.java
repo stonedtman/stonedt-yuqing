@@ -86,17 +86,18 @@ public class UserController {
     ResultUtil editUserInfo(@RequestParam("oldPassword") String oldPassword,
                             @RequestParam("newPassword") String newPassword, HttpServletRequest request) {
         User user = userUtil.getuser(request);
-        if (MD5Util.getMD5(oldPassword).equals(user.getPassword())) {
-            //开源版本暂时不支持修改密码
-            //boolean updateUserPwdById = userService.updateUserPwdById(user.getUser_id(), MD5Util.getMD5(newPassword));
-            boolean updateUserPwdById = true;
-            if (updateUserPwdById) {
-                return ResultUtil.build(200, "密码修改成功！");
-            } else {
-                return ResultUtil.build(201, "密码修改失败！");
-            }
+        //查找用户
+        Map<String, String> checkUser = userService.getUserById(user.getUser_id());
+        //判断旧密码是否正确
+        if (!checkUser.get("password").equals(MD5Util.getMD5(oldPassword))) {
+            return ResultUtil.build(203, "旧密码错误", null);
+        }
+        //修改密码
+        int updated = userService.updatePassword(user.getUser_id(), MD5Util.getMD5(newPassword));
+        if (updated > 0) {
+            return ResultUtil.build(200, "修改成功", null);
         } else {
-            return ResultUtil.build(203, "旧密码输入错误！");
+            return ResultUtil.build(203, "修改失败", null);
         }
     }
 

@@ -1467,23 +1467,23 @@ public class AnalysisDataRequest {
                 Map<String, String> initSourceEn = initSource("en");
                 List<Map<String, Object>> all = new ArrayList<>();
                 List<Map<String, Object>> list = new ArrayList<>();
-                if ("微信公众号".equals(sourceWebsite)) {
-                    sourceWebsite = "1";
-                }else if ("微博".equals(sourceWebsite)) {
-                    sourceWebsite = "2";
-                }else if ("视频".equals(sourceWebsite)) {
-                    sourceWebsite = "10";
-                }
+//                if ("微信公众号".equals(sourceWebsite)) {
+//                    sourceWebsite = "1";
+//                }else if ("微博".equals(sourceWebsite)) {
+//                    sourceWebsite = "2";
+//                }else if ("视频".equals(sourceWebsite)) {
+//                    sourceWebsite = "10";
+//                }
 
                 for (int i = 0; i < jsonArray.size(); i++) {
                     List<Map<String, Object>> list2 = new ArrayList<>();
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     String key = jsonObject.getString("key");
-                    if (sourceWebsite!=null&&!"".equals(sourceWebsite)) {
-                        if (!sourceWebsite.equals(key)) {
-                            continue;
-                        }
-                    }
+//                    if (sourceWebsite!=null&&!"".equals(sourceWebsite)) {
+//                        if (!sourceWebsite.equals(key)) {
+//                            continue;
+//                        }
+//                    }
                     //2021.8.6修改，将视频/微博/微信信息替换
                     //微信替换
                     if("1".equals(key)){

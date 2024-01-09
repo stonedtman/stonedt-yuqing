@@ -137,4 +137,9 @@ public class UserServiceImpl implements UserService {
 		return userDao.selectUserByUserId(userId);
 	}
 
+	@Override
+	public int updatePassword(Long userId, String password) {
+		return userDao.updatePassword(userId, password);
+	}
+
 }

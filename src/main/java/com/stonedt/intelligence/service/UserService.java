@@ -53,4 +53,6 @@ public interface UserService {
     String getToken(User user) throws Exception;
 
     User selectUserByUserId(Long userId);
+
+    int updatePassword(Long userId, String password);
 }

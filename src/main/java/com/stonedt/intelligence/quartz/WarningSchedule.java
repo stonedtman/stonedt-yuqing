@@ -361,6 +361,7 @@ public class WarningSchedule {
                                         .data(wxMpTemplateDataList)
                                         .url(systemUrl + "/mobile/monitor/detail?id=" + article_public_id + "&projectid=" + projectId)
                                         .build();
+                                logger.info("发送公众号预警给用户：{}", openId);
                                 wechatService.send(wxMpTemplateMessage);
                                 logger.info("公众号预警结束");
 

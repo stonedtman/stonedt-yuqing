@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.stonedt</groupId>
     <artifactId>stonedt-portal</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <name>stonedt-portal</name>
     <description>stonedt-portal</description>
 
@@ -262,7 +262,7 @@
     </dependencies>
 
     <build>
-        <finalName>stonedt-portal</finalName>
+<!--        <finalName>stonedt-portal</finalName>-->
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
