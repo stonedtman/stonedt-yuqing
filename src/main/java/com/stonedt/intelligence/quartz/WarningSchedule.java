@@ -594,7 +594,13 @@ public class WarningSchedule {
                 .templateId(templateId)
                 .toUser(openId)
                 .data(wxMpTemplateDataList)
-                .url(systemUrl + "/mobile/monitor?token=" + userService.getToken(user))
+                .url(systemUrl + "/mobile/warning?token=" +
+                        userService.getToken(user) +
+                        "&projectId=" +
+                        projectByProId.get("project_id") +
+                        "&groupId" +
+                        projectByProId.get("group_id")
+                )
                 .build();
         wechatService.send(wxMpTemplateMessage);
         logger.info("公众号预警结束");
