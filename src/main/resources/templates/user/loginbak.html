@@ -133,6 +133,19 @@
 		line-height: 64px;
 		font-size: 20px;
 	}
+
+	@media (max-width: 768px) {
+		.login_right{
+			width: 100%;
+		}
+		.login_right .login-window{
+			width: 100%;
+			height: calc(100% - 60px);
+			top: 60px;
+			transform: translateX(-50%);
+			border-radius: 0;
+		}
+	}
 </style>
 
 </head>
@@ -235,6 +248,10 @@
 							window.location.href = reference
 							return
 						}
+						if(isMobile){
+							window.location.href = "/mobile/monitor"
+							return;
+						}
 						window.location.href = "/monitor"
 					}else if(res.status==204){
 						setTimeout(() => {
@@ -282,6 +299,11 @@
 			})
 		}
 
+		function isMobile(){
+			// 判断是否是手机端，如果是，返回true
+			var flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+			return flag
+		}
 	</script>
 </body>
 
