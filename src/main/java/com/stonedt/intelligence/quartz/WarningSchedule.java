@@ -565,6 +565,16 @@ public class WarningSchedule {
      * 公众号预警
      */
     public void wxPush(String openId, Map<String, Object> projectByProId, Integer size, User user) throws JOSEException {
+        if (openId == null || openId.isEmpty()) {
+            logger.error("公众号预警失败......用户未绑定微信......");
+            return;
+        }
+
+        if (size == 0) {
+            logger.info("未查询到预警信息......不需要推送......");
+            return;
+        }
+
         logger.info("开始公众号预警");
         List<WxMpTemplateMessage.WxMpTemplateData> wxMpTemplateDataList =
                 new ArrayList<>();
