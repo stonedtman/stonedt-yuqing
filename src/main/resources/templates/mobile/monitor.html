@@ -16,8 +16,8 @@
     <link th:href="@{/assets/libs/sweetalert2/dist/sweetalert2.min.css}" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" th:href="@{/assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css}"/>
     <link rel="stylesheet" href="../dist/css/main.css" />
-    <link rel="stylesheet" href="../dist/css/mobile/mobile.css" />
-    <link rel="stylesheet" href="../dist/css/mobile/monitor.css" />
+    <link rel="stylesheet" th:href="@{/dist/css/mobile/mobile.css}" />
+    <link rel="stylesheet" th:href="@{/dist/css/mobile/monitor.css}" />
     <title>舆情监测</title>
     <style type="text/css">
 
@@ -157,6 +157,7 @@
 <script th:src="@{/assets/libs/block-ui/jquery.blockUI.js}"></script>
 <script th:src="@{/common/iconfont.js}"></script>
 <script th:src="@{/dist/baidu/baidu_statistics.js}"></script>
+<script th:src="@{/dist/js/mobile/monitor.js}"></script>
 </body>
 <script th:inline="javascript" type="text/javascript">
     var ctxPath = /*[[@{/}]]*/'';
@@ -164,5 +165,4 @@
         window.location.replace("/mobile/warning")
     }
 </script>
-<script th:src="@{/dist/js/mobile/monitor.js}"></script>
 </html>

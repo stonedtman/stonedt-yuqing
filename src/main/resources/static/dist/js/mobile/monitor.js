@@ -9,7 +9,7 @@ sendProjectAndProject()
 function sendProjectAndProject() {
     $.ajax({
         type: "POST",
-        url: ctxPath + "project/getGroupAndProject",
+        url: "/project/getGroupAndProject",
         dataType: 'json',
         data: {
             groupid: "",
@@ -112,7 +112,7 @@ function switchProject(e) {
 function installCondition(){
     $.ajax({
         type: "POST",
-        url: ctxPath + "monitor/getCondition",
+        url: "/monitor/getCondition",
         dataType: 'json',
         data: JSON.stringify({
             group_id: groupId,
@@ -158,7 +158,7 @@ function installCondition(){
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                window.location.href = ctxPath + "login";
+                window.location.href = "/login";
             } else {
                 $("#page").html("");
                 dataerror("#monitor-content");
@@ -268,7 +268,7 @@ function sendArticle(t) {
     }
     $.ajax({
         type: "POST",
-        url: ctxPath + "monitor/getarticle",
+        url: "/monitor/getarticle",
         dataType: 'json',
         data: JSON.stringify(obj),
         contentType: 'application/json;charset=utf-8',
@@ -324,7 +324,7 @@ function sendArticle(t) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                window.location.href = ctxPath + "login";
+                window.location.href = "/login";
             } else {
                 dataerror(".dataList");
             }

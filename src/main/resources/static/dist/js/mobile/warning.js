@@ -7,7 +7,7 @@ sendProjectAndProject()
 function sendProjectAndProject() {
     $.ajax({
         type: "POST",
-        url: ctxPath + "project/getGroupAndProject",
+        url: "/project/getGroupAndProject",
         dataType: 'json',
         data: {
             groupid: "",
@@ -126,7 +126,7 @@ function sendArticle(t) {
     }
     $.ajax({
         type: "POST",
-        url: ctxPath + "system/getWarningArticle",
+        url: "/system/getWarningArticle",
         dataType: 'json',
         data: obj,
         beforeSend: function() {
@@ -173,7 +173,7 @@ function sendArticle(t) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
-                window.location.href = ctxPath + "login";
+                window.location.href = "/login";
             } else {
                 dataerror(".dataList");
             }
