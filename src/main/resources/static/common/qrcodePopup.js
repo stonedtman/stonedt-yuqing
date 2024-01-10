@@ -29,7 +29,9 @@ function QRCodePopup(){
         url: "/wechat/getBindQrCode",
         success: function (res) {
             if(res.status==200){
-                $("#exampleModal .qrcode-container img").attr("src",res.data.qrcodeUrl)
+                if($("#exampleModal")){
+                    $("#exampleModal .qrcode-container img").attr("src",res.data.qrcodeUrl)
+                }
             }else{
                 showtips(res.msg)
             }
