@@ -224,8 +224,8 @@ public class WarningSchedule {
             //相似文章合并（0：取消合并 1：合并）
            
             String params = "keyword=" + highKeyword + "&searchkeyword=" + yjword + "&emotionalIndex=" + emotionalIndex + "&times=" + getTimee(nowtime, time)
-                    + "&timee=" + nowtime + "&searchType=1&stopword=" + listStopwords + "&page=1&size=10&matchingmode=" + matchingMode
-                    + "&classify=" + classify + "&province=" + province + "&city=" + city+"&projecttype="+projectType + "&size=" + "100";
+                    + "&timee=" + nowtime + "&searchType=1&stopword=" + listStopwords + "&page=1&size=100&matchingmode=" + matchingMode
+                    + "&classify=" + classify + "&province=" + province + "&city=" + city+"&projecttype="+projectType;
             if(warningSetting.getWarning_similar()==0) {
                 String urls = es_search_url + searchearlywarningApi;
                 System.err.println(urls + "?" + params);
