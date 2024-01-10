@@ -142,8 +142,8 @@ $("#currentyear").text((new Date()).getFullYear());
         if(telephone==null||telephone==''){showtips('用户名为空');return;}
         if(password==null||password==''){showtips('密码为空');return;}
         if(graph_code==null||graph_code==''){showtips('图形验证码为空');return;}
-        
-        
+
+
         $.ajax({
             type: "POST",
             url: "/login",

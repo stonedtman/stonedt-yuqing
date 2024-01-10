@@ -4277,3 +4277,109 @@ a {
     opacity: 1;
     background-color: #666;
 }
+
+
+
+#exampleModal{
+    position: fixed;
+    z-index: 10000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+#exampleModal .modal-backdrop{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10001;
+    background-color: rgba(0,0,0,.5);
+    pointer-events: all;
+}
+#exampleModal .modal-content{
+    position: relative;
+    z-index: 20000;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    width: 442px;
+    padding: 32px 49px 26px;
+    background: #fff;
+    border-radius: 10px;
+    box-sizing: border-box;
+    transition: all .3s ease;
+    pointer-events: all;
+}
+#exampleModal .modal-close{
+    position: absolute;
+    top: 9px;
+    right: 11px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+#exampleModal .modal-close:after, #exampleModal .modal-close:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 2px;
+    margin-left: -10px;
+    background: #8a8a8a;
+    border-radius: 2px;
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+#exampleModal .modal-close:before,#exampleModal .modal-close:after {
+    width: 15px;
+    margin-left: -7px;
+    background: #d0d2d4;
+}
+#exampleModal .modal-close:after {
+    transform: rotate(-45deg);
+}
+#exampleModal .modal-main-container .header-title{
+    margin-top: 26px;
+    margin-bottom: 50px;
+    line-height: 1;
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    color: #303030;
+}
+#exampleModal .qrcode-container{
+    position: relative;
+    width: 189px;
+    height: 189px;
+    margin: 0 auto;
+}
+#exampleModal .qrcode-container img{
+    width: 100%;
+    height: 100%;
+    border: 1px solid #eaeeef;
+}
+#exampleModal .modal-main-container .tip{
+    margin-top: 24px;
+    margin-bottom: 30px;
+    text-align: center;
+    line-height: 1;
+    font-size: 16px;
+    font-weight: 400;
+    color: #303030;
+}
+#exampleModal .modal-main-container .tip img{
+    width: 20px;
+}
+#exampleModal .modal-main-container .tip .key-word{
+    font-weight: 600;
+    line-height: 1;
+}
