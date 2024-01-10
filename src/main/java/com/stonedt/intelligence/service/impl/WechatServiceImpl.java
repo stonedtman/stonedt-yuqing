@@ -478,7 +478,7 @@ public class WechatServiceImpl implements WechatService {
 		if (checkUser == null) {
 			return ResultUtil.build(500, "用户不存在");
 		}
-		if (checkUser.getWechatflag() == 0) {
+		if (checkUser.getWechatflag() == null || checkUser.getWechatflag() == 0) {
 			return ResultUtil.build(500, "用户未绑定");
 		}
 		if (checkUser.getStatus() == 2) {
