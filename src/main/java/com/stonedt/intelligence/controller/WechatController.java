@@ -50,7 +50,7 @@ public class WechatController {
      * 检查是否已经绑定
      */
     @GetMapping("/checkBind")
-    public ResultUtil checkBind(HttpServletRequest request, HttpServletResponse response) {
+    public ResultUtil checkBind(HttpServletRequest request, HttpServletResponse response) throws Exception {
         User user = userUtil.getuser(request);
         return wechatService.checkBind(user,request,response);
     }
