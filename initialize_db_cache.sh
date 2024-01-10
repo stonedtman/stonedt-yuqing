@@ -88,7 +88,7 @@ CREATE TABLE `flyway_schema_history`  (
 -- ----------------------------
 -- Records of flyway_schema_history
 -- ----------------------------
-INSERT INTO `stonedt_portal`.`flyway_schema_history` (`installed_rank`, `version`, `description`, `type`, `script`, `checksum`, `installed_by`, `installed_on`, `execution_time`, `success`) VALUES (1, '1.0', 'InitTableAndData', 'SQL', 'V1.0__InitTableAndData.sql', -982959182, 'root', '2023-11-20 17:02:55', 1517, 1);
+INSERT INTO `stonedt_portal`.`flyway_schema_history` (`installed_rank`, `version`, `description`, `type`, `script`, `checksum`, `installed_by`, `installed_on`, `execution_time`, `success`) VALUES (1, '1.0', 'InitTableAndData', 'SQL', 'V1.0__InitTableAndData.sql', 1234453372, 'root', '2023-11-20 17:02:55', 1517, 1);
 
 -- ----------------------------
 -- Table structure for full_menu
@@ -1038,6 +1038,34 @@ INSERT INTO `default_project` VALUES (3, '2022-06-01 14:01:01', 1531878465882689
 INSERT INTO `default_project` VALUES (4, '2022-06-01 14:00:15', 1531878271678025728, '行业发展', '2022-06-01 14:00:15', 1, NULL, '可再生能源+(储能|氢能|农业|建筑|生态|天然气|电力|生物质能|地热能|太阳能|非电利用|农村清洁供能|环境治理|乡村振兴|中小型抽水蓄能|独立供能|光热发电|海洋能|技术创新|模式创新|应用创新|机制创新|产业融合)', '', '', '', '', 0, 1531878215595986944);
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for wechat_config
+-- ----------------------------
+DROP TABLE IF EXISTS `wechat_config`;
+CREATE TABLE `wechat_config`  (
+                                  `id` int NOT NULL AUTO_INCREMENT,
+                                  `appid` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'appid',
+                                  `secret` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'secret',
+                                  `token` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'token',
+                                  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '回调地址',
+                                  `template_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '模板id',
+                                  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                                  `update_time` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                                  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+ALTER TABLE `stonedt_portal`.`wechat_config`
+    ADD COLUMN `callback` varchar(255) NULL COMMENT '回调地址' AFTER `token`,
+    MODIFY COLUMN `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '地址' AFTER `token`;
+
+INSERT INTO `stonedt_portal`.`wechat_config` (`id`) VALUES (1);
 
 
 
