@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.stonedt</groupId>
     <artifactId>stonedt-portal</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.4-SNAPSHOT</version>
     <name>stonedt-portal</name>
     <description>stonedt-portal</description>
 

@@ -225,7 +225,7 @@ public class WarningSchedule {
            
             String params = "keyword=" + highKeyword + "&searchkeyword=" + yjword + "&emotionalIndex=" + emotionalIndex + "&times=" + getTimee(nowtime, time)
                     + "&timee=" + nowtime + "&searchType=1&stopword=" + listStopwords + "&page=1&size=10&matchingmode=" + matchingMode
-                    + "&classify=" + classify + "&province=" + province + "&city=" + city+"&projecttype="+projectType;
+                    + "&classify=" + classify + "&province=" + province + "&city=" + city+"&projecttype="+projectType + "&size=" + "100";
             if(warningSetting.getWarning_similar()==0) {
                 String urls = es_search_url + searchearlywarningApi;
                 System.err.println(urls + "?" + params);
@@ -575,28 +575,39 @@ public class WarningSchedule {
             return;
         }
 
+        final String firstString = "舆情方案监测";
+
+        final String keyword1String = sdf.format(new Date());
+
+        final String keyword2String = projectByProId.get("project_name") + "(方案名)";
+
+        final String keyword3String = size > 30? "您配置的预警方案有超过30条新的预警消息" : "共发现" + size + "条预警信息";
+
+        final String remarkString = "请及时查看预警信息。";
+
+
         logger.info("开始公众号预警");
         List<WxMpTemplateMessage.WxMpTemplateData> wxMpTemplateDataList =
                 new ArrayList<>();
         //创建
         WxMpTemplateMessage.WxMpTemplateData first =
-                new WxMpTemplateMessage.WxMpTemplateData("first", "舆情方案监测");
+                new WxMpTemplateMessage.WxMpTemplateData("first", firstString);
         wxMpTemplateDataList.add(first);
 
         WxMpTemplateMessage.WxMpTemplateData keyword1 =
-                new WxMpTemplateMessage.WxMpTemplateData("keyword1",  sdf.format(new Date()));
+                new WxMpTemplateMessage.WxMpTemplateData("keyword1",  keyword1String);
         wxMpTemplateDataList.add(keyword1);
 
         WxMpTemplateMessage.WxMpTemplateData keyword2 =
-                new WxMpTemplateMessage.WxMpTemplateData("keyword2", projectByProId.get("project_name") + "(方案名)");
+                new WxMpTemplateMessage.WxMpTemplateData("keyword2", keyword2String);
         wxMpTemplateDataList.add(keyword2);
 
         WxMpTemplateMessage.WxMpTemplateData keyword3 =
-                new WxMpTemplateMessage.WxMpTemplateData("keyword3", "共发现" + size + "条预警信息");
+                new WxMpTemplateMessage.WxMpTemplateData("keyword3", keyword3String);
         wxMpTemplateDataList.add(keyword3);
 
         WxMpTemplateMessage.WxMpTemplateData remark =
-                new WxMpTemplateMessage.WxMpTemplateData("remark", "请及时查看预警信息。");
+                new WxMpTemplateMessage.WxMpTemplateData("remark", remarkString);
         wxMpTemplateDataList.add(remark);
 
         WxMpTemplateMessage wxMpTemplateMessage = WxMpTemplateMessage

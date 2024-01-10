@@ -84,6 +84,7 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
                 url += "?" + queryString;
             }
             sendRedirect(request, response,url);
+            return false;
         }
 
         //取出请求的url
