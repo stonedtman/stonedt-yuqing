@@ -192,5 +192,9 @@ select user_id,username from user where user_type = 2 and user_id not in (${user
 		UPDATE user SET password = #{password}
 		WHERE user_id = #{userId}
 	</update>
+	<update id="updateOpenidById">
+		UPDATE user SET openid = #{openid} ,wechatflag = 1
+		WHERE id = #{id}
+	</update>
 
 </mapper>

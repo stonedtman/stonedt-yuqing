@@ -27,6 +27,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -118,6 +119,18 @@ public class WechatServiceImpl implements WechatService {
 		//转换成16进制
 		String suffix = Long.toHexString(nanoedTime);
 		String sceneStr = "yuqing:" + suffix;
+		QrcodeData qrcodeData = getQRCodeUrl(sceneStr);
+		if (qrcodeData == null) {
+			return ResultUtil.build(500, "生成二维码失败");
+		}
+		return ResultUtil.ok(qrcodeData);
+	}
+
+
+	/**
+	 * 根据场景值生成二维码地址
+	 */
+	private QrcodeData getQRCodeUrl(String sceneStr) {
 		QrCodeInput qrCodeInput = new QrCodeInput();
 		qrCodeInput.setSceneStr(sceneStr);
 		qrCodeInput.setExpireSeconds(600);
@@ -129,16 +142,14 @@ public class WechatServiceImpl implements WechatService {
 		try {
 			qrcodeUrl = restTemplate.postForObject(wechatUrl + WechatConstant.GET_QRCODE, request, String.class);
 		} catch (RestClientException e) {
-			e.printStackTrace();
-			return ResultUtil.build(500,"生成二维码失败");
+			return null;
 		}
 		if (qrcodeUrl == null) {
-			return ResultUtil.build(500,"生成二维码失败");
+			return null;
 		}
-		//返回二维码地址
-		QrcodeData qrcodeData = new QrcodeData(qrcodeUrl, sceneStr);
-		return ResultUtil.ok(qrcodeData);
+        return new QrcodeData(qrcodeUrl, sceneStr);
 	}
+
 
 	/**
 	 * 关注事件处理
@@ -148,6 +159,67 @@ public class WechatServiceImpl implements WechatService {
 	 */
 	@Override
 	public Boolean handleSubscribe(WxMpXmlMessage wxMpXmlMessage) {
+
+		//获取场景值
+		String eventKey = wxMpXmlMessage.getEventKey();
+		//删除qrscene_前缀
+		eventKey = eventKey.replace("qrscene_", "");
+
+		if (eventKey.endsWith("#pass")) {
+			return true;
+		}
+
+		//判断是登陆扫码还是绑定扫码
+		if (eventKey.endsWith("#bind")) {
+			//绑定扫码
+			return handleBind(wxMpXmlMessage);
+		}else {
+			//登陆扫码
+			return handleLogin(wxMpXmlMessage);
+		}
+
+
+	}
+
+/**
+	 * 绑定扫码事件处理
+	 * @param wxMpXmlMessage 微信消息
+	 * @return 该用户是否已经存在
+	 */
+	private boolean handleBind(WxMpXmlMessage wxMpXmlMessage) {
+		//获取用户openid
+		String openid = wxMpXmlMessage.getFromUser();
+		//获取场景值
+		String eventKey = wxMpXmlMessage.getEventKey();
+		//删除qrscene_前缀
+		eventKey = eventKey.replace("qrscene_", "");
+		//获取userid 删除yuqing:前缀 #bind后缀
+		String userIdStr = eventKey.substring(7, eventKey.length() - 5);
+		//转换为10进制int
+		int userId = Integer.parseInt(userIdStr, 16);
+
+		//查询数据库是否存在该用户
+		User user = userDao.selectUserByOpenid(openid);
+		if (user != null && user.getId() == userId) {
+			if (user.getWechatflag() == 0) {
+				//则更新用户状态
+				ThreadPoolConst.IO_EXECUTOR.execute(() -> userDao.updateUserWechatFlagByOpenid(openid, 1));
+				user.setWechatflag(1);
+			}
+			redisTemplate.opsForValue().set(eventKey, JSON.toJSONString(user), 10, TimeUnit.MINUTES);
+			return true;
+		}
+		//如果不存在,则将openid存入redis,并设置过期时间为10分钟
+		redisTemplate.opsForValue().set(openid, eventKey, 10, TimeUnit.MINUTES);
+		return false;
+	}
+
+	/**
+	 * 登录扫码事件处理
+	 * @param wxMpXmlMessage 微信消息
+	 * @return 该用户是否已经存在
+	 */
+	private boolean handleLogin(WxMpXmlMessage wxMpXmlMessage) {
 		//获取用户openid
 		String openid = wxMpXmlMessage.getFromUser();
 		//获取场景值
@@ -188,6 +260,52 @@ public class WechatServiceImpl implements WechatService {
 	 */
 	@Override
 	public void handleAuthorize(WechatUserInfo wechatUserInfo) {
+
+
+		String openid = wechatUserInfo.getOpenid();
+
+		//获取事件key
+		String eventKey = redisTemplate.opsForValue().get(openid);
+
+		if (eventKey == null) {
+			return;
+		}
+
+		if (eventKey.endsWith("#pass")) {
+			return;
+		}
+		//判断是否是绑定扫码
+		if (eventKey.endsWith("#bind")) {
+			//绑定扫码
+			handleBindAuthorize(wechatUserInfo, eventKey);
+		} else {
+			//登陆扫码
+			handleLoginAuthorize(wechatUserInfo, eventKey);
+		}
+
+
+
+	}
+
+	/**
+	 * 事务处理绑定扫码事件
+	 * @param wechatUserInfo
+	 * @param eventKey
+	 */
+	public void handleBindAuthorize(WechatUserInfo wechatUserInfo, String eventKey) {
+		//获取userid 删除yuqing:前缀 #bind后缀
+		String userIdStr = eventKey.substring(7, eventKey.length() - 5);
+		//转换为10进制int
+		int userId = Integer.parseInt(userIdStr, 16);
+		//插入用户微信信息
+		UserWechatInfo userWechatUserInfo = new UserWechatInfo(wechatUserInfo);
+		userWechatUserInfo.setUser_id(userId);
+		userWechatInfoDao.saveWechatUserInfo(userWechatUserInfo);
+		//更新用户openid
+		userDao.updateOpenidById(userId);
+	}
+
+	public void handleLoginAuthorize(WechatUserInfo wechatUserInfo,String eventKey) {
 		String openid = wechatUserInfo.getOpenid();
 		//查询用户是否存在
 		User user = userDao.selectUserByOpenid(openid);
@@ -209,8 +327,6 @@ public class WechatServiceImpl implements WechatService {
 			user.setUser_level(0);
 			user.setWechatflag(1);
 			userDao.saveUser(user);
-			//获取事件key
-			String eventKey = redisTemplate.opsForValue().get(openid);
 			//删除qrscene_前缀
 			eventKey = eventKey.replace("qrscene_", "");
 			//将用户信息存入redis
@@ -281,8 +397,10 @@ public class WechatServiceImpl implements WechatService {
 				}
 			});
 		}
-
 	}
+
+
+
 
 	@Override
 	public ResultUtil checkLogin(String sceneStr, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -336,6 +454,42 @@ public class WechatServiceImpl implements WechatService {
 		String string = restTemplate.postForObject(wechatUrl + WechatConstant.SEND, request, String.class);
 		log.info("微信消息发送完毕,返回内容为:{}",string);
 	}
+
+	@Override
+	public ResultUtil getBindQRCodeUrl(User user) {
+		//生成场景值,以yuqing:开头
+		int userId = user.getId();
+		//转换成16进制
+		String suffix = Integer.toHexString(userId);
+		String sceneStr = "yuqing:" + suffix + "#bind";
+
+		QrcodeData qrcodeData = getQRCodeUrl(sceneStr);
+		if (qrcodeData == null) {
+			return ResultUtil.build(500, "生成二维码失败");
+		}
+		return ResultUtil.ok(qrcodeData);
+	}
+
+	@Override
+	public ResultUtil checkBind(User user, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		//查询用户信息
+		User checkUser = userDao.selectUserByUserId(user.getUser_id());
+		userUtil.setUser(request,response,checkUser);
+		if (checkUser == null) {
+			return ResultUtil.build(500, "用户不存在");
+		}
+		if (checkUser.getWechatflag() == 0) {
+			return ResultUtil.build(500, "用户未绑定");
+		}
+		if (checkUser.getStatus() == 2) {
+			return ResultUtil.build(500, "很抱歉，您的账号已被禁用，请联系管理员");
+		}
+		if (checkUser.getTerm_of_validity().before(new Date())) {
+			return ResultUtil.build(504, "很抱歉，您的账号已过期，请联系管理员");
+		}
+		return ResultUtil.ok();
+	}
+
 
 	/**
 	 * 增加偏好设置

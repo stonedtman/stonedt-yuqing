@@ -3,6 +3,7 @@ package com.stonedt.intelligence.service;
 import com.stonedt.intelligence.dto.WechatUserInfo;
 import com.stonedt.intelligence.dto.WxMpTemplateMessage;
 import com.stonedt.intelligence.dto.WxMpXmlMessage;
+import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.util.ResultUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,4 +40,9 @@ public interface WechatService {
 	ResultUtil checkLogin(String sceneStr, HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 	void send(WxMpTemplateMessage wxMpTemplateMessage);
+
+	ResultUtil getBindQRCodeUrl(User user);
+
+
+	ResultUtil checkBind(User user, HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

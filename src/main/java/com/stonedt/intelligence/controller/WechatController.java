@@ -2,14 +2,15 @@ package com.stonedt.intelligence.controller;
 
 import com.stonedt.intelligence.dto.WechatUserInfo;
 import com.stonedt.intelligence.dto.WxMpXmlMessage;
+import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.service.WechatService;
 
 import com.stonedt.intelligence.util.ResultUtil;
+import com.stonedt.intelligence.util.UserUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
 
 
 @RestController
@@ -20,9 +21,12 @@ public class WechatController {
 
 	private final WechatService wechatService;
 
+    private final UserUtil userUtil;
 
-    public WechatController(WechatService wechatService) {
+
+    public WechatController(WechatService wechatService, UserUtil userUtil) {
         this.wechatService = wechatService;
+        this.userUtil = userUtil;
     }
 
     /**
@@ -31,6 +35,24 @@ public class WechatController {
     @GetMapping("/getQrCode")
     public ResultUtil getQrCode() {
         return wechatService.getQRCodeUrl();
+    }
+
+    /**
+     * 获取绑定二维码
+     */
+    @GetMapping("/getBindQrCode")
+    public ResultUtil getBindQrCode(HttpServletRequest request) {
+        User user = userUtil.getuser(request);
+        return wechatService.getBindQRCodeUrl(user);
+    }
+
+    /**
+     * 检查是否已经绑定
+     */
+    @GetMapping("/checkBind")
+    public ResultUtil checkBind(HttpServletRequest request, HttpServletResponse response) {
+        User user = userUtil.getuser(request);
+        return wechatService.checkBind(user,request,response);
     }
 
     /**
