@@ -557,6 +557,7 @@
 <script th:src="@{/assets/libs/sweetalert2/dist/sweetalert2.all.min.js}"></script>
 <script th:src="@{/assets/libs/bootstrap-switch/dist/js/bootstrap-switch.min.js}"></script>
 <script th:src="@{/dist/baidu/baidu_statistics.js}"></script>
+<script th:src="@{/common/qrcodePopup.js}"></script>
 
 <script th:inline="javascript" type="text/javascript">
 $("#currentyear").text((new Date()).getFullYear());
@@ -1302,8 +1303,27 @@ function checkEmail(){
             warning_source_str = $(this).attr('data-id')
         }
     });
-    if (warning_source_str!='2'){
+    if (warning_source_str=='1'){
         save();
+        return;
+    }
+    if (warning_source_str=='3'){
+        $.ajax({
+            url: '/wechat/checkBind',
+            type: 'get',
+            success: function (res) {
+                if (res.status === 200) {
+                    save()
+                } else {
+                    QRCodePopup()
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                if (xhr.status === 403) {
+                    window.location.href = ctxPath + "login";
+                }
+            }
+        });
         return;
     }
 
