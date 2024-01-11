@@ -25,7 +25,7 @@
         privileges,snapshot_user
     </sql>
     <insert id="saveWechatUserInfo">
-        insert into user_wechat_info(
+        replace into user_wechat_info(
             user_id, openid, nickname, sex, city, province, country, head_img_url, unionid, privileges, snapshot_user
         )
         values(
