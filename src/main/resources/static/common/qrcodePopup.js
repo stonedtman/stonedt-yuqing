@@ -36,12 +36,34 @@ function QRCodePopup(){
                 if($("#exampleModal")){
                     $("#exampleModal .accountName").html(res.data.name)
                     $("#exampleModal .qrcode-container img").attr("src",res.data.qrcodeUrl)
+                    wechatwasBind(res.data.sceneStr)
                 }
             }else{
                 showtips(res.msg)
             }
         }
     })
+}
+
+function wechatwasBind(str) {
+    $.ajax({
+        method: "GET",
+        url: "/wechat/wasBind/"+str,
+        success: function (res) {
+            if (res.status == 200) {
+                closeModal()
+                save()
+            }else if(res.status==204){
+                setTimeout(() => {
+                    if($("#exampleModal")){
+                        wechatwasBind(str);
+                    }
+                }, 1000)
+            }else{
+                showtips(res.msg);
+            }
+        },
+    });
 }
 
 function closeModal() {
