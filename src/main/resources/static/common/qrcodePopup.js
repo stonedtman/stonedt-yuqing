@@ -48,7 +48,9 @@ function QRCodePopup(){
 function wechatwasBind(str) {
     $.ajax({
         method: "GET",
-        url: "/wechat/wasBind/"+str,
+        url: "/wechat/wasBind",
+        contentType: "application/json",
+        data: { sceneStr:str },
         success: function (res) {
             if (res.status == 200) {
                 closeModal()
