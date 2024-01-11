@@ -286,8 +286,6 @@ function sendArticle(t) {
                         <div class="item">
                             <div class="title-box">
                                 <div class="title-left">
-                                    ${data[i].industrylable?('<span class="industrylable">'+data[i].industrylable+'</span>'):''}
-                                    ${data[i].eventlable?('<span class="eventlable">'+data[i].eventlable+'</span>'):''}
                                     ${data[i].categorylable?('<span class="categorylable">'+data[i].categorylable+'</span>'):''}
                                     <span class="title">${data[i].title}</span>
                                 </div>
