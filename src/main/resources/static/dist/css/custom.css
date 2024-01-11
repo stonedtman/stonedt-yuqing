@@ -4349,9 +4349,17 @@ a {
 }
 #exampleModal .modal-main-container .header-title{
     margin-top: 26px;
-    margin-bottom: 50px;
+    margin-bottom: 32px;
     line-height: 1;
     font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    color: #303030;
+}
+#exampleModal .accountName{
+    margin-bottom: 16px;
+    line-height: 1;
+    font-size: 16px;
     font-weight: 600;
     text-align: center;
     color: #303030;
@@ -4369,7 +4377,7 @@ a {
 }
 #exampleModal .modal-main-container .tip{
     margin-top: 24px;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
     text-align: center;
     line-height: 1;
     font-size: 16px;

@@ -24,3 +24,16 @@ $('#searchkeyword').keydown(function (e) {
         window.location.href = ctxPath + "monitor?searchword=" + searchText + "&searchflag=true";
     }
 });
+
+
+function isMobile(){
+    // 判断是否是手机端，如果是，返回true
+    var flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+    return flag
+}
+
+if(isMobile()){
+    if(window.location.pathname.indexOf("/login")==-1&&window.location.pathname.indexOf("/mobile")==-1){
+        window.location.href = "/mobile/monitor"
+    }
+}

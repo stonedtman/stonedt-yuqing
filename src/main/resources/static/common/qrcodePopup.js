@@ -10,11 +10,15 @@ function QRCodePopup(){
                             <div class="header">
                                 <h2 class="header-title">关注我们</h2>
                             </div>
+                            <div class="accountName"></div>
                             <div class="qrcode-container">
                                 <img src="assets/images/QRcode.jpg">
                             </div>
                             <div class="tip">
                                 微信扫码 <span class="key-word">关注公众号</span>
+                            </div>
+                            <div class="tip">
+                                及时接收最新人工智能技术与资讯
                             </div>
                         </div>
                     </div>
@@ -30,6 +34,7 @@ function QRCodePopup(){
         success: function (res) {
             if(res.status==200){
                 if($("#exampleModal")){
+                    $("#exampleModal .accountName").html(res.data.name)
                     $("#exampleModal .qrcode-container img").attr("src",res.data.qrcodeUrl)
                 }
             }else{
