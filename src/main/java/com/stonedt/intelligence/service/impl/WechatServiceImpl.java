@@ -508,6 +508,7 @@ public class WechatServiceImpl implements WechatService {
 		User user = JSON.parseObject(result, User.class);
 
 		userUtil.setUser(request,response,user);
+		redisTemplate.delete(sceneStr);
 		return ResultUtil.ok();
 	}
 
