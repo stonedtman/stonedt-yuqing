@@ -54,7 +54,7 @@ public class LoginController {
         }else {
             mv.addObject("reference", URLDecoder.decode(reference, "UTF-8"));
         }
-        mv.setViewName("user/login");
+        mv.setViewName("user/loginbak");
         return mv;
     }
 

@@ -4,14 +4,12 @@ package com.stonedt.intelligence.service.impl;
 
 import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.stonedt.intelligence.aop.SystemLogAspect;
 import com.stonedt.intelligence.constant.WechatConstant;
-import com.stonedt.intelligence.dao.ProjectTaskDao;
-import com.stonedt.intelligence.dao.UserDao;
-import com.stonedt.intelligence.dao.UserWechatInfoDao;
+import com.stonedt.intelligence.dao.*;
 import com.stonedt.intelligence.dto.*;
 import com.stonedt.intelligence.entity.*;
-import com.stonedt.intelligence.dao.DefaultOpinionConditionDao;
 import com.stonedt.intelligence.service.*;
 import com.stonedt.intelligence.thred.ThreadPoolConst;
 import com.stonedt.intelligence.util.DateUtil;
@@ -72,6 +70,8 @@ public class WechatServiceImpl implements WechatService {
 
 	private final UserUtil userUtil;
 
+	private final WechatConfigDao wechatConfigDao;
+
 	@Value("${wechat.url}")
 	private String wechatUrl;
 
@@ -80,17 +80,17 @@ public class WechatServiceImpl implements WechatService {
 	private Integer effectiveDays;
 
 	public WechatServiceImpl(RestTemplate restTemplate,
-							 StringRedisTemplate redisTemplate,
-							 UserWechatInfoDao userWechatInfoDao,
-							 UserDao userDao, ProjectService projectService,
-							 DefaultProjectService defaultProjectService,
-							 SolutionGroupService solutionGroupService,
-							 OpinionConditionService opinionConditionService,
-							 SystemService systemService,
-							 ProjectTaskDao projectTaskDao,
-							 DefaultOpinionConditionDao defaultOpinionConditionDao,
-							 SystemLogService systemLogService,
-							 UserUtil userUtil) {
+                             StringRedisTemplate redisTemplate,
+                             UserWechatInfoDao userWechatInfoDao,
+                             UserDao userDao, ProjectService projectService,
+                             DefaultProjectService defaultProjectService,
+                             SolutionGroupService solutionGroupService,
+                             OpinionConditionService opinionConditionService,
+                             SystemService systemService,
+                             ProjectTaskDao projectTaskDao,
+                             DefaultOpinionConditionDao defaultOpinionConditionDao,
+                             SystemLogService systemLogService,
+                             UserUtil userUtil, WechatConfigDao wechatConfigDao) {
 		this.restTemplate = restTemplate;
 		this.redisTemplate = redisTemplate;
 		this.userWechatInfoDao = userWechatInfoDao;
@@ -104,7 +104,8 @@ public class WechatServiceImpl implements WechatService {
 		this.defaultOpinionConditionDao = defaultOpinionConditionDao;
 		this.systemLogService = systemLogService;
 		this.userUtil = userUtil;
-	}
+        this.wechatConfigDao = wechatConfigDao;
+    }
 
 
 	/**
@@ -467,6 +468,10 @@ public class WechatServiceImpl implements WechatService {
 		if (qrcodeData == null) {
 			return ResultUtil.build(500, "生成二维码失败");
 		}
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("sceneStr",sceneStr);
+		jsonObject.put("qrcodeUrl",qrcodeData.getQrcodeUrl());
+		jsonObject.put("name",wechatConfigDao.selectLast().getName());
 		return ResultUtil.ok(qrcodeData);
 	}
 
