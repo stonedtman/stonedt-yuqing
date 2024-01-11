@@ -58,8 +58,8 @@ public class WechatController {
     /**
      * wasBind
      */
-    @GetMapping("/wasBind/{sceneStr}")
-    public ResultUtil wasBind(@PathVariable String sceneStr,HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @GetMapping("/wasBind")
+    public ResultUtil wasBind(@RequestParam String sceneStr,HttpServletRequest request, HttpServletResponse response) throws Exception {
         return wechatService.wasBind(sceneStr,request,response);
     }
 
