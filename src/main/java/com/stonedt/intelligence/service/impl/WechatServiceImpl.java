@@ -25,7 +25,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -304,6 +303,8 @@ public class WechatServiceImpl implements WechatService {
 		userWechatInfoDao.saveWechatUserInfo(userWechatUserInfo);
 		//更新用户openid
 		userDao.updateOpenidById(userId, wechatUserInfo.getOpenid());
+
+		redisTemplate.opsForValue().set(eventKey, JSON.toJSONString(userDao.selectById(userId)), 10, TimeUnit.MINUTES);
 	}
 
 	public void handleLoginAuthorize(WechatUserInfo wechatUserInfo,String eventKey) {
@@ -492,6 +493,21 @@ public class WechatServiceImpl implements WechatService {
 		if (checkUser.getTerm_of_validity().before(new Date())) {
 			return ResultUtil.build(504, "很抱歉，您的账号已过期，请联系管理员");
 		}
+		return ResultUtil.ok();
+	}
+
+	@Override
+	public ResultUtil wasBind(String sceneStr, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		if (sceneStr == null || "".equals(sceneStr)) {
+			return ResultUtil.build(500, "场景值不能为空");
+		}
+		String result = redisTemplate.opsForValue().get(sceneStr);
+		if (result == null|| result.isEmpty()) {
+			return ResultUtil.build(204, "未获取到用户操作");
+		}
+		User user = JSON.parseObject(result, User.class);
+
+		userUtil.setUser(request,response,user);
 		return ResultUtil.ok();
 	}
 

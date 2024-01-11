@@ -45,4 +45,6 @@ public interface WechatService {
 
 
 	ResultUtil checkBind(User user, HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	ResultUtil wasBind(String sceneStr, HttpServletRequest request, HttpServletResponse response) throws Exception;
 }
