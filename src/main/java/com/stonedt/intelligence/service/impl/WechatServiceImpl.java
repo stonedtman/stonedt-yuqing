@@ -472,7 +472,7 @@ public class WechatServiceImpl implements WechatService {
 		jsonObject.put("sceneStr",sceneStr);
 		jsonObject.put("qrcodeUrl",qrcodeData.getQrcodeUrl());
 		jsonObject.put("name",wechatConfigDao.selectLast().getName());
-		return ResultUtil.ok(qrcodeData);
+		return ResultUtil.ok(jsonObject);
 	}
 
 	@Override
