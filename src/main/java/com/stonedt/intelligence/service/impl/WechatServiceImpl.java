@@ -303,7 +303,7 @@ public class WechatServiceImpl implements WechatService {
 		userWechatUserInfo.setUser_id(userId);
 		userWechatInfoDao.saveWechatUserInfo(userWechatUserInfo);
 		//更新用户openid
-		userDao.updateOpenidById(userId);
+		userDao.updateOpenidById(userId, wechatUserInfo.getOpenid());
 	}
 
 	public void handleLoginAuthorize(WechatUserInfo wechatUserInfo,String eventKey) {

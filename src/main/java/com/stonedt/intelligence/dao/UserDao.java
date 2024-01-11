@@ -170,5 +170,5 @@ public interface UserDao {
 
     User getUserByUserId(@Param("userId") Long userId);
 
-	void updateOpenidById(@Param("id")int id);
+	void updateOpenidById(@Param("id")int id, @Param("openid")String openid);
 }
