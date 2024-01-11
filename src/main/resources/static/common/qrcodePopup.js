@@ -23,6 +23,20 @@ function QRCodePopup(){
         </div>
     `
     $("body").append(html)
+
+    $.ajax({
+        type: "get",
+        url: "/wechat/getBindQrCode",
+        success: function (res) {
+            if(res.status==200){
+                if($("#exampleModal")){
+                    $("#exampleModal .qrcode-container img").attr("src",res.data.qrcodeUrl)
+                }
+            }else{
+                showtips(res.msg)
+            }
+        }
+    })
 }
 
 function closeModal() {

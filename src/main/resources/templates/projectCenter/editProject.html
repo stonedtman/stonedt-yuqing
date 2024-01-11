@@ -597,6 +597,7 @@
 <script th:src="@{/assets/libs/bootstrap-switch/dist/js/bootstrap-switch.min.js}"></script>
 <script th:src="@{/dist/baidu/baidu_statistics.js}"></script>
 <script th:src="@{/common/ajax-config.js}"></script>
+<script th:src="@{/common/qrcodePopup.js}"></script>
 
 <script type="text/javascript" th:inline="javascript">
 $("#currentyear").text((new Date()).getFullYear());
@@ -1656,8 +1657,27 @@ function checkEmail(){
             warning_source_str = $(this).attr('data-id')
         }
     });
-    if (warning_source_str!='2'){
+    if (warning_source_str=='1'){
         save();
+        return;
+    }
+    if (warning_source_str=='3'){
+        $.ajax({
+            url: '/wechat/checkBind',
+            type: 'get',
+            success: function (res) {
+                if (res.status === 200) {
+                    save()
+                } else {
+                    QRCodePopup()
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                if (xhr.status === 403) {
+                    window.location.href = ctxPath + "login";
+                }
+            }
+        });
         return;
     }
 
