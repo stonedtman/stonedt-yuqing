@@ -619,7 +619,7 @@ public class WarningSchedule {
                         userService.getToken(user) +
                         "&projectId=" +
                         projectByProId.get("project_id") +
-                        "&groupId" +
+                        "&groupId=" +
                         projectByProId.get("group_id")
                 )
                 .build();
