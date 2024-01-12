@@ -1,5 +1,6 @@
 package com.stonedt.intelligence.service;
 
+import com.nimbusds.jose.JOSEException;
 import com.stonedt.intelligence.dto.WechatUserInfo;
 import com.stonedt.intelligence.dto.WxMpTemplateMessage;
 import com.stonedt.intelligence.dto.WxMpXmlMessage;
@@ -47,4 +48,6 @@ public interface WechatService {
 	ResultUtil checkBind(User user, HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 	ResultUtil wasBind(String sceneStr, HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	String getToken(String openid) throws JOSEException;
 }

@@ -5,6 +5,7 @@ package com.stonedt.intelligence.service.impl;
 import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.nimbusds.jose.JOSEException;
 import com.stonedt.intelligence.aop.SystemLogAspect;
 import com.stonedt.intelligence.constant.WechatConstant;
 import com.stonedt.intelligence.dao.*;
@@ -71,6 +72,8 @@ public class WechatServiceImpl implements WechatService {
 
 	private final WechatConfigDao wechatConfigDao;
 
+	private final UserService userService;
+
 	@Value("${wechat.url}")
 	private String wechatUrl;
 
@@ -89,7 +92,9 @@ public class WechatServiceImpl implements WechatService {
                              ProjectTaskDao projectTaskDao,
                              DefaultOpinionConditionDao defaultOpinionConditionDao,
                              SystemLogService systemLogService,
-                             UserUtil userUtil, WechatConfigDao wechatConfigDao) {
+                             UserUtil userUtil,
+							 WechatConfigDao wechatConfigDao,
+							 UserService userService) {
 		this.restTemplate = restTemplate;
 		this.redisTemplate = redisTemplate;
 		this.userWechatInfoDao = userWechatInfoDao;
@@ -104,6 +109,7 @@ public class WechatServiceImpl implements WechatService {
 		this.systemLogService = systemLogService;
 		this.userUtil = userUtil;
         this.wechatConfigDao = wechatConfigDao;
+        this.userService = userService;
     }
 
 
@@ -510,6 +516,19 @@ public class WechatServiceImpl implements WechatService {
 		userUtil.setUser(request,response,user);
 		redisTemplate.delete(sceneStr);
 		return ResultUtil.ok();
+	}
+
+	@Override
+	public String getToken(String openid) throws JOSEException {
+		//获取用户信息
+		User user = userDao.selectUserByOpenid(openid);
+		//判断用户是否存在
+		if (user == null) {
+			return null;
+		}
+		//生成token
+        return userService.getToken(user);
+
 	}
 
 

@@ -6,7 +6,9 @@ import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.service.WechatService;
 
 import com.stonedt.intelligence.util.ResultUtil;
+import com.stonedt.intelligence.util.ShaUtil;
 import com.stonedt.intelligence.util.UserUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping(value = "/wechat")
 public class WechatController {
+
+    @Value("${token.private-key}")
+    private String privateKey;
 	
 	
 
@@ -93,6 +98,27 @@ public class WechatController {
     @GetMapping("/checkLogin")
     public ResultUtil checkLogin(@RequestParam String sceneStr, HttpServletRequest request, HttpServletResponse response) throws Exception {
         return wechatService.checkLogin(sceneStr,request,response);
+    }
+
+    /**
+     * 获取token
+     */
+    @GetMapping("/token")
+    public String getToken(@RequestParam String openid,@RequestParam Long time,@RequestParam String ciphering) throws Exception {
+        //这里需要验证时间和密文
+        long currentTimeMillis = System.currentTimeMillis();
+        //如果时间超过了5分钟，就不让登录
+        if(currentTimeMillis-time>300000){
+            return null;
+        }
+        //私钥加密
+        String sha1 = ShaUtil.getSHA1(openid + time + privateKey, false);
+        //如果密文不一致，就不让登录
+        if(!sha1.equals(ciphering)){
+            return null;
+        }
+
+        return wechatService.getToken(openid);
     }
 
 }

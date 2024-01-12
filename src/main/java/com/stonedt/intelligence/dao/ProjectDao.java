@@ -69,7 +69,7 @@ public interface ProjectDao {
      */
     List<Project> listProjectByUserId(long userId);
 
-    List<Map<String, Object>> getMobileGroupAndProject(List<Long> list);
+    List<Map<String, Object>> getMobileGroupAndProject(@Param("list") List<Long> list);
 
     List<Long> getProjectIdListByUserId(@Param("userId")Long userId);
 }
