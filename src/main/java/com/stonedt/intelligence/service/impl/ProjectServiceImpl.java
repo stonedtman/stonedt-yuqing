@@ -255,6 +255,8 @@ public class ProjectServiceImpl implements ProjectService {
         for (Map<String, Object> project : projectList) {
             Long groupId = (Long) project.get("group_id");
             String groupName = (String) project.get("group_name");
+            project.put("group_id", groupId.toString());
+            project.put("project_id", project.get("project_id").toString());
             String key = groupId + "-" + groupName;
             boolean flag = false;
             for (Map<String, List<Map<String, Object>>> stringListMap : groupList) {
