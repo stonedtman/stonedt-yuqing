@@ -68,4 +68,8 @@ public interface ProjectDao {
      * @return 方案列表
      */
     List<Project> listProjectByUserId(long userId);
+
+    List<Map<String, Object>> getMobileGroupAndProject(List<Long> list);
+
+    List<Long> getProjectIdListByUserId(@Param("userId")Long userId);
 }

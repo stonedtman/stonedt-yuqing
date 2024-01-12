@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
+import com.stonedt.intelligence.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 import com.stonedt.intelligence.entity.Project;
@@ -57,4 +58,6 @@ public interface ProjectService {
 	 * @return 方案列表
 	 */
     List<Project> listProjectByUserId(long userId);
+
+	Map<String,Object> getMobileGroupAndProject(User user);
 }

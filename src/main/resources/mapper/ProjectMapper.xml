@@ -310,6 +310,25 @@
     <select id="listProjectByUserId" resultType="com.stonedt.intelligence.entity.Project">
 		select project_id as projectId,project_name as projectName,group_id as groupId from project where user_id = #{userId} and del_status = 0
 	</select>
+    <select id="getMobileGroupAndProject" resultType="java.util.List">
+		select
+		    p.regional_word,DATE_FORMAT(p.create_time,'%Y-%m-%d %H:%i:%s') as create_time,
+		    DATE_FORMAT(p.update_time,'%Y-%m-%d %H:%i:%s') as update_time,p.project_id,p.project_name,
+		    p.subject_word,p.character_word,p.event_word,p.stop_word,
+		    p.group_id,sg.group_name
+		    from project p
+		    left join solution_group sg on p.group_id = sg.group_id
+		    where p.project_id in
+		    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			    #{item}
+		    </foreach>
+			and p.del_status = 0 and sg.del_status = 0
+
+	</select>
+	<select id="getProjectIdListByUserId" resultType="java.lang.Long">
+		select project_id from warning_article
+		where user_id = #{userId} and read_status = 0
+	</select>
 
 
 </mapper>

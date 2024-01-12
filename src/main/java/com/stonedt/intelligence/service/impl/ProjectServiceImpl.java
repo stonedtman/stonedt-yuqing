@@ -1,5 +1,6 @@
 package com.stonedt.intelligence.service.impl;
 
+import java.awt.event.WindowAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import com.github.pagehelper.PageInfo;
 import com.stonedt.intelligence.dao.DatafavoriteDao;
 import com.stonedt.intelligence.dao.OpinionConditionDao;
 import com.stonedt.intelligence.entity.ReportCustom;
+import com.stonedt.intelligence.entity.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -232,6 +234,48 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<Project> listProjectByUserId(long userId) {
         return projectDao.listProjectByUserId(userId);
+    }
+
+    @Override
+    public Map<String, Object> getMobileGroupAndProject(User user) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("code", 200);
+        result.put("msg", "用户方案和方案组返回成功");
+
+        List<Long> projectIdListByUserId = projectDao.getProjectIdListByUserId(user.getUser_id());
+        if (projectIdListByUserId.isEmpty()) {
+            result.put("data", new ArrayList<>());
+            return result;
+        }
+
+        List<Map<String, Object>> projectList = projectDao.getMobileGroupAndProject(projectIdListByUserId);
+        //组装，获取方案组和方案
+        List<Map<String, List<Map<String, Object>>>> groupList = new ArrayList<>();
+
+        for (Map<String, Object> project : projectList) {
+            Long groupId = (Long) project.get("group_id");
+            String groupName = (String) project.get("group_name");
+            String key = groupId + "-" + groupName;
+            boolean flag = false;
+            for (Map<String, List<Map<String, Object>>> stringListMap : groupList) {
+                if (stringListMap.containsKey(key)) {
+                    stringListMap.get(key).add(project);
+                    flag = true;
+                    break;
+                }
+            }
+
+            if (!flag) {
+                Map<String, List<Map<String, Object>>> groupMap = new HashMap<>();
+                List<Map<String, Object>> projectMapList = new ArrayList<>();
+                groupMap.put(key, projectMapList);
+                projectMapList.add(project);
+                groupList.add(groupMap);
+            }
+
+        }
+        result.put("data", groupList);
+        return result;
     }
 
 }
