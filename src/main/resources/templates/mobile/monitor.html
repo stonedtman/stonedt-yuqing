@@ -166,6 +166,7 @@
         window.location.replace("/mobile/warning?groupId="+groupId+"&projectId="+projectId)
     }
 </script>
-<script th:src="@{/dist/js/mobile/monitor.js}"></script>
+<!--<script th:src="@{/dist/js/mobile/monitor.js}"></script>-->
+<script th:src="@{/dist/js/mobile/monitor.js(v=${new java.util.Date().getTime()})}"></script>
 </body>
 </html>

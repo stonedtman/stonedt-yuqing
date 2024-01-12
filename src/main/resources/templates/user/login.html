@@ -178,14 +178,14 @@ $("#currentyear").text((new Date()).getFullYear());
         });
     }
     
-    
+
     var captchaImg = document.getElementById("graph_img");
     // 为验证码图片绑定点击事件
     captchaImg.onclick = function() {
         // 生成新的时间戳
         var timestamp = new Date().getTime();
         // 替换验证码图片的src属性
-        captchaImg.src = ctxPath + "/img/code?_t=" + timestamp;
+        captchaImg.src = "/img/code?_t=" + timestamp;
     };
 
     

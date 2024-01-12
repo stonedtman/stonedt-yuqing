@@ -165,7 +165,7 @@
                         <ul class="create-tab" id="search-tab">
                             <!--<li class="create-tab-act" data-type="2">快速创建</li>-->
                             <li class="create-tab-act" data-type="1">高级创建</li>
-                            <li id="tips" data-type="3">当前是快速创建，可设置550字</li>
+                            <li id="tips" data-type="3">当前是高级创建，可设置550字</li>
                         </ul>
                         <!-- tab1 start -->
                         <div id="tab2" class="card m-b-0" style="display: none;">
@@ -662,14 +662,14 @@ $("#currentyear").text((new Date()).getFullYear());
             case "2":
                 $(this).siblings().removeClass("create-tab-act");
                 $(this).addClass("create-tab-act");
-                $("#tips").html("当前是快速创建，可设置550字");
+                $("#tips").html("当前是快速创建，可设置100字");
                 $("#tab2").hide();
                 $("#tab1").show();
                 break;
             case "1":
                 $(this).siblings().removeClass("create-tab-act");
                 $(this).addClass("create-tab-act");
-                $("#tips").html("当前是高级创建，可设置100字");
+                $("#tips").html("当前是高级创建，可设置550字");
                 $("#tab1").hide();
                 $("#tab2").show();
                 break;
@@ -972,11 +972,21 @@ function save() {
         warning_status = 1;
     }
 
-    let warning_word = data.warning_word;
-    if (warning_word == "" && warning_status == 1) {
-        showtips("预警词为空，请关闭预警开关！");
-        return;
+    if(warning_status == 1){
+        if (data.warning_name == "") {
+            showtips("预警名称为空，请关闭预警开关！");
+            return;
+        }
+        if (data.warning_word == "") {
+            showtips("预警词为空，请关闭预警开关！");
+            return;
+        }
+        if(data.warning_classify == ""){
+            showtips("数据来源为空，请关闭预警开关！");
+            return;
+        }
     }
+    let warning_word = data.warning_word
 
     if (warning_status == 0 && warning_word != "") {  // 未开 有词
         swal({

@@ -90,6 +90,7 @@
     window.location.replace("/mobile/monitor?groupId="+groupId+"&projectId="+projectId)
   }
 </script>
-<script th:src="@{/dist/js/mobile/warning.js}"></script>
+<!--<script th:src="@{/dist/js/mobile/warning.js}"></script>-->
+<script th:src="@{/dist/js/mobile/warning.js(v=${new java.util.Date().getTime()})}"></script>
 </body>
 </html>

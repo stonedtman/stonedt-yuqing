@@ -1326,11 +1326,21 @@ function save() {
         warning_status = 1;
     }
 
-    let warning_word = data.warning_word;
-    if (warning_word == "" && warning_status == 1) {
-        showtips("预警词为空，请关闭预警开关！");
-        return;
+    if(warning_status == 1){
+        if (data.warning_name == "") {
+            showtips("预警名称为空，请关闭预警开关！");
+            return;
+        }
+        if (data.warning_word == "") {
+            showtips("预警词为空，请关闭预警开关！");
+            return;
+        }
+        if(data.warning_classify == ""){
+            showtips("数据来源为空，请关闭预警开关！");
+            return;
+        }
     }
+    let warning_word = data.warning_word
 
     if (warning_status == 0 && warning_word != "") {  // 未开 有词
         swal({
