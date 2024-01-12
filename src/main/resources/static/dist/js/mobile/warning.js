@@ -1,21 +1,12 @@
 var groupAndProjectList = [];
-var groupId = "";
-var projectId = "";
+
 var pageNum = 1
 
 sendProjectAndProject()
 function sendProjectAndProject() {
     $.ajax({
-        type: "POST",
-        url: "/project/getGroupAndProject",
-        dataType: 'json',
-        data: {
-            groupid: "",
-            page: 1,
-            projectsearch: "",
-            menu: ""
-        },
-        async: false,
+        type: "get",
+        url: "/mobile/getGroupAndProject",
         success: function (res) {
             if(res.code==200){
                 installGroupAndProject(res.data);
@@ -36,9 +27,8 @@ function installGroupAndProject(data) {
             let value = dataJson[key];
             let group_id = key.split("-")[0];
             let group_name = key.split("-")[1];
-            if(i==0){
+            if(!groupId&&i==0){
                 groupId = group_id
-                groupName = group_name
                 projectId = value[0].project_id
             }
             groupAndProjectList.push({
@@ -60,10 +50,16 @@ function installGroupAndProject(data) {
             }
         })
         changeProjectList()
+    }else{
+        $(".monitor-search").remove()
+        $(".projectList").remove()
+        $(".allNum").remove()
+        nodata(".dataList")
     }
 }
 function changegroup(e) {
     groupId = e.dataset.value
+    projectId = ""
     $(".schema_group li").each(function (){
         if(groupId==$(this).attr("data-value")){
             $(this).addClass("active")
@@ -81,7 +77,9 @@ function changeProjectList() {
         if(groupAndProjectList[i].group_id==groupId){
             let projectList = groupAndProjectList[i].project_list
             for (let j = 0; j < projectList.length; j++) {
-                if(j==0){
+                if(projectId&&projectId==projectList[j].project_id){
+                    html+=`<div class="item active" onclick="switchProject(this)" data-projectid="${projectList[j].project_id}"><span>${projectList[j].project_name}</span></div>`
+                }else if(!projectId&&j==0){
                     projectId = projectList[j].project_id
                     html+=`<div class="item active" onclick="switchProject(this)" data-projectid="${projectList[j].project_id}"><span>${projectList[j].project_name}</span></div>`
                 }else{
@@ -142,7 +140,7 @@ function sendArticle(t) {
                 for (let i = 0; i < data.length; i++) {
                     let sourcewebsitename = JSON.parse(data[i].article_detail).sourcewebsitename
 
-                    html+=`<a href="/mobile/monitor/detail?id=${data[i].article_id}&projectid=${data[i].project_id}">
+                    html+=`<a href="/mobile/monitor/detail?id=${data[i].article_id}&groupId=${data[i].group_id}&projectId=${data[i].project_id}">
                         <div class="item">
                             <div class="title">${data[i].article_title}</div>
                             <div class="like-comm">

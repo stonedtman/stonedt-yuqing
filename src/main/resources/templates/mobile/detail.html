@@ -149,7 +149,8 @@
 
 <script type="text/javascript" th:inline="javascript">
     const params = new URLSearchParams(window.location.search);
-    var projectId = params.get('projectid');
+    var groupId = params.get('groupId');
+    var projectId = params.get('projectId');
     var articleId = params.get('id');
     var relatedword = params.get('relatedword');
     var publish_time = params.get('publish_time');
@@ -163,6 +164,7 @@
             dataType: 'json',
             data: {
                 articleId: articleId,
+                groupId: groupId,
                 projectId: projectId,
                 relatedword: relatedword,
                 publish_time: publish_time,
@@ -175,10 +177,12 @@
                 if (res.detail&&res.detail.code==200) {
                     let detail = res.detail
                     $('#title').html(res.title);
+
                     if(res.warnWordList){
                         $(".words").html("涉及预警词: "+res.warnWordList.join(" | "))
-                    }else{
-                        $(".words").html("涉及预警词: -")
+                    }
+                    if(relatedword){
+                        $(".words").html("涉及关键词: "+relatedword.split(",").join(" | "))
                     }
 
                     if(detail.emotionalIndex==1){

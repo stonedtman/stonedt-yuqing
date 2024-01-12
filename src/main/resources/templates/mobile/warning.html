@@ -81,12 +81,15 @@
 <script th:src="@{/assets/libs/block-ui/jquery.blockUI.js}"></script>
 <script th:src="@{/common/iconfont.js}"></script>
 <script th:src="@{/dist/baidu/baidu_statistics.js}"></script>
-<script th:src="@{/dist/js/mobile/warning.js}"></script>
-</body>
 <script th:inline="javascript" type="text/javascript">
   var ctxPath = /*[[@{/}]]*/'';
+  const params = new URLSearchParams(window.location.search);
+  var groupId = params.get('groupId')||"";
+  var projectId = params.get('projectId')||"";
   function monitor() {
-    window.location.replace("/mobile/monitor")
+    window.location.replace("/mobile/monitor?groupId="+groupId+"&projectId="+projectId)
   }
 </script>
+<script th:src="@{/dist/js/mobile/warning.js}"></script>
+</body>
 </html>

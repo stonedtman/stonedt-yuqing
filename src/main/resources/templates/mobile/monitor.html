@@ -48,7 +48,7 @@
     </div>
     <div class="filter-box">
         <div class="filter">
-            <i class="fa fa-chart-bar"></i>
+<!--            <i class="fa fa-chart-bar"></i>-->
             <div class="dropdown dateSelect">
                 <button class="btn dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     时间
@@ -157,12 +157,15 @@
 <script th:src="@{/assets/libs/block-ui/jquery.blockUI.js}"></script>
 <script th:src="@{/common/iconfont.js}"></script>
 <script th:src="@{/dist/baidu/baidu_statistics.js}"></script>
-<script th:src="@{/dist/js/mobile/monitor.js}"></script>
-</body>
 <script th:inline="javascript" type="text/javascript">
     var ctxPath = /*[[@{/}]]*/'';
+    const params = new URLSearchParams(window.location.search);
+    var groupId = params.get('groupId')||"";
+    var projectId = params.get('projectId')||"";
     function warning() {
-        window.location.replace("/mobile/warning")
+        window.location.replace("/mobile/warning?groupId="+groupId+"&projectId="+projectId)
     }
 </script>
+<script th:src="@{/dist/js/mobile/monitor.js}"></script>
+</body>
 </html>

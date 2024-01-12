@@ -1,8 +1,4 @@
 let groupAndProjectList = []
-let groupId = ""
-let projectId = ""
-let groupName = ""
-let projectName = ""
 let page = 1
 
 sendProjectAndProject()
@@ -38,9 +34,8 @@ function installGroupAndProject(data) {
             let value = dataJson[key];
             let group_id = key.split("-")[0];
             let group_name = key.split("-")[1];
-            if(i==0){
+            if(!groupId&&i==0){
                 groupId = group_id
-                groupName = group_name
                 projectId = value[0].project_id
             }
             groupAndProjectList.push({
@@ -66,6 +61,7 @@ function installGroupAndProject(data) {
 }
 function changegroup(e) {
     groupId = e.dataset.value
+    projectId = ""
     $(".schema_group li").each(function (){
         if(groupId==$(this).attr("data-value")){
             $(this).addClass("active")
@@ -83,7 +79,9 @@ function changeProjectList() {
         if(groupAndProjectList[i].group_id==groupId){
             let projectList = groupAndProjectList[i].project_list
             for (let j = 0; j < projectList.length; j++) {
-                if(j==0){
+                if(projectId&&projectId==projectList[j].project_id){
+                    html+=`<div class="item active" onclick="switchProject(this)" data-projectid="${projectList[j].project_id}"><span>${projectList[j].project_name}</span></div>`
+                }else if(!projectId&&j==0){
                     projectId = projectList[j].project_id
                     html+=`<div class="item active" onclick="switchProject(this)" data-projectid="${projectList[j].project_id}"><span>${projectList[j].project_name}</span></div>`
                 }else{
@@ -282,7 +280,7 @@ function sendArticle(t) {
                 let data = res.data.data
                 let html = ""
                 for (let i = 0; i < data.length; i++) {
-                    html+=`<a href="/mobile/monitor/detail?id=${data[i].article_public_id}&projectid=${projectId}&publish_time=${data[i].publish_time}&relatedword=${data[i].relatedWord.join()}">
+                    html+=`<a href="/mobile/monitor/detail?id=${data[i].article_public_id}&groupId=${groupId}&projectId=${projectId}&publish_time=${data[i].publish_time}&relatedword=${data[i].relatedWord.join()}">
                         <div class="item">
                             <div class="title-box">
                                 <div class="title-left">
@@ -297,7 +295,7 @@ function sendArticle(t) {
                                     <img class="content-logo" src="${data[i].author_avatar}" alt="" onerror="javascript:this.src='/assets/images/default_source.png'">
                                     ${data[i].author}
                                 </span>
-                                <span>${data[i].publish_time}</span>
+                                <span>${data[i].publish_time.slice(0,-3)}</span>
                                 <span>来源:${data[i].source_name}</span>
                             </div>
                         </div>
