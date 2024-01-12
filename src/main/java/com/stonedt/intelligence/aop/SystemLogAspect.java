@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import com.stonedt.intelligence.util.JWTUtils;
 import com.stonedt.intelligence.util.UserUtil;
+import eu.bitwalker.useragentutils.Version;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -111,8 +112,10 @@ public class SystemLogAspect {
         //log.info("浏览器：{}", userAgent.getBrowser().toString());
         systemlog.setUser_browser(userAgent.getBrowser().toString());
         //log.info("浏览器版本：{}", userAgent.getBrowserVersion());
-        
-        systemlog.setUser_browser_version(userAgent.getBrowserVersion().getVersion());
+		Version browserVersion = userAgent.getBrowserVersion();
+		if (browserVersion != null) {
+			systemlog.setUser_browser_version(browserVersion.getVersion());
+		}
        // log.info("操作系统: {}", userAgent.getOperatingSystem().toString());
         systemlog.setOperatingSystem(userAgent.getOperatingSystem().toString());
         systemlog.setUser_id(id);
