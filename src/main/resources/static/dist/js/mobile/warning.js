@@ -23,14 +23,24 @@ function installGroupAndProject(data) {
     let html = ""
     for (let i = 0; i < data.length; i++) {
         let dataJson = data[i];
-        let isexist = false
+        let isgroup = false
+        let isproject = false
         for (let key in dataJson) {
+            let value = dataJson[key];
             let group_id = key.split("-")[0];
             if(groupId == group_id){
-                isexist = true
+                isgroup = true
+                for (let j = 0; j < value.length; j++){
+                    if(projectId==value[j].project_id){
+                        isproject = true
+                    }
+                }
+                if(!isproject){
+                    groupId = value[0].project_id
+                }
             }
         }
-        if(!isexist){
+        if(!isgroup){
             groupId = ""
         }
         for (let key in dataJson) {
