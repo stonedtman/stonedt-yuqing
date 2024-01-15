@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stonedt.intelligence.dao.UserPopUpDao">
+
+    <resultMap id="BaseResultMap" type="com.stonedt.intelligence.entity.UserPopUp">
+            <id property="userId" column="user_id" jdbcType="INTEGER"/>
+            <result property="count" column="count" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,count
+    </sql>
+    <insert id="insert">
+        insert into user_pop_up
+        (user_id,count)
+        values
+        (#{userId,jdbcType=INTEGER},#{count,jdbcType=INTEGER})
+    </insert>
+    <update id="plusOne">
+        update user_pop_up
+        set count = count + 1
+        where user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <select id="selectOne" resultType="com.stonedt.intelligence.entity.UserPopUp">
+        select
+         user_id as userId , count
+        from user_pop_up
+        where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+</mapper>
