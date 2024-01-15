@@ -64,11 +64,11 @@ public class QRCodeUtil {
 
         Hashtable<EncodeHintType, Object> hints = new Hashtable<>();
         // 设置纠错等级
-        hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+        hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);
         // 设置编码方式
         hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
         // 设置白边
-        hints.put(EncodeHintType.MARGIN, 1);
+        hints.put(EncodeHintType.MARGIN, 0);
 
         BitMatrix bitMatrix = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, size, size, hints);
         // 生成二维码
