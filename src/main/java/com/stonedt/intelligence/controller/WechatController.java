@@ -105,12 +105,6 @@ public class WechatController {
      */
     @GetMapping("/token")
     public String getToken(@RequestParam String openid,@RequestParam Long time,@RequestParam String ciphering) throws Exception {
-        //这里需要验证时间和密文
-        long currentTimeMillis = System.currentTimeMillis();
-        //如果时间超过了5分钟，就不让登录
-        if(currentTimeMillis-time>300000){
-            return null;
-        }
         //私钥加密
         String sha1 = ShaUtil.getSHA1(openid + time + privateKey, false);
         //如果密文不一致，就不让登录
