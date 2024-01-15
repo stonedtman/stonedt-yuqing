@@ -1,13 +1,20 @@
 package com.stonedt.intelligence.controller;
 
+import com.google.zxing.WriterException;
+import com.nimbusds.jose.JOSEException;
+import com.stonedt.intelligence.aop.SystemControllerLog;
 import com.stonedt.intelligence.entity.User;
+import com.stonedt.intelligence.service.MobileService;
 import com.stonedt.intelligence.service.ProjectService;
 import com.stonedt.intelligence.util.UserUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Map;
 
 @Controller
@@ -19,10 +26,13 @@ public class MobileController {
 
     private final ProjectService projectService;
 
+    private final MobileService mobileService;
+
     public MobileController(UserUtil userUtil,
-                            ProjectService projectService) {
+                            ProjectService projectService, MobileService mobileService) {
         this.userUtil = userUtil;
         this.projectService = projectService;
+        this.mobileService = mobileService;
     }
 
     @RequestMapping("/monitor")
@@ -49,5 +59,23 @@ public class MobileController {
         User user = userUtil.getuser(request);
         return projectService.getMobileGroupAndProject(user);
 
+    }
+
+    /**
+     * 获取移动端二维码
+     */
+    @GetMapping("/mobileQRCode")
+    @ResponseBody
+    public void getMobileQRCode(HttpServletRequest request, HttpServletResponse response) throws IOException, JOSEException, WriterException {
+        User user = userUtil.getuser(request);
+        mobileService.getMobileQRCode(user, response);
+    }
+
+    /**
+     * 跳转到移动端
+     */
+    @GetMapping("/uuid/{uuid}/{key}")
+    public RedirectView mobile(@PathVariable String uuid, @PathVariable String key) {
+        return mobileService.redirectBy(uuid, key);
     }
 }

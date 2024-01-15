@@ -51,7 +51,8 @@ public class WebConfigurer implements WebMvcConfigurer {
                 .excludePathPatterns("/fullsearch/listFullTypeByThird", "/fullsearch/hotList", "/hot/hotpage/**", "/img/**", "/logonCode")
                 .excludePathPatterns("/swagger-ui/**", "/api-docs/**")
                 .excludePathPatterns("/api/**")
-                .excludePathPatterns("/wechat/**");
+                .excludePathPatterns("/wechat/**")
+                .excludePathPatterns("/mobile/uuid/**");
 
         registry.addInterceptor(apiHandlerInterceptor)
                 .addPathPatterns("/api/**")
