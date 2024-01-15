@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -34,10 +36,14 @@ public class MobileServiceImpl implements MobileService {
 
     private final StringRedisTemplate stringRedisTemplate;
 
+
+
+
     public MobileServiceImpl(UserService userService,
                              StringRedisTemplate stringRedisTemplate) {
         this.userService = userService;
         this.stringRedisTemplate = stringRedisTemplate;
+
     }
 
     @Override
@@ -59,8 +65,9 @@ public class MobileServiceImpl implements MobileService {
         response.setDateHeader("Expire", 0);
         // 预览而不是下载
         response.setHeader("Content-Disposition", "inline; filename=qrcode.png");
-
-        QRCodeUtil.encodeQR(qrCodeUrl, 250, response.getOutputStream());
+        InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream("static/assets/images/logo.png");
+        // 生成带logo二维码
+        QRCodeUtil.encodeQR(qrCodeUrl, 250, response.getOutputStream(), resourceAsStream);
     }
 
     @Override
