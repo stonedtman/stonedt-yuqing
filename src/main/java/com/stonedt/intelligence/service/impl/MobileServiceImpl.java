@@ -60,7 +60,7 @@ public class MobileServiceImpl implements MobileService {
         // 预览而不是下载
         response.setHeader("Content-Disposition", "inline; filename=qrcode.png");
 
-        QRCodeUtil.encodeQR(qrCodeUrl, 300, response.getOutputStream());
+        QRCodeUtil.encodeQR(qrCodeUrl, 250, response.getOutputStream());
     }
 
     @Override

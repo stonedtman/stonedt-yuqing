@@ -570,6 +570,11 @@ public class WarningSchedule {
             return;
         }
 
+        if (user.getWechatflag() == null || user.getWechatflag() == 0) {
+            logger.error("公众号预警失败......用户未关注公众号......");
+            return;
+        }
+
         if (size == 0) {
             logger.info("未查询到预警信息......不需要推送......");
             return;
