@@ -36,7 +36,7 @@ function installGroupAndProject(data) {
                     }
                 }
                 if(!isproject){
-                    groupId = value[0].project_id
+                    projectId = value[0].project_id
                 }
             }
         }
