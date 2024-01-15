@@ -1753,6 +1753,9 @@ function installArticle(res) {
             $("#page").html("");
             nodata('#monitor-content');
         }
+    } else if(code==404) {
+        $("#page").html("");
+        nokeyword("#monitor-content");
     } else {
         $("#page").html("");
         dataerror("#monitor-content");

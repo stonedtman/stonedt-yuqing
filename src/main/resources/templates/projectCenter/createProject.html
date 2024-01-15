@@ -988,7 +988,7 @@ function save() {
     }
     let warning_word = data.warning_word
 
-    if (warning_status == 0 && warning_word != "") {  // 未开 有词
+    if (warning_status == 0 && data.warning_name != "" && warning_word != "" && data.warning_classify != "") {  // 未开 有词
         swal({
             title: "预警创建完成",
             text: "是否开启预警设置",

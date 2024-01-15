@@ -7,6 +7,9 @@ function sendProjectAndProject() {
     $.ajax({
         type: "get",
         url: "/mobile/getGroupAndProject",
+        beforeSend: function() {
+            loading(".dataList")
+        },
         success: function (res) {
             if(res.code==200){
                 installGroupAndProject(res.data);
@@ -21,28 +24,31 @@ function sendProjectAndProject() {
 
 function installGroupAndProject(data) {
     let html = ""
+    let isgroup = false
     for (let i = 0; i < data.length; i++) {
         let dataJson = data[i];
-        let isgroup = false
         let isproject = false
         for (let key in dataJson) {
             let value = dataJson[key];
             let group_id = key.split("-")[0];
-            if(groupId == group_id){
+            if (groupId == group_id) {
                 isgroup = true
-                for (let j = 0; j < value.length; j++){
-                    if(projectId==value[j].project_id){
+                for (let j = 0; j < value.length; j++) {
+                    if (projectId == value[j].project_id) {
                         isproject = true
                     }
                 }
-                if(!isproject){
+                if (!isproject) {
                     projectId = value[0].project_id
                 }
             }
         }
-        if(!isgroup){
-            groupId = ""
-        }
+    }
+    if (!isgroup) {
+        groupId = ""
+    }
+    for (let i = 0; i < data.length; i++) {
+        let dataJson = data[i];
         for (let key in dataJson) {
             let value = dataJson[key];
             let group_id = key.split("-")[0];
@@ -73,7 +79,7 @@ function installGroupAndProject(data) {
     }else{
         $(".monitor-search").remove()
         $(".projectList").remove()
-        $(".allNum").remove()
+        $(".total").remove()
         nodata(".dataList")
     }
 }
@@ -126,10 +132,12 @@ function switchProject(e) {
 
 $(".search input").keydown(function(e){
     if(e.keyCode==13) {
+        pageNum = 1
         sendArticle()
     }
 })
 $(".search i").click(function(){
+    pageNum = 1
     sendArticle()
 })
 
@@ -154,7 +162,7 @@ function sendArticle(t) {
         },
         success: function (res) {
             if(res.status==200){
-                $(".allNum").html(res.data.pageInfo.total+"条预警消息")
+                $(".total").html("<div class='allNum'>"+res.data.pageInfo.total+"条预警消息</div>")
                 let data = res.data.warningArticle
                 let html = ""
                 for (let i = 0; i < data.length; i++) {
@@ -176,6 +184,7 @@ function sendArticle(t) {
                     $(".dataList").append(html)
                     if(data.length==0){
                         pageNum--
+                        $(".dataList").append('<div class="nomore text-center" style="color: #777;padding: 8px 0;">没有更多了</div>')
                     }
                     $(".dataList .loading").remove()
                     setTimeout(function () {
@@ -221,6 +230,9 @@ function getzf(num) {
 
 var scroll_flag = true
 window.addEventListener('scroll', function() {
+    if($(".nomore").length>0){
+        return
+    }
     let Top = window.scrollY
     let Height = window.innerHeight
     let listTop = document.querySelector(".dataList").offsetTop

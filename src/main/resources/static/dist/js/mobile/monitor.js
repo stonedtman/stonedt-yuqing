@@ -32,6 +32,11 @@ function installGroupAndProject(data) {
         let dataJson = data[i];
         for (let key in dataJson) {
             let value = dataJson[key];
+            if(value.length==0){
+                data.splice(i,1)
+                i--
+                continue;
+            }
             let group_id = key.split("-")[0];
             let group_name = key.split("-")[1];
             if(!groupId&&i==0){
@@ -305,6 +310,7 @@ function sendArticle(t) {
                     $(".dataList").append(html)
                     if(data.length==0){
                         page--
+                        $(".dataList").append('<div class="nomore text-center" style="color: #777">没有更多了</div>')
                     }
                     $(".dataList .loading").remove()
                     setTimeout(function () {
@@ -316,6 +322,12 @@ function sendArticle(t) {
                 if(data.length==0){
                     nodata(".dataList")
                 }
+            }
+            if(res.code==500){
+                dataerror(".dataList");
+            }
+            if(res.code==404){
+                nokeyword(".dataList")
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -331,6 +343,9 @@ function sendArticle(t) {
 
 var scroll_flag = true
 window.addEventListener('scroll', function() {
+    if($(".nomore").length>0){
+        return
+    }
     let Top = window.scrollY
     let Height = window.innerHeight
     let listTop = document.querySelector(".dataList").offsetTop

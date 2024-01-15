@@ -238,6 +238,25 @@ function dataerror(id, text, url) {
     $(id).html(dataerror)
 }
 
+//缺少关键词
+function nokeyword(id, text, url) {
+    if (text == undefined) {
+        text = '暂无数据'
+    }
+    if (url == undefined) {
+        url = "#"
+    }
+    var nokeyword =
+        '<div class="nodata">' +
+        '    <svg class="icon">' +
+        '    	<use xlink:href="#icon-loaderror"></use>' +
+        '	</svg>' +
+        '	<p>请检查您的方案是否配置了关键词</p>' +
+        '</div>'
+
+    $(id).html(nokeyword)
+}
+
 //主题观点类聚 弹出层<!-- showinfo 弹出层 -->
 function showpoint(id) {
     var pointdata =
