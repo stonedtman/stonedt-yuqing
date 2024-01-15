@@ -50,7 +50,7 @@ public class MobileServiceImpl implements MobileService {
     public void getMobileQRCode(User user, HttpServletResponse response) throws JOSEException, IOException, WriterException {
         String token = userService.getToken(user);
         // uuid
-        String uuid = UUID.randomUUID().toString();
+        String uuid = user.getUser_id() + "-" + System.currentTimeMillis();
         // 保存token
         stringRedisTemplate.opsForValue().set(uuid, token, 8, TimeUnit.HOURS);
         // 根据私钥生成key
