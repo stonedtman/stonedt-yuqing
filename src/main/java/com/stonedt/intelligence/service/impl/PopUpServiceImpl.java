@@ -4,7 +4,10 @@ import com.stonedt.intelligence.dao.UserPopUpDao;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.entity.UserPopUp;
 import com.stonedt.intelligence.service.PopUpService;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author 文轩
@@ -14,12 +17,22 @@ public class PopUpServiceImpl implements PopUpService {
 
     private final UserPopUpDao userPopUpDao;
 
-    public PopUpServiceImpl(UserPopUpDao userPopUpDao) {
+    private final StringRedisTemplate stringRedisTemplate;
+
+    public PopUpServiceImpl(UserPopUpDao userPopUpDao,
+                            StringRedisTemplate stringRedisTemplate) {
         this.userPopUpDao = userPopUpDao;
+        this.stringRedisTemplate = stringRedisTemplate;
     }
 
     @Override
     public boolean needPopUp(User user) {
+        // 从redis中获取
+        String value = stringRedisTemplate.opsForValue().get("popUp:" + user.getId());
+        if (value != null) {
+            return false;
+        }
+
         UserPopUp userPopUp = userPopUpDao.selectOne(user.getId());
         if (userPopUp == null) {
             userPopUpDao.insert(new UserPopUp(user.getId(), 0));
@@ -30,6 +43,8 @@ public class PopUpServiceImpl implements PopUpService {
 
     @Override
     public void close(User user) {
+        // 保存到redis中
+        stringRedisTemplate.opsForValue().set("popUp:" + user.getId(), "1", 1, TimeUnit.DAYS);
         userPopUpDao.plusOne(user.getId());
     }
 }
