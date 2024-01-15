@@ -360,12 +360,6 @@ public class ProjectController {
             String character_word = paramJson.getString("character_word");
             String subject_word = paramJson.getString("subject_word");
 
-            if (subject_word == null || "".equals(subject_word)) {
-                response.put("code", 404);
-                response.put("msg", "方案关键词不能为空！");
-                return response;
-            }
-
             stop_word = projectUtil.dealProjectWords(stop_word);
             regional_word = projectUtil.dealProjectWords(regional_word);
             event_word = projectUtil.dealProjectWords(event_word);

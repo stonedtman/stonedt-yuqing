@@ -132,6 +132,12 @@ public class MonitorServiceImpl implements MonitorService {
         }
         int projectType = (int) projectInfo.get("project_type");
         String subject_word = String.valueOf(projectInfo.get("subject_word"));
+        if (subject_word == null || subject_word.isEmpty()) {
+            response.put("code", 404);
+            response.put("msg", "方案关键词不能为空！");
+            return response;
+        }
+
         String regional_word = String.valueOf(projectInfo.get("regional_word"));
         String character_word = String.valueOf(projectInfo.get("character_word"));
         String event_word = String.valueOf(projectInfo.get("event_word"));
