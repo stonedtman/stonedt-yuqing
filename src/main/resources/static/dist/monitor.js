@@ -3991,6 +3991,11 @@ $('#searchkeyword').keydown(function (e) {
         let searchkeyword = $("#searchkeyword").val();
         let articleData = getArticleData(1, searchkeyword, monitor_projectid, monitor_groupid);
         sendArticle(articleParam, JSON.stringify(articleData), installArticle)
+
+        sendArticleIndustry(articleParam, JSON.stringify(articleData), funcIndustry);
+        sendArticleEvent(articleParam, JSON.stringify(articleData), funcEvent);
+        sendArticleProvince(articleParam, JSON.stringify(articleData), funcProvince);
+        sendArticleCity(articleParam, JSON.stringify(articleData), funcCity);
     }
 });
 

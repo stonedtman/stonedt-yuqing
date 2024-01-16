@@ -2561,6 +2561,15 @@ $('#searchWord').keydown(function (e) {
         articleParam.contentType = 'application/json;charset=utf-8';
         let searchWord = $("#searchWord").val();
         let articleData = getArticleData11(1, searchWord, monitor_projectid, monitor_groupid);
+
+        var data = getArticleData11(1,searchWord);
+        let parambasic = new Object(); // ajax基本的参数
+        parambasic.contentType = 'application/json;charset=utf-8';
+        sendArticleIndustrySearch(parambasic, JSON.stringify(data), funcIndustry);
+        sendArticleEventSearch(parambasic, JSON.stringify(data), funcEvent);
+        sendArticleProvinceSearch(parambasic, JSON.stringify(data), funcProvince);
+        sendArticleCitySearch(parambasic, JSON.stringify(data), funcCity);
+
         sendArticleSearch(articleParam,articleData, installArticle3)
     }
 });
