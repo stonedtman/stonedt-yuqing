@@ -13,11 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLEncoder;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**

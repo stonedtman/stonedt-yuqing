@@ -730,7 +730,7 @@ public class FullSearchServiceImpl implements FullSearchService{
         }
 
         if (StringUtils.isBlank(classify)) {
-        	classify = "3,6,7,8";
+			classify = null;
         }
 
         Integer searchType = param.getSortType();
@@ -1107,7 +1107,7 @@ public class FullSearchServiceImpl implements FullSearchService{
 		}
 
         if (StringUtils.isBlank(classify)) {
-		classify = "3,6,7,8";
+			classify = null;
         }
 
 		Integer searchType = param.getSearchType();
