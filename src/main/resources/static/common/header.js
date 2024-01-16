@@ -37,3 +37,51 @@ if(isMobile()){
         window.location.href = "/mobile/monitor"
     }
 }
+
+
+// 移动端舆情二维码弹窗
+function mobile_popup() {
+    let html = `
+        <div id="exampleModal" class="mobile_popup">
+            <div class="modal-backdrop"></div>
+            <div class="modal-content">
+                <span class="modal-close" onclick="close_mobile_popup()"></span>
+                <div class="modal-main-top">
+                    <img src="assets/images/mobile-popup.png" alt="">
+                    <div class="title">移动端舆情监测上线了!</div>
+                    <div class="tips">
+                        <div>实时推送</div>
+                        <div>预警通知</div>
+                    </div>
+                </div>
+                <div class="modal-main-container">
+                    <div class="scan-login">
+                        <div class="public-login">
+                            <div class="header">
+                                <h2 class="header-title">扫描下方二维码即可体验</h2>
+                            </div>
+                            <div class="qrcode-container">
+                                <img src="/mobile/mobileQRCode">
+                            </div>
+                            <div class="tip">
+                                <a href="https://www.bilibili.com/video/BV1gT4y1n7Y1/" target="_blank">如何使用移动端预警功能?</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `
+    $("body").append(html)
+}
+
+function close_mobile_popup() {
+    $("#exampleModal").remove()
+    $.ajax({
+        type: "post",
+        url: "/popUp/close",
+        success: function (res) {
+
+        }
+    })
+}

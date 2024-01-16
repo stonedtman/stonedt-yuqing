@@ -2052,6 +2052,17 @@
       list[0].remove()
       document.querySelector(".recommend-content-list").style.marginTop = 0
     }
+
+    // 移动端二维码弹窗
+    $.ajax({
+      type: "get",
+      url: "/popUp/needPopUp",
+      success: function (res) {
+        if(res){
+          mobile_popup()
+        }
+      }
+    })
   </script>
   <script type="text/javascript">
     // $("#example-multiple-selected").multiselect();

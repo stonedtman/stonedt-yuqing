@@ -4373,7 +4373,6 @@ a {
 #exampleModal .qrcode-container img{
     width: 100%;
     height: 100%;
-    border: 1px solid #eaeeef;
 }
 #exampleModal .modal-main-container .tip{
     margin-top: 24px;
@@ -4390,4 +4389,78 @@ a {
 #exampleModal .modal-main-container .tip .key-word{
     font-weight: 600;
     line-height: 1;
+}
+
+
+.mobile_popup{
+    letter-spacing: 1px;
+}
+#exampleModal.mobile_popup .modal-content{
+    border: 0;
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+#exampleModal.mobile_popup .modal-close{
+    width: 40px;
+    height: 40px;
+    top: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -60px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+}
+#exampleModal.mobile_popup .modal-close:before, #exampleModal.mobile_popup .modal-close:after{
+    width: 20px;
+    height: 3px;
+    margin-left: -10px;
+    background: #fff;
+}
+.mobile_popup .modal-main-top{
+    position: relative;
+}
+.mobile_popup .modal-main-top img{
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.mobile_popup .modal-main-top .title{
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+    color: #fff;
+    text-align: center;
+}
+.mobile_popup .modal-main-top .tips{
+    position: absolute;
+    left: 0;
+    top: 100px;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 600;
+    color: #4cdfff;
+    padding: 0 50px 0 56px;
+    letter-spacing: 4px;
+    display: flex;
+    justify-content: space-between;
+}
+#exampleModal.mobile_popup .modal-main-container .header-title{
+    font-size: 18px;
+    font-weight: normal;
+    margin-bottom: 24px;
+}
+#exampleModal.mobile_popup .qrcode-container{
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+}
+#exampleModal.mobile_popup .modal-main-container .tip a{
+    font-size: 14px;
+    color: #128bed;
 }
