@@ -1,5 +1,6 @@
 var groupAndProjectList = [];
 
+var groupData = []
 var pageNum = 1
 
 sendProjectAndProject()
@@ -62,19 +63,20 @@ function installGroupAndProject(data) {
                 group_name,
                 project_list: value
             })
+            groupData.push({
+                name: group_name,
+                value: group_id
+            })
             html+=`<li data-value="${group_id}" onclick="changegroup(this)"><a>${group_name}</a></li>`
         }
     }
     $(".schema_group ul").html(html)
     if(groupAndProjectList.length>0){
-        $(".schema_group li").each(function (){
-            if(groupId==$(this).attr("data-value")){
-                $(this).addClass("active")
-                $(".schema_group button").html($(this).text());
-            }else{
-                $(this).removeClass("active")
+        for (let i = 0; i < groupData.length; i++) {
+            if(groupId==groupData[i].value){
+                $("#dropdownMenu0").html(groupData[i].name);
             }
-        })
+        }
         changeProjectList()
     }else{
         $(".monitor-search").remove()
@@ -139,6 +141,10 @@ $(".search input").keydown(function(e){
 $(".search i").click(function(){
     pageNum = 1
     sendArticle()
+})
+
+$("#dropdownMenu0").click(function(){
+    selectContent("#dropdownMenu0",groupData,groupId,"changegroup")
 })
 
 function sendArticle(t) {

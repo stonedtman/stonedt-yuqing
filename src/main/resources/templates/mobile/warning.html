@@ -31,12 +31,15 @@
       <i class="fa fa-search"></i>
     </div>
     <div class="dropdown schema_group">
-      <button class="btn dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <button class="btn dropdown-toggle" type="button" id="dropdownMenu0">
+        方案组
+      </button>
+      <!--<button class="btn dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
         方案组
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
         <li data-value="1" onclick="changegroup(1)"><a>方案组</a></li>
-      </ul>
+      </ul>-->
     </div>
   </div>
   <div class="projectList"></div>
@@ -91,6 +94,7 @@
   }
 </script>
 <!--<script th:src="@{/dist/js/mobile/warning.js}"></script>-->
+<script th:src="@{/dist/js/mobile/mobile.js(v=${new java.util.Date().getTime()})}"></script>
 <script th:src="@{/dist/js/mobile/warning.js(v=${new java.util.Date().getTime()})}"></script>
 </body>
 </html>

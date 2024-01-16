@@ -1,5 +1,107 @@
 let groupAndProjectList = []
 let page = 1
+var groupData = []
+var dateValue = 4
+var dateData = [
+    {
+        name: "24小时",
+        value: 1
+    },
+    {
+        name: "今天",
+        value: 2
+    },
+    {
+        name: "昨天",
+        value: 3
+    },
+    {
+        name: "3天",
+        value: 4
+    },
+    {
+        name: "7天",
+        value: 5
+    },
+    {
+        name: "15天",
+        value: 6
+    },
+    {
+        name: "30天",
+        value: 7
+    }
+]
+var sourceValue = 0
+var sourceData = [
+    {
+        name: "来源",
+        value: 0
+    },
+    {
+        name: "微信",
+        value: 1
+    },
+    {
+        name: "微博",
+        value: 2
+    },
+    {
+        name: "政务",
+        value: 3
+    },
+    {
+        name: "论坛",
+        value: 4
+    },
+    {
+        name: "新闻",
+        value: 5
+    },
+    {
+        name: "报刊",
+        value: 6
+    },
+    {
+        name: "客户端",
+        value: 7
+    },
+    {
+        name: "网站",
+        value: 8
+    },
+    {
+        name: "外媒",
+        value: 9
+    },
+    {
+        name: "视频",
+        value: 10
+    },
+    {
+        name: "博客",
+        value: 11
+    }
+]
+var emoValue = 4
+var emoData = [
+    {
+        name: "属性",
+        value: 0
+    },
+    {
+        name: "正面",
+        value: 1
+    },
+    {
+        name: "中性",
+        value: 2
+    },
+    {
+        name: "负面",
+        value: 3
+    }
+]
 
 sendProjectAndProject()
 function sendProjectAndProject() {
@@ -48,19 +150,20 @@ function installGroupAndProject(data) {
                 group_name,
                 project_list: value
             })
+            groupData.push({
+                name: group_name,
+                value: group_id
+            })
             html+=`<li data-value="${group_id}" onclick="changegroup(this)"><a>${group_name}</a></li>`
         }
     }
     $(".schema_group ul").html(html)
     if(groupAndProjectList.length>0){
-        $(".schema_group li").each(function (){
-            if(groupId==$(this).attr("data-value")){
-                $(this).addClass("active")
-                $(".schema_group button").html($(this).text());
-            }else{
-                $(this).removeClass("active")
+        for (let i = 0; i < groupData.length; i++) {
+            if(groupId==groupData[i].value){
+                $("#dropdownMenu0").html(groupData[i].name);
             }
-        })
+        }
         changeProjectList()
     }
 }
@@ -132,30 +235,24 @@ function installCondition(){
                 let source = JSON.parse(data.classify)[0]
                 let emo = JSON.parse(data.emotion).length==3?0:JSON.parse(data.emotion)[0]
 
-                $(".dateSelect li").each(function (){
-                    if(date==$(this).attr("data-value")){
-                        $(this).addClass("active")
-                        $(".dateSelect button").html($(this).text());
-                    }else{
-                        $(this).removeClass("active")
+                dateValue = date
+                for (let i = 0; i < dateData.length; i++) {
+                    if(dateData[i].value==dateValue){
+                        $(".dateSelect button").html(dateData[i].name);
                     }
-                })
-                $(".sourceSelect li").each(function (){
-                    if(source==$(this).attr("data-value")){
-                        $(this).addClass("active")
-                        $(".sourceSelect button").html($(this).text());
-                    }else{
-                        $(this).removeClass("active")
+                }
+                sourceValue = source
+                for (let i = 0; i < sourceData.length; i++) {
+                    if(sourceData[i].value==sourceValue){
+                        $(".sourceSelect button").html(sourceData[i].name);
                     }
-                })
-                $(".emoSelect li").each(function (){
-                    if(emo==$(this).attr("data-value")){
-                        $(this).addClass("active")
-                        $(".emoSelect button").html($(this).text());
-                    }else{
-                        $(this).removeClass("active")
+                }
+                emoValue = emo
+                for (let i = 0; i < emoData.length; i++) {
+                    if(emoData[i].value==emoValue){
+                        $(".emoSelect button").html(emoData[i].name);
                     }
-                })
+                }
                 sendArticle()
             }
         },
@@ -179,68 +276,45 @@ $(".search i").click(function(){
     sendArticle()
 })
 
+$("#dropdownMenu0").click(function(){
+    selectContent("#dropdownMenu0",groupData,groupId,"changegroup")
+})
+
+$("#dropdownMenu").click(function(){
+    selectContent("#dropdownMenu",dateData,dateValue,"changedate")
+})
 function changedate(v) {
-    $('.dateSelect li').each(function() {
-        if (v==$(this).attr("data-value")) {
-            $(this).addClass('active');
-            $(".dateSelect button").html($(this).text());
-        } else {
-            $(this).removeClass('active');
-        }
-    });
-    sendArticle()
-}
-function changesource(v) {
-    $('.sourceSelect li').each(function() {
-        if (v==$(this).attr("data-value")) {
-            $(this).addClass('active');
-            $(".sourceSelect button").html($(this).text());
-        } else {
-            $(this).removeClass('active');
-        }
-    });
-    sendArticle()
-}
-function changeemo(v) {
-    $('.emoSelect li').each(function() {
-        if (v==$(this).attr("data-value")) {
-            $(this).addClass('active');
-            $(".emoSelect button").html($(this).text());
-        } else {
-            $(this).removeClass('active');
-        }
-    });
+    dateValue = v
     sendArticle()
 }
 
+$("#dropdownMenu1").click(function(){
+    selectContent("#dropdownMenu1",sourceData,sourceValue,"changesource")
+})
+function changesource(v) {
+    sourceValue = v
+    sendArticle()
+}
+
+$("#dropdownMenu2").click(function(){
+    selectContent("#dropdownMenu2",emoData,emoValue,"changeemo")
+})
+function changeemo(v) {
+    emoValue = v
+    sendArticle()
+}
+
+
 function sendArticle(t) {
-    let date = 1;
-    let source = [0];
+    let source = [sourceValue]
     let emo = [1,2,3];
-    $(".dateSelect li").each(function (){
-        if($(this).hasClass("active")){
-            date = $(this).attr("data-value")-0
-        }
-    })
-    $(".sourceSelect li").each(function (){
-        if($(this).hasClass("active")){
-            source = $(this).attr("data-value").split("")
-        }
-    })
-    $(".emoSelect li").each(function (){
-        if($(this).hasClass("active")){
-            emo = $(this).attr("data-value")
-            if(emo==0){
-                emo = [1,2,3]
-            }else{
-                emo = [emo-0];
-            }
-        }
-    })
+    if(emoValue!=0){
+        emo = [emoValue-0];
+    }
     let obj = {
         "projectid":projectId,
         "groupid":groupId,
-        "timeType":date,
+        "timeType":dateValue,
         "classify":source,
         "emotionalIndex":emo,
         "page":page,

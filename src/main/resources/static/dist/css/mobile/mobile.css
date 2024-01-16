@@ -52,3 +52,73 @@ select, select:focus {
 .loading{
     padding: 0.25rem;
 }
+
+
+
+.select-content{
+    width: 100%;
+    height: calc(100vh - 3rem - 3rem);
+    position: absolute;
+    left: 0;
+    top: 3rem;
+    z-index: 10;
+    padding-top: 0.25rem;
+}
+.select-content.filter-select{
+    top: 9.375rem;
+    height: calc(100vh - 9.375rem - 3rem);
+}
+.select-content .mask{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,.5);
+    pointer-events: all;
+}
+.select-content .select-content-box{
+    position: relative;
+    width: 100%;
+    max-height: 90%;
+    overflow-y: auto;
+}
+.select-content .select-content-box::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+.select-content .list {
+    width: 100%;
+    padding-left: 0.75rem;
+    background-color: #FFFFFF;
+}
+.select-content .list .item {
+    height: 2.75rem;
+    color: #3e5569;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+}
+.select-content .list .item:last-child{
+    border-bottom: 0;
+}
+.select-content .list .item .name{
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.select-content .list .item i{
+    display: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    text-align: center;
+}
+.select-content .list .item.active{
+    color: #128bed;
+}
+.select-content .list .item.active i{
+    display: block;
+}

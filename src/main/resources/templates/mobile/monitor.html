@@ -31,12 +31,15 @@
             <i class="fa fa-search"></i>
         </div>
         <div class="dropdown schema_group">
-            <button class="btn dropdown-toggle" type="button" id="dropdownMenu0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenu0">
+                方案组
+            </button>
+            <!--<button class="btn dropdown-toggle" type="button" id="dropdownMenu0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 方案组
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu0">
                 <li data-value="1" onclick="changegroup(1)"><a>方案组</a></li>
-            </ul>
+            </ul>-->
         </div>
     </div>
     <div class="projectList">
@@ -50,7 +53,10 @@
         <div class="filter">
 <!--            <i class="fa fa-chart-bar"></i>-->
             <div class="dropdown dateSelect">
-                <button class="btn dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenu">
+                    时间
+                </button>
+                <!--<button class="btn dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     时间
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
@@ -61,10 +67,13 @@
                     <li data-value="5" onclick="changedate(5)"><a>7天</a></li>
                     <li data-value="6" onclick="changedate(6)"><a>15天</a></li>
                     <li data-value="7" onclick="changedate(7)"><a>30天</a></li>
-                </ul>
+                </ul>-->
             </div>
             <div class="dropdown sourceSelect">
-                <button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenu1">
+                    来源
+                </button>
+                <!--<button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     来源
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -80,10 +89,13 @@
                     <li data-value="9" onclick="changesource(9)"><a>外媒</a></li>
                     <li data-value="10" onclick="changesource(10)"><a>视频</a></li>
                     <li data-value="11" onclick="changesource(11)"><a>博客</a></li>
-                </ul>
+                </ul>-->
             </div>
             <div class="dropdown emoSelect">
-                <button class="btn dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenu2">
+                    属性
+                </button>
+                <!--<button class="btn dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     属性
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
@@ -91,7 +103,7 @@
                     <li data-value="1" onclick="changeemo(1)"><a>正面</a></li>
                     <li data-value="2" onclick="changeemo(2)"><a>中性</a></li>
                     <li data-value="3" onclick="changeemo(3)"><a>负面</a></li>
-                </ul>
+                </ul>-->
             </div>
         </div>
 <!--        <div class="date">更新于：<span>2023-12-27 17:29:04</span></div>-->
@@ -167,6 +179,7 @@
     }
 </script>
 <!--<script th:src="@{/dist/js/mobile/monitor.js}"></script>-->
+<script th:src="@{/dist/js/mobile/mobile.js(v=${new java.util.Date().getTime()})}"></script>
 <script th:src="@{/dist/js/mobile/monitor.js(v=${new java.util.Date().getTime()})}"></script>
 </body>
 </html>
