@@ -1060,5 +1060,11 @@ ALTER TABLE `stonedt_portal`.`wechat_config`
     ADD COLUMN `name` varchar(255) NULL COMMENT '微信公众号名称' AFTER `template_id`;
 INSERT INTO `stonedt_portal`.`wechat_config` (`id`) VALUES (1);
 
+CREATE TABLE `user_pop_up` (
+                               `user_id` int(11) NOT NULL,
+                               `count` int(11) DEFAULT NULL,
+                               PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 

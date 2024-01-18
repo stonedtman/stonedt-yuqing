@@ -49,7 +49,7 @@ public class MobileServiceImpl implements MobileService {
         // uuid
         String uuid = user.getUser_id() + "-" + System.currentTimeMillis();
         // 保存token
-        stringRedisTemplate.opsForValue().set(uuid, token, 8, TimeUnit.HOURS);
+        stringRedisTemplate.opsForValue().set(uuid, token, 10, TimeUnit.MINUTES);
         // 根据私钥生成key
         String key = ShaUtil.getSHA1(privateKey + uuid, false);
 
