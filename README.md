@@ -235,8 +235,8 @@ docker logs 容器ID -f
 -  4.配置nginx,在http块中增加如下内容:
     ```text
     server {
-            listen       任意端口;
-            server_name  域名或者ip;
+            listen       8085;
+            server_name  127.0.0.1;
     
             location / {
                 proxy_pass http://127.0.0.1:8084;
@@ -247,7 +247,7 @@ docker logs 容器ID -f
     }
     ```
 
--  5.本地访问：http://127.0.0.1:8084/ 请将端口号8084替换为您上一步配置的端口
+-  5.本地访问：http://127.0.0.1:8085/ 
  用户名：13900000000，  密码：stonedt 
 
 详见思通舆情安装部署手册：https://gitee.com/stonedtx/yuqing/blob/master/install_guide.md
