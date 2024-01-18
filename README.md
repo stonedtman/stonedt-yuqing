@@ -218,7 +218,7 @@ docker logs 容器ID -f
 
 ## 安装依赖
 1. JavaEE 8 以上版本；
-2. MySQL 5.5 以上版本；
+2. MySQL 5.7 以上版本；
 3. Redis 4.0 以上版本；
 
 详见思通舆情安装部署手册：https://gitee.com/stonedtx/yuqing/blob/master/install_guide.md
@@ -228,7 +228,7 @@ docker logs 容器ID -f
 
 仅需五步快速安装 思通舆情：
 
--  1.安装 MySQL 5.5+、redis 4.0+
+-  1.安装 MySQL 5.7+、redis 4.0+
 
 -  2.下载 [stonedt-yuqing.zip](https://gitee.com/stonedtx/yuqing/attach_files/1629685/download)，解压zip包，执行  _nohup java -jar stonedt-yuqing.jar &_，启动舆情系统。 
 -  3.下载 [opinion_screen.zip](https://gitee.com/stonedtx/yuqing/attach_files/1640495/download)，解压zip包，进入apache-tomcat-8.5.46/bin文件夹.执行 ./startup.sh
