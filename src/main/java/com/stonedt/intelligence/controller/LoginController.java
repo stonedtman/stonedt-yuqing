@@ -195,35 +195,28 @@ public class LoginController {
 
     @SystemControllerLog(module = "用户登录", submodule = "用户登录", type = "查询", operation = "jumpLogin")
     @GetMapping(value = "/jumpLogin")
-    public String login(String b64, HttpServletResponse response) throws Exception {
+    public String login(String b64, HttpServletResponse response,HttpServletRequest request) throws Exception {
         System.err.println("=====b64-encode:" + b64 + "====================================================");
         b64 = Base64.decode(b64);
         System.err.println("=====b64-decode:" + b64 + "====================================================");
         b64 = b64.substring(4, 15);
         System.err.println("=====phone:" + b64 + "========================================================");
         User user = userService.selectUserByTelephone(b64);
-        if (null != user) {
-            if (user.getStatus() == 0) {
-                return "user/login";
-            } else {
-                Integer status = user.getStatus();
-                if (status == 2) {
-                    return "user/login";
-                } else {
-                    String token = userService.getToken(user);
-                    response.setHeader("token",token);
-                    Integer login_count = user.getLogin_count() + 1;
-                    String end_login_time = DateUtil.getNowTime();
-                    Map<String, Object> paramMap = new HashMap<String, Object>();
-                    paramMap.put("telephone", b64);
-                    paramMap.put("end_login_time", end_login_time);
-                    paramMap.put("login_count", login_count);
-                    userService.updateUserLoginCountByPhone(paramMap);
-                }
-            }
-        } else {
+        if (null == user) {
             return "user/login";
         }
+        Integer status = user.getStatus();
+        if (status == 0 || status == 2) {
+            return "user/login";
+        }
+        userUtil.setUser(request,response, user);
+        Integer login_count = user.getLogin_count() + 1;
+        String end_login_time = DateUtil.getNowTime();
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("telephone", b64);
+        paramMap.put("end_login_time", end_login_time);
+        paramMap.put("login_count", login_count);
+        userService.updateUserLoginCountByPhone(paramMap);
         return "redirect:/monitor";
     }
 
