@@ -7,6 +7,7 @@ import org.java_websocket.WebSocket;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.java_websocket.enums.ReadyState;
 
 public class WebSocketUtils {
 	static JSONArray array = new JSONArray();
@@ -40,7 +41,7 @@ public class WebSocketUtils {
             MyWebSocketClient client = new MyWebSocketClient(new URI("ws://s1.stonedt.com:6388/ws"));
             client.connect();
             //等待服务端响应
-            while (!client.getReadyState().equals(WebSocket.READYSTATE.OPEN)) {
+            while (!client.getReadyState().equals(ReadyState.OPEN)) {
                 System.out.println("连接中···请稍后");
                 Thread.sleep(1000);
             }
