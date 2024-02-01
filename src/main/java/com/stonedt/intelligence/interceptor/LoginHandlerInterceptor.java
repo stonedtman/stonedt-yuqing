@@ -55,6 +55,14 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
         //从查询参数中获取token
         String queryToken = request.getParameter("token");
         if (queryToken != null && !queryToken.isEmpty() && JWTUtils.decode(queryToken, privateKey)) {
+
+            UserDTO userDTO = JWTUtils.getEntity(queryToken, UserDTO.class);
+
+            if (userDTO == null || userDTO.getTokenIssueTime() + expireTime * 1000L < System.currentTimeMillis()) {
+                String url = request.getRequestURI();
+                sendRedirect(request, response,url);
+                return false;
+            }
             //并且将token放入cookie中
             Cookie cookie = new Cookie("token", queryToken);
             // 将token放在响应头中

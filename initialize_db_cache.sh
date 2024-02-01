@@ -88,7 +88,7 @@ CREATE TABLE `flyway_schema_history`  (
 -- ----------------------------
 -- Records of flyway_schema_history
 -- ----------------------------
-INSERT INTO `stonedt_portal`.`flyway_schema_history` (`installed_rank`, `version`, `description`, `type`, `script`, `checksum`, `installed_by`, `installed_on`, `execution_time`, `success`) VALUES (1, '1.0', 'InitTableAndData', 'SQL', 'V1.0__InitTableAndData.sql', 1384838617, 'root', '2023-11-20 17:02:55', 1517, 1);
+INSERT INTO `stonedt_portal`.`flyway_schema_history` (`installed_rank`, `version`, `description`, `type`, `script`, `checksum`, `installed_by`, `installed_on`, `execution_time`, `success`) VALUES (1, '1.0', 'InitTableAndData', 'SQL', 'V1.0__InitTableAndData.sql', 1085378749, 'root', '2023-11-20 17:02:55', 1517, 1);
 
 -- ----------------------------
 -- Table structure for full_menu
@@ -1067,6 +1067,13 @@ ALTER TABLE `stonedt_portal`.`wechat_config`
 ALTER TABLE `stonedt_portal`.`wechat_config`
 ADD COLUMN `name` varchar(255) NULL COMMENT '微信公众号名称' AFTER `template_id`;
 INSERT INTO `stonedt_portal`.`wechat_config` (`id`) VALUES (1);
+
+
+CREATE TABLE `user_pop_up` (
+  `user_id` int(11) NOT NULL,
+  `count` int(11) DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 

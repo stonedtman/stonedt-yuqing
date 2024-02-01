@@ -88,6 +88,12 @@ public class AnalysisController {
 	public String getOpinionScreenAanlysisByProjectidAndTimeperiod(Long projectId, Integer timePeriod) {
 		Boolean isNeedRefresh = projectTaskDao.getProjectTaskIsAnalysis(projectId);
 		Analysis anlysisByProjectidAndTimeperiod = analysisService.getAanlysisByProjectidAndTimeperiod(projectId, timePeriod);
+		if (anlysisByProjectidAndTimeperiod == null) {
+			Analysis analysis = new Analysis();
+			analysis.setIsNeedRefresh(isNeedRefresh);
+			return JSON.toJSONString(analysis);
+		}
+
 		String planWordHit = anlysisByProjectidAndTimeperiod.getPlan_word_hit();
 		if (StringUtils.isNotBlank(planWordHit)) {
 			JSONArray parseArray = JSONArray.parseArray(planWordHit);
