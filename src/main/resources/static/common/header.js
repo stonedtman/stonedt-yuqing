@@ -40,14 +40,14 @@ if(isMobile()){
 
 
 // 移动端舆情二维码弹窗
-function mobile_popup() {
+function mobile_popup(t) {
     let html = `
         <div id="exampleModal" class="mobile_popup">
             <div class="modal-backdrop"></div>
             <div class="modal-content">
-                <span class="modal-close" onclick="close_mobile_popup()"></span>
+                <span class="modal-close" onclick="close_mobile_popup(${t})"></span>
                 <div class="modal-main-top">
-                    <img src="assets/images/mobile-popup.png" alt="">
+                    <img src="/assets/images/mobile-popup.png" alt="">
                     <div class="title">移动端舆情监测上线了!</div>
                     <div class="tips">
                         <div>实时推送</div>
@@ -75,8 +75,11 @@ function mobile_popup() {
     $("body").append(html)
 }
 
-function close_mobile_popup() {
+function close_mobile_popup(t) {
     $("#exampleModal").remove()
+    if(t=="button"){
+        return
+    }
     $.ajax({
         type: "post",
         url: "/popUp/close",
