@@ -4318,6 +4318,7 @@ a {
 }
 #exampleModal .modal-close{
     position: absolute;
+    z-index: 2;
     top: 9px;
     right: 11px;
     width: 30px;
@@ -4417,15 +4418,15 @@ a {
     margin-left: -10px;
     background: #fff;
 }
-.mobile_popup .modal-main-top{
+#exampleModal.mobile_popup .modal-main-top{
     position: relative;
 }
-.mobile_popup .modal-main-top img{
+#exampleModal.mobile_popup .modal-main-top img{
     width: 100%;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
-.mobile_popup .modal-main-top .title{
+#exampleModal.mobile_popup .modal-main-top .title{
     position: absolute;
     left: 0;
     top: 8px;
@@ -4436,7 +4437,7 @@ a {
     color: #fff;
     text-align: center;
 }
-.mobile_popup .modal-main-top .tips{
+#exampleModal.mobile_popup .modal-main-top .tips{
     position: absolute;
     left: 0;
     top: 100px;
