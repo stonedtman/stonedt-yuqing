@@ -12,7 +12,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
-import org.jsoup.safety.Whitelist;
+import org.jsoup.safety.Safelist;
 
 /**
  * Created by Yangyang Deng on 17-9-7.
@@ -106,7 +106,7 @@ public class SimhashAlgoService {
 
     private String preProcess(String content) {
         // 若输入为HTML,下面会过滤掉所有的HTML的tag
-        content = Jsoup.clean(content, Whitelist.none());
+        content = Jsoup.clean(content, Safelist.none());
         content = StringUtils.lowerCase(content);
         String[] strings = {" ","\n","\\r","\\n","\\t","&nbsp;"};
         for (String s:strings) {

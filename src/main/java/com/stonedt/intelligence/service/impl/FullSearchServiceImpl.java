@@ -1090,7 +1090,7 @@ public class FullSearchServiceImpl implements FullSearchService{
 			searchkeyword = "";
 		}
 //		searchkeyword = searchkeyword.replace(" ", ",");
-		paramJson.put("keyword", ProjectWordUtil.QuickProjectKeyword(searchkeyword));
+		paramJson.put("searchkeyword", ProjectWordUtil.QuickProjectKeyword(searchkeyword));
 
 //		Integer similar = param.getMergeType();
 		Integer similar = param.getSimilar();
@@ -1317,7 +1317,16 @@ public class FullSearchServiceImpl implements FullSearchService{
 			if (article_public_idStr == null) {
 				article_public_idStr = "";
 			}
-			String key = paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+timeType+matchingmode+searchType+emotionalIndex+searchkeyword;
+			String key = paramJson.getString("city")
+					+paramJson.getString("province")
+					+paramJson.getString("eventlable")
+					+paramJson.getString("industrylable")
+					+paramJson.getString("hightechtypelist")
+					+paramJson.getString("policylableflag")
+					+paramJson.getShortValue("orgtypelist")
+					+paramJson.getString("categorylable")
+					+paramJson.getString("searchkeyword")
+					+timeType+ matchingmode+searchType+emotionalIndex+searchkeyword;
 
 			if (currentPage == 1) {
 				String params = MapUtil.getUrlParamsByMap(paramJson);
@@ -1348,7 +1357,7 @@ public class FullSearchServiceImpl implements FullSearchService{
 					dataGroupJson.put("article_public_idList", article_public_idList);
 				}
 			}
-			if (!article_public_idStr.equals("")) {
+			if (!"".equals(article_public_idStr)) {
 				paramJson.put("article_public_idstr", article_public_idStr);
 				paramJson.remove("stopword");
 				String params1 = MapUtil.getUrlParamsByMap(paramJson);

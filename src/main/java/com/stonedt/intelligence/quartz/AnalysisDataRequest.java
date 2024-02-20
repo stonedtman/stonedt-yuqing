@@ -885,7 +885,7 @@ public class AnalysisDataRequest {
                         	}
                         }
                     } catch (Exception e) {
-                        e.printStackTrace();
+
                     }
                 }
                 for (Entry<String, Integer> entrySet : map.entrySet()) {

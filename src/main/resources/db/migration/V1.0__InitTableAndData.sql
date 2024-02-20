@@ -922,7 +922,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 
 
-ALTER TABLE `stonedt_portal`.`user`
+ALTER TABLE `user`
     ADD COLUMN `mail_json` text NULL COMMENT '邮件相关配置' AFTER `term_of_validity`;
 
 
@@ -1052,13 +1052,13 @@ CREATE TABLE `wechat_config`  (
 
 SET FOREIGN_KEY_CHECKS = 1;
 
-ALTER TABLE `stonedt_portal`.`wechat_config`
+ALTER TABLE `wechat_config`
     ADD COLUMN `callback` varchar(255) NULL COMMENT '回调地址' AFTER `token`,
     MODIFY COLUMN `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '地址' AFTER `token`;
 
-ALTER TABLE `stonedt_portal`.`wechat_config`
+ALTER TABLE `wechat_config`
     ADD COLUMN `name` varchar(255) NULL COMMENT '微信公众号名称' AFTER `template_id`;
-INSERT INTO `stonedt_portal`.`wechat_config` (`id`) VALUES (1);
+INSERT INTO `wechat_config` (`id`) VALUES (1);
 
 CREATE TABLE `user_pop_up` (
                                `user_id` int(11) NOT NULL,
