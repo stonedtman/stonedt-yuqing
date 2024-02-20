@@ -173,6 +173,9 @@ public class AnalysisServiceImpl implements AnalysisService {
             }
             JSONObject json = JSONObject.parseObject(result);
             JSONArray resultArray = json.getJSONArray("data");
+            if (resultArray == null || resultArray.isEmpty()) {
+                return list;
+            }
             Map<String, Object> datamap = new HashMap<String, Object>();// 用户去除重复数据
             for (int i = 0; i < resultArray.size(); i++) {
                 Map<String, Object> map = new HashMap<>();

@@ -104,7 +104,7 @@ public class SystemLogAspect {
         
         
         
-       
+       	log.info("开始获取请求相关信息");
         UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
         String remark = joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName();
        
@@ -116,13 +116,16 @@ public class SystemLogAspect {
 		if (browserVersion != null) {
 			systemlog.setUser_browser_version(browserVersion.getVersion());
 		}
+		log.info("获取请求相关信息结束");
        // log.info("操作系统: {}", userAgent.getOperatingSystem().toString());
         systemlog.setOperatingSystem(userAgent.getOperatingSystem().toString());
         systemlog.setUser_id(id);
         systemlog.setUsername(username);
         systemlog.setLoginip(loginIp);
         try {
+			log.info("开始获取方法详情");
 			SysLog controllerMethodDescription = getControllerMethodDescription(joinPoint);
+			log.info("获取方法详情结束");
 			String module = controllerMethodDescription.getModule_name();
 			System.out.println("module:"+module);
 			systemlog.setModule(module);

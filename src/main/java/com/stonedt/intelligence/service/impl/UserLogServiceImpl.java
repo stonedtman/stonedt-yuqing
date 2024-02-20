@@ -4,6 +4,7 @@ package com.stonedt.intelligence.service.impl;
 import com.stonedt.intelligence.dao.UserLogDao;
 import com.stonedt.intelligence.entity.SysLog;
 import com.stonedt.intelligence.service.UserLogService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import java.util.Map;
  * version: 1.0 <br>
  */
 @Service
+@Slf4j
 public class UserLogServiceImpl implements UserLogService {
     @Autowired
     UserLogDao userLogDao;
@@ -57,7 +59,9 @@ public class UserLogServiceImpl implements UserLogService {
 
     @Override
     public Map<String, Object> getUserOrganizationById(Map<String, Object> map) {
+        log.info("开始获取用户的组织信息");
         Map<String, Object> responseMap = userLogDao.getUserOrganizationById(map);
+        log.info("获取用户的组织信息结束");
         return responseMap;
     }
 
@@ -69,7 +73,9 @@ public class UserLogServiceImpl implements UserLogService {
 
     @Override
     public Map<String, Object> getSubMoudleByName(String module_name) {
+        log.info("开始获取子模块信息");
         Map<String, Object> responseMap = userLogDao.getSubMoudleByName(module_name);
+        log.info("获取子模块信息结束");
         return responseMap;
     }
 }

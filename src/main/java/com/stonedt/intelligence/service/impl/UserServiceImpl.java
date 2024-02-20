@@ -8,6 +8,7 @@ import com.stonedt.intelligence.dto.UserDTO;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.service.UserService;
 import com.stonedt.intelligence.util.JWTUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +25,7 @@ import java.util.Map;
  * version: 1.0 <br>
  */
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
     @Autowired
     UserDao userDao;
@@ -33,8 +35,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User selectUserByTelephone(String telephone) {
-        return userDao.selectUserByTelephone(telephone);
-    }
+		log.info("开始查询用户信息");
+		User user = userDao.selectUserByTelephone(telephone);
+		log.info("查询用户信息结束");
+		return user;
+	}
 
     @Override
     public Integer updateUserLoginCountByPhone(Map<String, Object> map) {

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.service.UserLogService;
 import com.stonedt.intelligence.util.*;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -28,6 +29,7 @@ import java.util.Map;
  */
 @Aspect
 @Component
+@Slf4j
 public class UserLogAspect {
     @Autowired
     UserLogService userLogService;
@@ -44,6 +46,8 @@ public class UserLogAspect {
 
     @Around("controllerAspect()")
     public Object around(ProceedingJoinPoint point) {
+
+        log.info("进入用户操作日志切面");
         Object result = null;
         long times = System.currentTimeMillis();
         try {
@@ -54,9 +58,12 @@ public class UserLogAspect {
         }
 
         long timee = System.currentTimeMillis();
+        log.info("方法执行时间：" + (timee - times) + "ms");
 
+        log.info("保存用户操作日志");
         // 保存日志
         saveLog(point, times, timee);
+        log.info("保存用户操作日志结束");
         return result;
     }
 
@@ -156,7 +163,9 @@ public class UserLogAspect {
             responseJson.put("es_index", "stonedt_portaluserlog");
             responseJson.put("es_type", "infor");
             responseJson.put("hbase_table", "stonedt_portaluserlog");
+            log.info("开始发送数据到kafuka");
             String result = MyHttpRequestUtil.doPostKafka("proStonedtData", responseJson.toJSONString(), kafuka_url);
+            log.info("发送数据到kafuka结束");
             if (result.equals("200")) {
                 System.out.println("发送成功！");
             }

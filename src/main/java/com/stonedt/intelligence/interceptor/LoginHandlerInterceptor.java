@@ -3,6 +3,7 @@ package com.stonedt.intelligence.interceptor;
 import com.stonedt.intelligence.dto.UserDTO;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.util.JWTUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpSession;
  * Date: 2019年10月11日
  */
 @Component
+@Slf4j
 public class LoginHandlerInterceptor implements HandlerInterceptor {
 
     @Value("${token.expire-time}")
@@ -50,7 +52,7 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
 
         // 从 http 请求头中取出 token
 
-
+        log.info("进入登录拦截器");
 
         //从查询参数中获取token
         String queryToken = request.getParameter("token");
