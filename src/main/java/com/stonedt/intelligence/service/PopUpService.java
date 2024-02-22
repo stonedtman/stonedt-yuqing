@@ -6,4 +6,8 @@ public interface PopUpService {
     boolean needPopUp(User user);
 
     void close(User user);
+
+    boolean needContact(Long projectId, Integer total);
+
+    void closeContact(Long projectId);
 }

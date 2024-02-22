@@ -3,6 +3,7 @@ package com.stonedt.intelligence.controller;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,6 +18,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
@@ -69,6 +71,9 @@ public class ProjectController {
 
     @Value("${insertnewwords.url}")
     private String insert_new_words_url;
+
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
 
 //    @Autowired
 //    private RestTemplate template;
@@ -336,10 +341,10 @@ public class ProjectController {
         JSONObject response = new JSONObject();
         JSONObject kafukaJson = new JSONObject();
         kafukaJson = paramJson;
-        
+
         JSONObject CommonJson = new JSONObject();
         CommonJson = paramJson;
-        
+
         JSONObject idJson = new JSONObject();
         User user = userUtil.getuser(request);
         Long user_id = user.getUser_id();
@@ -453,11 +458,14 @@ public class ProjectController {
                 projectTask.setStop_word(stop_word);
                 projectTask.setSubject_word(subject_word);
                 projectTask.setVolume_flag(0);
-                ThreadPoolConst.IO_EXECUTOR.execute(() -> projectTaskDao.saveProjectTask(projectTask));
+                ThreadPoolConst.IO_EXECUTOR.execute(() -> {
+                    projectTaskDao.saveProjectTask(projectTask);
+                    stringRedisTemplate.opsForValue().set("PopUpContactMe:" + projectid, String.valueOf(projectid),7, TimeUnit.DAYS);
+                });
 
 
                 String message = "";
-                
+
                 if(CommonJson.getIntValue("project_type") == 1){
                     message = ProjectWordUtil.CommononprojectKeyWord(kafukaJson.getString("subject_word"));
                 }else {

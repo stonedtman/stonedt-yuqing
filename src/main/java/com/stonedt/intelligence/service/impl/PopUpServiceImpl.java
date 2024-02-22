@@ -47,4 +47,20 @@ public class PopUpServiceImpl implements PopUpService {
         stringRedisTemplate.opsForValue().set("popUp:" + user.getId(), "1", 1, TimeUnit.DAYS);
         userPopUpDao.plusOne(user.getId());
     }
+
+    @Override
+    public boolean needContact(Long projectId, Integer total) {
+        if (total > 50) {
+            stringRedisTemplate.delete("PopUpContactMe:" + projectId);
+            return false;
+        }
+
+        String need = stringRedisTemplate.opsForValue().get("PopUpContactMe:" + projectId);
+        return need != null;
+    }
+
+    @Override
+    public void closeContact(Long projectId) {
+        stringRedisTemplate.delete("PopUpContactMe:" + projectId);
+    }
 }

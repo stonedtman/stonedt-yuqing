@@ -45,4 +45,21 @@ public class PopUpController {
         popUpService.close(user);
     }
 
+    /**
+     * 是否弹联系我们
+     */
+    @GetMapping("/needContact")
+    public boolean needContact(@RequestParam Long projectId,
+                               @RequestParam Integer total) {
+        return popUpService.needContact(projectId, total);
+    }
+
+    /**
+     * 关闭联系我们
+     */
+    @PostMapping("/closeContact")
+    public void closeContact(@RequestParam Long projectId) {
+        popUpService.closeContact(projectId);
+    }
+
 }
