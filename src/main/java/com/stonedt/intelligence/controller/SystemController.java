@@ -423,7 +423,8 @@ public class SystemController {
     public @ResponseBody
     ResultUtil getSystemTitle(HttpServletRequest request) {
 
-        User userObj = userUtil.getuser(request);
+        User user= userUtil.getuser(request);
+        Map<String, String> userObj = userService.getUserById(user.getUser_id());
         return ResultUtil.build(200, "", userObj);
     }
     
