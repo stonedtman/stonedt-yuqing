@@ -190,7 +190,7 @@ public class publicoptionQuartz {
 		String url = es_search_url + PublicoptionConstant.es_api_qbsearchcontent;
 		String eventstarttime = checkString(publicoptionEntity.getEventstarttime());
     	String eventendtime = checkString(publicoptionEntity.getEventendtime());
-    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", "AND").replaceAll("\\|", "OR"));
+    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", " AND ").replaceAll("\\|", " OR "));
     	String eventstopwords = checkString(publicoptionEntity.getEventstopwords());
     	String searchwords = "";
 //    	eventkeywords = "海南司法";
@@ -252,7 +252,7 @@ public class publicoptionQuartz {
 		String url = es_search_url + PublicoptionConstant.es_api_datasourcestatistics;
     	String eventstarttime = checkString(publicoptionEntity.getEventstarttime());
     	String eventendtime = checkString(publicoptionEntity.getEventendtime());
-    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", "AND").replaceAll("\\|", "OR"));
+    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", " AND ").replaceAll("\\|", " OR "));
     	String eventstopwords = checkString(publicoptionEntity.getEventstopwords());
     	String searchwords = "";
     	
@@ -396,7 +396,7 @@ public class publicoptionQuartz {
 		String url = es_search_url + PublicoptionConstant.es_api_medialist;
 		String eventstarttime = checkString(publicoptionEntity.getEventstarttime());
     	String eventendtime = checkString(publicoptionEntity.getEventendtime());
-    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", "AND").replaceAll("\\|", "OR"));
+    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", " AND ").replaceAll("\\|", " OR "));
     	String searchwords = "";
     	String params = "times=" + eventstarttime + "&timee=" + eventendtime + "&keyword=" + eventkeywords + "&stopword=&searchkeyword=" + searchwords + "&origintype=0&emotionalIndex=1,2,3&projecttype=2&size=12";
     	String sendPost = getEsRequset(url, params,null,null);
@@ -533,7 +533,7 @@ public class publicoptionQuartz {
 		String url = es_search_url + PublicoptionConstant.es_api_authorstatistics;
 		String eventstarttime = checkString(publicoptionEntity.getEventstarttime());
     	String eventendtime = checkString(publicoptionEntity.getEventendtime());
-    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", "AND").replaceAll("\\|", "OR"));
+    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", " AND ").replaceAll("\\|", " OR "));
     	String eventstopwords = checkString(publicoptionEntity.getEventstopwords());
     	String searchwords = "";
     	String params = "times=" + eventstarttime + "&timee=" + eventendtime + "&keyword=" + eventkeywords + "&stopword=" + eventstopwords
@@ -609,7 +609,7 @@ public class publicoptionQuartz {
 		String url = es_search_url + PublicoptionConstant.es_api_HotPeoplestatistics;
 		String eventstarttime = checkString(publicoptionEntity.getEventstarttime());
     	String eventendtime = checkString(publicoptionEntity.getEventendtime());
-    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", "AND").replaceAll("\\|", "OR"));
+    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", " AND ").replaceAll("\\|", " OR "));
     	String eventstopwords = checkString(publicoptionEntity.getEventstopwords());
     	String searchwords = "";
     	String params = "times=" + eventstarttime + "&timee=" + eventendtime + "&keyword=" + eventkeywords + "&stopword=" + eventstopwords
@@ -711,7 +711,7 @@ public class publicoptionQuartz {
     	String url = es_search_url + PublicoptionConstant.es_api_qbsearchcontent;
 		String eventstarttime = checkString(publicoptionEntity.getEventstarttime());
     	String eventendtime = checkString(publicoptionEntity.getEventendtime());
-    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", "AND").replaceAll("\\|", "OR"));
+    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", " AND ").replaceAll("\\|", " OR "));
     	String eventstopwords = checkString(publicoptionEntity.getEventstopwords());
     	String searchwords = "";
 //    	eventkeywords = "海南司法";
@@ -877,7 +877,7 @@ public class publicoptionQuartz {
     	String url = es_search_url + PublicoptionConstant.es_api_sentimentFlagChart;
 		String eventstarttime = checkString(publicoptionEntity.getEventstarttime());
     	String eventendtime = checkString(publicoptionEntity.getEventendtime());
-    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", "AND").replaceAll("\\|", "OR"));
+    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", " AND ").replaceAll("\\|", " OR "));
     	String eventstopwords = checkString(publicoptionEntity.getEventstopwords());
     	String searchwords = "";
     	
@@ -973,7 +973,7 @@ public class publicoptionQuartz {
 		String url = es_search_url + PublicoptionConstant.es_api_datasourceanalysis;
 		String eventstarttime = checkString(publicoptionEntity.getEventstarttime());
     	String eventendtime = checkString(publicoptionEntity.getEventendtime());
-    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", "AND").replaceAll("\\|", "OR"));
+    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", " AND ").replaceAll("\\|", " OR "));
     	String eventstopwords = checkString(publicoptionEntity.getEventstopwords());
     	String searchwords = "";
     	
@@ -995,7 +995,7 @@ public class publicoptionQuartz {
     		String url = es_search_url + PublicoptionConstant.es_api_qbsearchcontent;
     		String eventstarttime = checkString(publicoptionEntity.getEventstarttime());
     		String eventendtime = checkString(publicoptionEntity.getEventendtime());
-    		String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", "AND").replaceAll("\\|", "OR"));
+    		String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", " AND ").replaceAll("\\|", " OR "));
     		String eventstopwords = checkString(publicoptionEntity.getEventstopwords());
     		String searchwords = "";
 //    	eventkeywords = "海南司法";
@@ -1088,7 +1088,7 @@ public class publicoptionQuartz {
 		String url = es_search_url + PublicoptionConstant.es_api_websitestatistics;
     	String eventstarttime = checkString(publicoptionEntity.getEventstarttime());
     	String eventendtime = checkString(publicoptionEntity.getEventendtime());
-    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", "AND").replaceAll("\\|", "OR"));
+    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", " AND ").replaceAll("\\|", " OR "));
     	String eventstopwords = checkString(publicoptionEntity.getEventstopwords());
     	String searchwords = "";
     	
@@ -1121,7 +1121,7 @@ public class publicoptionQuartz {
 		String url = es_search_url + PublicoptionConstant.es_api_search_list;
     	String eventstarttime = checkString(publicoptionEntity.getEventstarttime());
     	String eventendtime = checkString(publicoptionEntity.getEventendtime());
-    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", "AND").replaceAll("\\|", "OR"));
+    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", " AND ").replaceAll("\\|", " OR "));
     	String eventstopwords = checkString(publicoptionEntity.getEventstopwords());
     	String searchwords = "";
     	
@@ -1150,7 +1150,7 @@ public class publicoptionQuartz {
 		String url = es_search_url + PublicoptionConstant.es_api_keyword_temporaldatanum;
     	String eventstarttime = checkString(publicoptionEntity.getEventstarttime());
     	String eventendtime = checkString(publicoptionEntity.getEventendtime());
-    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", "AND").replaceAll("\\|", "OR"));
+    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", " AND ").replaceAll("\\|", " OR "));
     	String eventstopwords = checkString(publicoptionEntity.getEventstopwords());
     	String searchwords = "";
     	
