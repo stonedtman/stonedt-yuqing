@@ -349,9 +349,15 @@ public class WarningSchedule {
                                     return;
                                 }
                                 MailConfig mailConfig = JSON.parseObject(mailJson, MailConfig.class);
-                                String to = warning_source.getString("email");
-                                if (to != null && !to.isEmpty()) {
-                                    mailConfig.setTo(to);
+                                String recipient = warning_source.getString("email");
+                                if (recipient != null && !recipient.isEmpty()) {
+                                    String[] recipientList = recipient.split(",");
+                                    if (recipient.length() == 1) {
+                                        mailConfig.setTo(recipient);
+                                    }else {
+                                        mailConfig.setTo(recipientList[0]);
+                                        mailConfig.setCc(Arrays.copyOfRange(recipientList, 1, recipientList.length));
+                                    }
                                 }
                                 if (mailConfig.getTo() == null || mailConfig.getTo().isEmpty()) {
                                     logger.info("预警邮件发送失败......用户未指定收件人......");
@@ -524,9 +530,15 @@ public class WarningSchedule {
                                     return;
                                 }
                                 MailConfig mailConfig = JSON.parseObject(mailJson, MailConfig.class);
-                                String to = warning_source.getString("email");
-                                if (to != null && !to.isEmpty()) {
-                                    mailConfig.setTo(to);
+                                String recipient = warning_source.getString("email");
+                                if (recipient != null && !recipient.isEmpty()) {
+                                    String[] recipientList = recipient.split(",");
+                                    if (recipient.length() == 1) {
+                                        mailConfig.setTo(recipient);
+                                    }else {
+                                        mailConfig.setTo(recipientList[0]);
+                                        mailConfig.setCc(Arrays.copyOfRange(recipientList, 1, recipientList.length));
+                                    }
                                 }
                                 if (mailConfig.getTo() == null || mailConfig.getTo().isEmpty()) {
                                     logger.info("预警邮件发送失败......用户未指定收件人......");

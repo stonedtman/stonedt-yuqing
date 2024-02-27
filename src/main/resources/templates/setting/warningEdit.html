@@ -235,7 +235,7 @@
                                     <span class="badge badge-pill badge-info" data-id="1" onclick="badgeClick(this)">系统推送</span>
                                     <span class="badge badge-pill badge-light" data-id="2" onclick="badgeClick(this)">邮箱推送</span>
                                     <span class="badge badge-pill badge-light" data-id="3" onclick="badgeClick(this)">公众号推送</span>
-                                    <input type="text" class="form-control" placeholder="请输入邮箱地址"/>
+                                    <input type="text" class="form-control" placeholder="请输入邮箱地址,多个地址请使用英文逗号分隔"/>
                                 </div>
                             </div>
                             <div class="warning-right">
@@ -471,17 +471,17 @@ $("#currentyear").text((new Date()).getFullYear());
         sourceHtml = '<span class="badge badge-pill badge-info" data-id="1" onclick="badgeClick(this)">系统推送</span>' +
             '<span class="badge badge-pill badge-light" data-id="2" onclick="badgeClick(this)">邮箱推送</span>' +
             '<span class="badge badge-pill badge-light" data-id="3" onclick="badgeClick(this)">公众号推送</span>' +
-            '<input style="display:none;" id="email-input" type="text" class="form-control" value="' + warning_source.email + '" placeholder="请输入邮箱地址">'
+            '<input style="display:none;" id="email-input" type="text" class="form-control" value="' + warning_source.email + '" placeholder="请输入邮箱地址,多个地址请使用英文逗号分隔">'
     } else if(warning_source.type == 2) {
         sourceHtml = '<span class="badge badge-pill badge-light" data-id="1" onclick="badgeClick(this)">系统推送</span>' +
             '<span class="badge badge-pill badge-info" data-id="2" onclick="badgeClick(this)">邮箱推送</span>' +
             '<span class="badge badge-pill badge-light" data-id="3" onclick="badgeClick(this)">公众号推送</span>' +
-            '<input id="email-input" type="text" class="form-control" value="' + warning_source.email + '" placeholder="请输入邮箱地址">'
+            '<input id="email-input" type="text" class="form-control" value="' + warning_source.email + '" placeholder="请输入邮箱地址,多个地址请使用英文逗号分隔">'
     } else if(warning_source.type == 3) {
         sourceHtml = '<span class="badge badge-pill badge-light" data-id="1" onclick="badgeClick(this)">系统推送</span>' +
             '<span class="badge badge-pill badge-light" data-id="2" onclick="badgeClick(this)">邮箱推送</span>' +
             '<span class="badge badge-pill badge-info" data-id="3" onclick="badgeClick(this)">公众号推送</span>' +
-            '<input style="display:none;" id="email-input" type="text" class="form-control" value="' + warning_source.email + '" placeholder="请输入邮箱地址">'
+            '<input style="display:none;" id="email-input" type="text" class="form-control" value="' + warning_source.email + '" placeholder="请输入邮箱地址,多个地址请使用英文逗号分隔">'
     }
     $('#warning-source').html(sourceHtml)
     //接收时间

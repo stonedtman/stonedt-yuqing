@@ -216,7 +216,7 @@ public class PublicOptionServiceImpl implements PublicOptionService{
 		String url = es_search_url + PublicoptionConstant.es_api_search_list;
     	String eventstarttime = checkString(publicoptionEntity.getEventstarttime());
     	String eventendtime = checkString(publicoptionEntity.getEventendtime());
-    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", "AND").replaceAll("\\|", "OR"));
+    	String eventkeywords = checkString(publicoptionEntity.getEventkeywords().replaceAll("\\+", " AND ").replaceAll("\\|", " OR "));
     	String eventstopwords = checkString(publicoptionEntity.getEventstopwords());
     	String searchwords = "";
     	
