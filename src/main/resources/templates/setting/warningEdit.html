@@ -560,7 +560,7 @@ $("#currentyear").text((new Date()).getFullYear());
 //        var data = getData()
         data.warning_status = warning_status;
         var warning_source = JSON.parse(data.warning_source)
-        if (warning_source.type == 2) {
+        if (warning_status==1 && warning_source.type == 2) {
             if ($('#warning-source > input').val() == '') {
                 showtips("由于您没有填写收件人邮箱,将使用发件人邮箱作为收件人")
                 // return
@@ -845,6 +845,14 @@ function createBindingEmailDialog() {
 }
 
     function checkEmail(){
+        var warning_status = 0;
+        if ($('#status').is(':checked')) {
+            warning_status = 1;
+        }
+        if(warning_status==0){
+            save()
+            return;
+        }
         let warning_source_str;
         $('#warning-source > .badge').each(function () {
             if ($(this).hasClass('badge-info')) {

@@ -467,7 +467,7 @@
                                                 <span class="badge badge-pill badge-info" data-id="1" onclick="badgeClick(this)">系统推送</span>
                                                 <span class="badge badge-pill badge-light" data-id="2" onclick="badgeClick(this)">邮箱推送</span>
                                                 <span class="badge badge-pill badge-light" data-id="3" onclick="badgeClick(this)">公众号推送</span>
-                                                <input type="text" class="form-control" placeholder="请输入邮箱地址,多个地址请使用英文逗号分隔"/>
+                                                <input id="email-input" type="text" class="form-control" placeholder="请输入邮箱地址,多个地址请使用英文逗号分隔"/>
                                             </div>
                                         </div>
                                         <div class="warning-right">
@@ -1379,7 +1379,7 @@ function updateData(warning_status, data) {
 //        var data = getData()
     data.warning_status = warning_status;
     var warning_source = JSON.parse(data.warning_source)
-    if (warning_source.type == 2) {
+    if (warning_status==1 && warning_source.type == 2) {
         if ($('#warning-source > input').val() == '') {
             showtips("由于您没有填写收件人邮箱,将使用发件人邮箱作为收件人")
             // return
@@ -1663,6 +1663,14 @@ function createBindingEmailDialog() {
 }
 
 function checkEmail(){
+    var warning_status = 0;
+    if ($('#status').is(':checked')) {
+        warning_status = 1;
+    }
+    if(warning_status==0){
+        save()
+        return;
+    }
     let warning_source_str;
     $('#warning-source > .badge').each(function () {
         if ($(this).hasClass('badge-info')) {
