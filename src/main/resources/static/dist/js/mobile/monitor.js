@@ -103,6 +103,8 @@ var emoData = [
     }
 ]
 
+let formData = null;
+
 sendProjectAndProject()
 function sendProjectAndProject() {
     $.ajax({
@@ -233,6 +235,7 @@ function installCondition(){
         success: function (res) {
             if(res.code==200){
                 let data = res.data
+                formData = JSON.parse(JSON.stringify(data))
                 let date = data.time>0?data.time:4
                 let source = JSON.parse(data.classify)[0]
                 let emo = JSON.parse(data.emotion).length==3?0:JSON.parse(data.emotion)[0]
@@ -313,35 +316,59 @@ function sendArticle(t) {
     if(emoValue!=0){
         emo = [emoValue-0];
     }
-    let obj = {
-        "projectid":projectId,
-        "groupid":groupId,
-        "timeType":dateValue,
-        "classify":source,
-        "emotionalIndex":emo,
-        "page":page,
-        "times":"",
-        "timee":"",
-        "searchType":1,
-        "similar":0,
-        "matchingmode":1,
-        "province":[""],
-        "city":[""],
-        "eventIndex":[""],
-        "industryIndex":[""],
-        "searchkeyword":"",
-        "group_id":groupId,
-        "projectId":projectId,
-        "precise":0,
-        "organizationtype":["0"],
-        "categorylabledata":["0"],
-        "enterprisetypelist":["0"],
-        "hightechtypelist":["0"],
-        "policylableflag":["0"],
-        "datasource_type":[],
-        "sourceWebsite":"",
-        "author":""
-    }
+    let obj = JSON.parse(JSON.stringify(formData))
+    obj.projectid = projectId
+    obj.groupid = groupId
+    obj.timeType = dateValue
+    obj.classify = source
+    obj.emotionalIndex = emo
+    obj.page = page
+    obj.searchType = 1
+    obj.matchingmode = obj.matchs
+    obj.group_id = groupId
+    obj.province = obj.province.split(",")
+    obj.city = obj.city.split(",")
+    obj.eventIndex = obj.eventIndex.split(",")
+    obj.industryIndex = obj.industryIndex.split(",")
+    obj.organizationtype = obj.organization.split(",")
+    obj.categorylabledata = obj.categorylable.split(",")
+    obj.enterprisetypelist = obj.enterprisetype.split(",")
+    obj.hightechtypelist = obj.hightechtype.split(",")
+    obj.policylableflag = obj.policylableflag.split(",")
+    obj.datasource_type = obj.datasource_type.split(",")
+    obj.sourceWebsite = obj.websitename
+    obj.times = obj.times.split(" ")[0]
+    obj.timee = obj.timee.split(" ")[0]
+
+    // obj = {
+    //     "projectid":projectId,
+    //     "groupid":groupId,
+    //     "timeType":dateValue,
+    //     "classify":source,
+    //     "emotionalIndex":emo,
+    //     "page":page,
+    //     "times":"",
+    //     "timee":"",
+    //     "searchType":1,
+    //     "similar":0,
+    //     "matchingmode":1,
+    //     "province":[""],
+    //     "city":[""],
+    //     "eventIndex":[""],
+    //     "industryIndex":[""],
+    //     "searchkeyword":"",
+    //     "group_id":groupId,
+    //     "projectId":projectId,
+    //     "precise":0,
+    //     "organizationtype":["0"],
+    //     "categorylabledata":["0"],
+    //     "enterprisetypelist":["0"],
+    //     "hightechtypelist":["0"],
+    //     "policylableflag":["0"],
+    //     "datasource_type":[],
+    //     "sourceWebsite":"",
+    //     "author":""
+    // }
     if($(".search input").val().trim()!=""){
         obj.searchkeyword = $(".search input").val().trim()
     }
