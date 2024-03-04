@@ -316,59 +316,57 @@ function sendArticle(t) {
     if(emoValue!=0){
         emo = [emoValue-0];
     }
-    let obj = JSON.parse(JSON.stringify(formData))
-    obj.projectid = projectId
-    obj.groupid = groupId
-    obj.timeType = dateValue
-    obj.classify = source
-    obj.emotionalIndex = emo
-    obj.page = page
-    obj.searchType = 1
-    obj.matchingmode = obj.matchs
-    obj.group_id = groupId
-    obj.province = obj.province.split(",")
-    obj.city = obj.city.split(",")
-    obj.eventIndex = obj.eventIndex.split(",")
-    obj.industryIndex = obj.industryIndex.split(",")
-    obj.organizationtype = obj.organization.split(",")
-    obj.categorylabledata = obj.categorylable.split(",")
-    obj.enterprisetypelist = obj.enterprisetype.split(",")
-    obj.hightechtypelist = obj.hightechtype.split(",")
-    obj.policylableflag = obj.policylableflag.split(",")
-    obj.datasource_type = obj.datasource_type.split(",")
-    obj.sourceWebsite = obj.websitename
-    obj.times = obj.times.split(" ")[0]
-    obj.timee = obj.timee.split(" ")[0]
+    // let obj = JSON.parse(JSON.stringify(formData))
+    let obj = {
+        "projectid":projectId,
+        "groupid":groupId,
+        "timeType":dateValue,
+        "classify":source,
+        "emotionalIndex":emo,
+        "page":page,
+        "searchType":1,
+        "matchingmode":formData.matchs,
+        "province":formData.province.split(","),
+        "city":formData.city.split(","),
+        "eventIndex":formData.eventIndex.split(","),
+        "industryIndex":formData.industryIndex.split(","),
+        "similar":formData.similar,
+        "precise":formData.precise,
+        "organizationtype":formData.organization.split(","),
+        "categorylabledata":formData.categorylable.split(","),
+        "enterprisetypelist":formData.enterprisetype.split(","),
+        "hightechtypelist":formData.hightechtype.split(","),
+        "policylableflag":formData.policylableflag.split(","),
+        "datasource_type":formData.datasource_type.split(","),
+        "sourceWebsite":formData.websitename,
+        "times":formData.times.split(" ")[0],
+        "timee":formData.timee.split(" ")[0],
+        "author":formData.author
+    }
+    // obj.projectid = projectId
+    // obj.groupid = groupId
+    // obj.timeType = dateValue
+    // obj.classify = source
+    // obj.emotionalIndex = emo
+    // obj.page = page
+    // obj.searchType = 1
+    // obj.matchingmode = formData.matchs
+    // obj.group_id = groupId
+    // obj.province = formData.province.split(",")
+    // obj.city = formData.city.split(",")
+    // obj.eventIndex = formData.eventIndex.split(",")
+    // obj.industryIndex = formData.industryIndex.split(",")
+    // obj.organizationtype = formData.organization.split(",")
+    // obj.categorylabledata = formData.categorylable.split(",")
+    // obj.enterprisetypelist = formData.enterprisetype.split(",")
+    // obj.hightechtypelist = formData.hightechtype.split(",")
+    // obj.policylableflag = formData.policylableflag.split(",")
+    // obj.datasource_type = formData.datasource_type.split(",")
+    // obj.sourceWebsite = formData.websitename
+    // obj.times = formData.times.split(" ")[0]
+    // obj.timee = formData.timee.split(" ")[0]
+    // obj.author = formData.author
 
-    // obj = {
-    //     "projectid":projectId,
-    //     "groupid":groupId,
-    //     "timeType":dateValue,
-    //     "classify":source,
-    //     "emotionalIndex":emo,
-    //     "page":page,
-    //     "times":"",
-    //     "timee":"",
-    //     "searchType":1,
-    //     "similar":0,
-    //     "matchingmode":1,
-    //     "province":[""],
-    //     "city":[""],
-    //     "eventIndex":[""],
-    //     "industryIndex":[""],
-    //     "searchkeyword":"",
-    //     "group_id":groupId,
-    //     "projectId":projectId,
-    //     "precise":0,
-    //     "organizationtype":["0"],
-    //     "categorylabledata":["0"],
-    //     "enterprisetypelist":["0"],
-    //     "hightechtypelist":["0"],
-    //     "policylableflag":["0"],
-    //     "datasource_type":[],
-    //     "sourceWebsite":"",
-    //     "author":""
-    // }
     if($(".search input").val().trim()!=""){
         obj.searchkeyword = $(".search input").val().trim()
     }
