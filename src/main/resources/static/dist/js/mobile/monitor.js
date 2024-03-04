@@ -103,7 +103,7 @@ var emoData = [
     }
 ]
 
-let formData = null;
+let conditionData = null;
 
 sendProjectAndProject()
 function sendProjectAndProject() {
@@ -235,7 +235,7 @@ function installCondition(){
         success: function (res) {
             if(res.code==200){
                 let data = res.data
-                formData = JSON.parse(JSON.stringify(data))
+                conditionData = JSON.parse(JSON.stringify(data))
                 let date = data.time>0?data.time:4
                 let source = JSON.parse(data.classify)[0]
                 let emo = JSON.parse(data.emotion).length==3?0:JSON.parse(data.emotion)[0]
@@ -316,7 +316,7 @@ function sendArticle(t) {
     if(emoValue!=0){
         emo = [emoValue-0];
     }
-    // let obj = JSON.parse(JSON.stringify(formData))
+
     let obj = {
         "projectid":projectId,
         "groupid":groupId,
@@ -325,47 +325,24 @@ function sendArticle(t) {
         "emotionalIndex":emo,
         "page":page,
         "searchType":1,
-        "matchingmode":formData.matchs,
-        "province":formData.province.split(","),
-        "city":formData.city.split(","),
-        "eventIndex":formData.eventIndex.split(","),
-        "industryIndex":formData.industryIndex.split(","),
-        "similar":formData.similar,
-        "precise":formData.precise,
-        "organizationtype":formData.organization.split(","),
-        "categorylabledata":formData.categorylable.split(","),
-        "enterprisetypelist":formData.enterprisetype.split(","),
-        "hightechtypelist":formData.hightechtype.split(","),
-        "policylableflag":formData.policylableflag.split(","),
-        "datasource_type":formData.datasource_type.split(","),
-        "sourceWebsite":formData.websitename,
-        "times":formData.times.split(" ")[0],
-        "timee":formData.timee.split(" ")[0],
-        "author":formData.author
+        "matchingmode":conditionData.matchs,
+        "province":conditionData.province.split(","),
+        "city":conditionData.city.split(","),
+        "eventIndex":conditionData.eventIndex.split(","),
+        "industryIndex":conditionData.industryIndex.split(","),
+        "similar":conditionData.similar,
+        "precise":conditionData.precise,
+        "organizationtype":conditionData.organization.split(","),
+        "categorylabledata":conditionData.categorylable.split(","),
+        "enterprisetypelist":conditionData.enterprisetype.split(","),
+        "hightechtypelist":conditionData.hightechtype.split(","),
+        "policylableflag":conditionData.policylableflag.split(","),
+        "datasource_type":conditionData.datasource_type.split(","),
+        "sourceWebsite":conditionData.websitename,
+        "times":conditionData.times.split(" ")[0],
+        "timee":conditionData.timee.split(" ")[0],
+        "author":conditionData.author
     }
-    // obj.projectid = projectId
-    // obj.groupid = groupId
-    // obj.timeType = dateValue
-    // obj.classify = source
-    // obj.emotionalIndex = emo
-    // obj.page = page
-    // obj.searchType = 1
-    // obj.matchingmode = formData.matchs
-    // obj.group_id = groupId
-    // obj.province = formData.province.split(",")
-    // obj.city = formData.city.split(",")
-    // obj.eventIndex = formData.eventIndex.split(",")
-    // obj.industryIndex = formData.industryIndex.split(",")
-    // obj.organizationtype = formData.organization.split(",")
-    // obj.categorylabledata = formData.categorylable.split(",")
-    // obj.enterprisetypelist = formData.enterprisetype.split(",")
-    // obj.hightechtypelist = formData.hightechtype.split(",")
-    // obj.policylableflag = formData.policylableflag.split(",")
-    // obj.datasource_type = formData.datasource_type.split(",")
-    // obj.sourceWebsite = formData.websitename
-    // obj.times = formData.times.split(" ")[0]
-    // obj.timee = formData.timee.split(" ")[0]
-    // obj.author = formData.author
 
     if($(".search input").val().trim()!=""){
         obj.searchkeyword = $(".search input").val().trim()
