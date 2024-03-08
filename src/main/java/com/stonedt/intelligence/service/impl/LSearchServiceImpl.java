@@ -61,7 +61,7 @@ public class LSearchServiceImpl implements LSearchService {
         String searchword = paramJson.getString("searchword");
         if (StringUtils.isNotBlank(searchword)) {
             searchword = searchword.trim();
-            searchword = ProjectWordUtil.QuickProjectKeyword(searchword);
+            searchword = searchword.replaceAll(" "," OR ").replaceAll("\\+"," AND ");
         }
         paramJson.remove("searchword");
         paramJson.put("keyword", searchword);
@@ -269,7 +269,7 @@ public class LSearchServiceImpl implements LSearchService {
         paramJson.put("searchType", searchType);
         // 查询es数据
         String url = "";
-        similar = 0;
+//        similar = 0;
         if (similar == 1) {  // 合并
             Integer totalCount = 0;
             Integer currentPage = paramJson.getInteger("page");
@@ -290,7 +290,8 @@ public class LSearchServiceImpl implements LSearchService {
 //                }else {
 //                	esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
 //                }
-            String key =paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("keyword")+timeType+matchingmode+searchType+emotionalIndex;
+            String key =paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("keyword")+timeType+matchingmode+searchType+emotionalIndex
+                    + "times" + times + "timee" + timee;
 //            String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword");
             if(redisUtil.existsKey(key)) {
                 esSimilarResponse = redisUtil.getKey(key);
@@ -303,7 +304,7 @@ public class LSearchServiceImpl implements LSearchService {
 
             if (!esSimilarResponse.equals("")) {
                 List article_public_idList = new ArrayList();
-                JSONArray similarArray = JSON.parseArray(esSimilarResponse);
+                JSONArray similarArray = JSON.parseObject(esSimilarResponse).getJSONArray("data");
                 for (int i = 0; i < similarArray.size(); i++) {
                     JSONObject similarJson = (JSONObject) similarArray.get(i);
                     String article_public_id = similarJson.getString("article_public_id");
@@ -379,7 +380,7 @@ public class LSearchServiceImpl implements LSearchService {
         String searchword = paramJson.getString("searchword");
         if (StringUtils.isNotBlank(searchword)) {
             searchword = searchword.trim();
-            searchword = ProjectWordUtil.QuickProjectKeyword(searchword);
+            searchword = searchword.replaceAll(" "," OR ").replaceAll("\\+"," AND ");
         }
 //        paramJson.put("searchword", searchword);
         paramJson.remove("searchword");
@@ -609,7 +610,7 @@ public class LSearchServiceImpl implements LSearchService {
         /*System.out.println(paramJson.toString());*/
         // 查询es数据
         String url = "";
-        similar = 0;
+//        similar = 0;
         if (similar == 1) {  // 合并
             Integer totalCount = 0;
             Integer currentPage = paramJson.getInteger("page");
@@ -643,7 +644,7 @@ public class LSearchServiceImpl implements LSearchService {
 
             if (!esSimilarResponse.equals("")) {
                 List article_public_idList = new ArrayList();
-                JSONArray similarArray = JSON.parseArray(esSimilarResponse);
+                JSONArray similarArray = JSON.parseObject(esSimilarResponse).getJSONArray("data");
                 for (int i = 0; i < similarArray.size(); i++) {
                     JSONObject similarJson = (JSONObject) similarArray.get(i);
                     String article_public_id = similarJson.getString("article_public_id");
@@ -717,7 +718,7 @@ public class LSearchServiceImpl implements LSearchService {
         String searchword = paramJson.getString("searchword");
         if (StringUtils.isNotBlank(searchword)) {
             searchword = searchword.trim();
-            searchword = ProjectWordUtil.QuickProjectKeyword(searchword);
+            searchword = searchword.replaceAll(" "," OR ").replaceAll("\\+"," AND ");
         }
         paramJson.remove("searchword");
         paramJson.put("keyword", searchword);
@@ -925,7 +926,7 @@ public class LSearchServiceImpl implements LSearchService {
 
         // 查询es数据
         String url = "";
-        similar = 0;
+//        similar = 0;
         if (similar == 1) {  // 合并
             Integer totalCount = 0;
             Integer currentPage = paramJson.getInteger("page");
@@ -947,7 +948,8 @@ public class LSearchServiceImpl implements LSearchService {
 //                	esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
 //                }
             //String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword");
-            String key =paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("keyword")+timeType+matchingmode+searchType+emotionalIndex;
+            String key =paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("keyword")+timeType+matchingmode+searchType+emotionalIndex
+                    + "times" + times + "timee" + timee;
             if(redisUtil.existsKey(key)) {
                 esSimilarResponse = redisUtil.getKey(key);
             }else {
@@ -960,7 +962,7 @@ public class LSearchServiceImpl implements LSearchService {
 
             if (!esSimilarResponse.equals("")) {
                 List article_public_idList = new ArrayList();
-                JSONArray similarArray = JSON.parseArray(esSimilarResponse);
+                JSONArray similarArray = JSON.parseObject(esSimilarResponse).getJSONArray("data");
                 for (int i = 0; i < similarArray.size(); i++) {
                     JSONObject similarJson = (JSONObject) similarArray.get(i);
                     String article_public_id = similarJson.getString("article_public_id");
@@ -1040,7 +1042,7 @@ public class LSearchServiceImpl implements LSearchService {
         String searchword = paramJson.getString("searchword");
         if (StringUtils.isNotBlank(searchword)) {
             searchword = searchword.trim();
-            searchword = ProjectWordUtil.QuickProjectKeyword(searchword);
+            searchword = searchword.replaceAll(" "," OR ").replaceAll("\\+"," AND ");
         }
 //        paramJson.put("searchword", searchword);
         paramJson.remove("searchword");
@@ -1253,7 +1255,6 @@ public class LSearchServiceImpl implements LSearchService {
 
         // 查询es数据
         String url = "";
-        similar = 0;
         if (similar == 1) {  // 合并
             Integer totalCount = 0;
             Integer currentPage = paramJson.getInteger("page");
@@ -1274,7 +1275,8 @@ public class LSearchServiceImpl implements LSearchService {
 //                }
 
             //String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword");
-            String key =paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("keyword")+timeType+matchingmode+searchType+emotionalIndex;
+            String key =paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("keyword")+timeType+matchingmode+searchType+emotionalIndex
+                    + "times" + times + "timee" + timee;
             if(redisUtil.existsKey(key)) {
                 esSimilarResponse = redisUtil.getKey(key);
             }else {
@@ -1286,7 +1288,7 @@ public class LSearchServiceImpl implements LSearchService {
 
             if (!esSimilarResponse.equals("")) {
                 List article_public_idList = new ArrayList();
-                JSONArray similarArray = JSON.parseArray(esSimilarResponse);
+                JSONArray similarArray = JSON.parseObject(esSimilarResponse).getJSONArray("data");
                 for (int i = 0; i < similarArray.size(); i++) {
                     JSONObject similarJson = (JSONObject) similarArray.get(i);
                     String article_public_id = similarJson.getString("article_public_id");

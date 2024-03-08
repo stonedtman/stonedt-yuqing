@@ -1090,7 +1090,7 @@ public class FullSearchServiceImpl implements FullSearchService{
 			searchkeyword = "";
 		}
 //		searchkeyword = searchkeyword.replace(" ", ",");
-		paramJson.put("keyword", ProjectWordUtil.QuickProjectKeyword(searchkeyword));
+		paramJson.put("keyword",searchkeyword.replaceAll(" "," OR ").replaceAll("\\+"," AND "));
 		paramJson.remove("searchWord");
 
 //		Integer similar = param.getMergeType();

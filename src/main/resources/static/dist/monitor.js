@@ -61,7 +61,7 @@ $(document).ready(function () {
             '                <div class="search-group d-flex" style="padding-left: 0;">' +
             '                    <div style="width: 100%;">' +
             '                        <input id="searchWord" type="text" class="form-control"' +
-            '                               placeholder="请输入企业名称、企业简称、产品名、行业名称、政策法规、人名等，多关键词用空格隔开">' +
+            '                               placeholder="请输入企业名称、企业简称、产品名、行业名称、政策法规、人名等，组合查询使用+号分隔，或查询使用空格分隔">' +
             '                    </div>' +
             '                    <button id="searchBtn" style="z-index: 1; border-radius: 0 2px 2px 0 !important;width: auto;"' +
             '                            class="btn btn-info">全文搜索' +

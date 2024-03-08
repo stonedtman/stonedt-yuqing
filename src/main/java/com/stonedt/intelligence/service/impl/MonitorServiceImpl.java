@@ -394,7 +394,8 @@ public class MonitorServiceImpl implements MonitorService {
                     paramJson.getString("searchkeyword")+paramJson.getString("classify")+
                     paramJson.getString("datasource_type")+paramJson.getString("sourceWebsite")+
                     "author"+paramJson.getString("author")+"timeType"+timeType+matchingmode+
-                    "searchtype"+searchType+"emotion"+emotionalIndex+searchkeyword + "precise" + precise + "similar" + similar;
+                    "searchtype"+searchType+"emotion"+emotionalIndex+searchkeyword + "precise" + precise + "similar" + similar
+                    + "times" + times + "timee" + timee;
 
             /*2021.6.25修改*/
             if (currentPage == 1) {
@@ -2211,8 +2212,9 @@ public class MonitorServiceImpl implements MonitorService {
                         paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+
                         paramJson.getString("searchkeyword")+paramJson.getString("datasource_type")+
                         "timeType"+timeType + "matchingmode" + matchingmode + "searchType" + searchType + "emotionalIndex" + emotionalIndex
-                        + "sourceWebsite" + paramJson.getString("sourceWebsite");
-                //String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword");
+                        + "sourceWebsite" + paramJson.getString("sourceWebsite")
+                        + "times" + times + "timee" + timee;
+            //String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword");
                 if(redisUtil.existsKey(key)) {
                     esSimilarResponse = redisUtil.getKey(key);
                 }else {
@@ -2565,8 +2567,9 @@ public class MonitorServiceImpl implements MonitorService {
 //                }else {
 //                	esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
 //                }
-            String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+paramJson.getString("datasource_type")+timeType+matchingmode+searchType+emotionalIndex+"sourceWebsite"+paramJson.getString("sourceWebsite");
-                //String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword");
+            String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+paramJson.getString("datasource_type")+timeType+matchingmode+searchType+emotionalIndex+"sourceWebsite"+paramJson.getString("sourceWebsite")
+                    + "times" + times + "timee" + timee;
+            //String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword");
                 if(redisUtil.existsKey(key)) {
                     esSimilarResponse = redisUtil.getKey(key);
                 }else {
@@ -2916,7 +2919,8 @@ public class MonitorServiceImpl implements MonitorService {
 //                	esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
 //                }
                 //String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword");                                                          数据品类
-            String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+paramJson.getString("datasource_type")+timeType+matchingmode+searchType+emotionalIndex;
+            String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+paramJson.getString("datasource_type")+timeType+matchingmode+searchType+emotionalIndex
+                    + "times" + times + "timee" + timee;
             if(redisUtil.existsKey(key)) {
                 esSimilarResponse = redisUtil.getKey(key);
                 }else {
@@ -3261,8 +3265,9 @@ public class MonitorServiceImpl implements MonitorService {
 //                }
                 
                 //String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword");
-                String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+timeType+matchingmode+searchType+emotionalIndex;
-                if(redisUtil.existsKey(key)) {
+                String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+timeType+matchingmode+searchType+emotionalIndex
+                        + "times" + times + "timee" + timee;
+            if(redisUtil.existsKey(key)) {
                     esSimilarResponse = redisUtil.getKey(key);
                 }else {
                     esSimilarResponse = MyHttpRequestUtil.sendPostEsSearch(similarUrl, params);
@@ -3634,7 +3639,8 @@ public class MonitorServiceImpl implements MonitorService {
             }
             /*String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+timeType+matchingmode+searchType+emotionalIndex+searchkeyword;*/
             /*2021.6.25修改*/                                                                                                                                                                                                                                                                                                                                                                                                                                                /*数据品类*/
-            String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+ paramJson.getString("classify") + paramJson.getString("datasource_type")+paramJson.getString("sourceWebsite") +paramJson.getString("author")+timeType+matchingmode+searchType+emotionalIndex+searchkeyword;
+            String key = projectid.toString()+paramJson.getString("city")+paramJson.getString("province")+paramJson.getString("eventlable")+paramJson.getString("industrylable")+paramJson.getString("hightechtypelist")+paramJson.getString("policylableflag")+paramJson.getShortValue("orgtypelist")+paramJson.getString("categorylable")+paramJson.getString("searchkeyword")+ paramJson.getString("classify") + paramJson.getString("datasource_type")+paramJson.getString("sourceWebsite") +paramJson.getString("author")+timeType+matchingmode+searchType+emotionalIndex+searchkeyword
+                    + "times" + times + "timee" + timee;
 
             /*2021.6.25修改*/
             if (currentPage == 1) {
