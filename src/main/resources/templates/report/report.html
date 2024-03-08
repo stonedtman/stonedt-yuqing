@@ -59,6 +59,12 @@
                         </div>
                         <div class="col-lg-7 align-self-center ">
                             <div class="d-flex no-block justify-content-end align-items-center data-number-min">
+                                <button class="btn btn-outline-secondary btn-sm bnone" type="button" onclick="downImg()">
+                                    <i class="fa fa-image"></i> 图片下载
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm bnone" type="button" onclick="downPDF()">
+                                    <i class="fa fa-file-pdf"></i> PDF下载
+                                </button>
                                 <button class="btn btn-outline-secondary btn-sm bnone" type="button" id="goback">
                                     <i class="mdi mdi-redo-variant"></i> 返回
                                 </button>
@@ -735,8 +741,73 @@
     <script th:src="@{/dist/reportDetail.js?unixtemp=0728}"></script>
     <script th:src="@{/dist/baidu/baidu_statistics.js}"></script>
     <script th:src="@{/common/ajax-config.js}"></script>
+    <script th:src="@{/dist/js/html2canvas.min.js}"></script>
+    <script th:src="@{/dist/js/jspdf.js}"></script>
     
     <script type="text/javascript" th:inline="javascript">
+        let reportName = ""
+        function downImg(){
+            html2canvas(document.querySelector(".p-20")).then(canvas => {
+                let dataURL = canvas.toDataURL("image/png"); //base64格式的图片 url
+                // 创建a标签下载图片
+                var addElement = document.createElement('a')
+                addElement.href = dataURL
+                addElement.download = reportName+".png" //设置下载的图片名称
+
+                document.body.appendChild(addElement)
+                addElement.click();
+                document.body.removeChild(addElement);
+            });
+        }
+        function downPDF(){
+            html2canvas(document.querySelector(".p-20")).then(canvas => {
+                // html生成图片的数据
+                var imageData = canvas.toDataURL('image/jpeg', 1.0);
+                // 原本的html页面的宽高
+                const canvasWidth = canvas.width;
+                const canvasHeight = canvas.height;
+                // 当分辨率是72像素/英寸时，A4纸像素长宽分别是842×595
+                var a4Width = 595; // A4 宽度
+                var a4Height = (595 / canvasWidth) * canvasHeight; // A4总高度
+                // 生成pdf的一页显示html的高度
+                let pageHeight = canvasWidth / 595 * 842;
+                // 未生成pdf的html页面高度，最初是整体的高度
+                let restHeight = canvasHeight;
+                // 页面上下偏移的大小
+                var position = 0;
+                /**
+                 * 参数1：方向：l：横向  p：纵向
+                 * 参数2：单位："pt"、"mm"、"cm"、"m"、"in"、"px"
+                 * 参数3：格式：默认为a4
+                 */
+                var pdf = new jsPDF('p', 'pt', 'a4');
+                // 当内容未超过pdf一页显示的范围，无需分页
+                if (restHeight < pageHeight) {
+                    /**
+                     * 将图像添加到PDF中
+                     * 参数1：图片的url
+                     * 参数2：图片的格式
+                     * 参数3：图片上下偏移的大小
+                     * 参数4：原始宽度
+                     * 参数5：原始高度
+                     */
+                    pdf.addImage(imageData, 'JPEG', 0, position, a4Width, a4Height );
+                } else {
+                    while(restHeight > 0) {
+                        pdf.addImage(imageData, 'JPEG',0, position, a4Width, a4Height)
+                        restHeight -= pageHeight;
+                        position -= 842;
+                        if(restHeight > 0) {
+                            // 在PDF文档中添加新页面
+                            pdf.addPage();
+                        }
+                    }
+                }
+                // 保存为pdf格式的文件
+                pdf.save(reportName+'.pdf')
+            });
+        }
+
     $("#currentyear").text((new Date()).getFullYear());
 	    var reportId = [[${id}]];
 	    var groupId = [[${groupid}]];
@@ -800,6 +871,8 @@
 	    			if(res.report_type == 1) $('#reportTypeName').html('日报详情');
 	    			if(res.report_type == 2) $('#reportTypeName').html('周报详情');
 	    			if(res.report_type == 3) $('#reportTypeName').html('月报详情');
+                    reportName = res.report_name
+
 	    			// 1数据概览逻辑处理 2、3资讯和社交数据逻辑处理
 	    			if(res.data_overview){
 	    				toHtmlDataOverview(res);
