@@ -225,20 +225,23 @@ public class LoginController {
      * @param args
      */
     @GetMapping(value = "/wechatJumpLogin")
-    public String wechatJumpLogin(String openid,String userId, HttpServletRequest request,HttpServletResponse response) throws Exception {
-        if (userId==null||"".equals(userId)||openid==null|| "".equals(openid)){
+    public String wechatJumpLogin(String sha,
+                                  String userId,
+                                  HttpServletRequest request,HttpServletResponse response) throws Exception {
+        if (userId==null|| userId.isEmpty() ||sha==null|| sha.isEmpty()){
             return "user/login";
         }
         User user = userService.selectUserByUserId(Long.valueOf(userId));
         if (null == user) {
             return "user/login";
         }
-        if(user.getOpenid()==null|| "".equals(user.getOpenid())) {
+        String password = user.getPassword();
+        if(password ==null|| password.isEmpty()) {
             return "user/login";
         }
-        //加密openid与传入的openid进行比较
-        String decode = ShaUtil.getSHA256(user.getOpenid(),false);
-        if(!decode.equals(openid)) {
+        //password与传入的password进行比较
+        String decode = ShaUtil.getSHA256(password,false);
+        if(!decode.equals(sha)) {
             return "user/login";
         }
         if (user.getStatus() == 0) {

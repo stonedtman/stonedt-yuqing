@@ -1171,7 +1171,7 @@ public class FullSearchServiceImpl implements FullSearchService{
 		paramJson.put("eventIndex", param.getEventIndex());
 		paramJson.put("industryIndex", param.getIndustryIndex());
 		paramJson.put("province", param.getProvince());
-
+		paramJson.put("article_public_idstr", param.getArticle_public_idstr());
 
 		paramJson.remove("projectid");
 		paramJson.remove("group_id");
