@@ -178,7 +178,7 @@
                     let detail = res.detail
                     $('#title').html(res.title);
 
-                    if(res.warnWordList){
+                    if(res.warnWordList&&res.warnWordList.length>0&&res.warnWordList.join()!=""){
                         $(".words").html("涉及预警词: "+res.warnWordList.join(" | "))
                     }
                     if(relatedword){
