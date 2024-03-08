@@ -59,7 +59,11 @@ public class LSearchServiceImpl implements LSearchService {
         JSONObject dataGroupJson = new JSONObject();
 
         String searchword = paramJson.getString("searchword");
-        if (StringUtils.isNotBlank(searchword)) searchword = searchword.trim();
+        if (StringUtils.isNotBlank(searchword)) {
+            searchword = searchword.trim();
+            searchword = ProjectWordUtil.QuickProjectKeyword(searchword);
+        }
+        paramJson.remove("searchword");
         paramJson.put("keyword", searchword);
 
         Integer similar = paramJson.getInteger("similar");
@@ -373,7 +377,12 @@ public class LSearchServiceImpl implements LSearchService {
         JSONObject dataGroupJson = new JSONObject();
 
         String searchword = paramJson.getString("searchword");
-        if (StringUtils.isNotBlank(searchword)) searchword = searchword.trim();
+        if (StringUtils.isNotBlank(searchword)) {
+            searchword = searchword.trim();
+            searchword = ProjectWordUtil.QuickProjectKeyword(searchword);
+        }
+//        paramJson.put("searchword", searchword);
+        paramJson.remove("searchword");
         paramJson.put("keyword", searchword);
 
         Integer similar = paramJson.getInteger("similar");
@@ -706,7 +715,11 @@ public class LSearchServiceImpl implements LSearchService {
         JSONObject dataGroupJson = new JSONObject();
 
         String searchword = paramJson.getString("searchword");
-        if (StringUtils.isNotBlank(searchword)) searchword = searchword.trim();
+        if (StringUtils.isNotBlank(searchword)) {
+            searchword = searchword.trim();
+            searchword = ProjectWordUtil.QuickProjectKeyword(searchword);
+        }
+        paramJson.remove("searchword");
         paramJson.put("keyword", searchword);
 
         Integer similar = paramJson.getInteger("similar");
@@ -1025,7 +1038,12 @@ public class LSearchServiceImpl implements LSearchService {
 
 
         String searchword = paramJson.getString("searchword");
-        if (StringUtils.isNotBlank(searchword)) searchword = searchword.trim();
+        if (StringUtils.isNotBlank(searchword)) {
+            searchword = searchword.trim();
+            searchword = ProjectWordUtil.QuickProjectKeyword(searchword);
+        }
+//        paramJson.put("searchword", searchword);
+        paramJson.remove("searchword");
         paramJson.put("keyword", searchword);
 
         Integer similar = paramJson.getInteger("similar");

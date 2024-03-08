@@ -21,6 +21,7 @@ public class LSearchController {
     @PostMapping("/industry")
     @ResponseBody
     public JSONObject getIndustry(@RequestBody JSONObject paramJson) {
+        paramJson.put("projecttype", 2);
         JSONObject articleIndustryList = lSearchService.getArticleIndustryList(paramJson);
         return articleIndustryList;
     }
@@ -29,6 +30,7 @@ public class LSearchController {
     @PostMapping("/getevent")
     @ResponseBody
     public JSONObject getEvent(@RequestBody JSONObject paramJson) {
+        paramJson.put("projecttype", 2);
         JSONObject articleEventList = lSearchService.getArticleEventList(paramJson);
         return articleEventList;
     }
@@ -37,7 +39,7 @@ public class LSearchController {
     @PostMapping("/getProvinceList")
     @ResponseBody
     public JSONObject getArticleProvinceList(@RequestBody JSONObject paramJson) {
-
+        paramJson.put("projecttype", 2);
         JSONObject articleProvinceList = lSearchService.getArticleProvinceList(paramJson);
         return articleProvinceList;
     }
@@ -46,6 +48,7 @@ public class LSearchController {
     @PostMapping("/getArticleCityList")
     @ResponseBody
     public JSONObject getArticleCityList(@RequestBody JSONObject paramJson) {
+        paramJson.put("projecttype", 2);
         JSONObject articleCityList = lSearchService.getArticleCityList(paramJson);
         return articleCityList;
     }

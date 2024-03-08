@@ -1090,7 +1090,8 @@ public class FullSearchServiceImpl implements FullSearchService{
 			searchkeyword = "";
 		}
 //		searchkeyword = searchkeyword.replace(" ", ",");
-		paramJson.put("searchkeyword", ProjectWordUtil.QuickProjectKeyword(searchkeyword));
+		paramJson.put("keyword", ProjectWordUtil.QuickProjectKeyword(searchkeyword));
+		paramJson.remove("searchWord");
 
 //		Integer similar = param.getMergeType();
 		Integer similar = param.getSimilar();
@@ -1318,15 +1319,15 @@ public class FullSearchServiceImpl implements FullSearchService{
 				article_public_idStr = "";
 			}
 			String key = paramJson.getString("city")
-					+paramJson.getString("province")
-					+paramJson.getString("eventlable")
-					+paramJson.getString("industrylable")
-					+paramJson.getString("hightechtypelist")
-					+paramJson.getString("policylableflag")
-					+paramJson.getShortValue("orgtypelist")
-					+paramJson.getString("categorylable")
-					+paramJson.getString("searchkeyword")
-					+timeType+ matchingmode+searchType+emotionalIndex+searchkeyword;
+					+ paramJson.getString("province")
+					+ paramJson.getString("eventlable")
+					+ paramJson.getString("industrylable")
+					+ paramJson.getString("hightechtypelist")
+					+ paramJson.getString("policylableflag")
+					+ paramJson.getShortValue("orgtypelist")
+					+ paramJson.getString("categorylable")
+					+ paramJson.getString("keyword")
+					+ timeType + matchingmode + searchType + emotionalIndex + similar;
 
 			if (currentPage == 1) {
 				String params = MapUtil.getUrlParamsByMap(paramJson);
