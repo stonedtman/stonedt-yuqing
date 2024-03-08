@@ -1063,7 +1063,35 @@ function pageHelper(currentPage, totalPages) {
 				articleParam2.url = ctxPath + "fullsearch/informationListpost";
 				articleParam2.contentType = 'application/json;charset=utf-8';
 				debugger;
-            	sendArticleSearch(articleParam2, getArticleData11(page,$('#searchWord').val()), installArticle3);
+				let articleData11 = getArticleData11(page,$('#searchWord').val())
+				let similar = articleData11.similar;
+				if (similar == 1) {  // 合并
+					let start = 30 * page - 30
+					let end = start + 30
+					if (end > article_public_idList.length) {
+						end = article_public_idList.length
+					}
+
+					let ids = "";
+					for (let s = start; s < end; s++) {
+						if (s == (article_public_idList.length - 1)) {
+							ids += article_public_idList[s];
+						} else {
+							ids += article_public_idList[s] + ","
+						}
+					}
+
+					let totalPage = 1;
+					if (article_public_idList.length % 30 == 0) {
+						totalPage = article_public_idList.length / 30;
+					} else {
+						totalPage = Math.ceil(article_public_idList.length/30);
+					}
+					articleData11.article_public_idstr = ids;
+					articleData11.totalCount = article_public_idList.length;
+					articleData11.totalPage = totalPage;
+				}
+            	sendArticleSearch(articleParam2, articleData11, installArticle3);
 			}
             if(full_type == 23) sendArticle(articleParam, articleData, installComplaint);
             if(full_type == 28) sendArticle(articleParam, articleData, installAnnouncement);
