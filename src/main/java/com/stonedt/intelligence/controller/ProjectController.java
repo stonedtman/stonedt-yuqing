@@ -365,11 +365,11 @@ public class ProjectController {
             String character_word = paramJson.getString("character_word");
             String subject_word = paramJson.getString("subject_word");
 
-            stop_word = projectUtil.dealProjectWords(stop_word);
-            regional_word = projectUtil.dealProjectWords(regional_word);
-            event_word = projectUtil.dealProjectWords(event_word);
-            character_word = projectUtil.dealProjectWords(character_word);
-            subject_word = projectUtil.dealProjectWords(subject_word);
+            stop_word = ProjectUtil.dealProjectWords(stop_word);
+            regional_word = ProjectUtil.dealProjectWords(regional_word);
+            event_word = ProjectUtil.dealProjectWords(event_word);
+            character_word = ProjectUtil.dealProjectWords(character_word);
+            subject_word = ProjectUtil.dealProjectWords(subject_word);
 
             subject_word = ProjectUtil.mergeProjectWords(subject_word);
             character_word = ProjectUtil.mergeProjectWords(character_word);

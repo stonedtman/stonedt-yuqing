@@ -11,12 +11,16 @@ import com.stonedt.intelligence.entity.FullPolymerization;
 import com.stonedt.intelligence.entity.FullType;
 import com.stonedt.intelligence.entity.FullWord;
 import com.stonedt.intelligence.service.FullSearchService;
+import com.stonedt.intelligence.thred.ThreadPoolConst;
 import com.stonedt.intelligence.util.*;
 import com.stonedt.intelligence.vo.FullSearchParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -36,8 +40,15 @@ public class FullSearchServiceImpl implements FullSearchService{
 	// es热点地址
 	@Value("${es.hot.search.url}")
 	private String es_hot_search_url;
-	
-	
+
+	@Value("${kafuka.url}")
+	private String kafuka_url;
+
+	@Value("${insertnewwords.url}")
+	private String insert_new_words_url;
+
+
+
 	@Autowired
 	private IFullSearchDao fullSearchDao;
 	@Autowired
@@ -1070,6 +1081,22 @@ public class FullSearchServiceImpl implements FullSearchService{
         return response;
 	}
 
+
+	/**
+	 * 将词发送到kafka
+	 */
+	private void sendWordToKafka(String message) {
+		final String words = message.replaceAll("\\+", ",").replaceAll(" ", ",");
+		ThreadPoolConst.IO_EXECUTOR.execute(() -> MyHttpRequestUtil.doPostKafka("ikHotWords", words, kafuka_url));
+		RestTemplate template = new RestTemplate();
+		MultiValueMap<String, Object> paramMap = new LinkedMultiValueMap<String, Object>();
+		paramMap.add("text", message);
+		ThreadPoolConst.IO_EXECUTOR.execute(() -> {
+			String result = template.postForObject(insert_new_words_url, paramMap, String.class);
+			System.out.println("result========================="+result);
+		});
+	}
+
 	/**
 	 * 筛选查找
 	 * @author lh
@@ -1089,6 +1116,7 @@ public class FullSearchServiceImpl implements FullSearchService{
         }else {
 			searchkeyword = "";
 		}
+		sendWordToKafka(searchkeyword);
 //		searchkeyword = searchkeyword.replace(" ", ",");
 		paramJson.put("keyword",searchkeyword.replaceAll(" "," OR ").replaceAll("\\+"," AND "));
 		paramJson.remove("searchWord");
