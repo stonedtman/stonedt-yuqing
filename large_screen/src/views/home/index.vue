@@ -168,13 +168,13 @@ export default {
       formData.append("projectId", this.programme)
       formData.append("timePeriod", this.date)
       getAanlysisByProjectidAndTimeperiod(formData).then(res=>{
-        if(res.data.isNeedRefresh){
-          this.showNewInfo()
-          this.loading = false
-          return
-        }
         let data = res.data
         
+        if(data.isNeedRefresh){
+          this.showNewInfo()
+          this.loading = false
+        }
+
         if(data.create_time){
           this.updatedOn = this.getDateDiff(data.create_time)
           // 如果超过48小时，提示用户刷新数据
@@ -185,7 +185,7 @@ export default {
             this.showNewInfo()
           }
         }
-        
+        console.log(data);
         if(data.emotional_proportion){
           let emotional_proportion = JSON.parse(data.emotional_proportion)
           this.$refs.sourcedistribution.changeData(emotional_proportion)
