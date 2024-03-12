@@ -44,17 +44,15 @@
     <select id="exitByProjectId" resultType="java.lang.Boolean">
         select count(*) from monitor_warning_setting where project_id = #{projectId}
     </select>
-    <select id="SelectByProjectId" resultType="com.stonedt.intelligence.entity.MonitorWarningSetting">
+    <select id="SelectByProjectId" resultMap="BaseResultMap">
         select
-         id, group_id as groupId, project_id as projectId, to_list as toList,
-         pop_up_time as popUpTime, enable
+         *
         from monitor_warning_setting
         where project_id = #{projectId}
     </select>
-    <select id="selectWaitWarningSetting" resultType="com.stonedt.intelligence.entity.MonitorWarningSetting">
+    <select id="selectWaitWarningSetting" resultMap="BaseResultMap">
         select
-            id, group_id as groupId, project_id as projectId, to_list as toList,
-            pop_up_time as popUpTime, enable
+            *
         from monitor_warning_setting
         where enable = 1
         and pop_up_time &lt; time(now()) + interval 1 minute
