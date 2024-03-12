@@ -26,8 +26,8 @@ public class SwaggerConfig {
         //配置扫描包
         return new OpenAPI()
                 .info(new io.swagger.v3.oas.models.info.Info()
-                        .title("开源舆情接口文档")
-                        .description("开源舆情接口文档")
+                        .title("舆情监测系统接口文档")
+                        .description("舆情监测系统接口文档")
                         .version("1.0.0"))
 
                 .addSecurityItem(new SecurityRequirement().addList(SECURITY_SCHEME_NAME))

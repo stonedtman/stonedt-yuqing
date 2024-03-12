@@ -93,7 +93,7 @@ public class ArticleData {
     /**
      * 文章id
      */
-    @Schema(name = "article_id", description = "文章id")
+    @Schema(name = "article_public_id", description = "文章id")
     private String article_public_id;
 
     /**

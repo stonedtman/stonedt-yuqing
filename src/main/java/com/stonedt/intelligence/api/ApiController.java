@@ -3,17 +3,22 @@ package com.stonedt.intelligence.api;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.stonedt.intelligence.entity.User;
+import com.stonedt.intelligence.service.ArticleService;
 import com.stonedt.intelligence.service.MonitorService;
 import com.stonedt.intelligence.service.UserService;
 import com.stonedt.intelligence.util.MD5Util;
 import com.stonedt.intelligence.vo.*;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author 文轩
@@ -27,10 +32,14 @@ public class ApiController {
 
     private final UserService userService;
 
+    private final ArticleService articleService;
+
     public ApiController(MonitorService monitorService,
-                         UserService userService) {
+                         UserService userService,
+                         ArticleService articleService) {
         this.monitorService = monitorService;
         this.userService = userService;
+        this.articleService = articleService;
     }
 
 
@@ -43,15 +52,24 @@ public class ApiController {
      * @author: huajiancheng <br>
      */
     @Operation(summary = "获取文章列表",
-            description = "根据条件获取文章列表",
+            description = "根据条件获取文章列表\n" +
+                    "请求头中需要携带token，状态码0表示成功，其他表示失败",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     content = @Content(mediaType = "application/json",schema = @Schema(implementation = SearchCondition.class)))
     )
     /*@SystemControllerLog(module = "数据监测", submodule = "数据监测-列表", type = "查询", operation = "getarticle")*/
     @PostMapping(value = "/getArticle")
     @ResponseBody
-    public ResultVO<PageInfo<ArticleData>> getArticleList(@RequestBody JSONObject paramJson) {
+    public ResultVO<PageInfo<ArticleData>> getArticleList(@RequestBody SearchCondition searchCondition) {
+
+        JSONObject paramJson = searchCondition.toJsonObject();
+
         paramJson.put("similar", 0);
+        List<String> classify = new ArrayList<>();
+        classify.add("0");
+        paramJson.put("classify", classify);
+        paramJson.put("matchingmode", 1);
+        paramJson.put("precise", 0);
         JSONObject response = monitorService.getArticleList(paramJson);
         return JSON.parseObject(response.toJSONString(), ResultVO.class);
     }
@@ -66,17 +84,54 @@ public class ApiController {
      * @author: huajiancheng <br>
      */
     @Operation(summary = "获取文章列表(合并相似文章)",
-            description = "根据条件获取文章列表(合并相似文章)",
+            description = "根据条件获取文章列表(合并相似文章)。请求头中需要携带token，状态码0表示成功，其他表示失败",
+//            parameters = @Parameter(name = "searchCondition", description = "搜索条件", required = true, schema = @Schema(implementation = SearchCondition.class)),
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    content = @Content(mediaType = "application/json",schema = @Schema(implementation = SearchCondition.class)))
+                    content = @Content(mediaType = "application/json",schema = @Schema(implementation = SearchCondition.class))
+
+            )
     )
     /*@SystemControllerLog(module = "数据监测", submodule = "数据监测-列表", type = "查询", operation = "getarticle")*/
     @PostMapping(value = "/getMergeArticle")
     @ResponseBody
-    public ResultVO<PageInfo<ArticleData>> getMergeArticleList(@RequestBody JSONObject paramJson) {
+    public ResultVO<PageInfo<ArticleData>> getMergeArticleList(@RequestBody SearchCondition searchCondition) {
+        JSONObject paramJson = searchCondition.toJsonObject();
+
         paramJson.put("similar", 1);
+        List<String> classify = new ArrayList<>();
+        classify.add("0");
+        paramJson.put("classify", classify);
+        paramJson.put("matchingmode", 1);
+        paramJson.put("precise", 0);
         JSONObject response = monitorService.getArticleList(paramJson);
         return JSON.parseObject(response.toJSONString(), ResultVO.class);
+    }
+
+    @Operation(summary = "获取文章详情",
+            description = "根据文章id、方案id和文章发布时间获取文章详情。请求头中需要携带token.状态码0表示成功，其他表示失败",
+            parameters = {
+                    @Parameter(name = "articleId", description = "文章id", required = true),
+                    @Parameter(name = "projectId", description = "方案id", required = true),
+                    @Parameter(name = "publish_time", description = "文章发布时间,string类型，格式为yyyy-MM-dd", required = true)
+            }
+    )
+    @GetMapping(value = "/detail")
+    @ResponseBody
+    public ResultVO<ArticleDetail> articleDetail(String articleId,
+                                Long projectId,
+                                String publish_time) {
+        long startTime = System.currentTimeMillis();
+        Map<String, Object> articleDetail = articleService.articleDetail(articleId, projectId, "",publish_time);
+        JSONObject jsonObject = new JSONObject(articleDetail);
+        System.out.println(jsonObject.toJSONString());
+        ArticleDetail articleData = JSON.parseObject(jsonObject.toJSONString(), ArticleDetail.class);
+        System.err.println("请求详情获取时间：" + (System.currentTimeMillis() - startTime) / 1000d + "s");
+        ResultVO<ArticleDetail> articleDataResultVO = new ResultVO<>();
+        articleDataResultVO.setCode(0);
+        articleDataResultVO.setMsg("success");
+        articleDataResultVO.setData(articleData);
+        return articleDataResultVO;
+
     }
 
 //    /**

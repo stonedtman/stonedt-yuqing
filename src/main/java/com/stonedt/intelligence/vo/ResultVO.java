@@ -1,6 +1,7 @@
 package com.stonedt.intelligence.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.Data;
 
 /**
@@ -9,7 +10,7 @@ import lombok.Data;
  * @param <T>
  */
 @Data
-@Schema(name = "ResultVO", description = "通用返回对象")
+@ApiResponse(description = "通用返回对象", content = @io.swagger.v3.oas.annotations.media.Content(schema = @Schema(implementation = ResultVO.class)))
 public class ResultVO <T>{
 
     /**
