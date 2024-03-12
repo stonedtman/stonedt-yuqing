@@ -329,6 +329,9 @@
 		select distinct project_id from warning_article
 		where user_id = #{userId} and read_status = 0
 	</select>
+    <select id="existByProjectIdAndUserId" resultType="java.lang.Boolean">
+		select count(*) from project where project_id = #{projectId} and user_id = #{userId}
+	</select>
 
 
 </mapper>

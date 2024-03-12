@@ -72,4 +72,7 @@ public interface ProjectDao {
     List<Map<String, Object>> getMobileGroupAndProject(@Param("list") List<Long> list);
 
     List<Long> getProjectIdListByUserId(@Param("userId")Long userId);
+
+
+    boolean existByProjectIdAndUserId(@Param("projectId") Long projectId,@Param("userId") Long userId);
 }

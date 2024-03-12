@@ -1066,5 +1066,18 @@ CREATE TABLE `user_pop_up` (
                                PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE `monitor_warning_setting` (
+                                           `id` int NOT NULL AUTO_INCREMENT,
+                                           `group_id` bigint NOT NULL,
+                                           `project_id` bigint NOT NULL,
+                                           `to_list` json NOT NULL COMMENT '收件人列表',
+                                           `pop_up_time` datetime NOT NULL COMMENT '推送时间',
+                                           `enable` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否开启推送',
+                                           `create_time` datetime NOT NULL COMMENT '创建时间',
+                                           `update_time` datetime NOT NULL COMMENT '修改时间',
+                                           PRIMARY KEY (`id`),
+                                           UNIQUE KEY `unique_monitor_warning_setting_projectid` (`project_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 

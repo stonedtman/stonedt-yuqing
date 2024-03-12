@@ -3,12 +3,10 @@ package com.stonedt.intelligence.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.stonedt.intelligence.dao.SolutionGroupDao;
+import com.stonedt.intelligence.entity.MonitorWarningSetting;
 import com.stonedt.intelligence.entity.User;
-import com.stonedt.intelligence.service.ArticleService;
-import com.stonedt.intelligence.service.EarlyWarningService;
-import com.stonedt.intelligence.service.MonitorService;
-import com.stonedt.intelligence.service.OpinionConditionService;
-import com.stonedt.intelligence.service.ProjectService;
+import com.stonedt.intelligence.entity.WarningSetting;
+import com.stonedt.intelligence.service.*;
 import com.stonedt.intelligence.util.UserUtil;
 import com.stonedt.intelligence.aop.SystemControllerLog;
 
@@ -58,6 +56,9 @@ public class MonitorController {
 	private EarlyWarningService warningService;
 	@Autowired
 	private SolutionGroupDao solutionGroupDao;
+
+	@Autowired
+	private WarningSettingService warningSettingService;
 	
 	@Value("${insertnewwords.url}")
     private String insert_new_words_url;
@@ -489,6 +490,20 @@ public class MonitorController {
 		paramJson.put("user_id", user_id);
 		JSONObject response = monitorService.getGroupNameById(paramJson);
 		return response;
+	}
+
+
+	@PostMapping("/warningSetting")
+	@ResponseBody
+	public ResultVO<Void> warningSetting(@RequestBody MonitorWarningSetting monitorWarningSetting,
+										 HttpServletRequest request,
+										 HttpServletResponse response) {
+		return warningSettingService.warningSetting(monitorWarningSetting, request, response);
+	}
+
+	@GetMapping("/warningSetting/{projectId}")
+	public ResultVO<MonitorWarningSetting> warningSetting(@PathVariable Long projectId, HttpServletRequest request) {
+		return warningSettingService.getWarningSetting(projectId, request);
 	}
 
 }

@@ -88,7 +88,7 @@ CREATE TABLE `flyway_schema_history`  (
 -- ----------------------------
 -- Records of flyway_schema_history
 -- ----------------------------
-INSERT INTO `stonedt_portal`.`flyway_schema_history` (`installed_rank`, `version`, `description`, `type`, `script`, `checksum`, `installed_by`, `installed_on`, `execution_time`, `success`) VALUES (1, '1.0', 'InitTableAndData', 'SQL', 'V1.0__InitTableAndData.sql', -1127108165, 'root', '2023-11-20 17:02:55', 1517, 1);
+INSERT INTO `stonedt_portal`.`flyway_schema_history` (`installed_rank`, `version`, `description`, `type`, `script`, `checksum`, `installed_by`, `installed_on`, `execution_time`, `success`) VALUES (1, '1.0', 'InitTableAndData', 'SQL', 'V1.0__InitTableAndData.sql', -643059722, 'root', '2023-11-20 17:02:55', 1517, 1);
 
 -- ----------------------------
 -- Table structure for full_menu
