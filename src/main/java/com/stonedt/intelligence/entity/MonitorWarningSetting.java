@@ -44,7 +44,7 @@ public class MonitorWarningSetting implements Serializable {
     /**
      * 是否开启推送
      */
-    private Integer enable;
+    private boolean enable;
 
     /**
      * 创建时间
