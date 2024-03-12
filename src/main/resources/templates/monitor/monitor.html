@@ -21,6 +21,8 @@
       th:href="@{/assets/libs/sweetalert2/dist/sweetalert2.min.css}"
       rel="stylesheet"
     />
+    <link th:href="@{/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css}" rel="stylesheet"
+          type="text/css">
     <link
       rel="stylesheet"
       type="text/css"
@@ -228,6 +230,51 @@
       }
       .wb-right-content {
         width: auto;
+      }
+
+      .switch {
+        display: inline-block;
+      }
+
+      .bootstrap-switch {
+        border-radius: 22px;
+        width: 35px !important;
+        height: 19px !important;
+      }
+
+      .bootstrap-switch .bootstrap-switch-handle-off, .bootstrap-switch .bootstrap-switch-handle-on, .bootstrap-switch .bootstrap-switch-label {
+        padding: 0px;
+        font-size: 10px;
+        display: inline-block;
+      }
+      .bootstrap-switch .bootstrap-switch-handle-on {
+        width: 35px !important;
+        margin-right: 0px;
+        padding-right: 22px;
+      }
+
+      .bootstrap-switch .bootstrap-switch-handle-off {
+        width: 35px !important;
+        border-radius: 11px;
+        margin-left: -16px;
+        /*padding-right: -30px;*/
+        position: relative;
+        color: #fff !important;
+      }
+      #statusSwitch .bootstrap-switch{
+        width: 50px !important;
+        border: none;
+        padding: 0;
+      }
+      #statusSwitch .bootstrap-switch-handle-on,#statusSwitch .bootstrap-switch-handle-off{
+        width: 50px !important;
+        margin: 0;
+        border: 0;
+        padding: 0 !important;
+        font-size: 12px;
+      }
+      #statusSwitch .bootstrap-switch .bootstrap-switch-label{
+        display: none;
       }
     </style>
     <!--<meta name="referrer" content="no-referrer"/>-->
@@ -1642,6 +1689,12 @@
               </div>
             </div>
             <!--<hr>-->
+            <div class="filter-box">
+              <div class="filter-title">数据推送</div>
+              <div id="statusSwitch" class="bt-switch-early-warning">
+                <input id="data-push" type="checkbox" data-on-color="success" data-off-color="warning">
+              </div>
+            </div>
             <!-- <hr> -->
             <div class="filter-box">
               <div class="card-title filter-title">时间范围</div>
@@ -1933,23 +1986,23 @@
     </div>
     <script th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
     <!-- Bootstrap tether Core JavaScript -->
-    <script th:src=" @{/assets/libs/popper.js/dist/umd/popper.min.js}"></script>
+    <script th:src="@{/assets/libs/popper.js/dist/umd/popper.min.js}"></script>
     <script
-      th:src=" @{/assets/libs/bootstrap/dist/js/bootstrap.min.js}"
+      th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.min.js}"
     ></script>
     <!-- apps -->
-    <script th:src=" @{/dist/js/app.min.js}"></script>
-    <script th:src=" @{/dist/js/app.init.light-sidebar.js}"></script>
-    <script th:src=" @{/dist/js/app-style-switcher.js}"></script>
+    <script th:src="@{/dist/js/app.min.js}"></script>
+    <script th:src="@{/dist/js/app.init.light-sidebar.js}"></script>
+    <script th:src="@{/dist/js/app-style-switcher.js}"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
     <script
-      th:src=" @{/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js}"
+      th:src="@{/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js}"
     ></script>
-    <script th:src=" @{/assets/extra-libs/sparkline/sparkline.js}"></script>
+    <script th:src="@{/assets/extra-libs/sparkline/sparkline.js}"></script>
     <!--Wave Effects -->
-    <script th:src=" @{/dist/js/waves.js}"></script>
+    <script th:src="@{/dist/js/waves.js}"></script>
     <!--Menu sidebar -->
-    <script th:src=" @{/dist/js/sidebarmenu.js}"></script>
+    <script th:src="@{/dist/js/sidebarmenu.js}"></script>
     <!--Custom JavaScript -->
     <script th:src="@{/dist/js/custom.min.js}"></script>
     <script
@@ -1961,6 +2014,7 @@
     <script
       th:src="@{/assets/libs/sweetalert2/dist/sweetalert2.all.min.js}"
     ></script>
+    <script th:src="@{/assets/libs/bootstrap-switch/dist/js/bootstrap-switch.min.js}"></script>
     <script th:src="@{/dist/js/pages.js}"></script>
     <script th:src="@{/assets/libs/block-ui/jquery.blockUI.js}"></script>
     <script th:src="@{/dist/monitor.js?unixtemp=0728}"></script>
@@ -2052,6 +2106,278 @@
       list[0].remove()
       document.querySelector(".recommend-content-list").style.marginTop = 0
     }
+
+    $(".bt-switch-early-warning input[type='checkbox']").bootstrapSwitch({
+      onText: "ON",
+      offText: "OFF",
+      onColor: "success",
+      offColor: "warning",
+      size: "normal",
+      handleWidth: "10",
+      onSwitchChange: function (event, state) {
+        window.parent.Warn_Start = state;
+        var $el = $(event.el)
+                , value = event.value;
+        var step = this.value;
+        if (state == true) {
+          changeSwitch(true)
+        } else {
+          changeSwitch(false)
+        }
+      }
+    })
+
+  let dataPushObj = ""
+  $.ajax({
+    url: window.location.origin + '/monitor/warningSetting/'+monitor_projectid,
+    type: 'get',
+    success: function (res) {
+      console.log(res)
+      if(res.code==200){
+        dataPushObj = res.data
+        if(dataPushObj.enable){
+          $("#data-push").bootstrapSwitch('state', true, true);
+        }
+      }
+    }
+  })
+
+  function changeSwitch(v){
+      if(v){
+        $.ajax({
+          url: window.location.origin + '/mail/checkMailConfig',
+          type: 'post',
+          dataType: 'json',
+          data: {},
+          success: function (res) {
+            if (res.status === 200) {
+              dataPushDialog()
+            } else {
+              showtips("请先绑定发件邮箱！")
+              createBindingEmailDialog()
+            }
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+            if (xhr.status === 403) {
+              window.location.href = ctxPath + "login";
+            }
+          }
+        });
+      }else{
+        let pushBody = {
+          groupId: monitor_groupid,
+          projectId: monitor_projectid,
+          enable: false,
+        }
+        $.ajax({
+          url: window.location.origin + '/monitor/warningSetting',
+          type: 'post',
+          contentType: "application/json; charset=utf-8",
+          dataType: 'json',
+          data: JSON.stringify(pushBody),
+          success: function (res) {
+            if(res.code==200){
+              showtips("数据推送已关闭！")
+            }
+          }
+        })
+      }
+
+  }
+
+  function dataPushDialog(){
+    const create =
+            '<div class="shadebox" id="dataPush">' +
+            '    <div class="modal-dialog" role="document">' +
+            '        <div class="modal-content">' +
+            '            <div class="modal-header align-flexend" style="border:none">' +
+            '                <h5 class="modal-title">数据推送</h5>' +
+            '                <i class="mdi mdi-close-circle-outline font-18 cursor-po" id="closeDataPush"></i>' +
+            '            </div>' +
+            '            <div class="modal-body">' +
+            '                <div class="input-group mb-3" style="align-items: center">' +
+            '                    <div style="min-width: 120px">推送邮箱:</div>' +
+            '                    <input type="text" class="form-control" id="pushEmail" placeholder="多个邮箱以,分割" maxlength="100">' +
+            '                </div>' +
+            '                <div class="input-group mb-3" style="align-items: center">' +
+            '                    <div style="min-width: 120px">推送时间:</div>' +
+            `                    <select name="" id="pushTime" class="custom-select form-control">
+                                      <option value="00:00:00">00:00:00</option>
+                                      <option value="01:00:00">01:00:00</option>
+                                      <option value="02:00:00">02:00:00</option>
+                                      <option value="03:00:00">03:00:00</option>
+                                      <option value="04:00:00">04:00:00</option>
+                                      <option value="05:00:00">05:00:00</option>
+                                      <option value="06:00:00">06:00:00</option>
+                                      <option value="07:00:00">07:00:00</option>
+                                      <option value="08:00:00">08:00:00</option>
+                                      <option value="09:00:00">09:00:00</option>
+                                      <option value="10:00:00">10:00:00</option>
+                                      <option value="11:00:00">11:00:00</option>
+                                      <option value="12:00:00">12:00:00</option>
+                                      <option value="13:00:00">13:00:00</option>
+                                      <option value="14:00:00">14:00:00</option>
+                                      <option value="15:00:00">15:00:00</option>
+                                      <option value="16:00:00">16:00:00</option>
+                                      <option value="17:00:00">17:00:00</option>
+                                      <option value="18:00:00">18:00:00</option>
+                                      <option value="19:00:00">19:00:00</option>
+                                      <option value="20:00:00">20:00:00</option>
+                                      <option value="21:00:00">21:00:00</option>
+                                      <option value="22:00:00">22:00:00</option>
+                                      <option value="23:00:00">23:00:00</option>
+                                  </select>` +
+            '                </div>' +
+            '            </div>' +
+            '            <div class="modal-footer" style="border:none">' +
+            '                <button type="button" class="btn btn-info" id="confirmPush"> 确定</button>' +
+            '                <button type="button" class="btn btn-secondary" id="cancelPush">取消</button>' +
+            '             </div>' +
+            '        </div>' +
+            '    </div>' +
+            '</div>'
+
+    $("body").append(create)
+    if(dataPushObj.toList){
+      $("#pushEmail").val(dataPushObj.toList.join())
+    }
+    if(dataPushObj.popUpTime){
+      $("#pushTime").val(dataPushObj.popUpTime)
+    }
+    $("#closeDataPush").click(function (param) {
+      $("#dataPush").remove()
+      $("#data-push").bootstrapSwitch('state', false, true);
+    })
+    $("#cancelPush").click(function (param) {
+      $("#dataPush").remove()
+      $("#data-push").bootstrapSwitch('state', false, true);
+    })
+    $("#confirmPush").click(function () {
+      let pushEmail = $("#pushEmail").val().trim()
+      let pushTime = $('#pushTime').val()
+      if(pushEmail==""){
+        showtips("推送邮箱不能为空！")
+        return
+      }
+
+      let pushBody = {
+        groupId: monitor_groupid,
+        projectId: monitor_projectid,
+        toList: pushEmail.split(","),
+        popUpTime: pushTime,
+        enable: true,
+      }
+      $.ajax({
+        url: window.location.origin + '/monitor/warningSetting',
+        type: 'post',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        data: JSON.stringify(pushBody),
+        success: function (res) {
+          if(res.code==200){
+            showtips("数据推送已开启！")
+            $("#dataPush").remove()
+          }
+        }
+      })
+    })
+  }
+
+  function createBindingEmailDialog() {
+    const create =
+            '<div class="shadebox" id="createmodel">' +
+            '    <div class="modal-dialog" role="document">' +
+            '        <div class="modal-content">' +
+            '            <div class="modal-header align-flexend" style="border:none">' +
+            '                <h5 class="modal-title"><i class="ti-marker-alt m-r-10"></i>绑定发件邮箱</h5>' +
+            '                <i class="mdi mdi-close-circle-outline font-18 cursor-po" id="closethis"></i>' +
+            '            </div>' +
+            '            <div class="modal-body">' +
+            '                <div class="input-group mb-3" style="align-items: center">' +
+            '                    <div style="min-width: 120px">发件人邮箱:</div>' +
+            '                    <input type="text" class="form-control" id="username" placeholder="请输入发件人邮箱，例如:warring@stonedt.com" maxlength="100">' +
+            '                </div>' +
+            '                <div class="input-group mb-3" style="align-items: center">' +
+            '                    <div style="min-width: 120px">SMTP服务器地址:</div>' +
+            '                    <input type="text" class="form-control" id="host" placeholder="请输入SMTP服务器地址,例如:smtp.exmail.qq.com" maxlength="100">' +
+            '                </div>' +
+            '                <div class="input-group mb-3" style="align-items: center">' +
+            '                    <div style="min-width: 120px">发件人授权码:</div>' +
+            '                    <input type="text" class="form-control" id="password" placeholder="请输入发件人授权码,例如:3fakOUExbvsr3JVo" maxlength="100">' +
+            '                </div>' +
+            '                <div class="input-group mb-3" style="align-items: center">' +
+            '                    <div style="min-width: 120px">SMTP服务器端口:</div>' +
+            '                    <input type="text" class="form-control" id="port" placeholder="请输入SMTP服务器端口，例如:465" maxlength="100">' +
+            '                </div>' +
+            '            </div>' +
+            '            <div class="modal-footer" style="border:none">' +
+            '                <button type="button" class="btn btn-info" id="confirm"> 确定</button>' +
+            '                <button type="button" class="btn btn-secondary" id="cancel">取消</button>' +
+            '             </div>' +
+            '        </div>' +
+            '    </div>' +
+            '</div>'
+
+    $("body").append(create)
+    $("#closethis").click(function (param) {
+      $("#createmodel").remove()
+      $("#data-push").bootstrapSwitch('state', false, true);
+    })
+    $("#cancel").click(function (param) {
+      $("#createmodel").remove()
+      $("#data-push").bootstrapSwitch('state', false, true);
+    })
+    $("#confirm").click(function () {
+      // 获取所有变量
+      let host = $("#host").val();
+      let username = $("#username").val();
+      let password = $("#password").val();
+      let port = $("#port").val();
+      if (username == '' || username == null) {
+        showtips("发件人邮箱不能为空！")
+        return;
+      }
+      if (host == '' || host == null) {
+        showtips("SMTP服务器地址不能为空！")
+        return;
+      }
+      if (password == '' || password == null) {
+        showtips("发件人授权码不能为空！")
+        return;
+      }
+      if (port == '' || port == null) {
+        showtips("SMTP服务器端口不能为空！")
+        return;
+      }
+      let requestBody = new Object();
+      requestBody.host = host;
+      requestBody.username = username;
+      requestBody.password = password;
+      requestBody.port = port;
+      showtips("正在绑定发件邮箱...,会有一定延迟，请耐心等待")
+      $.ajax({
+        url: window.location.origin + '/mail/saveMailConfig',
+        type: 'post',
+        contentType:"application/json; charset=utf-8",
+        dataType: 'json',
+        data: JSON.stringify(requestBody),
+        success: function (res) {
+          if (res.status == 200) {
+            showtips("绑定成功！")
+            $("#createmodel").remove()
+            dataPushDialog()
+          } else {
+            showtips(res.msg)
+          }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          if (xhr.status === 403) {
+            window.location.href = ctxPath + "login";
+          }
+        }
+      });
+    })
+  }
 
     // 移动端二维码弹窗
     $.ajax({
