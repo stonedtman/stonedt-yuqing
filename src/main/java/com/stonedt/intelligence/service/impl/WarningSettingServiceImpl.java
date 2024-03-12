@@ -49,19 +49,21 @@ public class WarningSettingServiceImpl implements WarningSettingService {
     public ResultVO<Void> warningSetting(MonitorWarningSetting monitorWarningSetting,
                                          HttpServletRequest request, HttpServletResponse response) {
         Date popUpTime = monitorWarningSetting.getPopUpTime();
-        if (popUpTime == null) {
-            return ResultVO.error("推送时间不能为空");
-        }
-        //检查是否是准点
-        if (popUpTime.getMinutes() != 0 || popUpTime.getSeconds() != 0) {
-            return ResultVO.error("推送时间必须是准点");
-        }
-        //检查收件人列表
         Set<String> toList = monitorWarningSetting.getToList();
-        if (toList == null || toList.isEmpty()) {
-            return ResultVO.error("收件人不能为空");
-        }
 
+        if (monitorWarningSetting.isEnable()){
+            if (popUpTime == null) {
+                return ResultVO.error("推送时间不能为空");
+            }
+            //检查是否是准点
+            if (popUpTime.getMinutes() != 0 || popUpTime.getSeconds() != 0) {
+                return ResultVO.error("推送时间必须是准点");
+            }
+            //检查收件人列表
+            if (toList == null || toList.isEmpty()) {
+                return ResultVO.error("收件人不能为空");
+            }
+        }
 
         User user = userUtil.getuser(request);
 
