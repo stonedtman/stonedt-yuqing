@@ -65,7 +65,7 @@ mybatis:
 
 logging:
   level:
-     com.stonedt.intelligence.dao : debug
+     com.stonedt.intelligence.dao : info
 kaptcha:
   border: "yes"
   border.color: 105,179,90
@@ -90,3 +90,13 @@ springdoc:
     path: /swagger-ui
     enabled: true
   packagesToScan: com.stonedt.intelligence.api
+
+knife4j:
+  # 开启增强配置
+  enable: true
+  basic:
+    enable: true
+    # Basic认证用户名
+    username: test
+    # Basic认证密码
+    password: 123
