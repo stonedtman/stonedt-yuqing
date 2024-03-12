@@ -3,6 +3,8 @@ package com.stonedt.intelligence.dao;
 import com.stonedt.intelligence.entity.MonitorWarningSetting;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
 * @author 文轩
 * @description 针对表【monitor_warning_setting】的数据库操作Mapper
@@ -19,6 +21,8 @@ public interface MonitorWarningSettingDao {
     void update(MonitorWarningSetting monitorWarningSetting);
 
     MonitorWarningSetting SelectByProjectId(Long projectId);
+
+    List<MonitorWarningSetting> selectWaitWarningSetting();
 }
 
 

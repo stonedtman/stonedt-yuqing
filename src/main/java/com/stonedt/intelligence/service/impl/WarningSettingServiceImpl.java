@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -116,5 +117,13 @@ public class WarningSettingServiceImpl implements WarningSettingService {
             }
         }
         return ResultVO.success(monitorWarningSetting);
+    }
+
+    /**
+     * 查询等待推送的预警设置
+     */
+    @Override
+    public List<MonitorWarningSetting> getWaitWarningSetting() {
+        return monitorWarningSettingDao.selectWaitWarningSetting();
     }
 }

@@ -49,4 +49,12 @@
         from monitor_warning_setting
         where project_id = #{projectId}
     </select>
+    <select id="selectWaitWarningSetting" resultType="com.stonedt.intelligence.entity.MonitorWarningSetting">
+        select
+         *
+        from monitor_warning_setting
+        where enable = 1
+        and pop_up_time &lt; now() + interval 1 minute
+        and pop_up_time &gt; now() - interval 1 minute
+    </select>
 </mapper>

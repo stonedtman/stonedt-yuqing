@@ -502,6 +502,7 @@ public class MonitorController {
 	}
 
 	@GetMapping("/warningSetting/{projectId}")
+	@ResponseBody
 	public ResultVO<MonitorWarningSetting> warningSetting(@PathVariable Long projectId, HttpServletRequest request) {
 		return warningSettingService.getWarningSetting(projectId, request);
 	}
