@@ -22,7 +22,8 @@
     </sql>
     <insert id="insert">
         insert into monitor_warning_setting (group_id, project_id, to_list, pop_up_time, enable, create_time, update_time)
-        values (#{groupId,jdbcType=BIGINT}, #{projectId,jdbcType=BIGINT}, #{toList,typeHandler=com.stonedt.intelligence.handler.SetTypeHandler}, #{popUpTime,jdbcType=TIMESTAMP}, #{enable,jdbcType=TINYINT}, now(), now())
+        values (#{groupId,jdbcType=BIGINT}, #{projectId,jdbcType=BIGINT}, #{toList,typeHandler=com.stonedt.intelligence.handler.SetTypeHandler},
+                #{popUpTime,jdbcType=TIME}, #{enable,jdbcType=TINYINT}, now(), now())
     </insert>
     <update id="update">
         update monitor_warning_setting
@@ -31,7 +32,7 @@
                 to_list = #{toList,typeHandler=com.stonedt.intelligence.handler.SetTypeHandler},
             </if>
             <if test="popUpTime != null">
-                pop_up_time = #{popUpTime,jdbcType=TIMESTAMP},
+                pop_up_time = #{popUpTime,jdbcType=TIME},
             </if>
             <if test="enable != null">
                 enable = #{enable,jdbcType=TINYINT},
@@ -54,7 +55,7 @@
          *
         from monitor_warning_setting
         where enable = 1
-        and pop_up_time &lt; now() + interval 1 minute
-        and pop_up_time &gt; now() - interval 1 minute
+        and pop_up_time &lt; time(now()) + interval 1 minute
+        and pop_up_time &gt; time(now()) - interval 1 minute
     </select>
 </mapper>

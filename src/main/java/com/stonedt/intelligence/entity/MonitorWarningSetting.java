@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Date;
 import java.util.Set;
 
@@ -39,7 +40,7 @@ public class MonitorWarningSetting implements Serializable {
     /**
      * 推送时间
      */
-    private Date popUpTime;
+    private Time popUpTime;
 
     /**
      * 是否开启推送
