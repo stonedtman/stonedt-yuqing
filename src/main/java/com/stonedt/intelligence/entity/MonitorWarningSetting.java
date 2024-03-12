@@ -1,5 +1,6 @@
 package com.stonedt.intelligence.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
@@ -40,6 +41,7 @@ public class MonitorWarningSetting implements Serializable {
     /**
      * 推送时间
      */
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "GMT+8")
     private Time popUpTime;
 
     /**
