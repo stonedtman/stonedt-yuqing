@@ -132,6 +132,8 @@ export default {
         this.schemagroupoptions = res.data
         this.schemagroup = this.schemagroupoptions[0].groupId
         this.listProjectByGroupId()
+      }).catch(err=>{
+        // window.location.href = window.location.origin + "/login";
       })
     },
     listProjectByGroupId(){
@@ -167,30 +169,49 @@ export default {
       formData.append("timePeriod", this.date)
       getAanlysisByProjectidAndTimeperiod(formData).then(res=>{
         let data = res.data
-        this.updatedOn = this.getDateDiff(data.create_time)
-        // 如果超过48小时，提示用户刷新数据
-        let now = new Date().getTime();
-        let lasttime = new Date(data.create_time).getTime();
-        let diff = now - lasttime;
-        if (diff > 172800000) {
+        
+        if(data.isNeedRefresh){
           this.showNewInfo()
+          this.loading = false
+        }
+
+        if(data.create_time){
+          this.updatedOn = this.getDateDiff(data.create_time)
+          // 如果超过48小时，提示用户刷新数据
+          let now = new Date().getTime();
+          let lasttime = new Date(data.create_time).getTime();
+          let diff = now - lasttime;
+          if (diff > 172800000) {
+            this.showNewInfo()
+          }
+        }
+        console.log(data);
+        if(data.emotional_proportion){
+          let emotional_proportion = JSON.parse(data.emotional_proportion)
+          this.$refs.sourcedistribution.changeData(emotional_proportion)
+        }
+
+        if(data.data_overview&&data.hot_spot_ranking){
+          let data_overview = JSON.parse(data.data_overview)
+          let hot_spot_ranking = JSON.parse(data.hot_spot_ranking)
+          this.$refs.chart.changeData(data_overview,hot_spot_ranking)
         }
         
-        let emotional_proportion = JSON.parse(data.emotional_proportion)
-        this.$refs.sourcedistribution.changeData(emotional_proportion)
-
-        let data_overview = JSON.parse(data.data_overview)
-        let hot_spot_ranking = JSON.parse(data.hot_spot_ranking)
-        this.$refs.chart.changeData(data_overview,hot_spot_ranking)
-
-        let hot_event_ranking = JSON.parse(data.hot_event_ranking)
-        this.$refs.popularinformation.changeData(hot_event_ranking)
+        if(data.hot_event_ranking){
+          let hot_event_ranking = JSON.parse(data.hot_event_ranking)
+          this.$refs.popularinformation.changeData(hot_event_ranking)
+        }
         
-        let data_source_analysis = JSON.parse(data.data_source_analysis)
-        this.$refs.sensitiveinformation.changeData(data_source_analysis)
+        if(data.data_source_analysis){
+          let data_source_analysis = JSON.parse(data.data_source_analysis)
+          this.$refs.sensitiveinformation.changeData(data_source_analysis)
+        }
+        
+        if(data.event_statistics){
+          let event_statistics = JSON.parse(data.event_statistics)
+          this.$refs.publisherinteraction.changeData(event_statistics)
+        }
 
-        let event_statistics = JSON.parse(data.event_statistics)
-        this.$refs.publisherinteraction.changeData(event_statistics)
         this.loading = false
       })
     },
