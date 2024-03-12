@@ -27,12 +27,6 @@
     <update id="update">
         update monitor_warning_setting
         <set>
-            <if test="groupId != null">
-                group_id = #{groupId,jdbcType=BIGINT},
-            </if>
-            <if test="projectId != null">
-                project_id = #{projectId,jdbcType=BIGINT},
-            </if>
             <if test="toList != null">
                 to_list = #{toList,typeHandler=com.stonedt.intelligence.handler.SetTypeHandler},
             </if>
@@ -44,7 +38,7 @@
             </if>
             update_time = now()
         </set>
-        where id = #{id,jdbcType=INTEGER}
+        where project_id = #{projectId}
     </update>
     <select id="exitByProjectId" resultType="java.lang.Boolean">
         select count(*) from monitor_warning_setting where project_id = #{projectId}
