@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.sql.Time;
@@ -41,7 +42,8 @@ public class MonitorWarningSetting implements Serializable {
     /**
      * 推送时间
      */
-    @JsonFormat(pattern = "HH:mm", timezone = "GMT+8")
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "GMT+8",shape = JsonFormat.Shape.STRING)
+    @DateTimeFormat(pattern = "HH:mm:ss")
     private Time popUpTime;
 
     /**
