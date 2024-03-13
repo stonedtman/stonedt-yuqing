@@ -26,5 +26,5 @@ public interface OpinionConditionDao {
 	Map<String,Object> getOpinionConditionById(@Param("map") Map<String,Object> map);
 
 
-
+    OpinionCondition selectByProjectId(Long projectId);
 }

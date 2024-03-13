@@ -75,4 +75,6 @@ public interface ProjectDao {
 
 
     boolean existByProjectIdAndUserId(@Param("projectId") Long projectId,@Param("userId") Long userId);
+
+    Project selectByProjectId(long projectId);
 }

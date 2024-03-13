@@ -1,6 +1,10 @@
 package com.stonedt.intelligence.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.stonedt.intelligence.entity.OpinionCondition;
+import com.stonedt.intelligence.entity.Project;
+import com.stonedt.intelligence.vo.ArticleData;
+import com.stonedt.intelligence.vo.PageInfo;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,4 +44,9 @@ public interface MonitorService {
 	JSONObject getArticleCityList(JSONObject paramJson);
 
 	JSONObject getAnalysisArticleList(JSONObject paramJson);
+
+    /**
+     * 根据偏好设置获取文章列表
+     */
+    PageInfo<ArticleData> getArticleListByOpinionCondition(OpinionCondition opinionCondition, Project project,Integer pageNum);
 }

@@ -85,6 +85,21 @@ public class PlatformServiceImpl implements PlatformService {
     @Value("${platform.nlp.check-url}")
     private String nlpCheckUrl;
 
+    @Value("${account.public.use}")
+    private boolean accountPublicUse;
+
+    @Value("${account.public.nlp.secret-id}")
+    private String publicNlpSecretId;
+
+    @Value("${account.public.nlp.secret-key}")
+    private String publicNlpSecretKey;
+
+    @Value("${account.public.xie.secret-id}")
+    private String publicXieSecretId;
+
+    @Value("${account.public.xie.secret-key}")
+    private String publicXieSecretKey;
+
     public PlatformServiceImpl(UserDao userDao,
                                RestTemplate restTemplate,
                                OkHttpClient okHttpClient,
@@ -240,11 +255,21 @@ public class PlatformServiceImpl implements PlatformService {
             }
         };
 
+        final String secretId;
+        final String secretKey;
+        if (accountPublicUse) {
+            secretId = publicNlpSecretId;
+            secretKey = publicNlpSecretKey;
+        }else {
+            secretId = user.getNlp_secret_id();
+            secretKey = user.getNlp_secret_key();
+        }
+
         params.add("images", fileAsResource);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-        headers.set("secret-id",user.getNlp_secret_id());
-        headers.set("secret-key",user.getNlp_secret_key());
+        headers.set("secret-id",secretId);
+        headers.set("secret-key",secretKey);
         HttpEntity<MultiValueMap<String,Object>> requestEntity  = new HttpEntity<>(params, headers);
         return restTemplate.postForObject(url, requestEntity, String.class);
     }
@@ -381,11 +406,21 @@ public class PlatformServiceImpl implements PlatformService {
         }
         copyWriting.getParams().put("text", text);
         //调用写作宝服务
+        final String secretId;
+        final String secretKey;
+        if (accountPublicUse) {
+            secretId = publicXieSecretId;
+            secretKey = publicXieSecretKey;
+        }else {
+            secretId = user.getXie_secret_id();
+            secretKey = user.getXie_secret_key();
+        }
+
         RequestBody requestBody = RequestBody.create(JSON.toJSONString(copyWriting), okhttp3.MediaType.get("application/json"));
         Request request = new Request
                 .Builder()
-                .addHeader("secret-id", user.getXie_secret_id())
-                .addHeader("secret-key", user.getXie_secret_key())
+                .addHeader("secret-id", secretId)
+                .addHeader("secret-key", secretKey)
                 .method("POST", requestBody)
                 .url(xieUrl+XieConstant.XIE_COPY_WRITING)
                 .build();
@@ -583,11 +618,8 @@ public class PlatformServiceImpl implements PlatformService {
             text = text.substring(0, 2900);
         }
         copyWriting.getParams().put("text", text);
-        //设置请求头
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("secret-id", user.getXie_secret_id());
-        headers.set("secret-key", user.getXie_secret_key());
+
+        HttpHeaders headers = getHttpHeaders(user);
         String jsonString = JSON.toJSONString(copyWriting);
         HttpEntity<String> requestEntity = new HttpEntity<>(jsonString, headers);
         String result = restTemplate.postForObject(xieUrl+XieConstant.XIE_TITLE, requestEntity, String.class);
@@ -603,6 +635,25 @@ public class PlatformServiceImpl implements PlatformService {
             redisTemplate.opsForValue().set(RedisPrefixConstant.XIE_TITLE + articleId,(String)data,2, TimeUnit.DAYS);
         }
         return ResultUtil.build(Integer.parseInt(code.toString()), msg.toString(), data);
+    }
+
+    @NotNull
+    private HttpHeaders getHttpHeaders(User user) {
+        final String secretId;
+        final String secretKey;
+        if (accountPublicUse) {
+            secretId = publicXieSecretId;
+            secretKey = publicXieSecretKey;
+        }else {
+            secretId = user.getXie_secret_id();
+            secretKey = user.getXie_secret_key();
+        }
+        //设置请求头
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("secret-id", secretId);
+        headers.set("secret-key", secretKey);
+        return headers;
     }
 
     /**

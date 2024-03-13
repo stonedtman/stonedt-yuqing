@@ -34,6 +34,15 @@ public interface MailService {
      */
     void sendWarningMail(MailConfig mailConfig, String content) throws MessagingException, GeneralSecurityException, UnsupportedEncodingException;
 
+
+    /**
+     * 发送预警邮件
+     *
+     * @param mailConfig 邮件配置
+     * @param byteArray
+     */
+    void sendWarningMail(MailConfig mailConfig, byte[] byteArray) throws MessagingException, GeneralSecurityException, UnsupportedEncodingException;
+
     /**
      * 发送预警邮件，并抄送
      */

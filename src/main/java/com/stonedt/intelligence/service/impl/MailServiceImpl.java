@@ -8,16 +8,20 @@ import com.stonedt.intelligence.service.MailService;
 import com.stonedt.intelligence.util.ResultUtil;
 import com.stonedt.intelligence.util.UserUtil;
 import com.sun.mail.util.MailSSLSocketFactory;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.activation.DataHandler;
 import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import javax.mail.internet.*;
+import javax.mail.util.ByteArrayDataSource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.security.GeneralSecurityException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 
@@ -32,6 +36,9 @@ public class MailServiceImpl implements MailService {
     private final UserDao userDao;
 
     private final UserUtil userUtil;
+
+
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
     public MailServiceImpl(UserDao userDao,
                            UserUtil userUtil) {
@@ -123,6 +130,70 @@ public class MailServiceImpl implements MailService {
     @Override
     public void sendWarningMail(MailConfig mailConfig, String content) throws MessagingException, GeneralSecurityException, UnsupportedEncodingException {
         sendMail(mailConfig,"思通舆情  预警邮件推送",content,"思通舆情",true);
+    }
+
+    /**
+     * 发送预警邮件
+     *
+     * @param mailConfig 邮件配置
+     * @param byteArray
+     */
+    @Override
+    public void sendWarningMail(MailConfig mailConfig, byte[] byteArray) throws MessagingException, GeneralSecurityException, UnsupportedEncodingException {
+        Properties prop = new Properties();
+        // 开启debug调试，以便在控制台查看
+        prop.setProperty("mail.debug", "true");
+        // 设置邮件服务器主机名
+        prop.setProperty("mail.host", mailConfig.getHost());
+        // 发送服务器需要身份验证
+        prop.setProperty("mail.smtp.auth", "true");
+        // 发送邮件协议名称
+        prop.setProperty("mail.transport.protocol", "smtp");
+
+        // 开启SSL加密，否则会失败
+        MailSSLSocketFactory sf = new MailSSLSocketFactory();
+        sf.setTrustAllHosts(true);
+        prop.put("mail.smtp.ssl.enable", "true");
+        prop.put("mail.smtp.ssl.socketFactory", sf);
+
+        // 创建session
+        Session session = Session.getInstance(prop);
+        // 通过session得到transport对象
+        Transport ts = session.getTransport();
+        // 连接邮件服务器：邮箱类型，帐号，授权码代替密码（更安全）
+        ts.connect(mailConfig.getHost(), mailConfig.getUsername(), mailConfig.getPassword());
+        // 创建邮件对象
+        MimeMessage message = new MimeMessage(session);
+        // 指明邮件的发件人
+        message.setFrom(new InternetAddress(mailConfig.getUsername(), "思通舆情"));
+        // 指明邮件的收件人，现在发件人和收件人是一样的，那就是自己给自己发
+        message.setRecipient(Message.RecipientType.TO, new InternetAddress(mailConfig.getTo()));
+        // 邮件的标题
+        Date date = new Date();
+        String format = sdf.format(date);
+        String title = "思通舆情"+format;
+        message.setSubject(title, "UTF-8");
+        // 创建附件
+        MimeBodyPart attachment = new MimeBodyPart();
+        attachment.setDataHandler(new DataHandler(new ByteArrayDataSource(byteArray, "application/octet-stream")));
+        attachment.setFileName(MimeUtility.encodeText(title + ".xlsx"));
+
+        // 创建容器描述数据关系
+        MimeMultipart mp = new MimeMultipart();
+        mp.addBodyPart(attachment);
+        message.setContent(mp);
+
+
+        // 抄送
+        if (mailConfig.getCc()!=null) {
+            for (String cc : mailConfig.getCc()) {
+                message.addRecipient(Message.RecipientType.CC, new InternetAddress(cc));
+            }
+        }
+
+        // 发送邮件
+        ts.sendMessage(message, message.getAllRecipients());
+        ts.close();
     }
 
     /**

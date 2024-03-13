@@ -2,23 +2,21 @@ package com.stonedt.intelligence;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.stonedt.intelligence.dao.AnalysisQuartzDao;
-import com.stonedt.intelligence.dao.DefaultOpinionConditionDao;
-import com.stonedt.intelligence.dao.ProjectTaskDao;
+import com.stonedt.intelligence.dao.*;
 import com.stonedt.intelligence.dto.WechatUserInfo;
 import com.stonedt.intelligence.dto.WxMpTemplateMessage;
 import com.stonedt.intelligence.dto.WxMpXmlMessage;
-import com.stonedt.intelligence.entity.AnalysisQuartzDo;
-import com.stonedt.intelligence.entity.DefaultOpinionCondition;
-import com.stonedt.intelligence.entity.OpinionCondition;
-import com.stonedt.intelligence.entity.ProjectTask;
+import com.stonedt.intelligence.entity.*;
 import com.stonedt.intelligence.quartz.AnalysisDataRequest;
 import com.stonedt.intelligence.quartz.WarningSchedule;
+import com.stonedt.intelligence.service.MonitorService;
 import com.stonedt.intelligence.service.PlatformService;
 import com.stonedt.intelligence.service.WechatService;
 import com.stonedt.intelligence.util.DateUtil;
 import com.stonedt.intelligence.util.ProjectWordUtil;
 import com.stonedt.intelligence.util.SnowFlake;
+import com.stonedt.intelligence.vo.ArticleData;
+import com.stonedt.intelligence.vo.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,6 +41,11 @@ import java.util.Map;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class StonedtPortalApplicationTests {
+
+	@Autowired
+	private MonitorService monitorService;
+
+
 
 
 //	@Value("${schedule.analysispt.open}")
@@ -79,12 +82,25 @@ public class StonedtPortalApplicationTests {
 //	@Autowired
 //	DefaultOpinionConditionDao defaultOpinionConditionDao;
 
+//	@Autowired
+//	WarningSchedule warningSchedule;
+
 	@Autowired
-	WarningSchedule warningSchedule;
+	private OpinionConditionDao opinionConditionDao;
+
+	@Autowired
+	ProjectDao projectDao;
 	@Test
 	public void contextLoads() throws IOException, ParseException {
 
-		warningSchedule.start();
+//		OpinionCondition opinionCondition = opinionConditionDao.selectByProjectId(1767110003782717440L);
+//
+//		Project project = projectDao.selectByProjectId(1767110003782717440L);
+//
+//		PageInfo<ArticleData> articleListByOpinionCondition = monitorService.getArticleListByOpinionCondition(opinionCondition, project, 1);
+//		System.out.println(articleListByOpinionCondition);
+
+//		warningSchedule.start();
 //		String policyData = SynthesizeSchedule.getPolicyData();
 //		System.out.println(policyData);
 //		synthesizeSchedule.popularInformation();

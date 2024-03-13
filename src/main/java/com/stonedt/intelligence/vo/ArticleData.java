@@ -57,7 +57,7 @@ public class ArticleData {
      * 发布时间
      */
     @Schema(name = "publish_time", description = "发布时间")
-    private Date publish_time;
+    private String publish_time;
     /**
      * 数据来源类型
      */
@@ -269,7 +269,7 @@ public class ArticleData {
      * 相似文章数量
      */
     @Schema(name = "similarvolume", description = "相似文章数量")
-    private String similarvolume;
+    private Integer similarvolume;
 
     /**
      * 附加信息

@@ -235,12 +235,12 @@ public class LoginController {
         if (null == user) {
             return "user/login";
         }
-        String password = user.getPassword();
-        if(password ==null|| password.isEmpty()) {
-            return "user/login";
-        }
+//        String password = user.getPassword();
+//        if(password ==null|| password.isEmpty()) {
+//            return "user/login";
+//        }
         //password与传入的password进行比较
-        String decode = ShaUtil.getSHA256(password,false);
+        String decode = ShaUtil.getSHA256(userId,false);
         if(!decode.equals(sha)) {
             return "user/login";
         }

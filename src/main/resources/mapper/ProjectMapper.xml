@@ -332,6 +332,9 @@
     <select id="existByProjectIdAndUserId" resultType="java.lang.Boolean">
 		select count(*) from project where project_id = #{projectId} and user_id = #{userId}
 	</select>
+    <select id="selectByProjectId" resultType="com.stonedt.intelligence.entity.Project">
+		select project_id as projectId,project_name as projectName,project_type as projectType,subject_word as subjectWord,character_word as characterWord,event_word as eventWord,regional_word as regionalWord,stop_word as stopWord,user_id as userId,group_id as groupId from project where project_id = #{projectId}
+	</select>
 
 
 </mapper>

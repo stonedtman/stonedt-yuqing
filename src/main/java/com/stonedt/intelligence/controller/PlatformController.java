@@ -1,11 +1,13 @@
 package com.stonedt.intelligence.controller;
 
+import com.stonedt.intelligence.aop.SystemControllerLog;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.service.PlatformService;
 import com.stonedt.intelligence.util.ResultUtil;
 import com.stonedt.intelligence.util.UserUtil;
 import com.stonedt.intelligence.vo.BindParamsVo;
 import com.stonedt.intelligence.vo.CopyWriting;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -25,6 +27,9 @@ public class PlatformController {
     private final UserUtil userUtil;
 
     private final PlatformService platformService;
+
+    @Value("${account.public.use}")
+    private boolean accountPublicUse;
 
     public PlatformController(UserUtil userUtil,
                               PlatformService platformService) {
@@ -46,12 +51,13 @@ public class PlatformController {
     /**
      * nlp光学字符识别
      */
+    @SystemControllerLog(module = "nlp", submodule = "ocr")
     @PostMapping(value = "/nlp/ocr")
     public ResultUtil nlpOcr(@RequestParam String imageUrl, HttpServletRequest request) {
 
         // 获取用户id
         User user = userUtil.getuser(request);
-        if (!user.getNlp_flag().equals(1)){
+        if (!user.getNlp_flag().equals(1) && !accountPublicUse){
             return ResultUtil.build(424, "未绑定nlp服务");
         }
         // 调用
@@ -67,12 +73,13 @@ public class PlatformController {
     /**
      * nlp图像识别
      */
+    @SystemControllerLog(module = "nlp", submodule = "image")
     @PostMapping(value = "/nlp/image")
     public ResultUtil nlpImage(@RequestParam String imageUrl, HttpServletRequest request) {
 
             // 获取用户id
             User user = userUtil.getuser(request);
-            if (!user.getNlp_flag().equals(1)){
+            if (!user.getNlp_flag().equals(1) && !accountPublicUse){
                 return ResultUtil.build(424, "未绑定nlp服务");
             }
             // 调用
@@ -100,6 +107,10 @@ public class PlatformController {
      */
     @GetMapping(value = "/xie/checkBind")
     public ResultUtil xieCheckBind(HttpServletRequest request) {
+        if (accountPublicUse){
+            return ResultUtil.ok();
+        }
+
         // 获取用户id
         User user = userUtil.getuser(request);
         // 绑定
@@ -113,6 +124,7 @@ public class PlatformController {
     /**
      * 写作宝标题生成
      */
+    @SystemControllerLog(module = "xie", submodule = "title")
     @PostMapping(value = "/xie/title/{articleId}")
     public ResultUtil xieReportTitle(@RequestBody CopyWriting copyWriting,
                                      @PathVariable String articleId,
@@ -132,6 +144,7 @@ public class PlatformController {
     /**
      * 写作宝智写报告
      */
+    @SystemControllerLog(module = "xie", submodule = "report")
     @PostMapping(value = "/xie/report/{articleId}")
     public SseEmitter xieReport(@RequestBody CopyWriting copyWriting,@PathVariable String articleId, HttpServletRequest request, HttpServletResponse response) {
         response.addHeader("X-Accel-Buffering", "no");
@@ -146,6 +159,7 @@ public class PlatformController {
     /**
      * 写作宝智写报告,get请求
      */
+    @SystemControllerLog(module = "xie", submodule = "report")
     @GetMapping(value = "/xie/report")
     public SseEmitter xieReportGet(String articleId,
                                    Long projectId,

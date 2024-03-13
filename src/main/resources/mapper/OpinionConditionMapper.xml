@@ -92,4 +92,7 @@
 
       WHERE   project_id = #{map.projectid}
     </select>
+    <select id="selectByProjectId" resultType="com.stonedt.intelligence.entity.OpinionCondition">
+        select * from opinion_condition where project_id = #{projectId}
+    </select>
 </mapper>
