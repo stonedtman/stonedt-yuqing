@@ -1745,7 +1745,7 @@ $("#currentyear").text((new Date()).getFullYear());
     let articleContent = ""
     function intelligent_write() {
         articleTitle = ""
-        articleContent = ""
+        // articleContent = ""
         $.ajax({
             url: window.location.origin + "/platform/xie/checkBind",
             method: "get",
@@ -1789,6 +1789,7 @@ $("#currentyear").text((new Date()).getFullYear());
         });
     }
     let source = null
+let stopRequestTitle = false;
     function reporting() {
         var eventHtml =
             '<div class="shadebox" id="intelligentWrite">'+
@@ -1804,11 +1805,15 @@ $("#currentyear").text((new Date()).getFullYear());
         $("body").append(eventHtml)
         $("#close_this").click(function (param) {
             $("#intelligentWrite").remove()
-            if(source!=null){
-                source.close()
-            }
+            // if(source!=null){
+            //     source.close()
+            // }
         })
         loading(".event-box-body")
+        if(stopRequestTitle){
+            return
+        }
+        stopRequestTitle = true
         $.ajax({
             url: window.location.origin + "/platform/xie/title/"+articleId,
             method: "post",
@@ -1823,7 +1828,9 @@ $("#currentyear").text((new Date()).getFullYear());
             success: function (res) {
                 if(res.status==200){
                     articleTitle = res.data
-                    sse()
+                    if(document.querySelector("#intelligentWrite")){
+                        sse()
+                    }
                 }else if(res.status==302){
                     $("#intelligentWrite").remove()
                     $.blockUI({
@@ -1852,6 +1859,7 @@ $("#currentyear").text((new Date()).getFullYear());
                 }else{
                     $(".event-box-body").html("<div class='error-tips'>"+res.msg+"</div>");
                 }
+                stopRequestTitle = false
             },
             error: function (xhr, ajaxOptions, thrownError) {
 
@@ -1861,21 +1869,32 @@ $("#currentyear").text((new Date()).getFullYear());
                     $(".event-box-body").html("");
                     dataerror(".event-box-body");
                 }
+                stopRequestTitle = false
             }
         });
     }
+    let stopRequestContent = false;
     async function sse() {
+        if(stopRequestContent){
+            reporting_content(0)
+            setTimeout(function(){
+                reporting_content(1)
+            },1000)
+            return
+        }
         let num = 0
         reporting_content(num)
         num++
         source = new EventSource(window.location.origin + `/platform/xie/report?title=${encodeURIComponent(articleTitle)}&articleId=${encodeURIComponent(articleId)}&projectId=${encodeURIComponent(projectId)}&relatedword=${encodeURIComponent(relatedword)}&publish_time=${encodeURIComponent(publish_time)}`)
         source.onopen=function () {
+            articleContent = ""
+            stopRequestContent = true
             if(num>1){
                 source.close()
             }
-            if(!document.querySelector("#intelligentWrite")){
-                source.close()
-            }
+            // if(!document.querySelector("#intelligentWrite")){
+            //     source.close()
+            // }
         }
         source.onmessage=function (e) {
             if(e.type=="message"){
@@ -1883,12 +1902,15 @@ $("#currentyear").text((new Date()).getFullYear());
                 reporting_content(num)
             }
             if(e.type=="error"){
-                $("#intelligentWrite .content").html("<div class='error-tips'>"+e.data+"</div>")
+                if(document.querySelector("#intelligentWrite")){
+                    $("#intelligentWrite .content").html("<div class='error-tips'>"+e.data+"</div>")
+                }
             }
         }
         source.onerror=function () {
             source.close()
             num++
+            stopRequestContent = false
         }
     }
     function reporting_content(num) {
@@ -1906,11 +1928,13 @@ $("#currentyear").text((new Date()).getFullYear());
             $(".event-box-body").html(eventHtml)
             loading(".report-content .content")
         }else{
-            $("#intelligentWrite .content").html(articleContent)
-            let dialoguelist = document.querySelector("#intelligentWrite .content")
-            dialoguelist.scrollTo({
-                top: dialoguelist.scrollHeight
-            });
+            if(document.querySelector("#intelligentWrite")){
+                $("#intelligentWrite .content").html(articleContent)
+                let dialoguelist = document.querySelector("#intelligentWrite .content")
+                dialoguelist.scrollTo({
+                    top: dialoguelist.scrollHeight
+                });
+            }
         }
     }
     function intelligent_write_recognition() {

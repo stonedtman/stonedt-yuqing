@@ -1689,12 +1689,6 @@
               </div>
             </div>
             <!--<hr>-->
-            <div class="filter-box">
-              <div class="filter-title">数据推送</div>
-              <div id="statusSwitch" class="bt-switch-early-warning">
-                <input id="data-push" type="checkbox" data-on-color="success" data-off-color="warning">
-              </div>
-            </div>
             <!-- <hr> -->
             <div class="filter-box">
               <div class="card-title filter-title">时间范围</div>
@@ -1930,6 +1924,19 @@
             </div>
             <!-- <hr> -->
             <div class="filter-box">
+              <div class="filter-title">
+                数据推送
+                <i class="mdi mdi-minus-circle-outline" style="display: none" id="tshide"></i>
+                <i class="mdi mdi-plus-circle-outline" id="tsshow"></i>
+              </div>
+              <div id="statusSwitch" class="bt-switch-early-warning inline-list" style="display: none">
+<!--                <input id="data-push" type="checkbox" data-on-color="success" data-off-color="warning">-->
+                <span data-push="1" class="badge badge-pill badge-light">开启推送</span>
+                <span data-push="0" class="badge badge-pill badge-info">关闭推送</span>
+              </div>
+            </div>
+            <!-- <hr> -->
+            <div class="filter-box">
               <div class="card-title filter-title">
                 数据导出
                 <i
@@ -2107,25 +2114,44 @@
       document.querySelector(".recommend-content-list").style.marginTop = 0
     }
 
-    $(".bt-switch-early-warning input[type='checkbox']").bootstrapSwitch({
-      onText: "ON",
-      offText: "OFF",
-      onColor: "success",
-      offColor: "warning",
-      size: "normal",
-      handleWidth: "10",
-      onSwitchChange: function (event, state) {
-        window.parent.Warn_Start = state;
-        var $el = $(event.el)
-                , value = event.value;
-        var step = this.value;
-        if (state == true) {
-          changeSwitch(true)
-        } else {
-          changeSwitch(false)
-        }
+    // $(".bt-switch-early-warning input[type='checkbox']").bootstrapSwitch({
+    //   onText: "ON",
+    //   offText: "OFF",
+    //   onColor: "success",
+    //   offColor: "warning",
+    //   size: "normal",
+    //   handleWidth: "10",
+    //   onSwitchChange: function (event, state) {
+    //     window.parent.Warn_Start = state;
+    //     var $el = $(event.el)
+    //             , value = event.value;
+    //     var step = this.value;
+    //     if (state == true) {
+    //       changeSwitch(true)
+    //     } else {
+    //       changeSwitch(false)
+    //     }
+    //   }
+    // })
+
+  $("#statusSwitch span").click(function (e) {
+    var active = "badge-info";
+    var normal = "badge-light";
+    var act = $(this).hasClass(active);
+    if (act) {} else {
+      $(this).siblings().removeClass(active);
+      $(this).siblings().addClass(normal);
+      $(this).removeClass(normal);
+      $(this).addClass(active);
+
+      let s = $(this).attr("data-push")
+      if (s == 1) {
+        changeSwitch(true)
+      } else {
+        changeSwitch(false)
       }
-    })
+    }
+  });
 
   let dataPushObj = ""
   $.ajax({
@@ -2136,11 +2162,40 @@
       if(res.code==200){
         dataPushObj = res.data
         if(dataPushObj.enable){
-          $("#data-push").bootstrapSwitch('state', true, true);
+          // $("#data-push").bootstrapSwitch('state', true, true);
+          changeDataPush(true)
         }
       }
     }
   })
+
+  function changeDataPush(status){
+    var active = "badge-info";
+    var normal = "badge-light";
+    if(status){
+      $("#statusSwitch span").eq(0).addClass(active)
+      $("#statusSwitch span").eq(0).removeClass(normal)
+      $("#statusSwitch span").eq(1).addClass(normal)
+      $("#statusSwitch span").eq(1).removeClass(active)
+    }else{
+      $("#statusSwitch span").eq(0).addClass(normal)
+      $("#statusSwitch span").eq(0).removeClass(active)
+      $("#statusSwitch span").eq(1).addClass(active)
+      $("#statusSwitch span").eq(1).removeClass(normal)
+    }
+  }
+
+  $("#tsshow").click(function (e) {
+    $(this).hide();
+    $("#tshide").show();
+    $("#statusSwitch").show();
+  });
+
+  $("#tshide").click(function (e) {
+    $(this).hide();
+    $("#tsshow").show();
+    $("#statusSwitch").hide();
+  });
 
   function changeSwitch(v){
       if(v){
@@ -2246,11 +2301,13 @@
     }
     $("#closeDataPush").click(function (param) {
       $("#dataPush").remove()
-      $("#data-push").bootstrapSwitch('state', false, true);
+      // $("#data-push").bootstrapSwitch('state', false, true);
+      changeDataPush(false)
     })
     $("#cancelPush").click(function (param) {
       $("#dataPush").remove()
-      $("#data-push").bootstrapSwitch('state', false, true);
+      // $("#data-push").bootstrapSwitch('state', false, true);
+      changeDataPush(false)
     })
     $("#confirmPush").click(function () {
       let pushEmail = $("#pushEmail").val().trim()
@@ -2321,11 +2378,13 @@
     $("body").append(create)
     $("#closethis").click(function (param) {
       $("#createmodel").remove()
-      $("#data-push").bootstrapSwitch('state', false, true);
+      // $("#data-push").bootstrapSwitch('state', false, true);
+      changeDataPush(false)
     })
     $("#cancel").click(function (param) {
       $("#createmodel").remove()
-      $("#data-push").bootstrapSwitch('state', false, true);
+      // $("#data-push").bootstrapSwitch('state', false, true);
+      changeDataPush(false)
     })
     $("#confirm").click(function () {
       // 获取所有变量
