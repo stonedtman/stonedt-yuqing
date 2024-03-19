@@ -359,6 +359,17 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 <br>
 
 
+
+## 捐赠方式
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/Wechat.png" title="Logo"  width="200">
+
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/zhifubao-pay.png" title="Logo"  width="200">
+
+
+
+
+
 ## License & Copyright
 
 Copyright (c) 2014-2023 思通数科 StoneDT, All rights reserved.
