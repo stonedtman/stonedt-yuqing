@@ -2154,20 +2154,23 @@
   });
 
   let dataPushObj = ""
-  $.ajax({
-    url: window.location.origin + '/monitor/warningSetting/'+monitor_projectid,
-    type: 'get',
-    success: function (res) {
-      console.log(res)
-      if(res.code==200){
-        dataPushObj = res.data
-        if(dataPushObj.enable){
-          // $("#data-push").bootstrapSwitch('state', true, true);
-          changeDataPush(true)
+  dataPushFunc()
+  function dataPushFunc(){
+    $.ajax({
+      url: window.location.origin + '/monitor/warningSetting/'+monitor_projectid,
+      type: 'get',
+      success: function (res) {
+        console.log(res)
+        if(res.code==200){
+          dataPushObj = res.data
+          if(dataPushObj.enable){
+            // $("#data-push").bootstrapSwitch('state', true, true);
+            changeDataPush(true)
+          }
         }
       }
-    }
-  })
+    })
+  }
 
   function changeDataPush(status){
     var active = "badge-info";
@@ -2334,6 +2337,7 @@
           if(res.code==200){
             showtips("数据推送已开启！")
             $("#dataPush").remove()
+            dataPushFunc()
           }
         }
       })

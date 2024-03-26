@@ -177,7 +177,7 @@ function switchProject(event) {
 
         //sendArticleIndustry(articleParam, JSON.stringify(articleData), funcIndustry);
         //sendArticleEvent(articleParam, JSON.stringify(articleData), funcEvent);
-
+        dataPushFunc()
 
     } else if (monitor_groupid != null && monitor_projectid == null) { // 没有方案
         let data = new Object();
