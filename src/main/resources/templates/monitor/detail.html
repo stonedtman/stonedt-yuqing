@@ -1789,7 +1789,7 @@ $("#currentyear").text((new Date()).getFullYear());
         });
     }
     let source = null
-let stopRequestTitle = false;
+    let stopRequestTitle = false;
     function reporting() {
         var eventHtml =
             '<div class="shadebox" id="intelligentWrite">'+
@@ -1886,11 +1886,12 @@ let stopRequestTitle = false;
         reporting_content(num)
         num++
         source = new EventSource(window.location.origin + `/platform/xie/report?title=${encodeURIComponent(articleTitle)}&articleId=${encodeURIComponent(articleId)}&projectId=${encodeURIComponent(projectId)}&relatedword=${encodeURIComponent(relatedword)}&publish_time=${encodeURIComponent(publish_time)}`)
+        stopRequestContent = true
         source.onopen=function () {
             articleContent = ""
-            stopRequestContent = true
             if(num>1){
                 source.close()
+                stopRequestContent = false
             }
             // if(!document.querySelector("#intelligentWrite")){
             //     source.close()
