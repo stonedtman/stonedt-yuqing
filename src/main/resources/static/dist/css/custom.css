@@ -4204,6 +4204,9 @@ a {
 /* 重点对象事件 */
 .TopicClustering>li>span:nth-child(1){
     width: calc(100% - 500px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .TopicClustering>li>span:nth-child(2){
     width: 200px;
