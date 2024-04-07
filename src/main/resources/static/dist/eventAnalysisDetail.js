@@ -643,9 +643,9 @@ function thematicAnalysis2(){
 			rankingHtml='<span class="v-hot">'+(Number(i)+1)+'</span>'
 		}
 		let title = arr[i].title;
-		if (title.length > 50){
-			title = title.substring(0,50) + "......"
-		}
+		// if (title.length > 50){
+		// 	title = title.substring(0,50) + "......"
+		// }
 
 		$('#view').append(
 			'<li>'+
@@ -669,9 +669,9 @@ function thematicAnalysis2(){
 		}
 
 		let title = arr[i].title;
-		if (title.length > 50){
-			title = title.substring(0 , 49) + "......"
-		}
+		// if (title.length > 50){
+		// 	title = title.substring(0 , 49) + "......"
+		// }
 
 		$('#netizen').append(
 			'<li>'+
@@ -695,9 +695,9 @@ function thematicAnalysis2(){
 		}
 
 		let title = arr[i].title;
-		if(title.length > 50){
-			title = title.substring(0 , 49) + "......"
-		}
+		// if(title.length > 50){
+		// 	title = title.substring(0 , 49) + "......"
+		// }
 
 		$('#media').append(
 			'<li>'+

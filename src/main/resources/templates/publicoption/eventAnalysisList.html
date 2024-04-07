@@ -26,6 +26,14 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+	<style>
+		.pointer{
+			cursor: pointer;
+		}
+		.pointer:hover{
+			color: #6184e6;
+		}
+	</style>
 </head>
 
 <body>
@@ -236,8 +244,8 @@
 	                    '<label class="custom-control-label" for="cst'+(i+1)+'"></label>'+
 	                '</div>'+
 	            '</div>'+
-	            '<div class="text-over" title="'+list[i].eventname+'">'+list[i].eventname+'</div>'+
-	            '<div>'+list[i].eventkeywords+'</div>'+
+	            '<div class="text-over pointer" onclick="editEvent('+list[i].id+','+list[i].status+')" title="'+list[i].eventname+'">'+list[i].eventname+'</div>'+
+	            '<div class="pointer" onclick="editEvent1('+list[i].id+')">'+list[i].eventkeywords+'</div>'+
 	           ' <div class="text-over">'+list[i].eventstarttime.substring(0,16)+' - '+list[i].eventendtime.substring(0,16)+'</div>'+
 	            '<div class="text-over">'+list[i].createtime.substring(0,16)+'</div>';
 	            

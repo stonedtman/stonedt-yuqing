@@ -60,7 +60,7 @@ var globalObject = (function() {
 
 function consoleLog() {
   if (globalObject.console && typeof globalObject.console.log === "function") {
-    globalObject.console.log.apply(globalObject.console, arguments);
+    // globalObject.console.log.apply(globalObject.console, arguments);
   }
 }
 
