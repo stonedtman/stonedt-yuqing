@@ -865,66 +865,75 @@
 		var unscramble_content = '[[${unscramble_content}]]'
 		try {
 			if(back_analysis!=''){
-		    	back_analysis  =  JSON.parse(escape2Html(back_analysis))
+				back_analysis = back_analysis.replaceAll('\n','\\n')
+				back_analysis  =  JSON.parse(escape2Html(back_analysis))
 			}
 		} catch(err) {
-		    console.log(err)
+			console.log(err)
 		}
 		try {
 			if(event_context!=''){
-		    	event_context  =  JSON.parse(escape2Html(event_context))
+				event_context = event_context.replaceAll('\n','\\n')
+				event_context  =  JSON.parse(event_context)
 			}
 		} catch(err) {
-		    console.log(err)
+			console.log(err)
 		}
 		try {
 			if(event_trace!=''){
-		   	 	event_trace  =  JSON.parse(escape2Html(event_trace))
+				event_trace = event_trace.replaceAll('\n','\\n')
+				event_trace  =  JSON.parse(escape2Html(event_trace))
 			}
 		} catch(err) {
-		    console.log(err)
+			console.log(err)
 		}
 		try {
 			if(hot_analysis!=''){
-		    	hot_analysis  =  JSON.parse(escape2Html(hot_analysis))
+				hot_analysis = hot_analysis.replaceAll('\n','\\n')
+				hot_analysis  =  JSON.parse(escape2Html(hot_analysis))
 			}
 		} catch(err) {
-		    console.log(err)
+			console.log(err)
 		}
 		try {
 			if(netizens_analysis!=''){
-		    	netizens_analysis  =  JSON.parse(escape2Html(netizens_analysis))
+				netizens_analysis = netizens_analysis.replaceAll('\n','\\n')
+				netizens_analysis  =  JSON.parse(escape2Html(netizens_analysis))
 			}
 		} catch(err) {
-		    console.log(err)
+			console.log(err)
 		}
 		try {
 			if(statistics!=''){
-		    	statistics  =  JSON.parse(escape2Html(statistics))
+				statistics = statistics.replaceAll('\n','\\n')
+				statistics  =  JSON.parse(escape2Html(statistics))
 			}
 		} catch(err) {
-		    console.log(err)
+			console.log(err)
 		}
 		try {
 			if(propagation_analysis!=''){
-		    	propagation_analysis  =  JSON.parse(escape2Html(propagation_analysis))
+				propagation_analysis = propagation_analysis.replaceAll('\n','\\n')
+				propagation_analysis  =  JSON.parse(escape2Html(propagation_analysis))
 			}
 		} catch(err) {
-		    console.log(err)
+			console.log(err)
 		}
 		try {
 			if(thematic_analysis!=''){
-		    	thematic_analysis  =  JSON.parse(escape2Html(thematic_analysis))
+				thematic_analysis = thematic_analysis.replaceAll('\n','\\n')
+				thematic_analysis  =  JSON.parse(escape2Html(thematic_analysis))
 			}
 		} catch(err) {
-		    console.log(err)
+			console.log(err)
 		}
 		try {
 			if(unscramble_content!=''){
-		    	unscramble_content  =  JSON.parse(escape2Html(unscramble_content))
+				unscramble_content = unscramble_content.replaceAll('\n','\\n')
+				unscramble_content  =  JSON.parse(escape2Html(unscramble_content))
 			}
 		} catch(err) {
-		    console.log(err)
+			console.log(err)
 		}
 		
 		function change(num){
