@@ -82,20 +82,9 @@ export default {
   data(){
     return{
       loading: false,
-      schemagroupoptions: [
-        {
-          id: 4509,
-          groupName: '五月天',
-          groupId: "1711204654827835392"
-        },
-      ],
+      schemagroupoptions: [],
       schemagroup: '',
-      programmeoptions: [
-        {
-          projectId: '测试',
-          projectName: '测试'
-        },
-      ],
+      programmeoptions: [],
       programme: "",
       dateoptions: [
         {
@@ -185,7 +174,7 @@ export default {
             this.showNewInfo()
           }
         }
-        console.log(data);
+        
         if(data.emotional_proportion){
           let emotional_proportion = JSON.parse(data.emotional_proportion)
           this.$refs.sourcedistribution.changeData(emotional_proportion)
@@ -212,6 +201,8 @@ export default {
           this.$refs.publisherinteraction.changeData(event_statistics)
         }
 
+        this.loading = false
+      }).catch(()=>{
         this.loading = false
       })
     },
