@@ -119,6 +119,7 @@ public class MonitorController {
 	@RequestMapping("/wxGroup")
 	public ModelAndView wxGroup(ModelAndView modelAndView) {
 		modelAndView.setViewName("monitor/wxGroup");
+		modelAndView.addObject("settingLeft", "warning");
 		return modelAndView;
 	}
 
