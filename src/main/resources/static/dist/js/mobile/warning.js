@@ -117,6 +117,8 @@ function changeProjectList() {
         }
     }
     $(".projectList").html(html)
+    let seturl = "warning?" + "groupId=" + groupId + "&projectId=" + projectId;
+    setUrl(seturl);
     sendArticle()
 }
 
@@ -129,6 +131,8 @@ function switchProject(e) {
             $(this).removeClass("active")
         }
     })
+    let seturl = "warning?" + "groupId=" + groupId + "&projectId=" + projectId;
+    setUrl(seturl);
     sendArticle()
 }
 
