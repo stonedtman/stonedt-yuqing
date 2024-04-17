@@ -203,6 +203,8 @@ function changeProjectList() {
         }
     }
     $(".projectList").html(html)
+    let seturl = "monitor?" + "groupId=" + groupId + "&projectId=" + projectId;
+    setUrl(seturl);
     installCondition()
 }
 
@@ -215,6 +217,8 @@ function switchProject(e) {
             $(this).removeClass("active")
         }
     })
+    let seturl = "monitor?" + "groupId=" + groupId + "&projectId=" + projectId;
+    setUrl(seturl);
     installCondition()
 }
 

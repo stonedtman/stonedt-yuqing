@@ -63,3 +63,7 @@ function closeSelect() {
     $(".select-content").remove()
     $("body").removeAttr("style")
 }
+
+function setUrl(url) {
+    history.pushState({url: url, title: document.title}, document.title, url)
+}
