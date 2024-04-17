@@ -633,7 +633,7 @@ public class WarningSchedule {
                 .toUser(openId)
                 .data(wxMpTemplateDataList)
                 .url(systemUrl + "/mobile/warning?token=" +
-                        userService.getToken(user) +
+                        userService.getLongToken(user) +
                         "&projectId=" +
                         projectByProId.get("project_id") +
                         "&groupId=" +

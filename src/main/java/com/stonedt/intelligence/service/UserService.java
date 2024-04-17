@@ -54,6 +54,16 @@ public interface UserService {
      */
     String getToken(User user) throws JOSEException;
 
+    /**
+     * 获取长期token
+     */
+    String getLongToken(User user) throws JOSEException;
+
+    /**
+     * 根据用户id查询用户信息
+     * @param userId
+     * @return
+     */
     User selectUserByUserId(Long userId);
 
     int updatePassword( Long userId, String password);

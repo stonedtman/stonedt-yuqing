@@ -138,6 +138,21 @@ public class UserServiceImpl implements UserService {
         return JWTUtils.createJWT(JSON.toJSONString(userDTO), privateKey);
 	}
 
+	/**
+	 * 获取长期token
+	 *
+	 * @param user
+	 */
+	@Override
+	public String getLongToken(User user) throws JOSEException {
+		user.setPassword(null);
+		UserDTO userDTO = new UserDTO();
+		BeanUtils.copyProperties(user, userDTO);
+		// 设置token过期时间
+		userDTO.setTokenIssueTime(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 365);
+		return JWTUtils.createJWT(JSON.toJSONString(userDTO), privateKey);
+	}
+
 	@Override
 	public User selectUserByUserId(Long userId) {
 		return userDao.selectUserByUserId(userId);
