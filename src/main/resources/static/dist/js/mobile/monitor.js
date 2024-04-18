@@ -262,6 +262,21 @@ function installCondition(){
                         $(".emoSelect button").html(emoData[i].name);
                     }
                 }
+
+                var aList = JSON.parse(sessionStorage.getItem('aList'));
+                var aParam = JSON.parse(sessionStorage.getItem('aParam'));
+                if(aList){
+                    $(".dataList").html(aList)
+                    setTimeout(function (){
+                        $(window).scrollTop(aParam.top)
+                    },100)
+                    page = aParam.page;
+                    setStorage()
+                    sessionStorage.removeItem('aList');
+                    sessionStorage.removeItem('aParam');
+                    return;
+                }
+
                 sendArticle()
             }
         },
@@ -398,12 +413,14 @@ function sendArticle(t) {
                     setTimeout(function () {
                         scroll_flag = true
                     },100)
+                    setStorage()
                     return
                 }
                 $(".dataList").html(html)
                 if(data.length==0){
                     nodata(".dataList")
                 }
+                setStorage()
             }
             if(res.code==500){
                 dataerror(".dataList");
@@ -422,6 +439,18 @@ function sendArticle(t) {
     });
 }
 
+function setStorage(){
+    $(".dataList a").click(function (){
+        var aList = JSON.stringify($(".dataList").html());//把json数据转为string字符串
+        var aParam = {
+            page: page,  //当前页码
+            top: $(window).scrollTop(),
+        };
+        aParam = JSON.stringify(aParam);
+        sessionStorage.setItem('aList', aList);//sessionStorage只能存储string字符串
+        sessionStorage.setItem('aParam', aParam);
+    })
+}
 
 var scroll_flag = true
 window.addEventListener('scroll', function() {

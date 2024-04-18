@@ -119,6 +119,21 @@ function changeProjectList() {
     $(".projectList").html(html)
     let seturl = "warning?" + "groupId=" + groupId + "&projectId=" + projectId;
     setUrl(seturl);
+
+    var aList = JSON.parse(sessionStorage.getItem('aList'));
+    var aParam = JSON.parse(sessionStorage.getItem('aParam'));
+    if(aList){
+        $(".dataList").html(aList)
+        setTimeout(function (){
+            $(window).scrollTop(aParam.top)
+        },100)
+        pageNum = aParam.page;
+        setStorage()
+        sessionStorage.removeItem('aList');
+        sessionStorage.removeItem('aParam');
+        return;
+    }
+
     sendArticle()
 }
 
@@ -200,12 +215,14 @@ function sendArticle(t) {
                     setTimeout(function () {
                         scroll_flag = true
                     },100)
+                    setStorage()
                     return
                 }
                 $(".dataList").html(html)
                 if(data.length==0){
                     nodata(".dataList")
                 }
+                setStorage()
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -236,6 +253,19 @@ function getzf(num) {
         num = '0' + num;
     }
     return num;
+}
+
+function setStorage(){
+    $(".dataList a").click(function (){
+        var aList = JSON.stringify($(".dataList").html());//把json数据转为string字符串
+        var aParam = {
+            page: pageNum,  //当前页码
+            top: $(window).scrollTop(),
+        };
+        aParam = JSON.stringify(aParam);
+        sessionStorage.setItem('aList', aList);//sessionStorage只能存储string字符串
+        sessionStorage.setItem('aParam', aParam);
+    })
 }
 
 var scroll_flag = true

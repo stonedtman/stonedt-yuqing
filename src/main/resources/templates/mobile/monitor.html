@@ -175,6 +175,8 @@
     var groupId = params.get('groupId')||"";
     var projectId = params.get('projectId')||"";
     function warning() {
+        sessionStorage.removeItem('aList');
+        sessionStorage.removeItem('aParam');
         window.location.replace("/mobile/warning?groupId="+groupId+"&projectId="+projectId)
     }
 </script>
