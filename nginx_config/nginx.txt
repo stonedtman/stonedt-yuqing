@@ -1,0 +1,6 @@
+查看nginx安装位置
+which nginx
+ps -ef | grep nginx
+查看nginx配置位置
+nginx -t
+find / -name nginx.conf
