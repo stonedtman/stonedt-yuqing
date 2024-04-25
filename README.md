@@ -233,7 +233,7 @@ docker logs 容器ID -f
 -  2.下载 [stonedt-yuqing.7z](https://gitee.com/stonedtx/yuqing/releases/download/v1.3.0/stonedt-yuqing.7z)，解压zip包，执行  _nohup java -jar stonedt-yuqing.jar &_，启动舆情系统。 
 -  3.下载 [opinion_screen.zip](https://gitee.com/stonedtx/yuqing/releases/download/v1.3.0/opinion_screen.zip)，解压zip包，进入apache-tomcat-8.5.46/bin文件夹.执行 ./startup.sh
 -  4.配置nginx,直接使用我们提供的nginx配置文件[nginx.conf](https://gitee.com/stonedtx/yuqing/blob/master/nginx_config/nginx.conf).
-- **或者**在http块中增加如下内容:
+**或者**在http块中增加如下内容:
     ```text
     server {
             listen       8085;
