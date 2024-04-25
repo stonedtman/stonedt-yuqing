@@ -250,7 +250,7 @@ function eventContext2(){
 //	$('#start_date').html(start_time.substring(0,4)+'年'+start_time.substring(5,7)+'月'+start_time.substring(8,10)+'日')
 	for(let i in event_context){
 		timelinehtml+='<div class="ev-analysis-detail-trend-con"> <div class="ev-trend-con"> <div class="contenteditable"> [<span id="publish_time1">'+
-		event_context[i].publish_time+'</span>]【<span id="title1">'+event_context[i].title+'</span>】<span id="contenta1">'+event_context[i].contenta+'</span> 影响力：<span id="heat1">'+
+		event_context[i].publish_time.substring(0,16)+'</span>]【<span id="title1">'+event_context[i].title+'</span>】<span id="contenta1">'+event_context[i].contenta+'</span> 影响力：<span id="heat1">'+
 		event_context[i].heat+'</span></div></div></div>'
 //		let id=Number(i)+1
 //		$("#publish_time"+id).html(event_context[i].publish_time)
