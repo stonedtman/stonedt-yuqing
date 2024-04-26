@@ -194,7 +194,7 @@ systemctl start docker
 在命令行输入下面一行命令即可完成镜像的拉取以及运行,拉取镜像大概需要花费5-10分钟。
 
 ```
-docker run -itd --name stonedt_yuqing -p 8085:8085 registry.cn-beijing.aliyuncs.com/stonedt_yuqing/stonedt_yuqing:1.0.6
+docker run -itd --name stonedt_yuqing -p 8085:8085 registry.cn-beijing.aliyuncs.com/stonedt_yuqing/stonedt_yuqing:1.0.7
 ```
 
 ### 3.验证是否成功运行
