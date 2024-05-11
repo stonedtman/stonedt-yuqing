@@ -194,7 +194,7 @@ systemctl start docker
 在命令行输入下面一行命令即可完成镜像的拉取以及运行,拉取镜像大概需要花费5-10分钟。
 
 ```
-docker run -itd --name stonedt_yuqing -p 8085:8085 registry.cn-beijing.aliyuncs.com/stonedt_yuqing/stonedt_yuqing:1.0.6
+docker run -itd --name stonedt_yuqing -p 8085:8085 registry.cn-beijing.aliyuncs.com/stonedt_yuqing/stonedt_yuqing:1.0.7
 ```
 
 ### 3.验证是否成功运行
@@ -232,7 +232,8 @@ docker logs 容器ID -f
 
 -  2.下载 [stonedt-yuqing.7z](https://gitee.com/stonedtx/yuqing/releases/download/v1.3.0/stonedt-yuqing.7z)，解压zip包，执行  _nohup java -jar stonedt-yuqing.jar &_，启动舆情系统。 
 -  3.下载 [opinion_screen.zip](https://gitee.com/stonedtx/yuqing/releases/download/v1.3.0/opinion_screen.zip)，解压zip包，进入apache-tomcat-8.5.46/bin文件夹.执行 ./startup.sh
--  4.配置nginx,在http块中增加如下内容:
+-  4.配置nginx,直接使用我们提供的nginx配置文件[nginx.conf](https://gitee.com/stonedtx/yuqing/blob/master/nginx_config/nginx.conf).
+**或者**在http块中增加如下内容:
     ```text
     server {
             listen       8085;
@@ -246,6 +247,7 @@ docker logs 容器ID -f
             }
     }
     ```
+   
 
 -  5.本地访问：http://127.0.0.1:8085/ 
  用户名：13900000000，  密码：stonedt 
