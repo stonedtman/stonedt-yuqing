@@ -19,7 +19,7 @@
 </template>
 <script>
 import * as echarts from "echarts";
-let china = require("@/assets/json/china.json");
+let world = require("@/assets/json/world.json");
 export default {
   data(){
     return{
@@ -35,10 +35,31 @@ export default {
       this.nosensitiveData = data_overview.noSensitive.count
       this.sensitiveData = data_overview.sensitive.count
       this.datalist = hot_spot_ranking.chart
+
+      let list = world.features
+      let data = []
+      for (let i = 0; i < list.length; i++) {
+        let name = list[i].properties.name
+        let obj = {
+          name: name,
+          value: 0,
+          label: {
+            show: false
+          }
+        }
+        for (let j = 0; j < this.datalist.length; j++) {
+          if(name==this.datalist[j].name){
+            obj.value = this.datalist[j].value
+            obj.label.show = true
+          }
+        }
+        data.push(obj)
+      }
+      this.datalist = JSON.parse(JSON.stringify(data))
       this.initData()
     },
     initData(){
-      echarts.registerMap("china",china)
+      echarts.registerMap("world",world)
       let myChart = echarts.init(document.getElementById("charts"))
 
       let option = {
@@ -52,7 +73,7 @@ export default {
             color: "#fff"
           },
           formatter: function (e) { // 鼠标移入地图
-            let str = `<div>城市: ${e.name}</div><div>数值: ${e.value||0}</div>`
+            let str = `<div>国家: ${e.name}</div><div>数值: ${e.value||0}</div>`
             return str
           },
         },
@@ -69,75 +90,50 @@ export default {
             fontSize: 14,
           },
           pieces: [
-            // {
-            //   min: 200,
-            //   label: '>200',
-            // }, {
-            //   max: 200,
-            //   min: 100,
-            //   label: '100-200',
-            // }, {
-            //   max: 100,
-            //   min: 50,
-            //   label: '50-100',
-            // }, {
-            //   max: 50,
-            //   min: 10,
-            //   label: '10-50',
-            // }, {
-            //   max: 10,
-            //   min: 1,
-            //   label: '1-10',
-            // }, {
-            //   max: 0,
-            //   label: '0',
-            // }
             {
               min: 30,
               label: '>30',
             }
           ],
           inRange: {
-            // color: ['#aaa', '#b2b2ff', '#9999ff', '#7f7fff', '#6666ff', '#fe475d']
             color: ['#0a2dae']
           },
           outOfRange: {
             color: ['#2075b8']
           }
         },
-        geo: {
-          map: 'china',
-          zoom: 1.2,
-          label: {
-            show: true,
-            color: '#eee',
-            emphasis: { // 对应的鼠标悬浮效果
-              color: "#eee",
-            }
-          },
-          itemStyle: {
-            color: '#2075b8', // 背景
-            shadowBlur: 20,
-            shadowColor: "#0a2dae",
-            borderWidth: '0.05', // 边框宽度
-            borderColor: '#0a2dae', // 边框颜色
-            emphasis: { // 对应的鼠标悬浮效果
-              color: "#fff",
-              areaColor: "#0a2dae",
-              borderWidth: '0.05', // 边框宽度
-              borderColor: '#0a2dae', // 边框颜色
-            }
-          },
-        },
         grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
+          left: '1%',
+          right: '1%',
+          bottom: '1%',
+          // top: '1%',
           containLabel: true
         },
         series: [
-          { 
+          {
             type: 'map',
+            map: 'world',
+            zoom: 1.2,
+            label: {
+              // show: true,
+              color: '#eee',
+              emphasis: { // 对应的鼠标悬浮效果
+                color: "#eee",
+              }
+            },
+            itemStyle: {
+              color: '#2075b8', // 背景
+              shadowBlur: 20,
+              shadowColor: "#0a2dae",
+              borderWidth: '0.05', // 边框宽度
+              borderColor: '#0a2dae', // 边框颜色
+              emphasis: { // 对应的鼠标悬浮效果
+                color: "#fff",
+                areaColor: "#0a2dae",
+                borderWidth: '0.05', // 边框宽度
+                borderColor: '#0a2dae', // 边框颜色
+              }
+            },
             geoIndex: 0,
             selectedMode: false,
             data: this.datalist,
@@ -199,8 +195,8 @@ export default {
 }
 #charts{
   width: 100%;
-  height: 720px;
-  margin-top: 40px;
-  margin-bottom: -200px;
+  height: 640px;
+  // margin-top: -40px;
+  margin-bottom: -100px;
 }
 </style>

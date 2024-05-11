@@ -1,5 +1,6 @@
 <template>
   <div class="home" v-loading="loading" element-loading-text="努力加载中">
+    <span class="goback" @click="goback">返回</span>
     <!-- 顶部 -->
     <div class="header">
       <img class="header_bj" src="@/assets/images/header_line.png" />
@@ -260,6 +261,9 @@ export default {
         }
       });
     },
+    goback(){
+      window.location.href = "/monitor"
+    },
     refresh(){
       updateanalysisdata({
         groupid: this.schemagroup,
@@ -292,6 +296,19 @@ export default {
   position: relative;
   background-image: url("@/assets/images/bj.png");
   background-size: cover;
+}
+.goback{
+  position: absolute;
+  left: 24px;
+  top: 6px;
+  z-index: 1;
+  color: #FFF;
+  font-size: 12px;
+  background-color: #6184e6;
+  padding: 2px 5px;
+  border-radius: 2px;
+  margin-right: 2px;
+  cursor: pointer;
 }
 .header{
   height: 125px;
