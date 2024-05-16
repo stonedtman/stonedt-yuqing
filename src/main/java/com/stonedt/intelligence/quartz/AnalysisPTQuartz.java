@@ -128,7 +128,7 @@ public class AnalysisPTQuartz {
                                 analysisQuartzDo.setHighword_cloud(wordCloud);
                                 // 高频词指数
                                //String keyWordIndex = analysisDataRequest.keyWordIndex(time_period, keywordsentimentFlagChart, times, timee, stopword, projectType);
-                                String keyWordIndex = analysisDataRequest.keyWordIndex(time_period, keywordsentimentFlagChart, times, timee, stopword, projectType,wordCloud,opinionCondition);
+                                String keyWordIndex = analysisDataRequest.keyWordIndex(time_period, highKeyword, times, timee, stopword, projectType,wordCloud,opinionCondition);
                                 analysisQuartzDo.setKeyword_index(keyWordIndex);
                                 // 媒体活跃度分析
                                 String mediaActivityAnalysis = analysisDataRequest.mediaActivityAnalysis(highKeyword, stopword, times, timee, projectType,opinionCondition);
