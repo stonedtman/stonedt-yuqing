@@ -4697,7 +4697,8 @@ $(document).on('click', '.copy-link-custom', function () {
         type: 'post',
         dataType: 'json',
         data: {
-            id: flag
+            id: flag,
+            projectId: monitor_projectid
         },
         success: function (res) {
             let status = res.status;
