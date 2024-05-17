@@ -1,0 +1,23 @@
+version: "3.0"
+
+services:
+  ngnix:                                       #服务名称，名称可自定义
+    container_name: nginx                      #容器名称，可自定义
+    image: nginx:latest                        # 镜像名称
+    restart: always
+    ports:                                     # 容器和服务器对应的端口映射，每次新增一个站点之后一定要在这里把对应的端口映射加上，不然肯定会404
+      - "80:80"
+      - "443:443"
+    privileged: true
+    volumes: #指定挂载目录
+      - /data/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      - /data/nginx/html/:/usr/share/nginx/html/
+      - /data/nginx/logs/:/var/log/nginx/
+      - /data/nginx/conf.d/:/etc/nginx/conf.d
+      - /data/nginx/cert/:/home
+    networks:
+      - nginx
+# 如果使用nginx代理需要创建一个名称为nginx的network
+networks:
+  nginx:
+    external: true
