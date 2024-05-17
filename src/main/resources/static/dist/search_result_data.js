@@ -2149,12 +2149,21 @@ function installArticle3(res) {
 					let strLikeStr = '<div class="like-comm">';
 					let strSource = '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 '
 							+ sourcewebsitename + '</span>';
-					let strForward = '<span class="link m-r-10"> <i class="mdi mdi-shape-square-plus "></i> 转发 '
+					let strForward = '';
+					if(forwardingvolume){
+						strForward = '<span class="link m-r-10"> <i class="mdi mdi-shape-square-plus "></i> 转发 '
 							+ forwardingvolume + '</span>';
-					let strPraise = '<span class="link m-r-10"> <i class="mdi mdi-heart-outline "></i> 点赞 '
+					}
+					let strPraise = '';
+					if(praisevolume){
+						strPraise = '<span class="link m-r-10"> <i class="mdi mdi-heart-outline "></i> 点赞 '
 							+ praisevolume + '</span>';
-					let strComment = '<span class="link m-r-10"> <i class="mdi mdi-comment-processing-outline"></i> 评论 '
+					}
+					let strComment = '';
+					if(commentsvolume){
+						strComment = '<span class="link m-r-10"> <i class="mdi mdi-comment-processing-outline"></i> 评论 '
 							+ commentsvolume + '</span>';
+					}
 
 					let keyword = '<span class="link m-r-10"> <i class="mdi mdi-tag-outline"></i> 关键词 '
 						+ key_words + '</span>';
