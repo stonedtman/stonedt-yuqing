@@ -81,6 +81,8 @@ public class WechatServiceImpl implements WechatService {
 	@Value("${account.effective-days}")
 	private Integer effectiveDays;
 
+	private final String prefix = "yuqing:";
+
 	public WechatServiceImpl(RestTemplate restTemplate,
                              StringRedisTemplate redisTemplate,
                              UserWechatInfoDao userWechatInfoDao,
@@ -120,11 +122,11 @@ public class WechatServiceImpl implements WechatService {
 	 */
 	@Override
 	public ResultUtil getQRCodeUrl() {
-		//生成场景值,以yuqing:开头
+		//生成场景值,以 @{prefix} 开头
 		long nanoedTime = System.nanoTime();
 		//转换成16进制
 		String suffix = Long.toHexString(nanoedTime);
-		String sceneStr = "yuqing:" + suffix;
+		String sceneStr = prefix + suffix;
 		QrcodeData qrcodeData = getQRCodeUrl(sceneStr);
 		if (qrcodeData == null) {
 			return ResultUtil.build(500, "生成二维码失败");
@@ -199,8 +201,8 @@ public class WechatServiceImpl implements WechatService {
 		String eventKey = wxMpXmlMessage.getEventKey();
 		//删除qrscene_前缀
 		eventKey = eventKey.replace("qrscene_", "");
-		//获取userid 删除yuqing:前缀 #bind后缀
-		String userIdStr = eventKey.substring(7, eventKey.length() - 5);
+		//获取userid 删除 @{prefix} 前缀 #bind后缀
+		String userIdStr = eventKey.substring(prefix.length(), eventKey.length() - 5);
 		//转换为10进制int
 		int userId = Integer.parseInt(userIdStr, 16);
 
@@ -299,8 +301,8 @@ public class WechatServiceImpl implements WechatService {
 	 * @param eventKey
 	 */
 	public void handleBindAuthorize(WechatUserInfo wechatUserInfo, String eventKey) {
-		//获取userid 删除yuqing:前缀 #bind后缀
-		String userIdStr = eventKey.substring(7, eventKey.length() - 5);
+		//获取userid 删除@{prefix}前缀 #bind后缀
+		String userIdStr = eventKey.substring(prefix.length(), eventKey.length() - 5);
 		//转换为10进制int
 		int userId = Integer.parseInt(userIdStr, 16);
 		//插入用户微信信息
@@ -465,11 +467,11 @@ public class WechatServiceImpl implements WechatService {
 
 	@Override
 	public ResultUtil getBindQRCodeUrl(User user) {
-		//生成场景值,以yuqing:开头
+		//生成场景值,以 @{prefix} 开头
 		int userId = user.getId();
 		//转换成16进制
 		String suffix = Integer.toHexString(userId);
-		String sceneStr = "yuqing:" + suffix + "#bind";
+		String sceneStr = prefix + suffix + "#bind";
 
 		QrcodeData qrcodeData = getQRCodeUrl(sceneStr);
 		if (qrcodeData == null) {
