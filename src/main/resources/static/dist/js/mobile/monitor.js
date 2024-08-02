@@ -121,8 +121,9 @@ function sendProjectAndProject() {
         success: function (res) {
             if(res.code==200){
                 installGroupAndProject(res.data);
+            }else{
+                dataerror(".monitor");
             }
-
         },
         error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status == 403) {
@@ -276,8 +277,9 @@ function installCondition(){
                     sessionStorage.removeItem('aParam');
                     return;
                 }
-
                 sendArticle()
+            }else{
+                dataerror(".dataList");
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -285,7 +287,7 @@ function installCondition(){
                 window.location.href = "/login";
             } else {
                 $("#page").html("");
-                dataerror("#monitor-content");
+                dataerror(".dataList");
             }
         }
     });
@@ -421,12 +423,10 @@ function sendArticle(t) {
                     nodata(".dataList")
                 }
                 setStorage()
-            }
-            if(res.code==500){
-                dataerror(".dataList");
-            }
-            if(res.code==404){
+            }else if(res.code==404){
                 nokeyword(".dataList")
+            }else{
+                dataerror(".dataList");
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
