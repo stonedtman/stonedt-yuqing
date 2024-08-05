@@ -1679,7 +1679,7 @@ function toHtmlMediaActivityAnalysis(data) {
         if (logo) {
             logoHtml = '<img class="rounded-circle" width="24" src="' + logo + '" alt="" onerror="javascript:this.src=\'/assets/images/default_source.png\'">';
         }else{
-            logoHtml = '<img class="rounded-circle" width="45" src="/assets/images/default_source.png" alt="">';
+            logoHtml = '<img class="rounded-circle" width="24" src="/assets/images/default_source.png" alt="">';
         }
         var html = '<tr>' +
             '<td>' +

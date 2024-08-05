@@ -747,9 +747,9 @@ function wexin(){
 				}
 				
 				html += '<li><a target="_blank" href="'+wechatdetail.source_url+'"><div class="over-newsbox"><div class="content-title">'
-				+ '<div class="over-weibohottopictitle" title="'+wechatdetail.topic+'" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><span class="content-logo" style="background: url(https://file.ipadown.com/tophub/assets/images/media/mp.weixin.qq.com.png_160x160.png);"></span>'
+				+ '<div class="over-weibohottopictitle" title="'+wechatdetail.topic+'" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><span class="content-logo" style="background: url(https://file.ipadown.com/tophub/assets/images/media/toutiao.com.png);"></span>'
 				+ wechatdetail.topic+'</div></div><div class="over-tips">'
-				+ '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 微信</span><span class="link f-right moodzm" style="display: none;">'+emotionalIndex+'</span>'
+				+ '<span class="link m-r-10"> <i class="mdi mdi-earth "></i> 来源 今日头条</span><span class="link f-right moodzm" style="display: none;">'+emotionalIndex+'</span>'
 				+ '<span class="link f-right moodfm" style="color: #9ca8b3;margin: 0;"><i class="fas fa-fire" style="color: #fe475d;"> </i> '+wechatdetail.original_weight+'</span>'
 				+ '</div></div><i class="mdi mdi-chevron-right font-20"></i></a></li>'
 				
