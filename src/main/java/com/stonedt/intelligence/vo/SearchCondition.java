@@ -75,7 +75,6 @@ public class SearchCondition {
     @Schema(name = "groupid", description = "方案组id")
     private String groupid;
 
-
     /**
      * 搜索关键词
      */
