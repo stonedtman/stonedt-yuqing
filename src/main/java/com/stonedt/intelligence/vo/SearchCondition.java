@@ -75,12 +75,11 @@ public class SearchCondition {
     @Schema(name = "groupid", description = "方案组id")
     private String groupid;
 
-//
-//    /**
-//     * 搜索关键词
-//     */
-//    @Schema(name = "searchkeyword", description = "搜索关键词")
-//    private String searchkeyword;
+    /**
+     * 搜索关键词
+     */
+    @Schema(name = "searchkeyword", description = "搜索关键词")
+    private String searchkeyword;
 
 
 
@@ -218,6 +217,8 @@ public class SearchCondition {
 
         jsonObject.put("group_id", groupid);
         jsonObject.put("projectId", projectid);
+
+        jsonObject.put("searchkeyword", searchkeyword);
         return jsonObject;
     }
 
