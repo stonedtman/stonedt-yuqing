@@ -252,6 +252,15 @@ docker logs 容器ID -f
 -  5.本地访问：http://127.0.0.1:8085/ 
  用户名：13900000000，  密码：stonedt 
 
+## 宝塔面板一键部署
+
+1. 安装宝塔面板，前往 [宝塔面板](https://www.bt.cn/u/FSh8ym) 官网，选择正式版的脚本下载安装
+
+2. 安装后登录宝塔面板，在菜单栏中点击 `Docker`，首次进入会提示安装`Docker`服务，点击立即安装，按提示完成安装
+
+3. 安装完成后在应用商店中找到`思通舆情`，点击安装，配置域名等基本信息即可完成安装
+
+
 详见思通舆情安装部署手册：https://gitee.com/stonedtx/yuqing/blob/master/install_guide.md
 
 _备注：修改配置文件[[application.yml](https://gitee.com/stonedtx/yuqing/blob/master/config/application.yml)]，设定 MySQL、Redis 用户和密码等。
