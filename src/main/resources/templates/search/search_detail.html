@@ -425,7 +425,7 @@ $("#currentyear").text((new Date()).getFullYear());
                                 imggroup = imggroup+veviostr;
                                 
                             }
-                         }else{
+                        }else{
                         	 debugger;
                         	 let veviostr = '';
                         	 let extend_string_one = detail.extend_string_one;
@@ -439,7 +439,7 @@ $("#currentyear").text((new Date()).getFullYear());
                                  }
                              }
                              imggroup = imggroup+veviostr;
-                         }
+                        }
                         imgListAll = imgListStr1 + imggroup + imgListStr3;
                         $('#title').html(res.title);
                         $('#source').html('<i class="mdi mdi-earth"></i> 来源： ' + detail.sourcewebsitename);
@@ -455,7 +455,7 @@ $("#currentyear").text((new Date()).getFullYear());
                                 if(imggroup==""){
                                     $('#content').html(res.text + imgListAll);
                                 }else{
-                                    $('#content').html(imgListAll);
+                                    $('#content').html(res.text + imgListAll);
                                 }
                             }
                         } else {
