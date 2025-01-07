@@ -337,7 +337,19 @@ function sendArticle(t) {
     if(emoValue!=0){
         emo = [emoValue-0];
     }
-
+    let condition_data = ["province","city","eventIndex","industryIndex","organization","categorylable",
+        "enterprisetype","hightechtype","policylableflag","datasource_type"]
+    condition_data.forEach(v=>{
+        if(!conditionData[v]){
+            conditionData[v] = ""
+        }
+    })
+    if(!conditionData.times){
+        conditionData.times = conditionData.create_time
+    }
+    if(!conditionData.timee){
+        conditionData.timee = conditionData.create_time
+    }
     let obj = {
         "projectid":projectId,
         "groupid":groupId,
