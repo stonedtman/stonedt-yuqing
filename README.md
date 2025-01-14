@@ -11,8 +11,7 @@
 
 微信交流群
 
-![输入图片说明](ProIMG/weixinGroup2.jpg)
-
+<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/weixinGroup2.jpg" title="WeChat"  width="200">
 
 
 
