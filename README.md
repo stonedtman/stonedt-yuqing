@@ -9,6 +9,13 @@
 您的支持和参与就是我们坚持开源的动力！请 :star:  [star](https://gitee.com/stonedtx/yuqing) 或者 [fork](https://gitee.com/stonedtx/yuqing)!  
 
 
+微信交流群
+
+![输入图片说明](ProIMG/weixinGroup2.jpg)
+
+
+
+
 <br>
 
 ### 思通舆情 的功能：
