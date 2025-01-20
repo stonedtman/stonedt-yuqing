@@ -742,7 +742,7 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (97, '2022-02-14 17:22:13', 13900000000, '13900000000', '1ed91049c7697d6aaf7d1959e588e735', '13900000000@qq.com', '2023-10-16 19:55:03', 1, NULL, NULL, NULL, 3, NULL, NULL, 3, NULL, NULL, 2, NULL, NULL, 0, NULL, NULL, 0, '2025-01-19 00:00:00');
+INSERT INTO `user` VALUES (97, '2022-02-14 17:22:13', 13900000000, '13900000000', '1ed91049c7697d6aaf7d1959e588e735', '13900000000@qq.com', '2023-10-16 19:55:03', 1, NULL, NULL, NULL, 3, NULL, NULL, 3, NULL, NULL, 2, NULL, NULL, 0, NULL, NULL, 0, '2099-01-19 00:00:00');
 
 -- ----------------------------
 -- Table structure for user_apply
