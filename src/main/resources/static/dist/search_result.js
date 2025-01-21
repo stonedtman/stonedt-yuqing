@@ -482,7 +482,7 @@ function showorhidde() {
  * @returns
  */
 function hotList(page){
-	debugger;
+	//debugger;
 	var data = getArticleData(page);
 	showorhidde();
 	ajaxAsync('GET',ctx + 'fullsearch/hotList', data, installHot);
@@ -664,7 +664,7 @@ function thesisnList(page){
  */
 let articleData = new Object();
 function getArticleData(page) {
-	debugger;
+	//debugger;
     let times = $("input[name='start']").val();
     let timee = $("input[name='end']").val();
     let timeType; //时间范围
@@ -822,7 +822,7 @@ function getArticleData(page) {
 	
     articleData.times=times;
     articleData.timee=timee;
-    debugger;
+    //debugger;
     if(full_type==8){
     	
    
@@ -878,9 +878,9 @@ function getArticleData(page) {
 	}
 
 
-	debugger;
+	//debugger;
 	let aa = articleData.rtype;
-	debugger;
+	//debugger;
     $('span[data-classify]').each(function () {
         if ($(this).hasClass('badge-info')) {
         	classify = $(this).data('classify');
@@ -921,7 +921,7 @@ function getSource_websitename(twoid,sourcename,rtype){
 	if(full_type == 1){
 		informationList(1);
 	}else if(full_type == 8){
-		debugger;
+		//debugger;
 		seturl = seturl + "&sourcename="+sourcename
 		setUrl(seturl);
 		thirdBox(twoid);
@@ -1062,7 +1062,7 @@ function pageHelper(currentPage, totalPages) {
 				articleParam2.type = "POST";
 				articleParam2.url = ctxPath + "fullsearch/informationListpost";
 				articleParam2.contentType = 'application/json;charset=utf-8';
-				debugger;
+				//debugger;
 				let articleData11 = getArticleData11(page,$('#searchWord').val())
 				let similar = articleData11.similar;
 				if (similar == 1) {  // 合并
@@ -1167,7 +1167,7 @@ $("#searchBtn").click(function (e) {
 	}else if(full_type == 103){
 		doctorList(1)
 	}
-	debugger;
+	//debugger;
 	setUrl(seturl);
 });
 
@@ -1645,7 +1645,7 @@ $("#inlineTime span").click(function () {
 $("#date-range input").change(function () {
     var times = $("#date-range input[name=start]").val();
     var timed = $("#date-range input[name=end]").val();
-    debugger;
+    //debugger;
     if (times > timed) {
         showInfo("开始时间不能迟于结束时间");
         return

@@ -356,37 +356,37 @@ function getAnalysisMonitorProjectid() {
             
 // // 热点机构排名
 // if (analysis.ner) {
-// debugger;
+// //debugger;
 // var org = JSON.parse(analysis.ner).org;
 // hotOrgRank(org);
 // }
 // // 热点学校
 // if (analysis.ner) {
-// debugger;
+// //debugger;
 // var school = JSON.parse(analysis.ner).school;
 // hotSchoolRank(school);
 // }
 // // 热点政府机构
 // if (analysis.ner) {
-// debugger;
+// //debugger;
 // var nto = JSON.parse(analysis.ner).nto;
 // hotNtoRank(nto);
 // }
 // // 热点政府机构
 // if (analysis.ner) {
-// debugger;
+// //debugger;
 // var ipo = JSON.parse(analysis.ner).ipo;
 // hotIpoRank(ipo);
 // }
 // // 热点人物
 // if (analysis.ner) {
-// debugger;
+// //debugger;
 // var per = JSON.parse(analysis.ner).per;
 // hotPerRank(per);
 // }
 // // 热点人物
 // if (analysis.ner) {
-// debugger;
+// //debugger;
 // var hospital = JSON.parse(analysis.ner).hospital;
 // hotHospitalRank(hospital);
 // }
@@ -1990,7 +1990,7 @@ function highIPOForeignIndexList(data) {
 // //热点机构排名
 //
 // function hotOrgRank(data) {
-// debugger;
+// //debugger;
 // $('#highOrgIndexList').html('');
 // for (var i = 0; i < data.length; i++) {
 // var html =
@@ -3016,7 +3016,7 @@ function industrialDistribution(data) {
 
 //事件分析
 function eventStatistics(data) {
-	debugger;
+	//debugger;
 
     let dataArr=new Array()
     let arr=data;
