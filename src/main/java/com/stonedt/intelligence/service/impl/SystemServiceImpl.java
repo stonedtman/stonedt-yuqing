@@ -34,7 +34,7 @@ import com.stonedt.intelligence.util.ResultUtil;
  * @date Apr 16, 2020
  */
 @Service
-@PropertySource(value = "file:./config/config.properties", encoding = "UTF-8")
+@PropertySource(value = "file:${config.location:./config/config.properties}", encoding = "UTF-8")
 public class SystemServiceImpl implements SystemService {
 
     @Autowired
