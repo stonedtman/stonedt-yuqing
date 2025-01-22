@@ -222,6 +222,23 @@ docker logs 容器ID -f
 访问地址 http://ip:8085 
 用户名13900000000 密码stonedt
 
+### docker-compose部署
+部署步骤
+1. 克隆项目代码或下载压缩包解压
+```shell
+cd yuqing
+```
+2. 国际用户部署
+   运行以下命令，使用默认的 docker-compose.yml 文件进行部署：
+```shell
+docker-compose up -d
+```
+
+3. 国内用户部署
+   国内用户可使用 docker-compose-cn.yml 文件部署，该文件默认关闭 Redis 和 MySQL 的外部端口。如需开放端口，可手动取消注释。运行以下命令：
+```shell
+docker-compose -f docker-compose-cn.yml up -d
+```
 ## 安装依赖
 1. JavaEE 8 以上版本；
 2. MySQL 5.7 以上版本；
