@@ -1007,6 +1007,12 @@
 	        var chart = anychart.tagCloud(a);
 	        chart.addEventListener('pointClick', onPointClick);
 	        chart.container("keywords");
+            // 添加点击事件
+            chart.listen("pointClick", function(e) {
+                var word = e.point.get("x");
+                // 跳转到百度搜索该关键词
+                window.open("https://www.baidu.com/s?wd=" + encodeURIComponent(word), "_blank");
+            });
 	        chart.draw();
 	        clearlogo();
 	    // });
@@ -1086,7 +1092,7 @@
 	    
 	    // 14、高频词指数  html 生成
 	    function toHtmlHighWordIndex(res){
-	    	debugger;
+	    	//debugger;
 	    	res = JSON.parse(res).ipo;
 	    	
 	    	

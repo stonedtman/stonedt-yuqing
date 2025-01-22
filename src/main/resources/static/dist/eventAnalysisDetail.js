@@ -462,7 +462,7 @@ function statistics2(){
 	}
 }
 function propagationAnalysis2(){
-	debugger;
+	// //debugger;
      console.info("data:"+propagation_analysis)
 	//如果是string类型，转换成json
 	if (typeof propagation_analysis == "string") {

@@ -1825,6 +1825,12 @@
 			anychart.onDocumentReady(function() {
 				var chart = anychart.tagCloud(a);
 				chart.container("keywords");
+				// 添加点击事件
+				chart.listen("pointClick", function(e) {
+					var word = e.point.get("x");
+					// 跳转到百度搜索该关键词
+					window.open("https://www.baidu.com/s?wd=" + encodeURIComponent(word), "_blank");
+				});
 				chart.draw();
 			});
 			setTimeout(function() {
