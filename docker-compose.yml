@@ -1,0 +1,56 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: stonedt_portal
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./V1.0__InitTableAndData.sql:/docker-entrypoint-initdb.d/V1.0__InitTableAndData.sql
+    networks:
+      - stonedt_yuqing
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p123456"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+
+  redis:
+    image: redis:latest
+    container_name: redis_container
+    ports:
+      - "6379:6379"
+    networks:
+      - stonedt_yuqing
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+
+  stonedt-yuqing:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: stonedt-yuqing
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy  # 等待 MySQL 健康检查通过
+      redis:
+        condition: service_healthy  # 等待 Redis 健康检查通过
+    networks:
+      - stonedt_yuqing
+
+volumes:
+  mysql_data:
+
+networks:
+  stonedt_yuqing:
+    driver: bridge

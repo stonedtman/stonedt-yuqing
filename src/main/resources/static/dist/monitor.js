@@ -1027,7 +1027,7 @@ function installArticle(res) {
                 similarflag = $(this).data('similar');
             }
         });
-        // debugger;
+        // //debugger;
         if (similarflag == 1) {
             $("#totalCount").html(res.data.totalNum);
         } else {
@@ -3911,7 +3911,7 @@ $("#citylist1").on('click', 'span', function (e) {
 
 
 //$("body #eventlist").$("span").click(function (e) {
-//	debugger;
+//	//debugger;
 //    var active = "badge-info";
 //    var normal = "badge-light";
 //    var act = $(this).hasClass(active);
