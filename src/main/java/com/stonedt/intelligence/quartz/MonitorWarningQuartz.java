@@ -1,15 +1,9 @@
 package com.stonedt.intelligence.quartz;
 
 import com.alibaba.fastjson.JSON;
-import com.stonedt.intelligence.dao.MonitorWarningSettingDao;
-import com.stonedt.intelligence.dao.OpinionConditionDao;
-import com.stonedt.intelligence.dao.ProjectDao;
-import com.stonedt.intelligence.dao.UserDao;
+import com.stonedt.intelligence.dao.*;
 import com.stonedt.intelligence.dto.MailConfig;
-import com.stonedt.intelligence.entity.MonitorWarningSetting;
-import com.stonedt.intelligence.entity.OpinionCondition;
-import com.stonedt.intelligence.entity.Project;
-import com.stonedt.intelligence.entity.WarningSetting;
+import com.stonedt.intelligence.entity.*;
 import com.stonedt.intelligence.service.ExcelService;
 import com.stonedt.intelligence.service.MailService;
 import com.stonedt.intelligence.service.MonitorService;
@@ -18,6 +12,7 @@ import com.stonedt.intelligence.thred.ThreadPoolConst;
 import com.stonedt.intelligence.vo.ArticleData;
 import com.stonedt.intelligence.vo.PageInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -27,10 +22,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author 文轩
@@ -41,6 +33,9 @@ public class MonitorWarningQuartz {
 
     @Value("${schedule.monitor-warning.open}")
     private boolean open;
+
+    @Autowired
+    private MonitorArticleDao monitorArticleDao;
 
     private final WarningSettingService warningSettingService;
 
@@ -86,28 +81,23 @@ public class MonitorWarningQuartz {
         }
         List<MonitorWarningSetting> waitWarningSetting = warningSettingService.getWaitWarningSetting();
         log.info("监控预警任务开始......，共有{}个预警设置", waitWarningSetting.size());
-
         for (MonitorWarningSetting monitorWarningSetting : waitWarningSetting) {
             //查询偏好设置
             OpinionCondition opinionCondition = opinionConditionDao.selectByProjectId(monitorWarningSetting.getProjectId());
             if (opinionCondition == null) {
                 continue;
             }
-
             Project project = projectDao.selectByProjectId(monitorWarningSetting.getProjectId());
             if (project == null) {
                 continue;
             }
-
             LocalDateTime now = LocalDateTime.now();
             String timee = sdf.format(now);
             //24小时前
             LocalDateTime before = now.minusHours(24);
             String times = sdf.format(before);
-
             opinionCondition.setTimes(times);
             opinionCondition.setTimee(timee);
-
             //查询文章
             PageInfo<ArticleData> articleListByOpinionCondition = monitorService.getArticleListByOpinionCondition(opinionCondition, project, 1);
             if (articleListByOpinionCondition == null) {
@@ -124,9 +114,6 @@ public class MonitorWarningQuartz {
                     }
                 }
             }
-
-
-
             final byte[] bytes;
             try {
                 bytes = excelService.assembleExcel(articleDataList);
@@ -134,9 +121,7 @@ public class MonitorWarningQuartz {
                 log.error("监控预警任务失败......{}", e.getMessage());
                 continue;
             }
-
             Long userId = project.getUserId();
-
             ThreadPoolConst.IO_EXECUTOR.execute(()->{
                 try {
                     String mailJson = userDao.selectMailJsonByUserId(userId);
@@ -162,10 +147,111 @@ public class MonitorWarningQuartz {
                 }
             });
         }
-
     }
 
-
+    /**
+     * 实时推送，每10分钟检查一次
+     */
+    @Scheduled(cron = "0 */10 * * * ? ")
+    public void checkRealTimePushWarningSetting() {
+        if (!open) {
+            return;
+        }
+        List<MonitorWarningSetting> realTimePushWarningSettings = warningSettingService.getRealTimePushWarningSetting();
+        log.info("实时推送监控预警任务开始......，共有{}个预警设置", realTimePushWarningSettings.size());
+        for (MonitorWarningSetting monitorWarningSetting : realTimePushWarningSettings) {
+            //查询偏好设置
+            Long projectId = monitorWarningSetting.getProjectId();
+            OpinionCondition opinionCondition = opinionConditionDao.selectByProjectId(projectId);
+            if (opinionCondition == null) {
+                continue;
+            }
+            Project project = projectDao.selectByProjectId(projectId);
+            if (project == null) {
+                continue;
+            }
+            LocalDateTime now = LocalDateTime.now();
+            String timee = sdf.format(now);
+            //24小时前
+            LocalDateTime before = now.minusHours(24);
+            String times = sdf.format(before);
+            opinionCondition.setTimes(times);
+            opinionCondition.setTimee(timee);
+            //查询文章
+            PageInfo<ArticleData> articleListByOpinionCondition = monitorService.getArticleListByOpinionCondition(opinionCondition, project, 1);
+            if (articleListByOpinionCondition == null) {
+                continue;
+            }
+            List<ArticleData> articleDataList = articleListByOpinionCondition.getData();
+            //查询剩余页数
+            int totalPage = articleListByOpinionCondition.getTotalPage();
+            if (totalPage > 1) {
+                for (int i = 2; i <= totalPage; i++) {
+                    PageInfo<ArticleData> articleListByOpinionCondition1 = monitorService.getArticleListByOpinionCondition(opinionCondition, project, i);
+                    if (articleListByOpinionCondition1 != null) {
+                        articleDataList.addAll(articleListByOpinionCondition1.getData());
+                    }
+                }
+            }
+            //去重
+            List<ArticleData> unrepeatedArticleDataList = new ArrayList<>();
+            for (ArticleData articleData : articleDataList) {
+                String sourceUrl = articleData.getSource_url();
+                int count = monitorArticleDao.selectCountByProjectIdAndSourceUrl(projectId, sourceUrl);
+                if (count == 0) {
+                    log.info("该文章链接不存在：{}", sourceUrl);
+                    try {
+                        MonitorArticle monitorArticle = new MonitorArticle();
+                        monitorArticle.setProjectId(projectId);
+                        monitorArticle.setArticleSourceUrl(sourceUrl);
+                        monitorArticle.setCreateTime(new Date());
+                        monitorArticleDao.insert(monitorArticle);
+                        unrepeatedArticleDataList.add(articleData);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    log.info("该文章链接已存在，无需推送：{}", sourceUrl);
+                }
+            }
+            if (unrepeatedArticleDataList.size() == 0) {
+                log.info("实时推送数据列表为空！");
+                continue;
+            }
+            final byte[] bytes;
+            try {
+                bytes = excelService.assembleExcel(unrepeatedArticleDataList);
+            } catch (IOException e) {
+                log.error("监控预警任务失败......{}", e.getMessage());
+                continue;
+            }
+            Long userId = project.getUserId();
+            ThreadPoolConst.IO_EXECUTOR.execute(()->{
+                try {
+                    String mailJson = userDao.selectMailJsonByUserId(userId);
+                    if (mailJson == null || mailJson.isEmpty()) {
+                        log.info("监控预警邮件发送失败......用户未设置邮箱......");
+                        return;
+                    }
+                    MailConfig mailConfig = JSON.parseObject(mailJson, MailConfig.class);
+                    Set<String> toList = monitorWarningSetting.getToList();
+                    String[] toArray = toList.toArray(new String[0]);
+                    mailConfig.setTo(toArray[0]);
+                    if (toArray.length > 1) {
+                        mailConfig.setCc(Arrays.copyOfRange(toArray, 1, toArray.length));
+                    }
+                    if (mailConfig.getTo() == null || mailConfig.getTo().isEmpty()) {
+                        log.info("监控预警邮件发送失败......用户未指定收件人......");
+                        return;
+                    }
+                    mailService.sendWarningMail(mailConfig,bytes);
+                    log.info("监控预警邮件发送成功......");
+                } catch (Exception e) {
+                    log.info("监控预警邮件发送失败......{}", e.getMessage());
+                }
+            });
+        }
+    }
 
     /**
      * @param nowTime

@@ -18,4 +18,9 @@ public interface WarningSettingService {
      * 查询等待推送的预警设置
      */
     List<MonitorWarningSetting> getWaitWarningSetting();
+
+    /**
+     * 查询实时推送的预警设置
+     */
+    List<MonitorWarningSetting> getRealTimePushWarningSetting();
 }

@@ -23,6 +23,8 @@ public interface MonitorWarningSettingDao {
     MonitorWarningSetting SelectByProjectId(Long projectId);
 
     List<MonitorWarningSetting> selectWaitWarningSetting();
+
+    List<MonitorWarningSetting> selectRealTimePushWaitWarningSetting();
 }
 
 

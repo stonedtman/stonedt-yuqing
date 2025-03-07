@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stonedt.intelligence.dao.MonitorArticleDao">
+
+    <resultMap id="BaseResultMap" type="com.stonedt.intelligence.entity.MonitorArticle">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="projectId" column="project_id" jdbcType="BIGINT"/>
+        <result property="articleSourceUrl" column="article_source_url" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="insert">
+        insert into monitor_article (project_id, article_source_url, create_time)
+        values (#{projectId}, #{articleSourceUrl}, now())
+    </insert>
+
+    <select id="selectCountByProjectIdAndSourceUrl" resultType="java.lang.Integer">
+        select count(*) from monitor_article
+        where project_id = #{projectId}
+        and article_source_url = #{sourceUrl}
+    </select>
+
+</mapper>

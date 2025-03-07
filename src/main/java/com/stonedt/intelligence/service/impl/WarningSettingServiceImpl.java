@@ -128,4 +128,12 @@ public class WarningSettingServiceImpl implements WarningSettingService {
     public List<MonitorWarningSetting> getWaitWarningSetting() {
         return monitorWarningSettingDao.selectWaitWarningSetting();
     }
+
+    /**
+     * 查询实时推送的预警设置
+     */
+    @Override
+    public List<MonitorWarningSetting> getRealTimePushWarningSetting() {
+        return monitorWarningSettingDao.selectRealTimePushWaitWarningSetting();
+    }
 }

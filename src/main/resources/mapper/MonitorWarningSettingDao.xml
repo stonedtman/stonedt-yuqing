@@ -11,6 +11,7 @@
             <result property="toList" column="to_list" jdbcType="OTHER" typeHandler="com.stonedt.intelligence.handler.SetTypeHandler"/>
             <result property="popUpTime" column="pop_up_time" jdbcType="TIMESTAMP"/>
             <result property="enable" column="enable" jdbcType="TINYINT"/>
+            <result property="realTimePush" column="real_time_push" jdbcType="TINYINT"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
@@ -21,9 +22,9 @@
         create_time,update_time
     </sql>
     <insert id="insert">
-        insert into monitor_warning_setting (group_id, project_id, to_list, pop_up_time, enable, create_time, update_time)
+        insert into monitor_warning_setting (group_id, project_id, to_list, pop_up_time, enable, create_time, update_time, real_time_push)
         values (#{groupId,jdbcType=BIGINT}, #{projectId,jdbcType=BIGINT}, #{toList,typeHandler=com.stonedt.intelligence.handler.SetTypeHandler},
-                #{popUpTime,jdbcType=TIME}, #{enable,jdbcType=TINYINT}, now(), now())
+                #{popUpTime,jdbcType=TIME}, #{enable,jdbcType=TINYINT}, now(), now(), #{realTimePush})
     </insert>
     <update id="update">
         update monitor_warning_setting
@@ -36,6 +37,9 @@
             </if>
             <if test="enable != null">
                 enable = #{enable,jdbcType=TINYINT},
+            </if>
+            <if test="realTimePush != null">
+                real_time_push = #{realTimePush,jdbcType=TINYINT},
             </if>
             update_time = now()
         </set>
@@ -57,5 +61,11 @@
         where enable = 1
         and pop_up_time &lt; time(now()) + interval 10 minute
         and pop_up_time &gt; time(now()) - interval 10 minute
+        and real_time_push = 0
+    </select>
+    <select id="selectRealTimePushWaitWarningSetting" resultMap="BaseResultMap">
+        select * from monitor_warning_setting
+        where enable = 1
+        and real_time_push = 1
     </select>
 </mapper>

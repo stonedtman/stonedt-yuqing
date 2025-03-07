@@ -1071,12 +1071,22 @@ CREATE TABLE `monitor_warning_setting` (
                                            `group_id` bigint NOT NULL,
                                            `project_id` bigint NOT NULL,
                                            `to_list` json NOT NULL COMMENT '收件人列表',
-                                           `pop_up_time` time NOT NULL COMMENT '推送时间',
+                                           `pop_up_time` time DEFAULT NULL COMMENT '推送时间',
                                            `enable` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否开启推送',
+                                           `real_time_push` tinyint(1) DEFAULT '0' COMMENT '实时推送（0：否 1：是）',
                                            `create_time` datetime NOT NULL COMMENT '创建时间',
                                            `update_time` datetime NOT NULL COMMENT '修改时间',
-                                           PRIMARY KEY (`id`),
+                                           PRIMARY KEY (`id`) USING BTREE,
                                            UNIQUE KEY `unique_monitor_warning_setting_projectid` (`project_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `monitor_article` (
+                                   `id` int NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                                   `project_id` bigint DEFAULT NULL COMMENT '检测方案id',
+                                   `article_source_url` varchar(755) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '文章链接',
+                                   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+                                   PRIMARY KEY (`id`),
+                                   UNIQUE KEY `uniq_project_article` (`project_id`,`article_source_url`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='实时监测文章去重表';
 
 
