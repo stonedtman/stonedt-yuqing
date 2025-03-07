@@ -2257,7 +2257,7 @@
             '                    <div style="min-width: 120px">推送邮箱:</div>' +
             '                    <input type="text" class="form-control" id="pushEmail" placeholder="多个邮箱以,分割" maxlength="100">' +
             '                </div>' +
-            '                <div class="input-group mb-3" style="align-items: center">' +
+            '                 <div class="input-group mb-3" style="align-items: center">' +
             '                    <div style="min-width: 120px">推送时间:</div>' +
             `                    <select name="" id="pushTime" class="custom-select form-control">
                                       <option value="00:00:00">00:00:00</option>
@@ -2285,6 +2285,10 @@
                                       <option value="22:00:00">22:00:00</option>
                                       <option value="23:00:00">23:00:00</option>
                                   </select>` +
+            '                </div>' +
+            '                <div class="input-group mb-3" style="align-items: center">' +
+            '                    <div style="min-width: 120px">实时推送:</div>' +
+            '                    <div><input type="checkbox" id="option1"></div>' +
             '                </div>' +
             '            </div>' +
             '            <div class="modal-footer" style="border:none">' +
@@ -2326,6 +2330,11 @@
         toList: pushEmail.split(","),
         popUpTime: pushTime,
         enable: true,
+      }
+      if($("#option1").prop('checked')){
+        pushBody.realTimePush = 1
+      } else {
+        pushBody.realTimePush = 0
       }
       $.ajax({
         url: window.location.origin + '/monitor/warningSetting',

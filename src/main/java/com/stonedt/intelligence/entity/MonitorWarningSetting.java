@@ -54,7 +54,7 @@ public class MonitorWarningSetting implements Serializable {
     /**
      * 实时推送（0：否 1：是）
      */
-    private boolean realTimePush;
+    private Integer realTimePush;
 
     /**
      * 创建时间
