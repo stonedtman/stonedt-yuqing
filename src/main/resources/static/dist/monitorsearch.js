@@ -23,7 +23,7 @@ var timeb = null;
 function sendArticleSearch(param, data, funcname) {
     window.clearTimeout(timea);
     window.clearInterval(timeb);
-    debugger;
+    //debugger;
     let data_ = JSON.parse(JSON.stringify(data))
     data_.classify = data_.classify.join()
     data_.searchWord = data_.searchword
@@ -409,7 +409,7 @@ function sendArticleEventSearch(param, data, funcEvent) {
     articleParam.contentType = 'application/json;charset=utf-8';
     window.clearTimeout(timea);
     window.clearInterval(timeb);
-    debugger;
+    //debugger;
     $("#page").html("");
     $.ajax({
         type: articleParam.type,
@@ -550,7 +550,7 @@ $('#eventplus').click(function () {
 
 function funcEvent(res) {
 
-    debugger;
+    //debugger;
 
     $("#eventlist").html('');
     $("#eventlist1").html('');
@@ -640,7 +640,7 @@ function dealCate(arg) {
 //                 similarflag = $(this).data('similar');
 //             }
 //         });
-//         // debugger;
+//         // //debugger;
 //         if (similarflag == 1) {
 //             $("#totalCount").html(res.data.totalNum);
 //         } else {
@@ -692,14 +692,14 @@ function dealCate(arg) {
 //                 }
 //
 //
-//                 debugger;
+//                 //debugger;
 //
 //                 let category = dealCate(article_category);
 //
 //                 let copytext = '';
 //                 let read = '';
 //                 if (datasource == 2) { // 微博
-//                     debugger;
+//                     //debugger;
 //                     let strStart = '<div class="wb-content just-bet" >';
 //                     let strCheck = '<div class="monitor-check"><input type="checkbox" data-index="' + article_public_id + '" id="check2"><span></span></div>';
 //                     let strContentStart = '<div class="monitor-right">';
@@ -1475,7 +1475,7 @@ function getArticleData11(page, searchWord, currentProjectid, currentGroupid) {
         articleData.industryIndex = industryIndex;
     }
 
-    debugger;
+    //debugger;
 
     articleData.searchword = searchWord;
     articleData.projectid = currentProjectid;
@@ -1493,7 +1493,7 @@ function getArticleData11(page, searchWord, currentProjectid, currentGroupid) {
     articleData.policylableflag = policylableflag;
     articleData.classify = classify;
 
-    debugger;
+    //debugger;
     return articleData;
 }
 
@@ -1926,7 +1926,7 @@ $("#industrylist").on('click', 'span', function (e) {
     let searchWord = $("#searchWord").val();
     let articleData = getArticleData11(1, searchWord, monitor_projectid, monitor_groupid);
 
-    debugger;
+    //debugger;
     console.log(articleData, "ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp");
     sendArticleSearch(articleParam,articleData, installArticle3);
     //sendArticleIndustrySearch(articleParam, JSON.stringify(articleData), funcIndustry);

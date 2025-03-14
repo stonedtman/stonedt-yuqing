@@ -592,7 +592,7 @@ function installDoctor(res){
  * @returns
  */
 function installHot(res) {
-	debugger;
+	//debugger;
 	let code = res.code;
 	if (code == 200) {
 		let data = res.data
@@ -2008,7 +2008,7 @@ function installArticle3(res) {
 				});
 
 				if (similarflag == '1') {
-					debugger;
+					//debugger;
 					console.log("合并")
 					console.log(dataJson);
 					num = dataJson.num;
@@ -2148,7 +2148,7 @@ function installArticle3(res) {
 
 					//上市公司
 					strcompanyandgov += '<span class="link m-r-10">';
-					debugger;
+					//debugger;
 					let ipo = JSON.parse(ner).IPO;
 					let ipostr = "";
 					var ipoflag = 1;
@@ -2280,7 +2280,7 @@ function installArticle3(res) {
 							//上市公司
 							strcompanyandgov += '<span class="link m-r-10">';
 							let ipo = JSON.parse(ner).IPO;
-							debugger;
+							//debugger;
 							let ipostr = "";
 							var ipoflag = 1;
 							for (var key in ipo) {
@@ -2442,7 +2442,7 @@ function installArticle3(res) {
 							let ipo = JSON.parse(ner).IPO;
 							let ipostr = "";
 							var ipoflag = 1;
-							debugger;
+							//debugger;
 							for (var key in ipo) {
 								ipoflag++;
 								strcompanyandgov += '<a style="" class="ipotag" href="###">' + key + '</a>'
@@ -2600,7 +2600,7 @@ function installArticle3(res) {
 						let ipo = JSON.parse(ner).IPO;
 						let ipostr = "";
 						var ipoflag = 1;
-						debugger;
+						//debugger;
 						for (var key in ipo) {
 							ipoflag++;
 							strcompanyandgov += '<a style="" class="ipotag" href="###">' + key + '</a>'

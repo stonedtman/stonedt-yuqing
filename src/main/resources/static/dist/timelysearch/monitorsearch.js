@@ -25,7 +25,7 @@ gettempleteinfo(stype, website_id);
  * 获取模版信息
  */
 function gettempleteinfo(fulltype, website_id) {
-	debugger;
+	//debugger;
 	$.ajax({
 		url: "/timelysearch/templete?stype=" + fulltype,
 		type: "get",
@@ -178,7 +178,7 @@ function loadContent(stype, keywords, sexdata, pageNum) {
 		type: "get",
 		beforeSend: function() {
 			$("#contentdata").html('');
-			debugger;
+			//debugger;
 			loading("#monitor-content");
 			$('#div1').show();
 		},
@@ -526,7 +526,7 @@ function pageHelper(currentPage, totalPages) {
  * 获取模版信息
  */
 function gettempleteinfo2(fulltype, website_id) {
-	debugger;
+	//debugger;
 	$.ajax({
 		url: "/timelysearch/templete?stype=" + fulltype,
 		type: "get",
@@ -572,7 +572,7 @@ function gettempleteinfo2(fulltype, website_id) {
 					website_id = $(this).data('engine');
 				}
 			});
-			debugger;
+			//debugger;
 			loadContent(fulltype, keywords, website_id, 1);
 			
 			let url = "result?website_id=" + website_id + "&pageNoData=1&keyword=" + keywords +

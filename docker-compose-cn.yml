@@ -1,0 +1,61 @@
+services:
+  mysql:
+    image: docker.xuanyuan.me/mysql:5.7
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: stonedt_portal
+#    ports:
+#      - "3306:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+      - ./src/main/resources/db/migration/V1.0__InitTableAndData.sql:/docker-entrypoint-initdb.d/V1.0__InitTableAndData.sql
+    networks:
+      - yuqing
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p123456"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+
+  redis:
+    image: docker.xuanyuan.me/redis:latest
+    container_name: redis
+    volumes:
+      - ./redis_data:/data               # 持久化数据目录
+      - ./redis.conf:/usr/local/etc/redis/redis.conf # 自定义 Redis 配置
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+#    ports:
+#      - "6379:6379"
+    networks:
+      - yuqing
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+
+  stonedt-yuqing:
+    build:
+      context: .
+      dockerfile: DockerfileCN
+    container_name: stonedt-yuqing
+    ports:
+      - "8085:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy  # 等待 MySQL 健康检查通过
+      redis:
+        condition: service_healthy  # 等待 Redis 健康检查通过
+    networks:
+      - yuqing
+
+volumes:
+  mysql_data:
+  redis_data:
+
+networks:
+  yuqing:
+    driver: bridge
