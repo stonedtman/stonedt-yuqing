@@ -2,309 +2,309 @@
 <html dir="ltr" lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<!-- Tell the browser to be responsive to screen width -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
-<meta name="referrer" content="no-referrer" />
-<!-- Favicon icon -->
-<link rel="icon" type="image/png" sizes="16x16"
-	th:href="@{/assets/images/favicon.png}">
-<title>登录·网络情报分析系统</title>
-<script th:src="@{/common/analyze-cloud.js}"></script>
-<!---->
-<!-- Custom CSS -->
-<link th:href="@{/dist/css/style.min.css}" rel="stylesheet">
-<link th:href="@{/dist/css/custom.css}" rel="stylesheet">
-<link th:href="@{/dist/css/iconfont.css}" rel="stylesheet">
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="referrer" content="no-referrer" />
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16"
+          th:href="@{/assets/images/favicon.png}">
+    <title>登录·网络情报分析系统</title>
+    <script th:src="@{/common/analyze-cloud.js}"></script>
+    <!---->
+    <!-- Custom CSS -->
+    <link th:href="@{/dist/css/style.min.css}" rel="stylesheet">
+    <link th:href="@{/dist/css/custom.css}" rel="stylesheet">
+    <link th:href="@{/dist/css/iconfont.css}" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-<style type="text/css">
-	.login_right {
-		position: relative;
-		width: 50%;
-	}
-	.login_right .login-window {
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%);
-		width: 496px;
-		height: 614px;
-		text-align: center;
-		border-radius: 12px;
-		background: #fff;
-		box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.16);
-		margin: auto;
-		padding: 8px;
-	}
-	.login-window .logo-title {
-		margin-top: 79px;
-		font-size: 24px;
-		line-height: 20px;
-		letter-spacing: 0.88px;
-		color: #3f3f40;
-		font-weight: normal;
-	}
-	.login-window .logo-text {
-		margin-top: 15px;
-		font-size: 16px;
-		line-height: 17px;
-		letter-spacing: 0.75px;
-		color: #828282;
-	}
-	.login-window .qr-code {
-		position: relative;
-		width: 227.9px;
-		height: 227.56px;
-		background: #f4f4f4;
-		margin: auto;
-		margin-bottom: 10px;
-		margin-top: 40px;
-		color: #fff;
-		padding: 20px;
-		box-sizing: border-box;
-	}
-	.qrcode-img {
-		width: 100%;
-		height: 100%;
-	}
-	.login-window .qr-code .refresh {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		left: 0;
-		top: 0;
-		background: rgba(0, 0, 0, 0.75);
-		text-align: center;
-		border-radius: 5px;
-	}
-	.qr-code .qr_loading {
-		/*color: #3776ff;*/
-		/*background: transparent;*/
-	}
-	.refresh .iconfont {
-		font-size: 40px;
-		margin-bottom: 10px;
-		margin-top: 90px;
-		display: block;
-	}
-	@keyframes rotateImg {
-		0% {
-			transform: rotate(0deg);
-		}
-		100% {
-			transform: rotate(1turn);
-		}
-	}
+    <style type="text/css">
+        .login_right {
+            position: relative;
+            width: 50%;
+        }
+        .login_right .login-window {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 496px;
+            height: 614px;
+            text-align: center;
+            border-radius: 12px;
+            background: #fff;
+            box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.16);
+            margin: auto;
+            padding: 8px;
+        }
+        .login-window .logo-title {
+            margin-top: 79px;
+            font-size: 24px;
+            line-height: 20px;
+            letter-spacing: 0.88px;
+            color: #3f3f40;
+            font-weight: normal;
+        }
+        .login-window .logo-text {
+            margin-top: 15px;
+            font-size: 16px;
+            line-height: 17px;
+            letter-spacing: 0.75px;
+            color: #828282;
+        }
+        .login-window .qr-code {
+            position: relative;
+            width: 227.9px;
+            height: 227.56px;
+            background: #f4f4f4;
+            margin: auto;
+            margin-bottom: 10px;
+            margin-top: 40px;
+            color: #fff;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .qrcode-img {
+            width: 100%;
+            height: 100%;
+        }
+        .login-window .qr-code .refresh {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background: rgba(0, 0, 0, 0.75);
+            text-align: center;
+            border-radius: 5px;
+        }
+        .qr-code .qr_loading {
+            /*color: #3776ff;*/
+            /*background: transparent;*/
+        }
+        .refresh .iconfont {
+            font-size: 40px;
+            margin-bottom: 10px;
+            margin-top: 90px;
+            display: block;
+        }
+        @keyframes rotateImg {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(1turn);
+            }
+        }
 
-	.qr-code .qr_loading .iconfont {
-		animation: rotateImg 3s linear infinite;
-	}
-	#close {
-		position: absolute;
-		top: 8px;
-		right: 12px;
-		z-index: 1;
-	}
-	.showCreateEvent{
-		height: 100%;
-	}
-	#loginExpired .event-box {
-		width: 400px;
-		min-height: auto;
-		text-align: center;
-		margin: 0;
-		top: 50%;
-		transform: translate(-50%,-50%);
-	}
-	#loginExpired .event-box-body {
-		padding: 0px 20px 20px;
-	}
-	.modal-title{
-		height: 60px;
-		line-height: 64px;
-		font-size: 20px;
-	}
+        .qr-code .qr_loading .iconfont {
+            animation: rotateImg 3s linear infinite;
+        }
+        #close {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            z-index: 1;
+        }
+        .showCreateEvent{
+            height: 100%;
+        }
+        #loginExpired .event-box {
+            width: 400px;
+            min-height: auto;
+            text-align: center;
+            margin: 0;
+            top: 50%;
+            transform: translate(-50%,-50%);
+        }
+        #loginExpired .event-box-body {
+            padding: 0px 20px 20px;
+        }
+        .modal-title{
+            height: 60px;
+            line-height: 64px;
+            font-size: 20px;
+        }
 
-	@media (max-width: 768px) {
-		.login_right{
-			width: 100%;
-		}
-		.login_right .login-window{
-			width: 100%;
-			height: calc(100% - 60px);
-			top: 60px;
-			transform: translateX(-50%);
-			border-radius: 0;
-		}
-	}
-</style>
+        @media (max-width: 768px) {
+            .login_right{
+                width: 100%;
+            }
+            .login_right .login-window{
+                width: 100%;
+                height: calc(100% - 60px);
+                top: 60px;
+                transform: translateX(-50%);
+                border-radius: 0;
+            }
+        }
+    </style>
 
 </head>
 
 <body>
-	<div class="main-wrapper">
-		<div class="auth-wrapper auth-wrapper-bg d-flex">
-			<div class="login-header">
-				<img th:src="@{/assets/images/favicon.png}" alt=""> <span>思通数据</span>
-			</div>
-			<div class="auth-box-left slogan-wrapper">
-				<div class="slogan">
-					<img th:src="@{/assets/images/login-left.png}" alt="">
-				</div>
-			</div>
-			<div class="login_right">
-				<div class="login-window login-qrcode">
-					<div class="login-content-container">
-						<div class="logo-title">扫码登录</div>
-						<div class="logo-text">请打开微信扫码并关注公众号</div>
-						<div class="qr-code">
-							<img class="qrcode-img" src="" alt="">
-							<!--<div class="refresh" onclick="getQrcode()">
-								<i class="iconfont icon-shuaxin"></i>
-								<div>二维码已过期，点击刷新</div>
-							</div>-->
-						</div>
-					</div>
-				</div>
-				<div class="cus-footer" style="color: #5a5a5a;">
-					© 2014-<span id="currentyear"></span>  思通数科（南京）信息技术有限公司 <a href="https://beian.miit.gov.cn" target="_blank">苏ICP备17066984号-1</a>
-				</div>
-			</div>
+<div class="main-wrapper">
+    <div class="auth-wrapper auth-wrapper-bg d-flex">
+        <div class="login-header">
+            <img th:src="@{/assets/images/favicon.png}" alt=""> <span>思通数据</span>
+        </div>
+        <div class="auth-box-left slogan-wrapper">
+            <div class="slogan">
+                <img th:src="@{/assets/images/login-left.png}" alt="">
+            </div>
+        </div>
+        <div class="login_right">
+            <div class="login-window login-qrcode">
+                <div class="login-content-container">
+                    <div class="logo-title">扫码登录</div>
+                    <div class="logo-text">请打开微信扫码并关注公众号</div>
+                    <div class="qr-code">
+                        <img class="qrcode-img" src="" alt="">
+                        <!--<div class="refresh" onclick="getQrcode()">
+                            <i class="iconfont icon-shuaxin"></i>
+                            <div>二维码已过期，点击刷新</div>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+            <div class="cus-footer" style="color: #5a5a5a;">
+                © 2014-<span id="currentyear"></span>  思通数科（南京）信息技术有限公司 <a href="https://beian.miit.gov.cn" target="_blank">苏ICP备17066984号-1</a>
+            </div>
+        </div>
 
 
 
-		</div>
+    </div>
 
-	</div>
-	<script th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
-	<!-- Bootstrap tether Core JavaScript -->
-	<script th:src="@{/assets/libs/popper.js/dist/umd/popper.min.js}"></script>
-	<script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.min.js}"></script>
-	<script th:src="@{/assets/libs/block-ui/jquery.blockUI.js}"></script>
-	<script th:src="@{/dist/js/sidebarmenu.js}"></script>
-	<script th:src="@{/dist/baidu/baidu_statistics.js}"></script>
-	<script th:src="@{/common/ajax-config.js}"></script>
+</div>
+<script th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script th:src="@{/assets/libs/popper.js/dist/umd/popper.min.js}"></script>
+<script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/libs/block-ui/jquery.blockUI.js}"></script>
+<script th:src="@{/dist/js/sidebarmenu.js}"></script>
+<script th:src="@{/dist/baidu/baidu_statistics.js}"></script>
+<script th:src="@{/common/ajax-config.js}"></script>
 
-	<script th:inline="javascript">
-		var ctx = [[@{/}]];
-		var reference = [[${reference}]];
-	</script>
-	<script type="application/javascript">
-		$("#currentyear").text((new Date()).getFullYear());
-		ctx = window.location.origin
-		var timer;
-		var sceneStr;
-		function getQrcode() {
-			$(".qr-code").html(`<div class="qr_loading refresh"><i class="iconfont icon-shuaxin"></i>
+<script th:inline="javascript">
+    var ctx = [[@{/}]];
+    var reference = [[${reference}]];
+</script>
+<script type="application/javascript">
+    $("#currentyear").text((new Date()).getFullYear());
+    ctx = window.location.origin
+    var timer;
+    var sceneStr;
+    function getQrcode() {
+        $(".qr-code").html(`<div class="qr_loading refresh"><i class="iconfont icon-shuaxin"></i>
                 <div>正在生成二维码</div>
               </div>`);
-			$.ajax({
-				method: "GET",
-				url: ctx + "/wechat/getQrCode",
-				contentType: "application/json",
-				success: function (res) {
-					if (res.status == 200) {
-						$(".qr-code").html(`<img class="qrcode-img" src="${res.data.qrcodeUrl}" alt="">`)
-						sceneStr = res.data.sceneStr
-						judgeLogin(res.data.sceneStr);
-						clearTimeout(timer);
-						timer = setTimeout(() => {
-							$(".qr-code").html(`<div class="refresh" onclick="getQrcode()">
+        $.ajax({
+            method: "GET",
+            url: ctx + "/wechat/getQrCode",
+            contentType: "application/json",
+            success: function (res) {
+                if (res.status == 200) {
+                    $(".qr-code").html(`<img class="qrcode-img" src="${res.data.qrcodeUrl}" alt="">`)
+                    sceneStr = res.data.sceneStr
+                    judgeLogin(res.data.sceneStr);
+                    clearTimeout(timer);
+                    timer = setTimeout(() => {
+                        $(".qr-code").html(`<div class="refresh" onclick="getQrcode()">
 								<i class="iconfont icon-shuaxin"></i>
 								<div>二维码已过期，点击刷新</div>
 							</div>`)
-						}, 1000 * 60 * 5)
-					}else{
-						$(".qr-code").html(`<div class="refresh" onclick="getQrcode()">
+                    }, 1000 * 60 * 5)
+                }else{
+                    $(".qr-code").html(`<div class="refresh" onclick="getQrcode()">
 							<i class="iconfont icon-shuaxin"></i>
 							<div>二维码请求失败，点击重试</div>
 						</div>`)
-						clearTimeout(timer);
-					}
-				},
-			});
-		}
-		getQrcode()
+                    clearTimeout(timer);
+                }
+            },
+        });
+    }
+    getQrcode()
 
-		function judgeLogin(str) {
-			$.ajax({
-				method: "GET",
-				url: ctx + "/wechat/checkLogin",
-				contentType: "application/json",
-				data: { sceneStr:str },
-				success: function (res) {
-					if (res.status == 200) {
-						clearTimeout(timer);
-						if(isMobile()){
-							window.location.href = "/mobile/monitor"
-							return;
-						}
-						if(reference){
-							window.location.href = reference
-							return
-						}
-						window.location.href = "/monitor"
-					}else if(res.status==204){
-						setTimeout(() => {
-							if(!timer){
-								return
-							}
-							judgeLogin(sceneStr);
-						}, 1000)
-					}else if(res.status==504){
-						clearTimeout(timer);
-						$(".qr-code").html(`<div class="refresh" onclick="getQrcode()">
+    function judgeLogin(str) {
+        $.ajax({
+            method: "GET",
+            url: ctx + "/wechat/checkLogin",
+            contentType: "application/json",
+            data: { sceneStr:str },
+            success: function (res) {
+                if (res.status == 200) {
+                    clearTimeout(timer);
+                    if(isMobile()){
+                        window.location.href = "/mobile/monitor"
+                        return;
+                    }
+                    if(reference){
+                        window.location.href = reference
+                        return
+                    }
+                    window.location.href = "/monitor"
+                }else if(res.status==204){
+                    setTimeout(() => {
+                        if(!timer){
+                            return
+                        }
+                        judgeLogin(sceneStr);
+                    }, 1000)
+                }else if(res.status==504){
+                    clearTimeout(timer);
+                    $(".qr-code").html(`<div class="refresh" onclick="getQrcode()">
 							<i class="iconfont icon-shuaxin"></i>
 							<div>二维码已过期，点击刷新</div>
 						</div>`)
-						expire()
-					}else{
-						showtips(res.msg);
-						clearTimeout(timer);
-						timer = null
-					}
-				},
-			});
-		}
+                    expire()
+                }else{
+                    showtips(res.msg);
+                    clearTimeout(timer);
+                    timer = null
+                }
+            },
+        });
+    }
 
-		function expire(){
-			var eventHtml =
-				'<div class="shadebox" id="loginExpired">'+
-				'    <div class="showCreateEvent"> '+
-				'        <div class="event-box">'+
-				'			 <div class="modal-title">体验账号已过期</div>'+
-				'            <i class="mdi mdi-close-circle-outline font-18 cursor-po" id="close"></i>'+
-				'            <div class="event-box-body">'+
-				'				<div>请扫码添加产品经理获取体验资格</div>'+
-				'				<img style="width: 200px;margin-top: 10px;" src="/assets/images/expireCode.jpg" alt="">'+
-				'				<div style="margin-top: 20px">添加微信时请备注: SaaS用户</div>'+
-				'				<div style="margin-top: 10px">联系方式: 13913953100</div>'+
-				'            </div>'+
-				'        </div>'+
-				'    </div>'+
-				'</div>'
+    function expire(){
+        var eventHtml =
+            '<div class="shadebox" id="loginExpired">'+
+            '    <div class="showCreateEvent"> '+
+            '        <div class="event-box">'+
+            '			 <div class="modal-title">体验账号已过期</div>'+
+            '            <i class="mdi mdi-close-circle-outline font-18 cursor-po" id="close"></i>'+
+            '            <div class="event-box-body">'+
+            '				<div>请扫码添加产品经理获取体验资格</div>'+
+            '				<img style="width: 200px;margin-top: 10px;" src="/assets/images/expireCode.jpg" alt="">'+
+            '				<div style="margin-top: 20px">添加微信时请备注: SaaS用户</div>'+
+            '				<div style="margin-top: 10px">联系方式: 13913953100</div>'+
+            '            </div>'+
+            '        </div>'+
+            '    </div>'+
+            '</div>'
 
-			$("body").append(eventHtml)
-			$("#close").click(function (param) {
-				$("#loginExpired").remove()
-			})
-		}
+        $("body").append(eventHtml)
+        $("#close").click(function (param) {
+            $("#loginExpired").remove()
+        })
+    }
 
-		function isMobile(){
-			// 判断是否是手机端，如果是，返回true
-			var flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
-			return flag
-		}
-	</script>
+    function isMobile(){
+        // 判断是否是手机端，如果是，返回true
+        var flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+        return flag
+    }
+</script>
 </body>
 
 </html>

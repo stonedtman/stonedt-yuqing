@@ -46,6 +46,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -175,7 +176,12 @@ public class PlatformServiceImpl implements PlatformService {
             //获取图片字真实链接地址
             String realUrl = response.request().url().toString();
             //获取图片文件名
-            fileName = realUrl.substring(realUrl.lastIndexOf("/") + 1);
+            String tempFileName = realUrl.substring(realUrl.lastIndexOf("/") + 1);
+            tempFileName = tempFileName.substring(0, tempFileName.indexOf("?"));
+            if (tempFileName.length() > 70) {
+                tempFileName = UUID.randomUUID().toString();
+            }
+            fileName = tempFileName;
             //获取图片字节流
             if (response.body() != null) {
                 bytes = response.body().bytes();

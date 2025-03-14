@@ -72,13 +72,13 @@
                                        aria-describedby="basic-addon1">
                             </div>
                             <div class="input-group mb-3">
-		                  <input type="text" class="form-control form-control-lg" name="graph_code" id="graph_code" placeholder="图形验证码" required="">
-		                  <img th:src="@{/img/code}" alt="login-logo-icon" id="graph_img" style="height:44px;width:132px;margin-left:5px">
-               		 </div>
+                                <input type="text" class="form-control form-control-lg" name="graph_code" id="graph_code" placeholder="图形验证码" required="">
+                                <img th:src="@{/img/code}" alt="login-logo-icon" id="graph_img" style="height:44px;width:132px;margin-left:5px">
+                            </div>
                             <div class="form-group text-center">
                                 <div class="col-xs-12 p-b-20"
                                      style="display: flex; justify-content: space-between;align-items: center;">
-<!--                                    <a th:href="@{/forgotpwd}" style="color: #7290e0;">忘记密码？</a>-->
+                                    <!--                                    <a th:href="@{/forgotpwd}" style="color: #7290e0;">忘记密码？</a>-->
                                     <a href=""></a>
                                     <button class="btn btn-block btn-lg btn-info bt-login" type="button"
                                             onclick="login()">登录
@@ -125,11 +125,11 @@
 <!-- This page plugin js -->
 <!-- ============================================================== -->
 <script th:inline="javascript" type="application/javascript">
-$("#currentyear").text((new Date()).getFullYear());
+    $("#currentyear").text((new Date()).getFullYear());
     $('[data-toggle="tooltip"]').tooltip();
     $(".preloader").fadeOut();
-    // ============================================================== 
-    // Login and Recover Password 
+    // ==============================================================
+    // Login and Recover Password
     // ==============================================================
     var ctxPath = /*[[@{/}]]*/'';
     var reference = [[${reference}]];
@@ -137,8 +137,8 @@ $("#currentyear").text((new Date()).getFullYear());
         var telephone = $("input[name='telephone']").val();
         var password = $("input[name='password']").val();
         var graph_code = $("input[name='graph_code']").val();//图形验证码
-        
-        
+
+
         if(telephone==null||telephone==''){showtips('用户名为空');return;}
         if(password==null||password==''){showtips('密码为空');return;}
         if(graph_code==null||graph_code==''){showtips('图形验证码为空');return;}
@@ -177,7 +177,7 @@ $("#currentyear").text((new Date()).getFullYear());
             }
         });
     }
-    
+
 
     var captchaImg = document.getElementById("graph_img");
     // 为验证码图片绑定点击事件
@@ -188,9 +188,9 @@ $("#currentyear").text((new Date()).getFullYear());
         captchaImg.src = "/img/code?_t=" + timestamp;
     };
 
-    
-    
-    
+
+
+
 </script>
 </body>
 

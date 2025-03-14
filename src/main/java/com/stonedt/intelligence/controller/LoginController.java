@@ -46,7 +46,7 @@ public class LoginController {
      * @param mv
      * @return
      */
-  //  @SystemControllerLog(module = "用户登录",submodule="用户登录", type = "查询",operation = "login")
+    //  @SystemControllerLog(module = "用户登录",submodule="用户登录", type = "查询",operation = "login")
     @GetMapping(value = "/login")
     public ModelAndView login(ModelAndView mv,@RequestParam(required = false) String reference) throws UnsupportedEncodingException {
         if (reference == null || "".equals(reference)) {
@@ -81,8 +81,8 @@ public class LoginController {
                 try {
                     //如果Vector中有用户==》移除==》记录==>这样如果切换到别的浏览器同一账号登录且之前账号没有退出就不准确了
                     //如果Vector中没用户==》不记录
-                        userService.updateEndLoginTime(user.getUser_id());
-                        userUtil.removeUser(request, response);
+                    userService.updateEndLoginTime(user.getUser_id());
+                    userUtil.removeUser(request, response);
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -139,7 +139,7 @@ public class LoginController {
                     if (status == 2) {
                         response.put("code", 4);
                         response.put("msg", "账户已被注销");
-                    } 
+                    }
                     if(null==string||!graph_code.equals(string)) {
                         response.put("code", 6);
                         response.put("msg", "图形验证码不正确");
