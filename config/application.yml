@@ -39,7 +39,7 @@ spring:
       driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://localhost:3306/stonedt_portal?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&serverTimezone=Asia/Shanghai&useSSL=false
       username: root
-      password: 123456
+      password: 1234
 
 
  # 3.修改设置Redis服务器地址
