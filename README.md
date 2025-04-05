@@ -218,7 +218,7 @@ docker ps
 docker logs 容器ID -f
 ```
 屏幕出现运行日志即为部署成功
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/docker_log.png">
+<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/docker_log.png">
 访问地址 http://ip:8085 
 用户名13900000000 密码stonedt
 
@@ -317,7 +317,7 @@ https://github.com/stonedtman/stonedt-yuqing/blob/master/产品手册V1.0.pdf
 3.在产品上还有哪些未满足您的需求？
 
 
-可以在 issues list 中发布您的提问 ([点击这里](https://gitee.com/stonedtx/yuqing/issues/new?issue))
+可以在 issues list 中发布您的提问 ([点击这里](https://github.com/stonedtman/stonedt-yuqing/issues))
 
 或者
 
@@ -367,7 +367,7 @@ https://github.com/stonedtman/stonedt-yuqing/blob/master/产品手册V1.0.pdf
 免费的自然语言处理、情感分析、实体识别、图像识别与分类、OCR识别、语音识别接口，功能强大，欢迎体验。
 <br>
 
-访问地址： [https://gitee.com/stonedtx/free-nlp-api](https://gitee.com/stonedtx/free-nlp-api)
+访问地址： [https://github.com/stonedtman/free-nlp-api](https://github.com/stonedtman/free-nlp-api)
 
 <br>
 
