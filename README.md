@@ -6,7 +6,7 @@
 
 无论你是使用者还是共同完善的开发者，欢迎 pull request 或者 留言对我们提出建议。 
 <br>
-您的支持和参与就是我们坚持开源的动力！请 :star:  [star](https://gitee.com/stonedtx/yuqing) 或者 [fork](https://gitee.com/stonedtx/yuqing)!  
+您的支持和参与就是我们坚持开源的动力！请 :star:  [star](https://github.com/stonedtman/stonedt-yuqing) 或者 [fork](https://github.com/stonedtman/stonedt-yuqing)!  
 
 
 微信交流群超过200人已满，请添加产品经理微信
@@ -52,7 +52,7 @@
 
 关于本舆情系统项目的 心路历程、开发计划、入门文档、团队介绍、实际案例，等等，
 
-你想知道的一切都在这里： **[https://gitee.com/stonedtx/yuqing/wikis/pages](https://gitee.com/stonedtx/yuqing/wikis/pages)** 
+你想知道的一切都在这里： **[https://github.com/stonedtman/stonedt-yuqing/wiki](https://github.com/stonedtman/stonedt-yuqing/wiki)** 
 
 
 <br>
