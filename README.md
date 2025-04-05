@@ -152,11 +152,12 @@
 ###  舆情数据采集 
 -   目前正在整理编写文档，正式发布时间待定。
 
-    [【数据采集】技术架构说明文档](https://github.com/stonedtman/stonedt-yuqing/blob/master/dataCollection.md)
+   [【数据采集】技术架构说明文档](https://github.com/stonedtman/stonedt-yuqing/blob/master/dataCollection.md)
 
-    [数据采集](https://gitee.com/stonedtx/open-spider) 由于各种外界因素以及国家管制，系统已经闭源。
-    
     【数据采集】已经在2023年9月份，重新架构，预计在2024年打算重新开源。
+
+    [数据采集](https://gitee.com/stonedtx/open-spider) 2024年10月份，由于各种外界因素以及国家管制，系统已经闭源。
+    
 
 
 ### 舆情数据处理 
