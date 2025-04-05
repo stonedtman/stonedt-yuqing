@@ -219,7 +219,7 @@ docker ps
 docker logs 容器ID -f
 ```
 屏幕出现运行日志即为部署成功
-<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/docker_log.png">
+<img src="ProIMG/docker_log.png">
 访问地址 http://ip:8085 
 用户名13900000000 密码stonedt
 
@@ -342,7 +342,7 @@ https://github.com/stonedtman/stonedt-yuqing/blob/master/产品手册V1.0.pdf
 ### 产品经理微信
    扫描微信二维码，技术交流。
 
-<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg" title="Logo"  width="220">
+<img src="ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg" title="Logo"  width="220">
 
 
 ###  技术博客
@@ -354,12 +354,12 @@ https://github.com/stonedtman/stonedt-yuqing/blob/master/产品手册V1.0.pdf
 
   **微信公众号**
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/wxOfficialAccount.jpg" title="Logo"  width="220">
+<img src="ProIMG/wxOfficialAccount.jpg" title="Logo"  width="220">
  
 ###  技术交流群
 
    微信群已超过200人，无法生成二维码，请添加产品经理微信入群：javabloger 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg" title="Logo"  width="220">
+<img src="ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg" title="Logo"  width="220">
 
 
 ## 其他开源项目
@@ -380,9 +380,9 @@ https://github.com/stonedtman/stonedt-yuqing/blob/master/产品手册V1.0.pdf
 
 ## 捐赠方式
 
-<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/Wechat.png" title="Logo"  width="200">
+<img src="ProIMG/Wechat.png" title="Logo"  width="200">
 
-<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/zhifubao-pay.png" title="Logo"  width="200">
+<img src="ProIMG/zhifubao-pay.png" title="Logo"  width="200">
 
 
 
