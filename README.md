@@ -236,8 +236,8 @@ docker logs 容器ID -f
 
 -  1.安装 MySQL 5.7+、redis 4.0+
 
--  2.下载 [stonedt-yuqing.7z](https://gitee.com/stonedtx/yuqing/releases/download/v1.3.0/stonedt-yuqing.7z)，解压zip包，执行  _nohup java -jar stonedt-yuqing.jar &_，启动舆情系统。 
--  3.下载 [opinion_screen.zip](https://gitee.com/stonedtx/yuqing/releases/download/v1.3.0/opinion_screen.zip)，解压zip包，进入apache-tomcat-8.5.46/bin文件夹.执行 ./startup.sh
+-  2.下载 [stonedt-yuqing.7z](https://github.com/stonedtman/stonedt-yuqing/releases/download/v1.3.0/stonedt-yuqing.7z)，解压zip包，执行  _nohup java -jar stonedt-yuqing.jar &_，启动舆情系统。 
+-  3.下载 [opinion_screen.zip](https://github.com/stonedtman/stonedt-yuqing/releases/download/v1.3.0/opinion_screen.zip)，解压zip包，进入apache-tomcat-8.5.46/bin文件夹.执行 ./startup.sh
 -  4.配置nginx,直接使用我们提供的nginx配置文件[nginx.conf](https://github.com/stonedtman/stonedt-yuqing/blob/master/nginx_config/nginx.conf).
 **或者**在http块中增加如下内容:
     ```text
@@ -271,7 +271,7 @@ docker logs 容器ID -f
 
 _备注：修改配置文件[[application.yml](https://github.com/stonedtman/stonedt-yuqing/blob/master/config/application.yml)]，设定 MySQL、Redis 用户和密码等。
       修改配置文件[[application.properties](https://github.com/stonedtman/stonedt-yuqing/blob/master/config/application.properties)]，修改xmlFilePath文件路径，并且拷贝config文件下的xml文件到指定路径等。
-      舆情大屏下载地址[opinion_screen.zip](https://gitee.com/stonedtx/yuqing/attach_files/1633832/download)_ 
+      舆情大屏下载地址[opinion_screen.zip](https://github.com/stonedtman/stonedt-yuqing/releases/download/v1.3.0/opinion_screen.zip)_ 
 
 
 ## 安装手册
