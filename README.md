@@ -9,9 +9,9 @@
 您的支持和参与就是我们坚持开源的动力！请 :star:  [star](https://gitee.com/stonedtx/yuqing) 或者 [fork](https://gitee.com/stonedtx/yuqing)!  
 
 
-微信交流群
+微信交流群超过200人已满，请添加产品经理微信
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/weixinGroup2.jpg" title="WeChat"  width="200">
+<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg?raw=true" title="WeChat"  width="200">
 
 
 
@@ -100,36 +100,36 @@
 
 
 ## UI 展示
-![登录页面](https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/login.png)
+![登录页面](https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/login.png)
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/jinriredian.png" />
+<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/jinriredian.png" />
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/main2.png" />
+<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/main2.png" />
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/main.png" />
+<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/main.png" />
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/main3.png" />
+<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/main3.png" />
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/main4.png" />
+<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/main4.png" />
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/report.png" />
+<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/report.png" />
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/xiangqing.png" />
+<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/xiangqing.png" />
  
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/secher.png" />
+<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/secher.png" />
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/jiance.png" />
+<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/jiance.png" />
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/WechatIMG3.png" />
+<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/WechatIMG3.png" />
 
 
 ## 系统架构
 
-![输入图片说明](https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/gongneng-jiagou.png)
+![输入图片说明](https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/gongneng-jiagou.png)
 
 
 ## 功能架构
-![输入图片说明](https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD.png)
+![输入图片说明](https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD.png)
 
 
 ## 开源计划
@@ -152,9 +152,9 @@
 ###  舆情数据采集 
 -   目前正在整理编写文档，正式发布时间待定。
 
-    [【数据采集】技术架构说明文档](https://gitee.com/stonedtx/yuqing/blob/master/dataCollection.md)
+    [【数据采集】技术架构说明文档](https://github.com/stonedtman/stonedt-yuqing/blob/master/dataCollection.md)
 
-    [数据采集](https://gitee.com/stonedtx/open-spider) 系统已经开源，预计2022年6月完成开源计划。
+    [数据采集](https://gitee.com/stonedtx/open-spider) 由于各种外界因素以及国家管制，系统已经闭源。
     
     【数据采集】已经在2023年9月份，重新架构，预计在2024年打算重新开源。
 
@@ -163,7 +163,7 @@
 
 -   文档预计在2022年3月份提到开源社区。
 
-    [【数据处理】技术架构说明文档](https://gitee.com/stonedtx/yuqing/blob/master/dataProcessing.md)
+    [【数据处理】技术架构说明文档](https://github.com/stonedtman/stonedt-yuqing/blob/master/dataProcessing.md)
 
      【数据处理】 中的核心部分已经开源，请查阅 [nlp.stonedt.com](https://nlp.stonedt.com)  和 [https://gitee.com/stonedtx/free-nlp-api](https://gitee.com/stonedtx/free-nlp-api)
 
@@ -182,7 +182,7 @@
 
 -  系统很容易上手，简单易懂。2022年4月份 会全部开放源代码，同时也会提供运行部署程序下载。
    
-   开源代码访问地址：https://gitee.com/stonedtx/yuqing-manager
+   开源代码访问地址： https://github.com/stonedtman/yuqing-manager
 
 
 ## Docker 部署
@@ -227,7 +227,7 @@ docker logs 容器ID -f
 2. MySQL 5.7 以上版本；
 3. Redis 4.0 以上版本；
 
-详见思通舆情安装部署手册：https://gitee.com/stonedtx/yuqing/blob/master/install_guide.md
+详见思通舆情安装部署手册：https://github.com/stonedtman/stonedt-yuqing/blob/master/install_guide.md
 
 
 ## 运行版本
@@ -238,7 +238,7 @@ docker logs 容器ID -f
 
 -  2.下载 [stonedt-yuqing.7z](https://gitee.com/stonedtx/yuqing/releases/download/v1.3.0/stonedt-yuqing.7z)，解压zip包，执行  _nohup java -jar stonedt-yuqing.jar &_，启动舆情系统。 
 -  3.下载 [opinion_screen.zip](https://gitee.com/stonedtx/yuqing/releases/download/v1.3.0/opinion_screen.zip)，解压zip包，进入apache-tomcat-8.5.46/bin文件夹.执行 ./startup.sh
--  4.配置nginx,直接使用我们提供的nginx配置文件[nginx.conf](https://gitee.com/stonedtx/yuqing/blob/master/nginx_config/nginx.conf).
+-  4.配置nginx,直接使用我们提供的nginx配置文件[nginx.conf](https://github.com/stonedtman/stonedt-yuqing/blob/master/nginx_config/nginx.conf).
 **或者**在http块中增加如下内容:
     ```text
     server {
@@ -269,8 +269,8 @@ docker logs 容器ID -f
 
 详见思通舆情安装部署手册：https://gitee.com/stonedtx/yuqing/blob/master/install_guide.md
 
-_备注：修改配置文件[[application.yml](https://gitee.com/stonedtx/yuqing/blob/master/config/application.yml)]，设定 MySQL、Redis 用户和密码等。
-      修改配置文件[[application.properties](https://gitee.com/stonedtx/yuqing/blob/master/config/application.properties)]，修改xmlFilePath文件路径，并且拷贝config文件下的xml文件到指定路径等。
+_备注：修改配置文件[[application.yml](https://github.com/stonedtman/stonedt-yuqing/blob/master/config/application.yml)]，设定 MySQL、Redis 用户和密码等。
+      修改配置文件[[application.properties](https://github.com/stonedtman/stonedt-yuqing/blob/master/config/application.properties)]，修改xmlFilePath文件路径，并且拷贝config文件下的xml文件到指定路径等。
       舆情大屏下载地址[opinion_screen.zip](https://gitee.com/stonedtx/yuqing/attach_files/1633832/download)_ 
 
 
@@ -280,17 +280,17 @@ _备注：修改配置文件[[application.yml](https://gitee.com/stonedtx/yuqing
 
 详见思通舆情安装部署手册 及 常见问题：
 
-https://gitee.com/stonedtx/yuqing/blob/master/install_guide.md
+https://github.com/stonedtman/stonedt-yuqing/blob/master/install_guide.md
 
 
 ## 产品手册
 
-https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
+https://github.com/stonedtman/stonedt-yuqing/blob/master/产品手册V1.0.pdf
 
 
 ## 版本更新
 
-   每次版本更新的记录说明都在此，[查看详情](https://gitee.com/stonedtx/yuqing/blob/master/releasenote.md) 。
+   每次版本更新的记录说明都在此，[查看详情](https://github.com/stonedtman/stonedt-yuqing/blob/master/releasenote.md) 。
 
 
 
@@ -334,14 +334,14 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 
   服务流程如下
 
-![输入图片说明](https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/data-plan.png)
+![输入图片说明](https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/data-plan.png)
 
 
 
 ### 产品经理微信
    扫描微信二维码，技术交流。
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg" title="Logo"  width="220">
+<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg" title="Logo"  width="220">
 
 
 ###  技术博客
@@ -379,9 +379,9 @@ https://gitee.com/stonedtx/yuqing/raw/master/产品手册V1.0.pdf
 
 ## 捐赠方式
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/Wechat.png" title="Logo"  width="200">
+<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/Wechat.png" title="Logo"  width="200">
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/zhifubao-pay.png" title="Logo"  width="200">
+<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/zhifubao-pay.png" title="Logo"  width="200">
 
 
 
