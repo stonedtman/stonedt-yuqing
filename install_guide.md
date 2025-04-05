@@ -87,7 +87,7 @@ https://gitee.com/stonedtx/yuqing/attach_files
 
 ### 配置文件
 
-配置文件 [application.yml](https://gitee.com/stonedtx/yuqing/blob/master/config/application.yml) 中包含了
+配置文件 [application.yml](https://github.com/stonedtman/stonedt-yuqing/blob/master/config/application.yml) 中包含了
 
 1.舆情系统http访问端口，2.MySQL数据库连接，3.redis缓存服务连接。三个要点都已经在配置文件中标明。您只需要修改IP地址或者用户名密码即可。
 
@@ -192,7 +192,7 @@ https://gitee.com/stonedtx/yuqing/attach_files
 ## 产品经理微信
    扫描微信二维码，技术交流。
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg" title="Logo"  width="220">
+<img src="ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg" title="Logo"  width="220">
 
 
 ##  技术博客
@@ -207,8 +207,8 @@ https://gitee.com/stonedtx/yuqing/attach_files
 
 ## 捐赠方式
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/Wechat.png" title="Logo"  width="200">
+<img src="ProIMG/Wechat.png" title="Logo"  width="200">
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/zhifubao-pay.png" title="Logo"  width="200">
+<img src="ProIMG/zhifubao-pay.png" title="Logo"  width="200">
 
 
