@@ -102,34 +102,34 @@
 ## UI 展示
 ![登录页面](ProIMG/login.png)
 
-<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/jinriredian.png" />
+<img src="ProIMG/jinriredian.png" />
 
-<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/main2.png" />
+<img src="ProIMG/main2.png" />
 
-<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/main.png" />
+<img src="ProIMG/main.png" />
 
-<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/main3.png" />
+<img src="ProIMG/main3.png" />
 
-<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/main4.png" />
+<img src="ProIMG/main4.png" />
 
-<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/report.png" />
+<img src="ProIMG/report.png" />
 
-<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/xiangqing.png" />
+<img src="ProIMG/xiangqing.png" />
  
-<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/secher.png" />
+<img src="ProIMG/secher.png" />
 
-<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/jiance.png" />
+<img src="ProIMG/jiance.png" />
 
-<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/WechatIMG3.png" />
+<img src="ProIMG/WechatIMG3.png" />
 
 
 ## 系统架构
 
-![输入图片说明](https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/gongneng-jiagou.png)
+![输入图片说明](ProIMG/gongneng-jiagou.png)
 
 
 ## 功能架构
-![输入图片说明](https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD.png)
+![输入图片说明](ProIMG/%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD.png)
 
 
 ## 开源计划
@@ -152,7 +152,7 @@
 ###  舆情数据采集 
 -   目前正在整理编写文档，正式发布时间待定。
 
-   [【数据采集】技术架构说明文档](https://github.com/stonedtman/stonedt-yuqing/blob/master/dataCollection.md)
+   [【数据采集】技术架构说明文档](dataCollection.md)
 
     【数据采集】已经在2023年9月份，重新架构，预计在2024年打算重新开源。
 
@@ -164,7 +164,7 @@
 
 -   文档预计在2022年3月份提到开源社区。
 
-    [【数据处理】技术架构说明文档](https://github.com/stonedtman/stonedt-yuqing/blob/master/dataProcessing.md)
+    [【数据处理】技术架构说明文档](dataProcessing.md)
 
      【数据处理】 中的核心部分已经开源，请查阅 [nlp.stonedt.com](https://nlp.stonedt.com)  和 [https://gitee.com/stonedtx/free-nlp-api](https://gitee.com/stonedtx/free-nlp-api)
 
@@ -270,8 +270,8 @@ docker logs 容器ID -f
 
 详见思通舆情安装部署手册：https://gitee.com/stonedtx/yuqing/blob/master/install_guide.md
 
-_备注：修改配置文件[[application.yml](https://github.com/stonedtman/stonedt-yuqing/blob/master/config/application.yml)]，设定 MySQL、Redis 用户和密码等。
-      修改配置文件[[application.properties](https://github.com/stonedtman/stonedt-yuqing/blob/master/config/application.properties)]，修改xmlFilePath文件路径，并且拷贝config文件下的xml文件到指定路径等。
+_备注：修改配置文件[[application.yml](config/application.yml)]，设定 MySQL、Redis 用户和密码等。
+      修改配置文件[[application.properties](config/application.properties)]，修改xmlFilePath文件路径，并且拷贝config文件下的xml文件到指定路径等。
       舆情大屏下载地址[opinion_screen.zip](https://github.com/stonedtman/stonedt-yuqing/releases/download/v1.3.0/opinion_screen.zip)_ 
 
 
@@ -291,7 +291,7 @@ https://github.com/stonedtman/stonedt-yuqing/blob/master/产品手册V1.0.pdf
 
 ## 版本更新
 
-   每次版本更新的记录说明都在此，[查看详情](https://github.com/stonedtman/stonedt-yuqing/blob/master/releasenote.md) 。
+   每次版本更新的记录说明都在此，[查看详情](releasenote.md) 。
 
 
 
@@ -335,7 +335,7 @@ https://github.com/stonedtman/stonedt-yuqing/blob/master/产品手册V1.0.pdf
 
   服务流程如下
 
-![输入图片说明](https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/data-plan.png)
+![输入图片说明](ProIMG/data-plan.png)
 
 
 
