@@ -11,7 +11,7 @@
 
 微信交流群超过200人已满，请添加产品经理微信
 
-<img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg?raw=true" title="WeChat"  width="200">
+<img src="ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg?raw=true" title="WeChat"  width="200">
 
 
 
@@ -100,7 +100,7 @@
 
 
 ## UI 展示
-![登录页面](https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/login.png)
+![登录页面](ProIMG/login.png)
 
 <img src="https://github.com/stonedtman/stonedt-yuqing/blob/master/ProIMG/jinriredian.png" />
 
