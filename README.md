@@ -11,7 +11,7 @@
 
 微信交流群超过200人已满，请添加产品经理微信
 
-<img src="ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg?raw=true" title="WeChat"  width="200">
+<img src="ProIMG/Wechat-javabloger.jpg?raw=true" title="WeChat"  width="200">
 
 
 
@@ -359,7 +359,9 @@ https://github.com/stonedtman/stonedt-yuqing/blob/master/产品手册V1.0.pdf
 ###  技术交流群
 
    微信群已超过200人，无法生成二维码，请添加产品经理微信入群：javabloger 
-<img src="ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg" title="Logo"  width="220">
+
+   <br>
+<img src="ProIMG/Wechat-javabloger.jpg?raw=true" title="WeChat"  width="200">
 
 
 ## 其他开源项目
