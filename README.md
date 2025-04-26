@@ -342,7 +342,7 @@ https://github.com/stonedtman/stonedt-yuqing/blob/master/产品手册V1.0.pdf
 ### 产品经理微信
    扫描微信二维码，技术交流。
 
-<img src="ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg" title="Logo"  width="220">
+<img src="ProIMG/Wechat-javabloger.jpg?raw=true" title="WeChat"  width="200">
 
 
 ###  技术博客
