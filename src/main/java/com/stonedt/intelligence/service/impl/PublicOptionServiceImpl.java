@@ -12,10 +12,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpResponse;
+import com.stonedt.intelligence.context.Context;
+import com.stonedt.intelligence.dto.UserDTO;
+import com.stonedt.intelligence.entity.Message;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -32,13 +42,32 @@ import com.stonedt.intelligence.service.PublicOptionService;
 import com.stonedt.intelligence.util.ProjectWordUtil;
 @Service
 public class PublicOptionServiceImpl implements PublicOptionService{
+	private static final Logger log = LoggerFactory.getLogger(PublicOptionServiceImpl.class);
 	@Autowired
 	private PublicOptionDao publicOptionDao;
+
+	@Autowired
+	private PublicOptionService publicOptionService;
 	// es搜索地址
     @Value("${es.search.url}")
     private String es_search_url;
     @Value("${insertnewwords.url}")
 	private String insert_new_words_url;
+
+	@Value("${llm.dashCope.url}")
+	private String apiUrl;
+
+	@Value("${llm.dashCope.model}")
+	private String model;
+
+	@Value("${llm.dashCope.key}")
+	private String apiKey;
+
+	@Value("${llm.dashCope.flag}")
+	private Boolean flag;
+
+	@Resource
+	private RedisTemplate redisTemplate;
 
 	@Override
 	public List<PublicoptionEntity> getlist(Long user_id, String searchkeyword) {
@@ -210,6 +239,197 @@ public class PublicOptionServiceImpl implements PublicOptionService{
 		// TODO Auto-generated method stub
 		return publicOptionDao.getUnscrambleContentById(id);
 	}
+
+	/**
+	 * 优化网民观点
+	 * @param publicoptionDetailEntity
+	 */
+	public void dealThematicAnalysis(PublicoptionDetailEntity publicoptionDetailEntity) {
+		log.info("处理网民观点");
+		UserDTO currentUser =  Context.getCurrentUser();
+		Map<String,Object> mapParam = new HashMap<>();
+		mapParam.put("userId", currentUser.getUser_id());
+		mapParam.put("id", publicoptionDetailEntity.getPublicoption_id());
+		mapParam.put("reportId",  publicoptionDetailEntity.getPublicoption_id());
+		PublicoptionEntity getdatabyid = publicOptionService.getdatabyid(mapParam);
+		String thematicAnalysis = publicoptionDetailEntity.getThematic_analysis();
+		List<Message> messages = new ArrayList<>();
+		Message system = new Message();
+		system.setRole("system");
+		system.setContent("根据事件主题来去除事件观点中与主题无关的内容");
+		messages.add(system);
+
+		Message message1 = new Message();
+		message1.setRole("system");
+		message1.setContent("事件主题为:"+getdatabyid.getEventname());
+		messages.add(message1);
+
+		Message message2 = new Message();
+		message2.setRole("system");
+		message2.setContent("事件观点数据中的 title 字段为观点");
+		messages.add(message2);
+
+		Message message3 = new Message();
+		message3.setRole("system");
+		message3.setContent("事件观点数据为:"+thematicAnalysis);
+		messages.add(message3);
+
+		Message message = new Message();
+		message.setRole("system");
+		message.setContent("将事件观点整理后的数据,按原有结构返回;返回数据的前后用$符号包裹;例如 $data(这是要返会的数据)$");
+
+		messages.add(message);
+		Map<String,Object> map = new HashMap<>();
+		map.put("model",model);
+		map.put("messages",messages);
+
+		String jsonString = JSON.toJSONString(map);
+
+		HttpRequest post = HttpRequest.post(apiUrl);
+		post.header(HttpHeaders.AUTHORIZATION, "Bearer " + apiKey);
+		post.header(HttpHeaders.CONTENT_TYPE, "application/json");
+		post.body(jsonString);
+		try {
+			log.info("开始调用大模型");
+			HttpResponse execute = post.execute();
+			String body = execute.body();
+			JSONObject jsonObject = JSON.parseObject(body);
+			JSONArray choices = jsonObject.getJSONArray("choices");
+			JSONObject jsonObject1  =  choices.getJSONObject(0);
+			String content = jsonObject1.getJSONObject("message").getString("content");
+			log.info("大模型回复:"+content);
+			String[] split= content.split("\\$");
+			String str = split[1];
+			publicoptionDetailEntity.setThematic_analysis(str);
+		}catch (Exception e) {
+			log.error(e.getMessage());
+		}
+
+
+	}
+
+	/**
+	 * 事件脉络1需要把与事件主题无关的内容排除，2并且合并重复内容
+	 * @param publicoptionDetailEntity
+	 */
+	public void dealEventContext(PublicoptionDetailEntity publicoptionDetailEntity) {
+		log.info("处理事件脉络");
+		UserDTO currentUser = (UserDTO) Context.getCurrentUser();
+		Map<String,Object> mapParam = new HashMap<>();
+		mapParam.put("userId", currentUser.getUser_id());
+		mapParam.put("id", publicoptionDetailEntity.getPublicoption_id());
+		mapParam.put("reportId",  publicoptionDetailEntity.getPublicoption_id());
+
+		PublicoptionEntity getdatabyid = publicOptionService.getdatabyid(mapParam);
+
+		String eventContext = publicoptionDetailEntity.getEvent_context();
+		List<Message> messages = new ArrayList<>();
+		Message system = new Message();
+		system.setRole("system");
+		system.setContent("根据事件主题来去除事件脉络模块中与主题无关的内容,若事件脉络模块中有大致重复的内容将他们合并（将内容新的合并到旧的上）");
+		messages.add(system);
+
+		Message message1 = new Message();
+		message1.setRole("system");
+		message1.setContent("事件主题为:"+getdatabyid.getEventname());
+		messages.add(message1);
+
+		Message message2 = new Message();
+		message2.setRole("system");
+		message2.setContent("事件脉络模块为:"+eventContext);
+		messages.add(message2);
+
+		Message message = new Message();
+		message.setRole("system");
+		message.setContent("将事件脉络模块整理后的数据,按原有结构返回;数据的前后用$符号包裹;例如 $data(这是要返会的数据)$");
+
+		messages.add(message);
+		Map<String,Object> map = new HashMap<>();
+		map.put("model",model);
+		map.put("messages",messages);
+
+		String jsonString = JSON.toJSONString(map);
+
+		HttpRequest post = HttpRequest.post(apiUrl);
+		post.header(HttpHeaders.AUTHORIZATION, "Bearer " + apiKey);
+		post.header(HttpHeaders.CONTENT_TYPE, "application/json");
+		post.body(jsonString);
+		try {
+			log.info("开始调用大模型");
+			HttpResponse execute = post.execute();
+			String body = execute.body();
+			JSONObject jsonObject = JSON.parseObject(body);
+			JSONArray choices = jsonObject.getJSONArray("choices");
+			JSONObject jsonObject1  =  choices.getJSONObject(0);
+			String content = jsonObject1.getJSONObject("message").getString("content");
+			log.info("大模型回复:"+content);
+			String[] split= content.split("\\$");
+			String result = split[1];
+			publicoptionDetailEntity.setEvent_context(result);
+		}catch (Exception e) {
+			log.error(e.getMessage());
+		}
+
+
+	}
+
+	/**
+	 * 文展内容解读
+	 * @param publicoptionDetailEntity
+	 */
+	public void getContentFromLLM(PublicoptionDetailEntity publicoptionDetailEntity) {
+
+		StringBuffer sb = new StringBuffer();
+		sb.append("帮我解读以下文章内容，限制200字；文章内容为:");
+
+		publicoptionDetailEntity.getDetail_status();
+		String backAnalysis = publicoptionDetailEntity.getBack_analysis();
+		sb.append("。事件概述模块为:"+backAnalysis);
+		String eventContext = publicoptionDetailEntity.getEvent_context();
+		sb.append("。事件脉络模块为:"+eventContext);
+
+		String thematicAnalysis = publicoptionDetailEntity.getThematic_analysis();
+		String replace = thematicAnalysis.replace("view", "观点聚类").replace("media", "媒体观点").replace("netizen", "网民观点");
+		sb.append("。专题分析模块为"+replace);
+
+		List<Message> messages = new ArrayList<>();
+		Message system = new Message();
+		system.setRole("system");
+		system.setContent("将网站中的相关标签去掉;不要生成相关的标签;若原来的文展有标签则将原来的文展标签去掉;数据的前后用$符号包裹;例如 $data(这是要返会的数据)$");
+		Message message = new Message();
+		message.setRole("user");
+		message.setContent(	sb.toString());
+
+		messages.add(message);
+		Map<String,Object> map = new HashMap<>();
+		map.put("model",model);
+		map.put("messages",messages);
+
+		String jsonString = JSON.toJSONString(map);
+
+		HttpRequest post = HttpRequest.post(apiUrl);
+		post.header(HttpHeaders.AUTHORIZATION, "Bearer " + apiKey);
+		post.header(HttpHeaders.CONTENT_TYPE, "application/json");
+		post.body(jsonString);
+		try {
+			HttpResponse execute = post.execute();
+			String body = execute.body();
+			JSONObject jsonObject = JSON.parseObject(body);
+			JSONArray choices = jsonObject.getJSONArray("choices");
+			JSONObject jsonObject1  =  choices.getJSONObject(0);
+			String content = jsonObject1.getJSONObject("message").getString("content");
+			log.info("大模型回复:"+content);
+			String[] split= content.split("\\$");
+			String result = split[1];
+			publicoptionDetailEntity.setContent_analysis(result);
+		}catch (Exception e){
+			log.error(e.getMessage());
+		}
+
+
+	}
+
+
 
 	@Override
 	public JSONObject loadInformation(PublicoptionEntity publicoptionEntity) {

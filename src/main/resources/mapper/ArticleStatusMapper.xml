@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stonedt.intelligence.dao.ArticleStatusDao">
+
+    <insert id="saveData" >
+        insert into article_status( aid, user_id, create_time, update_time, publish_time, event_label )
+        values
+        <foreach item="item" index="index" collection="articleList"  separator="," >
+            ( #{item.aid}, #{userId}, #{dateTime}, #{dateTime}, #{item.publish_time}, #{item.eventlable} )
+        </foreach>
+    </insert>
+
+
+    <select id="findListByAid"  resultType="com.stonedt.intelligence.entity.ArticleStatus">
+        select *
+        from article_status
+        where user_id=#{userId}
+          and aid in
+        <foreach item="item" index="index" collection="aidList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+
+    <select id="findListByArticle"  resultType="com.stonedt.intelligence.entity.ArticleStatus">
+        select *
+        from article_status
+        where user_id=#{userId}
+          and aid in
+        <foreach item="item" index="index" collection="articleList" open="(" separator="," close=")">
+            #{item.aid}
+        </foreach>
+    </select>
+
+
+    <delete id="removeData" >
+        delete from article_status
+        where user_id=#{userId}
+        and aid in
+        <foreach item="item" index="index" collection="articleList" open="(" separator="," close=")">
+            #{item.aid}
+        </foreach>
+    </delete>
+
+</mapper>

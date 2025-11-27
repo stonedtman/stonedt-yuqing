@@ -2,7 +2,9 @@ package com.stonedt.intelligence.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.stonedt.intelligence.context.Context;
 import com.stonedt.intelligence.dao.SolutionGroupDao;
+import com.stonedt.intelligence.dto.UserDTO;
 import com.stonedt.intelligence.entity.MonitorWarningSetting;
 import com.stonedt.intelligence.entity.User;
 import com.stonedt.intelligence.entity.WarningSetting;
@@ -294,6 +296,9 @@ public class MonitorController {
 	@PostMapping(value = "/getarticle")
 	@ResponseBody
 	public ResultVO<PageInfo<ArticleData>> getArticleList(@RequestBody JSONObject paramJson) {
+		UserDTO user = Context.getCurrentUser();
+		paramJson.put("uid", user.getId());
+		paramJson.put("user_id", user.getUser_id());
 		JSONObject response = monitorService.getArticleList(paramJson);
 		return JSON.parseObject(response.toJSONString(), ResultVO.class);
 	}
@@ -507,5 +512,31 @@ public class MonitorController {
 	public ResultVO<MonitorWarningSetting> warningSetting(@PathVariable Long projectId, HttpServletRequest request) {
 		return warningSettingService.getWarningSetting(projectId, request);
 	}
+
+
+	/**
+	 * 标记已读， type: 1.设为已读  2.设为未读
+	 */
+	@PostMapping("/edit/read")
+	@ResponseBody
+	public Object editRead( @RequestBody JSONObject paramJson, HttpServletRequest request){
+		User user = userUtil.getuser(request);
+		Integer user_id = user.getId();
+		paramJson.put("user_id", user_id );
+		return monitorService.editArticleRead(paramJson);
+	}
+
+	/**
+	 * 标记状态， type: 1.失效  2.未失效
+	 */
+	@PostMapping("/edit/status")
+	@ResponseBody
+	public Object editStatus( @RequestBody JSONObject paramJson, HttpServletRequest request){
+		User user = userUtil.getuser(request);
+		Integer user_id = user.getId();
+		paramJson.put("user_id", user_id );
+		return monitorService.editArticleStatus(paramJson);
+	}
+
 
 }

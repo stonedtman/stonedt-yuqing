@@ -8,12 +8,16 @@ import com.stonedt.intelligence.constant.PublicoptionConstant;
 import com.stonedt.intelligence.constant.ReportConstant;
 import com.stonedt.intelligence.constant.SearchConstant;
 import com.stonedt.intelligence.dao.PublicOptionDao;
+import com.stonedt.intelligence.entity.PublicoptionDetailEntity;
 import com.stonedt.intelligence.entity.PublicoptionEntity;
 import com.stonedt.intelligence.service.FullSearchService;
+import com.stonedt.intelligence.service.PublicOptionService;
 import com.stonedt.intelligence.util.DateUtil;
 import com.stonedt.intelligence.util.MyHttpRequestUtil;
 import com.stonedt.intelligence.vo.FullSearchParam;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -41,6 +45,7 @@ import static com.stonedt.intelligence.util.StopWordsUtil.isLockWordsMonster;
 @EnableScheduling
 public class publicoptionQuartz {
 
+    private static final Logger log = LoggerFactory.getLogger(publicoptionQuartz.class);
     // 定时任务开关
     @Value("${schedule.publicoption.open}")
     private Integer schedule_publicoption_open;
@@ -50,6 +55,9 @@ public class publicoptionQuartz {
 
     @Value("${es.hot.search.url}")
     private String es_hot_search_url;
+
+    @Value("${llm.dashCope.flag}")
+    private Boolean llm_dashCope_flag;
     //    private  String es_search_url="http://221.231.137.209:7120";
 //    private  String es_search_url="http://127.0.0.1:8004";
     private String similarityMaxTitle = null;
@@ -58,6 +66,9 @@ public class publicoptionQuartz {
     private PublicOptionDao PublicOptionDao;
     @Autowired
     private FullSearchService fullSearchService;
+
+    @Autowired
+    private PublicOptionService publicOptionService;
 
     /**
      * 舆情研判
@@ -74,12 +85,15 @@ public class publicoptionQuartz {
             for (int i = 0; i < result.size(); i++) {
                 try {
                     PublicoptionEntity publicoptionEntity = result.get(i);
+                    PublicoptionDetailEntity entity = new PublicoptionDetailEntity();
                     Map<String, Object> map = new HashMap<String, Object>();
                     map.put("publicoption_id", publicoptionEntity.getId());
+                    entity.setPublicoption_id(publicoptionEntity.getId());
                     //溯源分析
                     try {
                         String back_analysis = getback_analysis(publicoptionEntity);
                         map.put("back_analysis", back_analysis);
+                        entity.setBack_analysis(back_analysis);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -87,6 +101,7 @@ public class publicoptionQuartz {
                         //事件脉络
                         String event_context = gatevent_context(publicoptionEntity);
                         map.put("event_context", event_context);
+                        entity.setEvent_context(event_context);
                     } catch (Exception e) {
                         // TODO: handle exception
                     }
@@ -95,6 +110,7 @@ public class publicoptionQuartz {
                     try {
                         String event_trace = getevent_trace(publicoptionEntity);
                         map.put("event_trace", event_trace);
+                        entity.setEvent_trace(event_trace);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -102,6 +118,7 @@ public class publicoptionQuartz {
                     try {
                         String hot_analysis = gethot_analysis(publicoptionEntity);
                         map.put("hot_analysis", hot_analysis);
+                        entity.setHot_analysis(hot_analysis);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -109,6 +126,7 @@ public class publicoptionQuartz {
                     try {
                         String netizens_analysis = getnetizens_analysis(publicoptionEntity);
                         map.put("netizens_analysis", netizens_analysis);
+                        entity.setNetizens_analysis(netizens_analysis);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -116,6 +134,7 @@ public class publicoptionQuartz {
                     try {
                         String statistics = getstatistics(publicoptionEntity);
                         map.put("statistics", statistics);
+                        entity.setStatistics(statistics);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -123,6 +142,7 @@ public class publicoptionQuartz {
                     try {
                         String propagation_analysis = getpropagation_analysis(publicoptionEntity);
                         map.put("propagation_analysis", propagation_analysis);
+                        entity.setPropagation_analysis(propagation_analysis);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -130,6 +150,7 @@ public class publicoptionQuartz {
                     try {
                         String thematic_analysis = getthematic_analysis(publicoptionEntity);
                         map.put("thematic_analysis", thematic_analysis);
+                        entity.setThematic_analysis(thematic_analysis);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -141,6 +162,7 @@ public class publicoptionQuartz {
                         unscramble_contentOb.put("wemedia", wemediaTitle);
                         unscramble_contentOb.put("main_media", main_mediaTitle);
                         map.put("unscramble_content", unscramble_contentOb.toJSONString());
+                        entity.setUnscramble_content(unscramble_contentOb.toJSONString());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -149,6 +171,22 @@ public class publicoptionQuartz {
 //        			System.out.println("--------------------------------");
 //        			System.err.println(JSON.toJSONString(map));
 //        			System.out.println("===============================");
+                    try {
+                        if(llm_dashCope_flag){
+                            publicOptionService.dealThematicAnalysis(entity);
+                            String thematicAnalysis = entity.getThematic_analysis();
+                            publicOptionService.dealEventContext(entity);
+                            String eventContext = entity.getEvent_context();
+                            publicOptionService.getContentFromLLM(entity);
+                            String contentAnalysis = entity.getContent_analysis();
+                            map.put("content_analysis", contentAnalysis);
+                            map.put("thematic_analysis", thematicAnalysis);
+                            map.put("event_context", eventContext);
+                        }
+
+                    }catch (Exception e){
+                        log.info(e.getMessage());
+                    }
                     System.out.println("舆情研判结束,开始保存舆情研判结果");
                     PublicOptionDao.savepublicoptionDetail(map);
                     PublicOptionDao.updateStatusbyid(publicoptionEntity.getId(), 3);

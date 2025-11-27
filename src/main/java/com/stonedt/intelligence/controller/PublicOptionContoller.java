@@ -169,19 +169,32 @@ public class PublicOptionContoller {
 		mv.addObject("menu", "public_option");
 		mapParam.put("reportId", id);
 		PublicoptionEntity publicoption =publicOptionService.getdatabyid(mapParam);
+		dealEventBeginTime(dcd.getEvent_context(),publicoption);
 		mv.addObject("publicoption", publicoption);
 		if(dcd!=null) {
 			JSONObject parseObject = JSONObject.parseObject(JSON.toJSONString(dcd));
 			Set<String> keySet = parseObject.keySet();
 			for (String string : keySet) {
 				String string2 = TextUtil.processQuotationMarks(parseObject.get(string).toString());
-				mv.addObject(string,JSONObject.parse(string2));
+				if(string.equals("content_analysis")){
+					mv.addObject(string,string2);
+				}else {
+					mv.addObject(string,JSONObject.parse(string2));
+				}
 			}
 		}
 		mv.setViewName("publicoption/eventAnalysisDetail");
 		return mv;
 		
 		
+	}
+
+
+	private void dealEventBeginTime(String eventContext, PublicoptionEntity publicoption) {
+		JSONArray jsonArray = JSON.parseArray(eventContext);
+		JSONObject object = jsonArray.getJSONObject(0);
+		String string = object.getString("publish_time");
+		publicoption.setEventstarttime(string);
 	}
 	
 	/**

@@ -49,4 +49,8 @@ public interface MonitorService {
      * 根据偏好设置获取文章列表
      */
     PageInfo<ArticleData> getArticleListByOpinionCondition(OpinionCondition opinionCondition, Project project,Integer pageNum);
+
+    Object editArticleStatus(JSONObject paramJson);
+
+    Object editArticleRead(JSONObject paramJson);
 }

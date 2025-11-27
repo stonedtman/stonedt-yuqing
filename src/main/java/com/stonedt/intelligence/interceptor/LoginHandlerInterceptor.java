@@ -1,5 +1,6 @@
 package com.stonedt.intelligence.interceptor;
 
+import com.stonedt.intelligence.context.Context;
 import com.stonedt.intelligence.dto.UserDTO;
 import com.stonedt.intelligence.util.JWTUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -114,7 +115,7 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
             return false;
         }
 
-
+        Context.setCurrentUser(userDTO);
         return true;
 
     }
@@ -156,6 +157,7 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
             throws Exception {
         // TODO Auto-generated method stub
+        Context.clear();
         HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
     }
 }

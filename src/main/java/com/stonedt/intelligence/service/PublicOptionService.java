@@ -48,5 +48,10 @@ public interface PublicOptionService {
 	String getUnscrambleContentById(Integer id);
 
 	JSONObject loadInformation(PublicoptionEntity publicoptionEntity);
-	
+
+	void dealThematicAnalysis(PublicoptionDetailEntity publicoptionDetailEntity);
+
+	void dealEventContext(PublicoptionDetailEntity publicoptionDetailEntity);
+
+	void getContentFromLLM(PublicoptionDetailEntity publicoptionDetailEntity);
 }

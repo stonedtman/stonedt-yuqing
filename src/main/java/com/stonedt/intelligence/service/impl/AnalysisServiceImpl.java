@@ -16,9 +16,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
+import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.stonedt.intelligence.constant.MonitorConstant;
+import com.stonedt.intelligence.dao.KeywordHandlerDao;
+import com.stonedt.intelligence.dto.HighWordCloudDto;
+import com.stonedt.intelligence.dto.KeywordIndexDto;
+import com.stonedt.intelligence.nlp.NLPService;
 import com.stonedt.intelligence.util.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +44,8 @@ import com.stonedt.intelligence.entity.Project;
 import com.stonedt.intelligence.service.AnalysisService;
 import com.stonedt.intelligence.util.ProjectWordUtil;
 
+import javax.annotation.Resource;
+
 @Service
 public class AnalysisServiceImpl implements AnalysisService {
 
@@ -52,6 +61,17 @@ public class AnalysisServiceImpl implements AnalysisService {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
+    @Resource
+    private NLPService nlpService;
+
+    @Value("nlp.service.username")
+    private String username;
+
+    @Value("nlp.service.password")
+    private String password;
+
+    @Resource
+    private KeywordHandlerDao keywordHandlerDao;
     @Override
     public Analysis getAanlysisByProjectidAndTimeperiod(Long projectId, Integer timePeriod) {
         Analysis aanlysisByProjectidAndTimeperiod = analysisDao.getAanlysisByProjectidAndTimeperiod(projectId, timePeriod);
@@ -341,4 +361,77 @@ public class AnalysisServiceImpl implements AnalysisService {
         return response.toString();
     }
 
+    /**
+     * 高频词统计需要把无关性的词去掉
+     * @param anlysisByProjectidAndTimeperiod
+     * @throws Exception
+     */
+    @Override
+    public void handleHighFrequencyWord(Analysis anlysisByProjectidAndTimeperiod)  {
+
+        //处理收集数据
+        String highwordCloud = anlysisByProjectidAndTimeperiod.getHighword_cloud();
+        String keywordIndex = anlysisByProjectidAndTimeperiod.getKeyword_index();
+
+
+        List<HighWordCloudDto> highwordClouds = JSONUtil.toList(JSONUtil.parseArray(highwordCloud), HighWordCloudDto.class);
+        List<KeywordIndexDto> keywordIndexDtos = JSONUtil.toList(JSONUtil.parseArray(keywordIndex), KeywordIndexDto.class);
+        Map<String, KeywordIndexDto> keywordIndexMap = keywordIndexDtos.stream().collect(Collectors.toMap(KeywordIndexDto::getKeyword, Function.identity(), (a, b) -> a));
+        Map<String, HighWordCloudDto> wordCloudMap = highwordClouds.stream().collect(Collectors.toMap(HighWordCloudDto::getX, Function.identity(), (a, b) -> a));
+        List<String> texts = highwordClouds.stream().map(HighWordCloudDto::getX).collect(Collectors.toList());
+
+
+        //登录nlp
+        String s = nlpService.nlpLogin(username, password);
+        cn.hutool.json.JSONObject jsonObject = JSONUtil.parseObj(s);
+        String secretId = jsonObject.getStr("secret-id");
+        String secretKey = jsonObject.getStr("secret-key");
+        String token = jsonObject.getStr("token");
+        String s1 = nlpService.nlpLac(texts, 100, secretId, secretKey, token);
+        if(StringUtils.isBlank(s1)){
+            return;
+        }
+        JSONArray objects =  JSONArray.parseArray(s1);
+        List<String> results = new ArrayList<>();
+        int allCount = 0;
+        for (Object object : objects) {
+            cn.hutool.json.JSONObject json = JSONUtil.parseObj(object);
+            List<String> tag = json.getJSONArray("tag").toList(String.class);
+            List<String> word = json.getJSONArray("word").toList(String.class);
+            String str ="";
+            if(tag.contains("n")){
+                str =StringUtils.join(word,"");
+            }
+            if(StringUtils.isNotBlank(str)){
+                if(keywordIndexMap.containsKey(str)){
+                    allCount += keywordIndexMap.get(str).getCount();
+                }
+                results.add(str);
+            }
+        }
+
+        List<HighWordCloudDto> collect = highwordClouds.stream().filter(item -> results.contains(item.getX())).collect(Collectors.toList());
+        anlysisByProjectidAndTimeperiod.setHighword_cloud(JSON.toJSONString(collect));
+        List<KeywordIndexDto> collec2 = handleKeyWord(results,keywordIndexDtos,allCount);
+        anlysisByProjectidAndTimeperiod.setKeyword_index(JSON.toJSONString(collec2));
+
+
+
+    }
+
+    private List<KeywordIndexDto> handleKeyWord(List<String> results, List<KeywordIndexDto> keywordIndexDtos, int allCount) {
+        List<KeywordIndexDto> result = new ArrayList<>();
+
+        for (KeywordIndexDto keywordIndexDto : keywordIndexDtos) {
+
+            if(results.contains(keywordIndexDto.getKeyword())){
+                Integer count = keywordIndexDto.getCount();
+                double v = Double.valueOf(count)*100 / Double.valueOf(allCount);
+                keywordIndexDto.setIndex( String.format("%.2f", v)+"%");
+                result.add(keywordIndexDto);
+            }
+
+        }
+        return result;
+    }
 }

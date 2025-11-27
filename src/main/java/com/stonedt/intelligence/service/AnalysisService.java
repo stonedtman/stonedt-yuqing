@@ -25,5 +25,6 @@ public interface AnalysisService {
 	
 	List<Map<String, Object>> latestnews(Long projectid, Integer timePeriod);
 
+	void handleHighFrequencyWord(Analysis anlysisByProjectidAndTimeperiod) ;
 
 }

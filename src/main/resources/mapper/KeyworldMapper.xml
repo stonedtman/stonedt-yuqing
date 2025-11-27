@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.stonedt.intelligence.dao.KeywordHandlerDao">
+
+
+    <insert id="insert">
+        insert into  keyword_handler(analysis_id,is_hander)   VALUES (#{keywordHandler.analysis_id},#{keywordHandler.is_hander})
+
+    </insert>
+    <update id="updateMonitorAnalysis">
+        update monitor_analysic set highword_cloud = #{highword_cloud},keyword_index =#{keyword_index} where id =#{id}
+    </update>
+
+
+    <select id="getByAnalysisId" resultType="com.stonedt.intelligence.entity.KeywordHandler">
+        select * from keyword_handler where  analysis_id =#{analysisId}
+    </select>
+</mapper>

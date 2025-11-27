@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stonedt.intelligence.dao.ArticleReadDao">
+
+    <insert id="saveData" >
+        insert into article_read( aid, user_id, create_time, update_time, publish_time, event_label )
+        values
+        <foreach item="item" index="index" collection="articleList"  separator="," >
+            ( #{item.aid}, #{userId}, #{dateTime}, #{dateTime}, #{item.publish_time}, #{item.eventlable} )
+        </foreach>
+    </insert>
+
+
+    <select id="findListByAid"  resultType="com.stonedt.intelligence.entity.ArticleRead">
+        select *
+        from article_read
+        where user_id=#{userId}
+          and aid in
+        <foreach item="item" index="index" collection="aidList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="findListByArticle"  resultType="com.stonedt.intelligence.entity.ArticleRead">
+        select *
+        from article_read
+        where user_id=#{userId}
+          and aid in
+        <foreach item="item" index="index" collection="articleList" open="(" separator="," close=")">
+            #{item.aid}
+        </foreach>
+    </select>
+
+
+    <select id="findListByEvent"  resultType="java.lang.String">
+        select aid
+        from article_read
+        <where>
+            user_id = #{userId}
+            <if test=" eventLabel!=null and eventLabel!='' ">
+                and event_label=#{eventLabel}
+            </if>
+            <if test=" startTime!=null and startTime!='' ">
+                and publish_time >= #{startTime}
+            </if>
+            <if test=" endTime!=null and endTime!='' ">
+                and publish_time &lt;= #{endTime}
+            </if>
+        </where>
+    </select>
+
+
+    <delete id="removeData" >
+        delete from article_read
+        where user_id=#{userId}
+        and aid in
+        <foreach item="item" index="index" collection="articleList" open="(" separator="," close=")">
+            #{item.aid}
+        </foreach>
+    </delete>
+
+</mapper>

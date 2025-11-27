@@ -1098,6 +1098,38 @@ CREATE TABLE `monitor_article` (
   UNIQUE KEY `uniq_project_article` (`project_id`,`article_source_url`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='实时监测文章去重表';
 
+ALTER TABLE `publicoption_detail`
+    ADD COLUMN `content_analysis` varchar(300) NULL COMMENT '底部文章解读' AFTER `detail_status`;
 
+
+CREATE TABLE `keyword_handler` (
+                                   `id` int NOT NULL AUTO_INCREMENT,
+                                   `analysis_id` int NOT NULL,
+                                   `is_hander` int DEFAULT NULL COMMENT '是否处理；0:未处理,1:已处理',
+                                   PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE TABLE `article_read` (
+                                `id` int NOT NULL AUTO_INCREMENT,
+                                `aid` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+                                `user_id` int DEFAULT NULL,
+                                `create_time` datetime DEFAULT NULL,
+                                `update_time` datetime DEFAULT NULL,
+                                `publish_time` datetime DEFAULT NULL,
+                                `event_label` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+                                PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `article_status` (
+                                  `id` int NOT NULL AUTO_INCREMENT,
+                                  `aid` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+                                  `user_id` int DEFAULT NULL,
+                                  `create_time` datetime DEFAULT NULL,
+                                  `update_time` datetime DEFAULT NULL,
+                                  `publish_time` datetime DEFAULT NULL,
+                                  `event_label` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+                                  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 

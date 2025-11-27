@@ -5,7 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.stonedt.intelligence.entity.Analysis;
 import com.stonedt.intelligence.entity.OpinionCondition;
+import com.stonedt.intelligence.service.AnalysisService;
 import com.stonedt.intelligence.service.OpinionConditionService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,12 @@ public class AnalysisPTQuartz {
     private Integer schedule_analysispt_open;
     @Value("${insertnewwords.url}")
     private String insert_new_words_url;
+
+    @Autowired
+    private AnalysisService analysisService;
+
+    @Value("${nlp.service.open}")
+    private Boolean nlp_service_open;
     
 
     @Autowired
@@ -209,6 +217,16 @@ public class AnalysisPTQuartz {
                                //方案命中分类统计
                                 String datacategory = analysisDataRequest.dataCategory(highKeyword, stopword, times, timee, projectType,opinionCondition);
                                 analysisQuartzDo.setCategory_rank(datacategory);
+
+                                if(nlp_service_open){
+                                    Analysis analysis = new Analysis();
+                                    analysis.setKeyword_index(analysisQuartzDo.getKeyword_index());
+                                    analysis.setHighword_cloud(analysisQuartzDo.getHighword_cloud());
+                                    analysisService.handleHighFrequencyWord(analysis);
+
+                                    analysisQuartzDo.setKeyword_index(analysis.getKeyword_index());
+                                    analysisQuartzDo.setHighword_cloud(analysis.getHighword_cloud());
+                                }
                                 Boolean updateAnalysisExceptPopularInformation = analysisQuartzDao.updateAnalysisExceptPopularInformation(analysisQuartzDo);
                                 if (updateAnalysisExceptPopularInformation) {
                                     System.err.println("监测分析数据更新");

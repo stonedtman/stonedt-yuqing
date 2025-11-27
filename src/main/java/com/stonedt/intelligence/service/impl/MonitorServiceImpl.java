@@ -5,10 +5,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.stonedt.intelligence.constant.MonitorConstant;
+import com.stonedt.intelligence.dao.ArticleReadDao;
+import com.stonedt.intelligence.dao.ArticleStatusDao;
 import com.stonedt.intelligence.dao.ProjectDao;
-import com.stonedt.intelligence.entity.OpinionCondition;
-import com.stonedt.intelligence.entity.Project;
-import com.stonedt.intelligence.entity.User;
+import com.stonedt.intelligence.entity.*;
 import com.stonedt.intelligence.service.MonitorService;
 import com.stonedt.intelligence.service.OpinionConditionService;
 import com.stonedt.intelligence.service.ProjectService;
@@ -18,16 +18,21 @@ import com.stonedt.intelligence.vo.PageInfo;
 import com.stonedt.intelligence.vo.ResultVO;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * description: MonitorServiceImpl <br>
@@ -37,6 +42,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 public class MonitorServiceImpl implements MonitorService {
+    private static final Logger log = LoggerFactory.getLogger(MonitorServiceImpl.class);
     @Autowired
     OpinionConditionService opinionConditionService;
     // es搜索地址
@@ -55,6 +61,12 @@ public class MonitorServiceImpl implements MonitorService {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
+
+    @Resource
+    private ArticleReadDao articleReadDao;
+
+    @Resource
+    private ArticleStatusDao articleStatusDao;
     
 
     /**
@@ -465,6 +477,8 @@ public class MonitorServiceImpl implements MonitorService {
                     dataGroupJson.put("currentPage", page);
                     JSONArray esDataArray = articleResponseJson.getJSONArray("data");
                     JSONArray dataArray = new JSONArray();
+
+                    List<String> aidList = new ArrayList<>();
                     for (int i = 0; i < esDataArray.size(); i++) {
                         JSONObject dataJson = (JSONObject) esDataArray.get(i);
                         JSONObject highlightJson = dataJson.getJSONObject("highlight"); // 高亮
@@ -566,8 +580,13 @@ public class MonitorServiceImpl implements MonitorService {
                             }
                             _sourceJson.put("key_words", sb);
                         }
+                        String aid = _sourceJson.getString("article_public_id");
+                        if( StringUtils.isNotBlank(aid)){
+                            aidList.add(aid);
+                        }
                         dataArray.add(_sourceJson);
                     }
+                    dataArray = dealArtcileRead(dataArray, paramJson.getInteger("uid"), aidList);
                     dataGroupJson.put("data", dataArray);
                     response.put("code", 200);
                     response.put("msg", "舆情列表es返回成功");
@@ -612,6 +631,7 @@ public class MonitorServiceImpl implements MonitorService {
                     JSONArray dataArray = new JSONArray();
                     System.out.println("后台计算开始时间：" + TimeUtil.getCurrenttime());
 
+                    List<String> aidList = new ArrayList<>();
                     for (int i = 0; i < esDataArray.size(); i++) {
                         JSONObject dataJson = (JSONObject) esDataArray.get(i);
                         JSONObject highlightJson = dataJson.getJSONObject("highlight"); // 高亮
@@ -710,8 +730,17 @@ public class MonitorServiceImpl implements MonitorService {
                             }
                             _sourceJson.put("key_words", sb);
                         }
+
+
+                        String aid = _sourceJson.getString("article_public_id");
+                        if( StringUtils.isNotBlank(aid)){
+                            aidList.add(aid);
+                        }
                         dataArray.add(_sourceJson);
                     }
+
+                    dataArray = dealArtcileRead(dataArray,paramJson.getInteger("uid"),aidList);
+
                     System.out.println("后台计算结束时间：" + TimeUtil.getCurrenttime());
                     dataGroupJson.put("data", dataArray);
                     response.put("code", 200);
@@ -745,6 +774,52 @@ public class MonitorServiceImpl implements MonitorService {
         }
         return response;
     }
+
+
+    /**
+     * 1已读，2未读
+     * @param dataArray
+     * @param uid
+     * @param aidList
+     * @return
+     */
+    private JSONArray dealArtcileRead(JSONArray dataArray, Integer uid, List<String> aidList) {
+        JSONArray resultJsonArr = new JSONArray();
+        if( aidList!=null && aidList.size()>0 ){
+            List<ArticleStatus> articleStatuses = articleStatusDao.findListByAid(uid, aidList);
+            List<ArticleRead> articleReadList = articleReadDao.findListByAid(uid, aidList);
+
+            List<String> statusAids = articleStatuses.stream().map(ArticleStatus::getAid).distinct().collect(Collectors.toList());
+
+            List<String> readAids = articleReadList.stream().map(ArticleRead::getAid).distinct().collect(Collectors.toList());
+
+            for (Object o : dataArray) {
+                int article_status = 2;
+                int article_read = 2;
+                JSONObject jsonObject = JSONObject.parseObject(o.toString());
+                try {
+                    String aid = jsonObject.getString("article_public_id");
+                    if (statusAids.contains(aid)) {
+                        article_status =1;
+                    }
+                    if (readAids.contains(aid)) {
+                        article_read =1;
+                    }
+                    jsonObject.put("article_read", article_status);
+                    jsonObject.put("article_status", article_read);
+
+                }catch (Exception e){
+                    log.error(e.getMessage());
+                }
+                resultJsonArr.add(jsonObject);
+            }
+
+        }
+
+        return resultJsonArr;
+
+    }
+
 
     @Override
     public JSONObject getSimilarArticleList(JSONObject paramJson) {
@@ -4080,6 +4155,81 @@ public class MonitorServiceImpl implements MonitorService {
         return null;
 
     }
+
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Object editArticleRead(JSONObject paramJson) {
+        try {
+            Integer userId = paramJson.getInteger("user_id");
+            Integer type = paramJson.getInteger("type");
+            String dateTime = DateUtil.getDate();
+
+            JSONArray articleArr = paramJson.getJSONArray("articleArr");
+            if( articleArr==null && articleArr.size()==0 ){
+                return ResultUtil.build(500,"数据为空");
+            }
+
+            int editType = 0;
+            if( type==2 ){
+                editType =  articleReadDao.removeData(userId,articleArr);
+            }else {
+                List<ArticleRead> list = articleReadDao.findListByArticle(userId,articleArr);
+                if ( list.size()==0 ){
+                    editType = articleReadDao.saveData(userId,dateTime,articleArr);
+                }else {
+                    return ResultUtil.build(500,"数据存在已读");
+                }
+            }
+
+            if( editType>0){
+                return ResultUtil.build(200,"更新成功");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ResultUtil.build(500,"更新失败");
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Object editArticleStatus(JSONObject paramJson) {
+        try {
+            Integer userId = paramJson.getInteger("user_id");
+            Integer type = paramJson.getInteger("type");
+            String dateTime = DateUtil.getDate();// 操作时间
+
+
+            JSONArray articleArr = paramJson.getJSONArray("articleArr");
+            if( articleArr==null && articleArr.size()==0 ){
+                return ResultUtil.build(500,"数据为空");
+            }
+
+
+            int editType = 0;
+            if( type==2 ){
+                editType =  articleStatusDao.removeData(userId,articleArr);
+            }else {
+                List<ArticleStatus> list = articleStatusDao.findListByArticle(userId,articleArr);
+                if ( list.size()==0 ){
+                    editType = articleStatusDao.saveData(userId,dateTime,articleArr);
+                }else {
+                    return ResultUtil.build(500,"数据存在已读");
+                }
+            }
+
+            if( editType>0){
+                return ResultUtil.build(200,"更新成功");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ResultUtil.build(500,"更新失败");
+    }
+
+
 
 
     /**

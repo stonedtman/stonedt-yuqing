@@ -18,6 +18,16 @@ public class PublicoptionDetailEntity {
 	private String unscramble_content;
 	private Date create_time;
 	private Integer detail_status;
+
+	public String getContent_analysis() {
+		return content_analysis;
+	}
+
+	public void setContent_analysis(String content_analysis) {
+		this.content_analysis = content_analysis;
+	}
+
+	private String content_analysis;
 	public Integer getId() {
 		return id;
 	}
@@ -103,6 +113,6 @@ public class PublicoptionDetailEntity {
 				+ ", hot_analysis=" + hot_analysis + ", netizens_analysis=" + netizens_analysis + ", statistics="
 				+ statistics + ", propagation_analysis=" + propagation_analysis + ", thematic_analysis="
 				+ thematic_analysis + ", unscramble_content=" + unscramble_content + ", create_time=" + create_time
-				+ ", detail_status=" + detail_status + "]";
+				+ ", detail_status=" + detail_status + ",content_analysis ="+content_analysis+"]";
 	}
 }
